@@ -171,7 +171,7 @@
 								</replacement>
 								<replacement>
 									<token>MAVEN_REPLACER_SMTP_PASSWORD</token>
-									<value>prova</value>
+									<value>vulit</value>
 								</replacement>
 								<replacement>
 									<token>MAVEN_REPLACER_SMTP_PORT</token>

@@ -16,7 +16,7 @@ public class GreenareaLoginModule extends UsernamePasswordLoginModule {
 
 	@Override
 	protected String getUsersPassword() throws LoginException {
-		return "prova";
+		return "vulit";
 	}
 
 	@Override

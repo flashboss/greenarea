@@ -88,93 +88,93 @@ public class GreenareaDemoData {
 				"amministratore",
 				"Luca",
 				"Stancapiano",
-				"prova",
+				"vulit",
 				"greenareavige@gmail.com",
 				"org/activiti/explorer/images/kermit.jpg",
 				asList("user", "admin"),
 				asList("birthDate", "15-05-1976", "jobTitle", "Consulente",
 						"location", "Guidonia", "phone", "+393381584484",
 						"twitterName", "flashboss", "skype", "flashboss62"));
-		createUser(identityService, "dhl", "Frodo", "Baggins", "prova",
+		createUser(identityService, "dhl", "Frodo", "Baggins", "vulit",
 				"frodobaggins@vige.it",
 				"org/activiti/explorer/images/fozzie.jpg",
 				asList(OPERATORE_LOGISTICO, "user"), null);
 		identityService.setUserInfo("dhl", "creditoMobilita", "1000");
-		createUser(identityService, "tnt", "Bilbo", "Baggins", "prova",
+		createUser(identityService, "tnt", "Bilbo", "Baggins", "vulit",
 				"bilbobaggins@vige.it",
 				"org/activiti/explorer/images/fozzie.jpg",
 				asList(OPERATORE_LOGISTICO, "user"), null);
 		identityService.setUserInfo("tnt", "creditoMobilita", "1000");
-		createUser(identityService, "patorino", "Gan", "Dalf", "prova",
+		createUser(identityService, "patorino", "Gan", "Dalf", "vulit",
 				"gandalf@vige.it",
 				"org/activiti/explorer/images/fozzie.jpg",
 				asList(PA, TORINO, "user"), null);
-		createUser(identityService, "pamilano", "Ara", "Gorn", "prova",
+		createUser(identityService, "pamilano", "Ara", "Gorn", "vulit",
 				"aragorne@vige.it",
 				"org/activiti/explorer/images/kermit.jpg",
 				asList(PA, MILANO, "user"), null);
-		createUser(identityService, "pagenova", "Boro", "Mir", "prova",
+		createUser(identityService, "pagenova", "Boro", "Mir", "vulit",
 				"boromir@vige.it",
 				"org/activiti/explorer/images/kermit.jpg",
 				asList(PA, GENOVA, "user"), null);
-		createUser(identityService, "buscar", "Cele", "Born", "prova",
+		createUser(identityService, "buscar", "Cele", "Born", "vulit",
 				"celeborn@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(SOCIETA_DI_TRASPORTO, "user"), null);
-		createUser(identityService, "trambus", "Dene", "Thor", "prova",
+		createUser(identityService, "trambus", "Dene", "Thor", "vulit",
 				"denethor@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(SOCIETA_DI_TRASPORTO, "user"), null);
-		createUser(identityService, "4006944", "Camillo", "Cinque", "prova",
+		createUser(identityService, "4006944", "Camillo", "Cinque", "vulit",
 				"camillo.cinque@vige.it",
 				"org/activiti/explorer/images/kermit.jpg",
 				asList(SOCIETA_DI_TRASPORTO, "user"), null);
 		createUser(identityService, "trasportatoreautonomo1", "Tra",
-				"Sportatore", "prova", "trasportatoreautonomo1@vige.it",
+				"Sportatore", "vulit", "trasportatoreautonomo1@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(TRASPORTATORE_AUTONOMO, AUTISTA, "user"), null);
 		createUser(identityService, "trasportatoreautonomo2", "Traspor",
-				"Tatore", "prova", "trasportatoreautonomo2@vige.it",
+				"Tatore", "vulit", "trasportatoreautonomo2@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(TRASPORTATORE_AUTONOMO, AUTISTA, "user"), null);
 		createUser(identityService, "trasportatoreautonomo3", "Trasportato",
-				"Re", "prova", "trasportatoreautonomo3@vige.it",
+				"Re", "vulit", "trasportatoreautonomo3@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(TRASPORTATORE_AUTONOMO, AUTISTA, "user"), null);
 		createUser(identityService, "autista1", "Auti", "Sta", "psw1",
 				"autista1@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista2", "Au", "Tista", "prova",
+		createUser(identityService, "autista2", "Au", "Tista", "vulit",
 				"autista2@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista3", "Au3", "Tista3", "prova",
+		createUser(identityService, "autista3", "Au3", "Tista3", "vulit",
 				"autista3@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista4", "Au4", "Tista4", "prova",
+		createUser(identityService, "autista4", "Au4", "Tista4", "vulit",
 				"autista4@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista5", "Au5", "Tista5", "prova",
+		createUser(identityService, "autista5", "Au5", "Tista5", "vulit",
 				"autista5@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista6", "Au6", "Tista6", "prova",
+		createUser(identityService, "autista6", "Au6", "Tista6", "vulit",
 				"autista6@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista7", "Au7", "Tista7", "prova",
+		createUser(identityService, "autista7", "Au7", "Tista7", "vulit",
 				"autista7@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "autista8", "Au8", "Tista8", "prova",
+		createUser(identityService, "autista8", "Au8", "Tista8", "vulit",
 				"autista8@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
-		createUser(identityService, "enzo1", "Enzo", "Contini", "contini",
-				"enzo.contini@vige.it",
+		createUser(identityService, "enzo1", "Walter", "Conti", "conti",
+				"walter.conti@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
 				asList(AUTISTA, "user"), null);
 	}

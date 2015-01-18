@@ -150,7 +150,7 @@ public class TestTAP {
 		bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(
 				APPLICATION_JSON);
 		RichiestaPosizioneVeicolo richiestaPosizioneVeicolo = new RichiestaPosizioneVeicolo();
-		richiestaPosizioneVeicolo.setTarga("EL178YP");
+		richiestaPosizioneVeicolo.setTarga("EL818YP");
 		String response = bldr.post(
 				entity(richiestaPosizioneVeicolo, APPLICATION_JSON),
 				String.class);
@@ -162,7 +162,7 @@ public class TestTAP {
 		bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(
 				APPLICATION_JSON);
 		richiestaPosizioneVeicolo = new RichiestaPosizioneVeicolo();
-		richiestaPosizioneVeicolo.setTarga("EL178YP");
+		richiestaPosizioneVeicolo.setTarga("EL818YP");
 		response = bldr.post(
 				entity(richiestaPosizioneVeicolo, APPLICATION_JSON),
 				String.class);
