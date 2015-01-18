@@ -2,6 +2,7 @@
 .settings
 .classpath
 .checkstyle
+.metadata
 .externalToolBuilders
 .xml
 .log
