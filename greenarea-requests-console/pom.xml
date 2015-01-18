@@ -10,8 +10,8 @@
 
 	<artifactId>greenarea-requests-console</artifactId>
 	<packaging>war</packaging>
-	<name>Greenarea - Richieste Console</name>
-	<description>Greenarea - Richieste Console</description>
+	<name>Greenarea - Requests Console</name>
+	<description>Greenarea - Requests Console</description>
 
 	<build>
 		<finalName>greenarea-requests-console</finalName>

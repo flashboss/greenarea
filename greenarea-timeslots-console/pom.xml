@@ -10,8 +10,8 @@
 
 	<artifactId>greenarea-timeslots-console</artifactId>
 	<packaging>war</packaging>
-	<name>Greenarea - Fasce Orarie Admin Console</name>
-	<description>Greenarea - Fasce Orarie simple Web App</description>
+	<name>Greenarea - Timeslots Admin Console</name>
+	<description>Greenarea - Timeslots simple Web App</description>
 
 	<build>
 		<finalName>greenarea-timeslots-console</finalName>
