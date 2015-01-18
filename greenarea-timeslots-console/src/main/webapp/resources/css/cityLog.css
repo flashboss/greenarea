@@ -1,0 +1,197 @@
+/* 
+    Document   : citiLog
+    Created on : 24-gen-2012, 12.09.46
+    Author     : 
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+
+/* CSS Document */
+
+h4{
+    text-align: center;
+    text-indent: 4px;
+    font-family:"Century Gothic";
+    font-size:14px;
+    font-weight:normal;
+    color: #fffefc;
+    line-height:25px;
+}
+
+h3 {
+
+    font-family:"Century Gothic";
+    font-size:14px;
+    color:#FFF;
+    font-weight:normal;
+    height:28px;
+    padding-left:7px;
+    line-height:25px;
+
+}
+
+h1 {
+
+    font-family: "Lucida Grande";
+    font-size:25px;
+    color:#4f4f50; 
+    font-weight:bold;    
+    text-align: left;
+}
+
+parSettati {
+
+    font-family: "Lucida Grande";
+    font-size:20px;
+    color:#4f4f50; 
+    font-weight:bold;    
+    text-align: left;
+}
+
+
+settati {
+
+    font-family: "Lucida Grande";
+    font-size:18px;
+    color: #4f4f50;
+    font-weight:bold;    
+    text-align: left;
+    padding-left: 10px;
+}
+
+h2 {
+    font-family:"Century Gothic";
+    font-size:21px;
+    color:#fff;
+    font-weight:normal;
+    line-height:21px;
+    padding-left:5px;
+    padding-bottom:10px;
+    margin:0;
+}
+h5 {
+
+    font-family:"Century Gothic";
+    font-size:14px;
+    color:#FFF;
+    font-weight:bold;
+    height:28px;
+    width:690px;
+    padding-left:7px;
+    padding-top:5px;
+}
+
+.titoli{
+    font-family:"Century Gothic";
+    font-size:18px;
+    color:#FFF;
+    font-weight:normal;
+    height:28px;
+    padding-left:7px;
+    line-height:25px;
+
+}
+
+fontConfigurazioni {
+
+    font-family: "Lucida Grande";
+    font-size:15px;
+    color: #4f4f50;
+    font-weight:bold;
+}
+
+fontRichieste {
+
+    font-family: "Lucida Grande";
+    font-size:17px;
+    color: #4f4f50;
+    font-weight:bold;
+}
+
+
+
+fontBenvenuto {
+
+    font-family: "Lucida Grande";
+    font-size:25px;
+    color: #e2001a;
+    font-weight:bold;    
+}
+
+fontTitoloSezioni {
+
+    font-family: "Lucida Grande";
+    font-size:25px;
+    color: #e2001a;
+    font-weight:bold;    
+}
+
+
+
+body {
+    font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+
+    text-align:center;
+    background: white no-repeat;
+}
+
+#container{
+    width: 1000px;
+    height: 800px;
+    background: #fffeff;
+    margin: auto auto;
+    border-style: solid;
+    border-color:#C0C0C0;
+}
+#subcontainerTop{
+    width: 100%;
+    height:20%;
+    background-color: #fffeff;
+}
+#subcontainerCenterUp{
+
+    width: 100%;
+    height:6%;
+    background-color: #fffeff;
+    border-top-style: solid;
+    border-top-color:#C0C0C0;
+    border-bottom-style: solid;
+    border-bottom-color:#C0C0C0;
+}
+
+#subcontainerCenterDown{
+
+    width: 90%;
+    height:68%;
+    background-color: #fffeff;
+    padding: 20px;
+}
+
+#subcontainerDown{
+    width:100%;
+    height:6%;
+    background-color: #fffeff;
+    border-top-style: solid;
+    border-top-color:#C0C0C0;
+}
+
+#topLeft{
+	width:60%;
+        height:100%;
+	float: left;
+        overflow: hidden;
+        margin: 0;
+}
+
+#topRight{
+	width:35%;
+        height:100%;
+	float: right;
+}

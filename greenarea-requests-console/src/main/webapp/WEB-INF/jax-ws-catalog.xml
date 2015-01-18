@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://192.168.112.10:47453/SGOTserver/ShippingOrderManager?wsdl" uri="wsdl/192.168.112.10_47453/SGOTserver/ShippingOrderManager.wsdl"/>
+    <system systemId="http://192.168.112.10:47453/SGOTserver/ShippingOrderManager?xsd=1" uri="wsdl/192.168.112.10_47453/SGOTserver/ShippingOrderManager.xsd_1.xsd"/>
+    <system systemId="http://163.162.24.76/SGOTserver/ShippingOrderManager?wsdl" uri="wsdl/163.162.24.76/SGOTserver/ShippingOrderManager.wsdl"/>
+    <system systemId="http://163.162.24.76:80/SGOTserver/ShippingOrderManager?xsd=1" uri="wsdl/163.162.24.76_80/SGOTserver/ShippingOrderManager.xsd_1.xsd"/>
+    <system systemId="http://192.168.112.10:47453/SGOTserver/SGOTadminService?wsdl" uri="wsdl/192.168.112.10_47453/SGOTserver/SGOTadminService.wsdl"/>
+    <system systemId="http://192.168.112.10:47453/SGOTserver/SGOTadminService?xsd=1" uri="wsdl/192.168.112.10_47453/SGOTserver/SGOTadminService.xsd_1.xsd"/>
+    <system systemId="http://163.162.24.76:80/SGOTserver/SGOTadminService?wsdl" uri="wsdl/163.162.24.76_80/SGOTserver/SGOTadminService.wsdl"/>
+    <system systemId="http://163.162.24.76/SGOTserver/SGOTadminService?wsdl" uri="wsdl/163.162.24.76/SGOTserver/SGOTadminService.wsdl"/>
+    <system systemId="http://163.162.24.76:80/SGOTserver/SGOTadminService?xsd=1" uri="wsdl/163.162.24.76_80/SGOTserver/SGOTadminService.xsd_1.xsd"/>
+    <system systemId="http://163.162.24.76/SGRLserver/LogisticNetworkRouting?wsdl" uri="wsdl/163.162.24.76/SGRLserver/LogisticNetworkRouting.wsdl"/>
+    <system systemId="http://163.162.24.76:80/SGRLserver/LogisticNetworkRouting?xsd=1" uri="wsdl/163.162.24.76_80/SGRLserver/LogisticNetworkRouting.xsd_1.xsd"/>
+</catalog>

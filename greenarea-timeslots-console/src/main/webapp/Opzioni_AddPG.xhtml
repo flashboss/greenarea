@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/css/cityLog.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{messages.fasceorarie_greenarea}</title>
+</h:head>
+<h:body>
+	<div id="container">
+		<div id="subcontainerTop">
+			<div id="topLeft">
+				<ui:include src="/DivTopLeft.xhtml" />
+			</div>
+			<div id="topRight">
+				<ui:include src="/DivTopRight.xhtml" />
+			</div>
+		</div>
+		<div id="subcontainerCenterUp">
+			<ui:include src="/Barra.xhtml" />
+		</div>
+		<div id="subcontainerCenterDown">
+
+			<f:view>
+				<h:form>
+					<p:panelGrid style="font-size:12px; width: 40%" columns="2">
+						<f:facet name="header">  
+                                #{messages.fasceorarie_inserisci_valori_nuovo_parametro}
+                            </f:facet>
+						<h:outputLabel value="#{messages.fasceorarie_nome_question}"
+							for="namePG" />
+						<h:inputText id="namePG" value="#{opzioniBean.namePG}"
+							title="NamePG" />
+						<h:outputLabel value="#{messages.fasceorarie_tipologia_question}"
+							for="typePG" />
+						<h:selectOneMenu id="typePG" value="#{opzioniBean.typePG}"
+							title="typePG">
+							<f:selectItems value="#{opzioniBean.tipologiaParametri}" />
+						</h:selectOneMenu>
+						<h:outputLabel
+							value="#{messages.fasceorarie_unita_di_misura_question}"
+							for="measureUnit" />
+						<h:inputText id="measureUnit" value="#{opzioniBean.measureUnit}"
+							title="MeasureUnit" />
+						<h:outputLabel
+							value="#{messages.fasceorarie_descrizione_question}"
+							for="description" />
+						<h:inputText id="description" value="#{opzioniBean.description}"
+							title="Description" />
+					</p:panelGrid>
+					<h:commandButton id="Aggiungi"
+						value="#{messages.fasceorarie_crea_parametro}"
+						onclick="alert('#{messages.fasceorarie_parametro_creato_correttamente}')"
+						action="#{opzioniBean.addParameterGen()}" />
+				</h:form>
+			</f:view>
+		</div>
+		<div id="subcontainerDown">
+			<ui:include src="SubContainerDown.xhtml" />
+		</div>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:tabView widgetVar="tabViewWidget" activeIndex="#{tabPanelController.tabViewCurrentIndex}">
+
+            <p:tab id="orderList" title="#{bundle.OrderListTitle}" >
+                <h:form>
+                    <p:growl id="growl" showDetail="true"/>
+                    <p:dataTable id="orderTable" value="#{sgapl_controller.orderList}" var="order" rowIndexVar="orderIndex" paginator="true" rows="2" >                        
+                        <p:column style="width:4%">  
+                            <p:rowToggler />  
+                        </p:column>
+                        <p:rowExpansion>
+                            <h:panelGrid  columns="2" >
+                                <h:outputText value="#{bundle.OrderListDetailsTermini}"/>
+                                <h:outputText value="#{order.terminiDiConsegna}"/>
+                                <h:outputText value="#{bundle.OrderListDetailsNote}"/>
+                                <h:outputText value="#{order.note}"/>
+                            </h:panelGrid>   
+                            <p:dataTable value="#{order.shippingItems}" var="shItem">
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabItemID}</f:facet>
+                                    <h:outputText value="#{shItem.itemID}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabItemDesc}</f:facet>
+                                    <h:outputText value="#{shItem.descrizione}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabAttrib}</f:facet>
+                                    <h:outputText value="#{shItem.attributi}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:rowExpansion>  
+                        <p:column>
+                            <f:facet name="header">#{bundle.OrderListDetailsTitle}</f:facet>
+                            <h:outputText value="#{order.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Stato</f:facet>  
+                            <h:outputText value="#{order.orderDetails.stato}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.OrderListTableFrom}</f:facet>  
+                            <h:outputText value="#{order.fromName}: #{order.fromAddressString}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.OrderListTableTo}</f:facet>  
+                            <h:outputText value="#{order.toName}: #{order.toAddressString}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.OrderListTableCommand}</f:facet>  
+                            <p:commandButton rendered="#{order.id == ''}" value="#{bundle.OrderListButtonEstimate}" action="#"  ajax="false"/>
+                            <p:commandButton rendered="#{order.id == ''}" value="#{bundle.OrderListButtonRequest}" action="#{sgoConsoleController.requestOrder()}"  ajax="false"/>
+                            <p:commandButton rendered="#{sgoConsoleController.suspended}" value="#{bundle.OrderListButtonDrop}" action="#{sgoConsoleController.dropOrder()}"  ajax="false"/>
+                            <p:commandButton rendered="#{sgoConsoleController.suspended}" value="#{bundle.OrderListButtonConfirm}" action="#{sgoConsoleController.confirmOrder()}"  ajax="false"/>
+                            <p:commandButton rendered="#{sgoConsoleController.ready || sgoConsoleController.onDelivery}" value="#{bundle.OrderListButtonLocate}" action="#"  ajax="false"/>
+                            <p:commandButton rendered="#{order.id == ''}" value="remove" action="#{sgoConsoleController.removeOrder()}"  ajax="false">
+                            </p:commandButton>
+
+
+                        </p:column> 
+                    </p:dataTable>
+                    <p:commandButton value="LoadSGOdb" action="#{sgapl_controller.loadOrders()}"  ajax="false">
+                    </p:commandButton> 
+                </h:form>
+            </p:tab>
+            <p:tab id="newOrder" title="#{bundle.NewOrderTitle}" >
+                <h:form>
+                    <p:wizard backLabel="#{bundle.wizardBack}" nextLabel="#{bundle.wizardNext}">
+                        <p:tab title="#{bundle.newOrderTabFromTitle}" id="tabFrom">
+                            <h:panelGrid columns="2" style="height:auto">
+                                <h:outputText value="#{bundle.newOrderTabFromName}" />  
+                                <p:inputText value="#{newOrderController.newOrderForm.fromName}"/>
+                                <h:outputText value="#{bundle.newOrderTabFromStreet}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.fromAddress.street}"/>
+                                <h:outputText value="#{bundle.newOrderTabFromNum}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.fromAddress.number}"/>
+                                <h:outputText value="#{bundle.newOrderTabFromCity}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.fromAddress.city}"/>
+
+                                <h:outputText value="#{bundle.newOrderTabFromProvince}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.fromAddress.province}"/>
+                                <h:outputText value="#{bundle.newOrderTabFromZip}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.fromAddress.zipCode}"/>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="#{bundle.newOrderTabToTitle}" id="tabTO">
+                            <h:panelGrid columns="2" style="height:auto">
+                                <h:outputText value="#{bundle.newOrderTabToName}" />  
+                                <p:inputText value="#{newOrderController.newOrderForm.toName}"/>
+                                <h:outputText value="#{bundle.newOrderTabToStreet}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.toAddress.street}"/>
+                                <h:outputText value="#{bundle.newOrderTabToNum}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.toAddress.number}"/>
+                                <h:outputText value="#{bundle.newOrderTabToCity}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.toAddress.city}"/>
+                                <h:outputText value="#{bundle.newOrderTabToProvince}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.toAddress.province}"/>
+                                <h:outputText value="#{bundle.newOrderTabToZip}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.toAddress.zipCode}"/>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="#{bundle.newOrderTabOrderTitle}" id="tabOrder">
+                            <h:panelGrid columns="2" style="vertical-align: text-top">
+                                <h:outputText value="#{bundle.newOrderTabOrdineClientAccount}" />  
+                                <p:inputText value="#{newOrderController.newOrderForm.clientAccountName}" required="true" requiredMessage="Il nome del client account e' obbligatorio"/>
+                                <h:outputText value="#{bundle.newOrderTabOrdineNote}" />
+                                <p:inputText value="#{newOrderController.newOrderForm.note}"/>
+                                <h:outputText value="#{bundle.newOrderTabOrdineTermini}" />
+
+                                <p:dataTable id="termTable" rowIndexVar="termIndex" value="#{newOrderController.termList}" rowKey="#{termID.index}"
+                                             var="termID" editable="true" 
+                                             selection="#{newOrderController.currentTerm}" >
+
+                                    <p:column selectionMode="single" />  
+                                    
+                                    <p:column headerText="Edit">  
+                                        <p:rowEditor />  
+                                    </p:column> 
+                                    <p:column >
+                                        <f:facet name="header">#{bundle.newOrderTabOrdineTerminiKey}</f:facet>
+                                        <p:cellEditor >
+                                            <f:facet name="output">
+                                                <h:outputText value="#{termID.key}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <h:inputText value="#{termID.key}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">#{bundle.newOrderTabOrdineTerminiValue}</f:facet>
+
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <h:outputText value="#{termID.val}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <h:inputText value="#{termID.val}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <f:facet name="footer">  
+                                        <p:commandButton value="AddTermID" action="#{newOrderController.addTerm()}"  ajax="false">
+                                        </p:commandButton>
+                                        <p:commandButton value="removeTermID" action="#{newOrderController.removeTerm()}"  ajax="false">
+                                        </p:commandButton>
+
+                                    </f:facet> 
+
+                                </p:dataTable>
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="#{bundle.newOrderTabItemTitle}" id="tabItems">
+                            <p:dataTable value="#{newOrderController.newOrderForm.shippingItems}" var="item" >
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabItemID}</f:facet>
+                                    <h:outputText value="#{item.itemID}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabItemID}</f:facet>
+                                    <h:outputText value="#{item.descrizione}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">#{bundle.newOrderTabAttrib}</f:facet>
+                                    <h:outputText value="#{item.attributi}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                            <h:panelGrid id="itemList" columns="2" >
+                                <h:outputText value="ID" />  
+                                <p:inputText value="#{newOrderController.newItem.itemID}" required="#{newOrderController.newOrderForm.shippingItems.size()==0}"/>
+                                <h:outputText value="Descrizione" />
+                                <p:inputText value="#{newOrderController.newItem.descrizione}"/>
+                                <h:outputText value="Attributi" />
+
+                                <p:dataTable value="#{newOrderController.newItem.attributi}" var="attr">
+                                    <p:column>
+                                        <f:facet name="header">#{bundle.newOrderTabOrdineTerminiKey}</f:facet>
+                                        <h:outputText value="#{attr.key}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">#{bundle.newOrderTabOrdineTerminiValue}</f:facet>
+                                        <h:outputText value="#{attr.val}"/>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <h:panelGrid id="attribList" columns="2" >
+                                    <h:outputText value="Key" />  
+                                    <p:inputText value="#{newOrderController.newAttrib.key}"/>
+                                    <h:outputText value="value" />
+                                    <p:inputText value="#{newOrderController.newAttrib.val}"/>
+
+                                </h:panelGrid>
+                                <p:commandButton value="AddAttr" action="#{newOrderController.addAttrib()}"  ajax="false">
+                                </p:commandButton>
+
+
+                            </h:panelGrid>
+                            <p:commandButton value="AddItem" action="#{newOrderController.addItem()}" ajax="false">
+
+                            </p:commandButton>
+                        </p:tab>
+
+                        <p:tab title="Confirmation" id="tabConfirm">
+                            <p:panel header="confirm">
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Mittente: " />  
+                                    <h:outputText value="#{newOrderController.newOrderForm.fromName}"/>
+                                    <h:outputText value="Via" />
+                                    <h:outputText value="#{newOrderController.newOrderForm.fromAddress.street}, 
+                                                  #{newOrderController.newOrderForm.fromAddress.number}" />
+                                    <h:outputText value="citta'" />
+                                    <h:outputText value="#{newOrderController.newOrderForm.fromAddress.zipCode} -
+                                                  #{newOrderController.newOrderForm.fromAddress.city}"/>
+                                    <h:outputText value="Desinatario " />  
+                                    <h:outputText value="#{newOrderController.newOrderForm.toName}"/>
+                                    <h:outputText value="Via" />
+                                    <h:outputText value="#{newOrderController.newOrderForm.toAddress.street},
+                                                  #{newOrderController.newOrderForm.toAddress.number}"/>
+                                    <h:outputText value="citta'" />
+                                    <h:outputText value="#{newOrderController.newOrderForm.toAddress.zipCode} -
+                                                  #{newOrderController.newOrderForm.toAddress.city}"/>
+                                </h:panelGrid>
+                                <p:commandButton value="Submit"  action="#{newOrderController.addOrder()}" ajax="false"/>
+                            </p:panel>                            
+                        </p:tab>
+                    </p:wizard>
+
+                </h:form>
+            </p:tab>
+            <p:tab id="GATconsole" title="#{bundle.GATconsoleTitle}">
+                <h:form>
+                    <p:dataTable  value="#{sgapl_controller.transportList}" var="transport" id="GatTable">
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableID}</f:facet>  
+                            <h:outputText value="#{transport.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableOrder}</f:facet>  
+                            <h:outputText value="#{transport.orderID}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableStatus}</f:facet>  
+                            <h:outputText value="#{transport.status}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableVector}</f:facet>  
+                            <h:outputText value="#{transport.vettore}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableSite}</f:facet>  
+                            <h:outputText value="#{transport.exchengeSite}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.TransportListTableCommand}</f:facet>  
+                            <p:commandButton rendered="#{gATconsoleController.transportReady}" value="#{bundle.TransportListButtonStart}" action="#{gATconsoleController.startTransport()}"  ajax="false"/>
+                            <p:commandButton rendered="#{gATconsoleController.transportOnDelivery}" value="#{bundle.TransportListButtonDone}" action="#{gATconsoleController.doneTransport()}"  ajax="false"/>
+                            <p:commandButton rendered="#{gATconsoleController.transportOnDelivery}" value="#{bundle.TransportListButtonReject}" action="#{gATconsoleController.rejectTransport()}"  ajax="false"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form>
+
+
+
+            </p:tab>
+        </p:tabView>
+        
+        <p:outputPanel autoUpdate="true">
+            
+            <h:outputText value="#{monitorController.sb}" escape="false"></h:outputText>
+        </p:outputPanel>  
+       
+    </h:body>
+</html>

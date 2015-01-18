@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14023974857110" configfile="/urbelog-cl-admin/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="AddTSStep1.xhtml" x="338" y="1351" id="pf14023975273871" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf14023975273882" inlinks="pf14023975273883 pf14023975273884" path="/AddTSStep1.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AddTSStep2.xhtml" x="554" y="199" id="pf14023975273895" referenceLink="//@navigationRule.15/@fromViewId|" outlinks="pf14023975273896 pf14023975273897" inlinks="pf14023975273882" path="/AddTSStep2.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="TimeSlot.xhtml" x="122" y="583" id="pf14023975273898" referenceLink="//@navigationRule.20/@navigationCase.0/@toViewId|" outlinks="pf14023975273899 pf14023975273883 pf14023975273884 pf140239752738910 pf140239752738911" inlinks="pf140239752738912 pf140239752738913 pf140239752738914" path="/TimeSlot.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DettaglioTS.xhtml" x="338" y="199" id="pf140239752738915" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf140239752738912" inlinks="pf14023975273899" path="/DettaglioTS.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Storico.xhtml" x="122" y="1927" id="pf140239752738916" referenceLink="//@navigationRule.9/@fromViewId|" outlinks="pf140239752738917 pf140239752738918" path="/Storico.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DettaglioStorico.xhtml" x="338" y="1735" id="pf140239752738919" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf140239752738917" path="/DettaglioStorico.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DaProcessare.xhtml" x="122" y="3079" id="pf140239752738920" referenceLink="//@navigationRule.8/@fromViewId|" outlinks="pf140239752738921 pf140239752738922" path="/DaProcessare.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DaProcessare_Richieste.xhtml" x="338" y="2887" id="pf140239752738923" referenceLink="//@navigationRule.7/@fromViewId|" outlinks="pf140239752738924" inlinks="pf140239752738921" path="/DaProcessare_Richieste.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DaProcessare_Richieste_Dettaglio.xhtml" x="554" y="2887" id="pf140239752738925" referenceLink="//@navigationRule.7/@navigationCase.0/@toViewId|" inlinks="pf140239752738924" path="/DaProcessare_Richieste_Dettaglio.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="DaProcessare_Simulazione.xhtml" x="338" y="3271" id="pf140239752738926" referenceLink="//@navigationRule.8/@navigationCase.0/@toViewId|" inlinks="pf140239752738922" path="/DaProcessare_Simulazione.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Storico_Dettaglio.xhtml" x="338" y="2119" id="pf140239752738927" referenceLink="//@navigationRule.9/@navigationCase.0/@toViewId|" inlinks="pf140239752738918" path="/Storico_Dettaglio.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="TimeSlot_Dettaglio.xhtml" x="338" y="583" id="pf140239752739028" referenceLink="//@navigationRule.10/@navigationCase.0/@toViewId|" inlinks="pf140239752738910" path="/TimeSlot_Dettaglio.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AddTSStep3.xhtml" x="770" y="583" id="pf140239752739029" referenceLink="//@navigationRule.13/@navigationCase.0/@toViewId|" outlinks="pf140239752739030" inlinks="pf14023975273896 pf140239752739031" path="/AddTSStep3.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AddTSStep2_1.xhtml" x="554" y="583" id="pf140239752739032" referenceLink="//@navigationRule.14/@fromViewId|" outlinks="pf140239752739031 pf140239752739033" inlinks="pf140239752739030" path="/AddTSStep2_1.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="AddTSStep4.xhtml" x="770" y="193" id="pf140239752739034" referenceLink="//@navigationRule.16/@fromViewId|" outlinks="pf140239752738913" inlinks="pf140239752739033 pf14023975273897" path="/AddTSStep4.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Opzioni.xhtml" x="338" y="2503" id="pf140239752739035" referenceLink="//@navigationRule.18/@navigationCase.0/@toViewId|" outlinks="pf140239752739036" inlinks="pf140239752739037" path="/Opzioni.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="Opzioni_AddPG.xhtml" x="122" y="2503" id="pf140239752739038" referenceLink="//@navigationRule.18/@fromViewId|" outlinks="pf140239752739037" inlinks="pf140239752739036" path="/Opzioni_AddPG.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="TimeSlot_Visualizza.xhtml" x="338" y="967" id="pf140239752739039" referenceLink="//@navigationRule.20/@fromViewId|" outlinks="pf140239752738914" inlinks="pf140239752738911" path="/TimeSlot_Visualizza.xhtml"/>
+  <links id="pf14023975273882" target="pf14023975273895" source="pf14023975273871" fromaction="#{addTimeSlotBean.createTimeSlot()}"/>
+  <links id="pf14023975273899" target="pf140239752738915" source="pf14023975273898" outcome="DETTAGLIO"/>
+  <links id="pf14023975273883" target="pf14023975273871" source="pf14023975273898" outcome="STEP1"/>
+  <links id="pf140239752738917" target="pf140239752738919" source="pf140239752738916" outcome="DETTAGLIO"/>
+  <links id="pf14023975273884" target="pf14023975273871" source="pf14023975273898" outcome="STEP1"/>
+  <links id="pf140239752738912" target="pf14023975273898" source="pf140239752738915" outcome="LISTA"/>
+  <links id="pf140239752738921" target="pf140239752738923" source="pf140239752738920" fromaction="#{daProcessareBean.daProcessare_BottoneRichieste(item.timeSlot, item.idTimeSlot)}"/>
+  <links id="pf140239752738924" target="pf140239752738925" source="pf140239752738923" fromaction="#{daProcessareBean.daProcessare_Richieste_BottoneDettaglio(item.idMission)}"/>
+  <links id="pf140239752738922" target="pf140239752738926" source="pf140239752738920" fromaction="#{daProcessareBean.daProcessare_BottoneSimulazione(item.timeSlot, item.idTimeSlot)}"/>
+  <links id="pf140239752738918" target="pf140239752738927" source="pf140239752738916" fromaction="#{storicoBean.storico_BottoneDettaglio(item.dateMission, item.idTimeSlot)}"/>
+  <links id="pf140239752738910" target="pf140239752739028" source="pf14023975273898" outcome="TIMESLOT_DETTAGLIO"/>
+  <links id="pf14023975273896" target="pf140239752739029" source="pf14023975273895" fromaction="#{addTimeSlotBean.addTSStep2_BottoneSetta(item.idPG)}"/>
+  <links id="pf140239752739030" target="pf140239752739032" source="pf140239752739029" fromaction="#{addTimeSlotBean.createParameterTS()}"/>
+  <links id="pf140239752739031" target="pf140239752739029" source="pf140239752739032" fromaction="#{addTimeSlotBean.addTSStep2_BottoneSetta(item.idPG)}"/>
+  <links id="pf140239752739033" target="pf140239752739034" source="pf140239752739032" outcome="STEP4"/>
+  <links id="pf14023975273897" target="pf140239752739034" source="pf14023975273895" outcome="STEP4"/>
+  <links id="pf140239752738913" target="pf14023975273898" source="pf140239752739034" fromaction="#{addTimeSlotBean.createPrice()}"/>
+  <links id="pf140239752739036" target="pf140239752739038" source="pf140239752739035" outcome="AGGPG"/>
+  <links id="pf140239752739037" target="pf140239752739035" source="pf140239752739038" fromaction="#{opzioniBean.addParameterGen()}"/>
+  <links id="pf140239752738911" target="pf140239752739039" source="pf14023975273898" fromaction="#{timeSlotBean.timeSlot_BottoneVisualizza(item.idTS)}"/>
+  <links id="pf140239752738914" target="pf14023975273898" source="pf140239752739039" outcome="TORNATS"/>
+</pageflow:Pageflow>

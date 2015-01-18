@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="testSGRLform">
+        <p:growl id="growl" showDetail="true"/>
+
+        <p:panelGrid columns="2">
+            <p:tab title="#{bundle.SgrlTestTitle}" id="tabFrom">
+                <h:panelGrid title="#{bundle.sgrlTestTabFromTitle}" columns="2" style="height:auto; border-color:transparent"> 
+                    <h:outputText value="Indirizzo " /><h:outputText value="Mittente " />
+                    <h:outputText value="#{bundle.sgrlTestTabFromStreet}" />
+                    <p:inputText id="from_street" value="#{testSGRLController.fromLoc.street}"/>
+                    <p:watermark for="from_street" value="Street Address *" />
+                    <p:message for="from_street" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromNum}" />
+                    <p:inputText id="from_number" value="#{testSGRLController.fromLoc.number}" 
+                                 validatorMessage="Invalid number format">
+                        <f:validateRegex pattern="^([1-9]*)$" />
+                    </p:inputText>
+                    <p:watermark for="from_number" value="Number Address *" />
+                    <p:message for="from_number" />
+
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromCity}" />
+                    <p:inputText id="from_city" value="#{testSGRLController.fromLoc.city}"
+                                 />
+                    <p:watermark for="from_city" value="City *" />
+                    <p:message for="from_city" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromProvince}" />
+                    <p:inputText id="from_prov" value="#{testSGRLController.fromLoc.adminAreaLevel2}"/>
+                    <p:watermark for="from_prov" value="Province *" />
+                    <p:message for="from_prov" />
+
+                    <h:outputText value="Regione" />
+                    <p:inputText id="from_reg" value="#{testSGRLController.fromLoc.adminAreaLevel1}"/>
+                    <p:watermark for="from_reg" value="Regione *" />
+                    <p:message for="from_reg" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromZip}" />
+                    <p:inputText id="from_zip" value="#{testSGRLController.fromLoc.zipCode}">
+
+                    </p:inputText>
+                    <p:watermark for="from_zip" value="Zip code *" />
+                    <p:message for="from_zip" />
+
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="#{bundle.sgrlTestTabToTitle}" id="tabTO">
+                <h:panelGrid title="#{bundle.sgrlTestTabToTitle}" columns="2" style="height:auto; border-color:transparent">
+                    <h:outputText value="Indirizzo " /><h:outputText value="Destinatario " />
+                    <h:outputText value="#{bundle.sgrlTestTabToStreet}" />
+                    <p:inputText id="to_street" value="#{testSGRLController.toLoc.street}"/>
+                    <p:watermark for="to_street" value="Street Address *" />
+                    <p:message for="to_street" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabToNum}" />
+                    <p:inputText id="to_number" value="#{testSGRLController.toLoc.number}" 
+                                 validatorMessage="Invalid number format">
+                        <f:validateRegex pattern="^([1-9]*)$" />
+
+                    </p:inputText>
+                    <p:watermark for="to_number" value="Number Address *" />
+                    <p:message for="to_number" />
+
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromCity}" />
+                    <p:inputText id="to_city" value="#{testSGRLController.toLoc.city}"
+                                 />
+                    <p:watermark for="to_city" value="City *" />
+                    <p:message for="to_city" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromProvince}" />
+                    <p:inputText id="to_prov" value="#{testSGRLController.toLoc.adminAreaLevel2}"/>
+                    <p:watermark for="to_prov" value="Province *" />
+                    <p:message for="to_prov" />
+
+                    <h:outputText value="Regione" />
+                    <p:inputText id="to_reg" value="#{testSGRLController.toLoc.adminAreaLevel1}"/>
+                    <p:watermark for="to_reg" value="Regione *" />
+                    <p:message for="to_reg" />
+
+                    <h:outputText value="#{bundle.sgrlTestTabFromZip}" />
+                    <p:inputText id="to_zip" value="#{testSGRLController.toLoc.zipCode}" validatorMessage="Invalid zip format">
+                        <f:validateRegex pattern="^([0-9]{5})$|^$"/>
+                    </p:inputText>
+                    <p:watermark for="to_zip" value="Zip code *" />
+                    <p:message for="to_zip" />
+
+                </h:panelGrid>
+            </p:tab>
+        </p:panelGrid>
+
+
+        <p:commandButton value="Submit"  action="#{testSGRLController.testSGRL()}" ajax="false"/>
+        <p:commandButton value="Reset"  action="#{testSGRLController.resetForm()}" ajax="false"/>
+
+    </h:form>
+</html>
+

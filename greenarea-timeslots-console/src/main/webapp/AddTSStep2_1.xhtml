@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/css/cityLog.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{messages.fasceorarie_greenarea}</title>
+</h:head>
+<h:body>
+	<div id="container">
+		<div id="subcontainerTop">
+			<div id="topLeft">
+				<ui:include src="/DivTopLeft.xhtml" />
+			</div>
+			<div id="topRight">
+				<ui:include src="/DivTopRight.xhtml" />
+			</div>
+		</div>
+		<div id="subcontainerCenterUp">
+			<ui:include src="/Barra.xhtml" />
+		</div>
+		<div id="subcontainerCenterDown">
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="#{messages.fasceorarie_creazione23}" />
+					</h1>
+					<p:dataTable style="font-size:12px; width: 70%"
+						value="#{addTimeSlotBean.parametriTrue()}" var="item"
+						paginatorAlwaysVisible="false" paginator="true" rows="3">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_nome}" />
+							</f:facet>
+							<h:outputText value="#{item.namePG}" id="namePG" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_tipologia}" />
+							</f:facet>
+							<h:outputText value="#{item.tipologiaParGen()}" id="typePG" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_descrizione}" />
+							</f:facet>
+							<h:outputText value="#{item.description}" id="description" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_unita_di_misura}" />
+							</f:facet>
+							<h:outputText value="#{item.measureUnit}" id="measureUnit" />
+						</p:column>
+						<p:column>
+							<h:commandButton id="Setta" value="#{messages.fasceorarie_setta}"
+								action="#{addTimeSlotBean.addTSStep2_BottoneSetta(item.idPG)}" />
+						</p:column>
+					</p:dataTable>
+
+					<h:form>
+						<h1>
+							<h:outputText value="#{messages.fasceorarie_parametri_settati}" />
+						</h1>
+						<p:dataTable style="font-size:12px; width: 50%; padding: 5"
+							value="#{addTimeSlotBean.listaParTS()}" var="item"
+							paginatorAlwaysVisible="false" paginator="true" rows="3">
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{messages.fasceorarie_nome}" />
+								</f:facet>
+								<h:outputText value="#{item.parGen.namePG}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{messages.fasceorarie_range}" />
+								</f:facet>
+								<h:outputText value="[#{item.minVal} - #{item.maxVal}]" />
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{messages.fasceorarie_peso}" />
+								</f:facet>
+								<h:outputText value="#{item.pesoParameterTS()}" />
+							</p:column>
+						</p:dataTable>
+						<h:commandButton id="Avanti"
+							value="#{messages.fasceorarie_avanti}" action="STEP4" />
+
+					</h:form>
+
+				</h:form>
+			</f:view>
+
+		</div>
+		<div id="subcontainerDown">
+			<ui:include src="SubContainerDown.xhtml" />
+		</div>
+	</div>
+</h:body>
+</html>

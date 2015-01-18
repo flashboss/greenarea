@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true" id="mainlayout" >
+
+            <p:layoutUnit position="center"  header="Consolle Interazione con SGAPL" style="size: auto">
+                <p:tabView  id="accordionP" activeIndex="#{tabPanelController.tabViewIndex}">
+                    <p:tab id="orderList" title="#{bundle.OrderListTitle}" >
+                        <ui:include src="/WEB-INF/includes/sgoManagerTab.xhtml" ></ui:include>
+                    </p:tab>
+                    <p:tab id="GATconsole" title="#{bundle.GATconsoleTitle}">
+                        <ui:include src="/WEB-INF/includes/gatManagerTab.xhtml" ></ui:include>
+                    </p:tab>
+                    <p:tab id="newOrder" title="#{bundle.NewOrderTitle}" >
+                        <ui:include src="/WEB-INF/includes/newOrderTab.xhtml" ></ui:include>
+                    </p:tab>
+                    <p:tab id="TestSGRL" title="#{bundle.SgrlTestTitle}" >
+                        <ui:include src="/WEB-INF/includes/testSGRLtab.xhtml" ></ui:include>
+                    </p:tab>
+                </p:tabView>
+
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" header="Monitor"  collapsible="true" size="200" >
+
+                <h:form id="monitor_form">
+
+                    <p:dataTable id="MonitorTable" value="#{monitorController.sbMonitor}" var="sbM" scrollable="true" scrollHeight="180">
+                        <p:column>
+                            <f:facet name="header">Source</f:facet>  
+                            <h:outputText value="#{sbM.source}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Properties</f:facet>  
+                            <h:outputText value="#{sbM.props}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Message</f:facet>  
+                            <h:outputText value="#{sbM.msg}"/>
+                        </p:column>
+                        <f:facet name="header">
+                            <p:commandButton style="font-size: small"  value="Clear" action="#{monitorController.clear()}"  ajax="false">
+                            </p:commandButton>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
