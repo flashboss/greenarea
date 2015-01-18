@@ -28,13 +28,13 @@
 	<modules>
 		<module>greenarea-common</module>
 		<module>greenarea-enforcement-console</module>
-		<module>greenarea-fasceorarie-console</module>
+		<module>greenarea-timeslots-console</module>
 		<module>greenarea-smart-console</module>
 		<module>greenarea-sgr-common</module>
 		<module>greenarea-its-easy</module>
 		<module>greenarea-sgr</module>
 		<module>greenarea-service</module>
-		<module>greenarea-richieste-console</module>
+		<module>greenarea-requests-console</module>
 		<module>greenarea-logistics-editor</module>
 		<module>greenarea-workflow</module>
 		<module>greenarea-ws-client</module>
