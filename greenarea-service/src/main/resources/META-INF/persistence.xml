@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	<persistence-unit name="GTGwebPU" transaction-type="JTA">
+		<jta-data-source>jdbc/gtgdb</jta-data-source>
+		<class>it.vige.greenarea.cl.library.entities.Mission</class>
+		<class>it.vige.greenarea.cl.library.entities.ParameterGen</class>
+		<class>it.vige.greenarea.cl.library.entities.ParameterTS</class>
+		<class>it.vige.greenarea.cl.library.entities.Price</class>
+		<class>it.vige.greenarea.cl.library.entities.TimeSlot</class>
+		<class>it.vige.greenarea.cl.library.entities.TsStat</class>
+		<class>it.vige.greenarea.cl.library.entities.ValueMission</class>
+		<class>it.vige.greenarea.cl.library.entities.Vehicle</class>
+		<class>it.vige.greenarea.cl.library.entities.TruckServiceClass</class>
+		<class>it.vige.greenarea.cl.library.entities.VikorResult</class>
+		<class>it.vige.greenarea.cl.library.entities.ExchangeStop</class>
+		<class>it.vige.greenarea.cl.library.entities.Freight</class>
+		<class>it.vige.greenarea.cl.library.entities.Transport</class>
+		<class>it.vige.greenarea.cl.library.entities.TransportServiceClass</class>
+		<class>it.vige.greenarea.cl.library.entities.ShippingOrder</class>
+		<class>it.vige.greenarea.cl.library.entities.ShippingItem</class>
+		<class>it.vige.greenarea.cl.library.entities.Carrier</class>
+		<class>it.vige.greenarea.cl.library.entities.Customer</class>
+		<class>it.vige.greenarea.cl.library.entities.Filter</class>
+		<class>it.vige.greenarea.cl.library.entities.TapOutData</class>
+		<class>it.vige.greenarea.cl.library.entities.TapGroupData</class>
+		<class>it.vige.greenarea.cl.library.entities.TapParamData</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<!-- Properties for Hibernate (default provider for JBoss AS) -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="javax.persistence.schema-generation.database.action"
+				value="MAVEN_REPLACER_SCHEMA_GENERATION" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="loaddata.sql" />
+		</properties>
+	</persistence-unit>
+</persistence>

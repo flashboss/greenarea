@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="aggiornaStatoVeicolo" name="Aggiorna Stato Veicolo" isExecutable="true" activiti:candidateStarterGroups="trasportatoreautonomo">
+    <startEvent id="startAggiornaStatoVeicolo" name="Start Aggiorna Stato Veicolo" activiti:initiator="currentUserId">
+      <documentation>contiene:
+&lt;UC1_2.5.1.4&gt;: &lt;Aggiorna stato veicolo&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="start" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetInitiator"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.DeleteCurrentProcesses"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="endAggiornaStatoVeicolo" name="End Aggiorna Stato Veicolo"></endEvent>
+    <sequenceFlow id="flowAggiornaStatoVeicolo" sourceRef="subprocessAggiornaStatoVeicolo" targetRef="endAggiornaStatoVeicolo"></sequenceFlow>
+    <serviceTask id="richiediIlVeicolo" name="Richiedi il veicolo" activiti:class="it.vige.greenarea.bpm.trasportatoreautonomo.aggiornastatoveicolo.RichiediVeicolo"></serviceTask>
+    <sequenceFlow id="flow3" sourceRef="startAggiornaStatoVeicolo" targetRef="richiediIlVeicolo"></sequenceFlow>
+    <subProcess id="subprocessAggiornaStatoVeicolo" name="Sub Process Aggiorna Stato Veicolo">
+      <userTask id="visualizzaParametriVeicolo" name="#{veicolo.toString()}" activiti:assignee="${initiator.id}" activiti:candidateUsers="${initiator.id}" activiti:candidateGroups="trasportatoreautonomo">
+        <extensionElements>
+          <activiti:formProperty id="stato_veicolo_tr_targa" name="targa" type="string" expression="${veicolo.targa}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_operatorelogistico" name="operatorelogistico" type="string" expression="#{veicolo.operatoreLogistico.id}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_autista" name="autista" type="string" expression="#{veicolo.autista.id}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_modello" name="modello" type="string" expression="#{veicolo.valori.model}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_emissione" name="emissione" type="double" expression="#{veicolo.valori.emission}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_euro" name="euro" type="string" expression="#{veicolo.valori.euro}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_lunghezza" name="lunghezza" type="double" expression="#{veicolo.valori.lenght}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_descrizione" name="descrizione" type="string" expression="#{veicolo.valori.description}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_basename" name="basename" type="string" expression="#{veicolo.valori.baseName}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_peso" name="peso" type="double" expression="#{veicolo.valori.weight}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_carico" name="carico" type="double" expression="#{veicolo.valori.carico}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_tappe" name="tappe" type="long" expression="#{veicolo.valori.tappe}" writable="false"></activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_stato" name="stato" type="enum" expression="${veicolo.stato}">
+            <activiti:value id="IDLE" name="In attesa"></activiti:value>
+            <activiti:value id="DELIVERING" name="In viaggio"></activiti:value>
+            <activiti:value id="MAINTAINANCE" name="In manutenzione"></activiti:value>
+          </activiti:formProperty>
+          <activiti:formProperty id="stato_veicolo_tr_carburante" name="carburante" type="enum" expression="#{veicolo.valori.fuel}" writable="false">
+            <activiti:value id="DIESEL" name="Diesel"></activiti:value>
+            <activiti:value id="BENZINA" name="Benzina"></activiti:value>
+          </activiti:formProperty>
+        </extensionElements>
+      </userTask>
+      <serviceTask id="aggiornaStato" name="Aggiorna Stato" activiti:class="it.vige.greenarea.bpm.trasportatoreautonomo.aggiornastatoveicolo.AggiornaStato"></serviceTask>
+      <startEvent id="startSubProcessAggiornaStatoVeicolo" name="Start Sub Process Aggiorna Stato Veicolo"></startEvent>
+      <endEvent id="endSubProcessAggiornaStatoVeicolo" name="End Sub Process Aggiorna Stato Veicolo"></endEvent>
+      <sequenceFlow id="flow10" sourceRef="startSubProcessAggiornaStatoVeicolo" targetRef="visualizzaParametriVeicolo"></sequenceFlow>
+      <sequenceFlow id="flow11" sourceRef="visualizzaParametriVeicolo" targetRef="aggiornaStato"></sequenceFlow>
+      <sequenceFlow id="flow12" sourceRef="aggiornaStato" targetRef="endSubProcessAggiornaStatoVeicolo"></sequenceFlow>
+      <serviceTask id="segnalazioneErroreaggiornaStatoAAmministratore" name="Segnalazione Errore Aggiorna Stato a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="from">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiorna Stato]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiorna Stato]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="segnalazioneErroreaggiornaStatoATrasportatoreAutonomo" name="Segnalazione Errore Aggiorna Stato a Trasportatore Autonomo" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiorna Stato]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiorna Stato a Operatore Logistico]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <boundaryEvent id="boundaryerror1" name="Error" attachedToRef="aggiornaStato">
+        <errorEventDefinition errorRef="erroreAggiornaStato"></errorEventDefinition>
+      </boundaryEvent>
+      <sequenceFlow id="flow15" sourceRef="boundaryerror1" targetRef="segnalazioneErroreaggiornaStatoATrasportatoreAutonomo"></sequenceFlow>
+      <sequenceFlow id="flow16" sourceRef="segnalazioneErroreaggiornaStatoATrasportatoreAutonomo" targetRef="segnalazioneErroreaggiornaStatoAAmministratore"></sequenceFlow>
+      <sequenceFlow id="flow17" sourceRef="segnalazioneErroreaggiornaStatoAAmministratore" targetRef="visualizzaParametriVeicolo"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow13" sourceRef="richiediIlVeicolo" targetRef="subprocessAggiornaStatoVeicolo"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_aggiornaStatoVeicolo">
+    <bpmndi:BPMNPlane bpmnElement="aggiornaStatoVeicolo" id="BPMNPlane_aggiornaStatoVeicolo">
+      <bpmndi:BPMNShape bpmnElement="startAggiornaStatoVeicolo" id="BPMNShape_startAggiornaStatoVeicolo">
+        <omgdc:Bounds height="35.0" width="35.0" x="263.0" y="79.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endAggiornaStatoVeicolo" id="BPMNShape_endAggiornaStatoVeicolo">
+        <omgdc:Bounds height="35.0" width="35.0" x="755.0" y="440.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="richiediIlVeicolo" id="BPMNShape_richiediIlVeicolo">
+        <omgdc:Bounds height="75.0" width="115.0" x="410.0" y="71.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocessAggiornaStatoVeicolo" id="BPMNShape_subprocessAggiornaStatoVeicolo">
+        <omgdc:Bounds height="365.0" width="445.0" x="206.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="visualizzaParametriVeicolo" id="BPMNShape_visualizzaParametriVeicolo">
+        <omgdc:Bounds height="71.0" width="105.0" x="236.0" y="280.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornaStato" id="BPMNShape_aggiornaStato">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="414.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundaryerror1" id="BPMNShape_boundaryerror1">
+        <omgdc:Bounds height="30.0" width="30.0" x="346.0" y="444.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSubProcessAggiornaStatoVeicolo" id="BPMNShape_startSubProcessAggiornaStatoVeicolo">
+        <omgdc:Bounds height="35.0" width="35.0" x="356.0" y="246.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endSubProcessAggiornaStatoVeicolo" id="BPMNShape_endSubProcessAggiornaStatoVeicolo">
+        <omgdc:Bounds height="35.0" width="35.0" x="316.0" y="520.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreaggiornaStatoAAmministratore" id="BPMNShape_segnalazioneErroreaggiornaStatoAAmministratore">
+        <omgdc:Bounds height="85.0" width="135.0" x="460.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreaggiornaStatoATrasportatoreAutonomo" id="BPMNShape_segnalazioneErroreaggiornaStatoATrasportatoreAutonomo">
+        <omgdc:Bounds height="91.0" width="121.0" x="490.0" y="450.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flowAggiornaStatoVeicolo" id="BPMNEdge_flowAggiornaStatoVeicolo">
+        <omgdi:waypoint x="651.0" y="412.0"></omgdi:waypoint>
+        <omgdi:waypoint x="772.0" y="440.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="298.0" y="96.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="108.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="356.0" y="263.0"></omgdi:waypoint>
+        <omgdi:waypoint x="288.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="288.0" y="351.0"></omgdi:waypoint>
+        <omgdi:waypoint x="308.0" y="414.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="308.0" y="469.0"></omgdi:waypoint>
+        <omgdi:waypoint x="333.0" y="520.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="376.0" y="459.0"></omgdi:waypoint>
+        <omgdi:waypoint x="490.0" y="495.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="550.0" y="450.0"></omgdi:waypoint>
+        <omgdi:waypoint x="527.0" y="375.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="460.0" y="332.0"></omgdi:waypoint>
+        <omgdi:waypoint x="341.0" y="315.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="467.0" y="146.0"></omgdi:waypoint>
+        <omgdi:waypoint x="428.0" y="230.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

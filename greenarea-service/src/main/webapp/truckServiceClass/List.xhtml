@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ListTruckServiceClassTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:form styleClass="jsfcrud_list_form">
+			<h:panelGroup id="messagePanel" layout="block">
+				<h:messages errorStyle="color: red" infoStyle="color: green"
+					layout="table" />
+			</h:panelGroup>
+			<h:outputText escape="false"
+				value="#{bundle.ListTruckServiceClassEmpty}"
+				rendered="#{truckServiceClassController.items.rowCount == 0}" />
+			<h:panelGroup
+				rendered="#{truckServiceClassController.items.rowCount > 0}">
+				<h:outputText
+					value="#{truckServiceClassController.pagination.pageFirstItem + 1}..#{truckServiceClassController.pagination.pageLastItem + 1}/#{truckServiceClassController.pagination.itemsCount}" />&nbsp;
+                    <h:commandLink
+					action="#{truckServiceClassController.previous}"
+					value="#{bundle.Previous} #{truckServiceClassController.pagination.pageSize}"
+					rendered="#{truckServiceClassController.pagination.hasPreviousPage}" />&nbsp;
+                    <h:commandLink
+					action="#{truckServiceClassController.next}"
+					value="#{bundle.Next} #{truckServiceClassController.pagination.pageSize}"
+					rendered="#{truckServiceClassController.pagination.hasNextPage}" />&nbsp;
+                    <h:dataTable
+					value="#{truckServiceClassController.items}" var="item" border="0"
+					cellpadding="2" cellspacing="0"
+					rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all"
+					style="border:solid 1px">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_id}" />
+						</f:facet>
+						<h:outputText value="#{item.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText
+								value="#{bundle.ListTruckServiceClassTitle_description}" />
+						</f:facet>
+						<h:outputText value="#{item.description}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_model}" />
+						</f:facet>
+						<h:outputText value="#{item.modelV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_baseName}" />
+						</f:facet>
+						<h:outputText value="#{item.makeV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_lenght}" />
+						</f:facet>
+						<h:outputText value="#{item.lenghtV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_weight}" />
+						</f:facet>
+						<h:outputText value="#{item.weightV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_emission}" />
+						</f:facet>
+						<h:outputText value="#{item.emissionV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_fuel}" />
+						</f:facet>
+						<h:outputText value="#{item.fuelV}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle.ListTruckServiceClassTitle_euro}" />
+						</f:facet>
+						<h:outputText value="#{item.EURO}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="&nbsp;" />
+						</f:facet>
+						<h:commandLink action="#{truckServiceClassController.prepareView}"
+							value="#{bundle.ListTruckServiceClassViewLink}" />
+						<h:outputText value=" " />
+						<h:commandLink action="#{truckServiceClassController.prepareEdit}"
+							value="#{bundle.ListTruckServiceClassEditLink}" />
+						<h:outputText value=" " />
+						<h:commandLink action="#{truckServiceClassController.destroy}"
+							value="#{bundle.ListTruckServiceClassDestroyLink}" />
+					</h:column>
+				</h:dataTable>
+			</h:panelGroup>
+			<br />
+			<h:commandLink action="#{truckServiceClassController.prepareCreate}"
+				value="#{bundle.ListTruckServiceClassCreateLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index"
+				value="#{bundle.ListTruckServiceClassIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

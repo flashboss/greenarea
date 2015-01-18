@@ -1,0 +1,77 @@
+/* 
+    Document   : cilo.css
+    Created on : 28-feb-2012, 10.26.44
+    Author     : MacRed
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+@media only screen and (min-width:150px) and (max-width:700px) {
+    body {
+        color:#000;
+        font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
+        font-size:12px;
+        font-size-adjust:none;
+        font-style:normal;
+        font-variant:normal;
+        font-weight:normal;
+        width:100%;
+        margin: auto auto;
+    }
+    #page {
+        width: 98%;
+        min-width: 310px;
+        margin: auto auto;
+        padding: 0px 0px;
+        position: relative;
+    }
+}
+@media only screen and (orientation:portrait) and (min-width:321px) {
+    html, body {
+        width: 320px;
+        min-width: 310px;
+        margin: auto auto;
+        overflow-x: hidden;
+    }
+    #page{
+        width: 320px;
+        min-width: 310px;
+        margin: 0 auto;
+    }
+    
+    #container{
+    
+    background: #fffeff;
+    margin: 0 auto;
+    border-style: solid;
+    text-align:center;
+    }
+}
+@media only screen and (max-device-width: 480px), 
+       only screen and (-webkit-min-device-pixel-ratio: 2) {
+    /* iPhone CSS rules here */
+    html, body {
+        width: 480px;
+        min-width: 310px;
+        margin: auto auto;
+        overflow-x: hidden;
+    }
+    #page {
+        width: 480px;
+        min-width: 310px;
+        margin: auto auto;
+    }
+    
+    #container{
+    background: #fffeff;
+    margin: auto auto;
+    border-style: solid;
+    text-align:center;
+}
+       }
+

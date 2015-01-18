@@ -1,0 +1,43 @@
+INSERT INTO Filter (operatoreLogistico,roundCode) VALUES ('tnt','01');
+INSERT INTO Filter (operatoreLogistico,roundCode) VALUES ('tnt','02');
+INSERT INTO Filter (operatoreLogistico,roundCode) VALUES ('tnt','06');
+
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (4,'Rapporto da bolla di accompagnamento',0,'Numero','carico',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (5,'Tappe nel ciclo di consegna',0,'Numero','tappe',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (6,'Peso del veicolo da libretto',1,'kg','peso',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (7,'Categoria Euro da libretto',1,'Numero','euro',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (67,'Rapporti per accompagnamento',0,'Numero','rapporto',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (68,'Tappe esterne al ciclo di consegna',0,'Numero','tappe esterne',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (69,'Peso del veicolo da libretto',1,'kg','peso veicolo',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (70,'Categoria Euro non da libretto',1,'Numero','euro categoria',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (88,'mia descrizione',2,'euro','mio p g',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (100,'mia nuova descrizione',2,'euro','mio pg prova',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (314,'Lunghezza veicolo da libretto',1,'m','lunghezza',0);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (356,'il mio parametro in chilometri',3,'chilometri','mio parametro',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (363,'il mio parametro in metri',3,'metri','mio nuovo parametro',1);
+INSERT INTO ParameterGen (idPG,description,typePG,measureUnit,namePG,useType) VALUES (412,'Lunghezza veicolo non da libretto',1,'m','libretto',0);
+
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (1,'FURGONATO','4',214,0,6,'IVECO','DAILY',1300,84.238);
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (2,'FURGONATO','5',255,0,6,'VOLKSWAGEN','CRAFTER',1300,84.238);
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (3,'FURGONATO','5',200,0,6,'FIAT','DUCATO',1300,84.238);
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (4,'3Assi','9',3.8,1,111.1,'NISSAN','MERIVA',2121.0,84.238);
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (5,'4Assi','10',3.8,1,234.1,'OPEL','345',2122.0,84.238);
+INSERT INTO TruckServiceClass (ID, DESCRIPTION,EURO,EMISSIONV,FUELV,LENGHTV,MAKEV,MODELV,WEIGHTV,CONSUMPTION) VALUES (6,'5Assi','11',3.8,0,541.1,'OPEL','MERIVA',2122.0,84.238);
+
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('44GU4',0,3,'trasportatoreautonomo3',null,'dhl','01','T01','VESA_ULOGOBU_0004');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('555MK',0,5,'trasportatoreautonomo1','null','dhl','02','T01','VESA_ULOGOBU_0005');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('OP666',0,6,'trasportatoreautonomo2','null','dhl','06','T01','VESA_ULOGOBU_0006');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('91GTK',0,2,'autista3','trambus','dhl','01','T01','VESA_ULOGOBU_0007');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('556MK',0,2,'autista4','trambus','dhl','02','T01','VESA_ULOGOBU_0008');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('557MK',0,2,'autista5','trambus','dhl','06','T01','VESA_ULOGOBU_0009');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('558MK',0,1,'autista6','trambus','dhl','01','T01','VESA_ULOGOBU_0010');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('559MK',0,3,'autista7','buscar','dhl','02','T01','VESA_ULOGOBU_0011');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('560MK',0,3,'autista8','buscar','dhl','06','T01','VESA_ULOGOBU_0012');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('561MK',0,6,'enzo1','buscar','dhl','01','T01','VESA_ULOGOBU_0013');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('ED158ZK',0,1,'autista1','4006944','tnt','01','T01','VESA_ULOGOBU_0001');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('EL178YP',0,2,'trasportatoreautonomo1','4006944','tnt','02','T01','VESA_ULOGOBU_0002');
+INSERT INTO Vehicle (PLATENUMBER,TRUCKSTATE,SERVICECLASS_ID, AUTISTA, SOCIETADITRASPORTO, OPERATORELOGISTICO, ROUNDCODE, CODICEFILIALE, VIN) VALUES ('BV925HJ',0,3,'trasportatoreautonomo2','4006944','tnt','06','T01','VESA_ULOGOBU_0003');
+
+INSERT INTO TransportServiceClass (id,description) VALUES (1,'FURGONATO');
+INSERT INTO TransportServiceClass (id,description) VALUES (2,'Frigo');
+INSERT INTO TransportServiceClass (id,description) VALUES (3,'Pesante');

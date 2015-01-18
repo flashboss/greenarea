@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	<persistence-unit name="SGRLserverPU" transaction-type="JTA">
+		<jta-data-source>jdbc/sgrl-db</jta-data-source>
+		<properties>
+			<!-- Properties for Hibernate (default provider for JBoss AS) -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="javax.persistence.schema-generation.database.action"
+				value="MAVEN_REPLACER_SCHEMA_GENERATION" />
+			<property name="javax.persistence.sql-load-script-source"
+				value="loaddata.sql" />
+		</properties>
+	</persistence-unit>
+</persistence>

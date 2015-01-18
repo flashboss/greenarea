@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="importaNuoviRitiri" name="Importa Nuovi Ritiri" isExecutable="true">
+    <startEvent id="timerImportaNuoviRitiri" name="Timer Importa Nuovi Ritiri">
+      <documentation>contiene:
+&lt;UC7_2.6.1.1&gt;: &lt;Importa nuovi ritiri&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetOperatoriLogistici"></activiti:executionListener>
+      </extensionElements>
+      <timerEventDefinition>
+        <timeCycle>R/PT30M</timeCycle>
+      </timerEventDefinition>
+    </startEvent>
+    <endEvent id="endImportaNuoviRitiri" name="End Importa Nuovi Ritiri"></endEvent>
+    <sequenceFlow id="flowVerificaDatiNuoviRitiri" sourceRef="timerImportaNuoviRitiri" targetRef="subprocessAggiornamentoNuoviRitiri"></sequenceFlow>
+    <subProcess id="subprocessAggiornamentoNuoviRitiri" name="Sub Process Aggiornamento Nuovi Ritiri">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico">
+        <completionCondition>${messaggio.categoria == 'ERROREGRAVE'}</completionCondition>
+      </multiInstanceLoopCharacteristics>
+      <startEvent id="startSubProcessAggiornamentoNuoviRitiri" name="Start Sub Process Aggiornamento Nuovi Ritiri"></startEvent>
+      <endEvent id="endSubProcessAggiornamentoNuoviRitiri" name="End Sub Process Aggiornamento Nuovi Ritiri"></endEvent>
+      <serviceTask id="recuperoDatiNuoviRitiri" name="Recupero Dati Nuovi Ritiri" activiti:class="it.vige.greenarea.bpm.tempo.importanuoviritiri.RecuperoDatiNuoviRitiri"></serviceTask>
+      <serviceTask id="verificaDatiNuoviRitiri" name="Verifica Dati Nuovi Ritiri" activiti:class="it.vige.greenarea.bpm.tempo.importanuoviritiri.VerificaDatiNuoviRitiri"></serviceTask>
+      <sequenceFlow id="flow4" sourceRef="recuperoDatiNuoviRitiri" targetRef="verificaDatiNuoviRitiri"></sequenceFlow>
+      <serviceTask id="aggiornamentoNuoviRitiri" name="Aggiornamento Nuovi Ritiri" activiti:class="it.vige.greenarea.bpm.tempo.importanuoviritiri.AggiornamentoNuoviRitiri"></serviceTask>
+      <sequenceFlow id="flow16" sourceRef="startSubProcessAggiornamentoNuoviRitiri" targetRef="recuperoDatiNuoviRitiri"></sequenceFlow>
+      <sequenceFlow id="flow26" sourceRef="verificaDatiNuoviRitiri" targetRef="exclusivegateway1"></sequenceFlow>
+      <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow27" sourceRef="exclusivegateway1" targetRef="aggiornamentoNuoviRitiri">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow29" sourceRef="exclusivegateway2" targetRef="endSubProcessAggiornamentoNuoviRitiri">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow31" sourceRef="aggiornamentoNuoviRitiri" targetRef="exclusivegateway2"></sequenceFlow>
+      <serviceTask id="sollecitoAOperatoreLogisticoPerDatiNuoviRitiriNonCorretti" name="Sollecito a Operatore Logistico per Dati Nuovi Ritiri non corretti" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Sollecito per DatiNuovi Ritiri non corretti]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Sollecito per DatiNuovi Ritiri non corretti]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow32" sourceRef="exclusivegateway1" targetRef="sollecitoAOperatoreLogisticoPerDatiNuoviRitiriNonCorretti">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <serviceTask id="segnalazioneErroreAggiornamentoNuoviRitiriAAmministratore" name="Segnalazione Errore Aggiornamento Nuovi Ritiri a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Nuovi Ritiri]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Nuovi Ritiri]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow22" sourceRef="segnalazioneErroreAggiornamentoNuoviRitiriAAmministratore" targetRef="segnalazioneErroreAggiornamentoNuoviRitiriAOperatoreLogistico"></sequenceFlow>
+      <serviceTask id="segnalazioneErroreAggiornamentoNuoviRitiriAOperatoreLogistico" name="Segnalazione Errore Aggiornamento Nuovi Ritiri a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Nuovi Ritiri]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Nuovi Ritiri]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow33" sourceRef="exclusivegateway2" targetRef="segnalazioneErroreAggiornamentoNuoviRitiriAAmministratore">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow34" sourceRef="sollecitoAOperatoreLogisticoPerDatiNuoviRitiriNonCorretti" targetRef="exclusivegateway3"></sequenceFlow>
+      <sequenceFlow id="flow35" sourceRef="segnalazioneErroreAggiornamentoNuoviRitiriAOperatoreLogistico" targetRef="exclusivegateway3"></sequenceFlow>
+      <sequenceFlow id="flow36" sourceRef="exclusivegateway3" targetRef="endSubProcessAggiornamentoNuoviRitiri"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow2" sourceRef="subprocessAggiornamentoNuoviRitiri" targetRef="endImportaNuoviRitiri"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_importaNuoviRitiri">
+    <bpmndi:BPMNPlane bpmnElement="importaNuoviRitiri" id="BPMNPlane_importaNuoviRitiri">
+      <bpmndi:BPMNShape bpmnElement="timerImportaNuoviRitiri" id="BPMNShape_timerImportaNuoviRitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="160.0" y="50.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endImportaNuoviRitiri" id="BPMNShape_endImportaNuoviRitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="500.0" y="68.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocessAggiornamentoNuoviRitiri" id="BPMNShape_subprocessAggiornamentoNuoviRitiri">
+        <omgdc:Bounds height="471.0" width="941.0" x="-140.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSubProcessAggiornamentoNuoviRitiri" id="BPMNShape_startSubProcessAggiornamentoNuoviRitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="-90.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endSubProcessAggiornamentoNuoviRitiri" id="BPMNShape_endSubProcessAggiornamentoNuoviRitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="397.0" y="420.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="recuperoDatiNuoviRitiri" id="BPMNShape_recuperoDatiNuoviRitiri">
+        <omgdc:Bounds height="81.0" width="131.0" x="90.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="verificaDatiNuoviRitiri" id="BPMNShape_verificaDatiNuoviRitiri">
+        <omgdc:Bounds height="61.0" width="105.0" x="-64.0" y="360.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornamentoNuoviRitiri" id="BPMNShape_aggiornamentoNuoviRitiri">
+        <omgdc:Bounds height="81.0" width="122.0" x="150.0" y="350.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="0.0" y="500.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="397.0" y="308.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoAOperatoreLogisticoPerDatiNuoviRitiriNonCorretti" id="BPMNShape_sollecitoAOperatoreLogisticoPerDatiNuoviRitiriNonCorretti">
+        <omgdc:Bounds height="91.0" width="117.0" x="180.0" y="490.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoNuoviRitiriAAmministratore" id="BPMNShape_segnalazioneErroreAggiornamentoNuoviRitiriAAmministratore">
+        <omgdc:Bounds height="97.0" width="134.0" x="590.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoNuoviRitiriAOperatoreLogistico" id="BPMNShape_segnalazioneErroreAggiornamentoNuoviRitiriAOperatoreLogistico">
+        <omgdc:Bounds height="104.0" width="135.0" x="580.0" y="429.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="438.0" y="526.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flowVerificaDatiNuoviRitiri" id="BPMNEdge_flowVerificaDatiNuoviRitiri">
+        <omgdi:waypoint x="177.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="150.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="155.0" y="301.0"></omgdi:waypoint>
+        <omgdi:waypoint x="-12.0" y="360.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="-55.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="90.0" y="260.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+        <omgdi:waypoint x="-12.0" y="421.0"></omgdi:waypoint>
+        <omgdi:waypoint x="20.0" y="500.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
+        <omgdi:waypoint x="20.0" y="500.0"></omgdi:waypoint>
+        <omgdi:waypoint x="211.0" y="431.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+        <omgdi:waypoint x="417.0" y="348.0"></omgdi:waypoint>
+        <omgdi:waypoint x="414.0" y="420.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
+        <omgdi:waypoint x="272.0" y="390.0"></omgdi:waypoint>
+        <omgdi:waypoint x="417.0" y="348.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+        <omgdi:waypoint x="40.0" y="520.0"></omgdi:waypoint>
+        <omgdi:waypoint x="180.0" y="535.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+        <omgdi:waypoint x="657.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="647.0" y="429.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+        <omgdi:waypoint x="437.0" y="328.0"></omgdi:waypoint>
+        <omgdi:waypoint x="590.0" y="298.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
+        <omgdi:waypoint x="297.0" y="535.0"></omgdi:waypoint>
+        <omgdi:waypoint x="438.0" y="546.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
+        <omgdi:waypoint x="580.0" y="481.0"></omgdi:waypoint>
+        <omgdi:waypoint x="458.0" y="526.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36">
+        <omgdi:waypoint x="458.0" y="526.0"></omgdi:waypoint>
+        <omgdi:waypoint x="414.0" y="455.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="330.0" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="517.0" y="103.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

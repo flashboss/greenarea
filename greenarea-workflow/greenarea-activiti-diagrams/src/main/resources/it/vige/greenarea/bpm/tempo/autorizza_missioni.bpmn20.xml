@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="autorizzaMissioni" name="Autorizza Missioni" isExecutable="true">
+    <startEvent id="timerAutorizzaMissioni" name="Timer Autorizza Missioni">
+      <documentation>contiene:
+&lt;UC6_2.6.1.1&gt;: &lt;Autorizza missioni&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetOperatoriLogistici"></activiti:executionListener>
+      </extensionElements>
+      <timerEventDefinition>
+        <timeDate>T08:00:00</timeDate>
+      </timerEventDefinition>
+    </startEvent>
+    <endEvent id="endAutorizzaMissioni" name="End Autorizza Missioni"></endEvent>
+    <sequenceFlow id="flowRecuperoDatiPolicy" sourceRef="timerAutorizzaMissioni" targetRef="recuperoDatiPolicy"></sequenceFlow>
+    <serviceTask id="recuperoDatiMissioniCorrenti" name="Recupero Dati Missioni Correnti" activiti:class="it.vige.greenarea.bpm.tempo.autorizzamissioni.RecuperoDatiMissioniCorrenti"></serviceTask>
+    <serviceTask id="elaborazioneRanking" name="Elaborazione Ranking" activiti:class="it.vige.greenarea.bpm.tempo.autorizzamissioni.ElaborazioneRanking"></serviceTask>
+    <serviceTask id="aggiornamentoRanking" name="Aggiornamento Ranking" activiti:class="it.vige.greenarea.bpm.tempo.autorizzamissioni.AggiornamentoRanking"></serviceTask>
+    <serviceTask id="sollecitoPolicyMancantiAPA" name="Sollecito Policy mancanti a PA" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Sollecito Policy mancanti]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${pa.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Sollecito Policy mancanti]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="pubblicheamministrazioni" activiti:elementVariable="pa"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <serviceTask id="notificaErroreReperimentoPolicyAAmministratore" name="Notifica Errore Reperimento Policy a Amministratore" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Policy]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Policy]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="notificaErroreReperimentoMissioniAAmministratore" name="Notifica Errore Reperimento Missioni a Amministratore" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="notificaErroreAggiornamentoRankingAAmministratore" name="Notifica Errore Aggiornamento Ranking a Amministratore" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Aggiornamento Ranking]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Aggiornamento Ranking]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="recuperoDatiPolicy" name="Recupero Dati Policy" activiti:class="it.vige.greenarea.bpm.tempo.autorizzamissioni.RecuperoDatiPolicy"></serviceTask>
+    <exclusiveGateway id="exclusivegatewayRecuperoDatiPolicy" name="Exclusive Gateway Recupero Dati Policy"></exclusiveGateway>
+    <sequenceFlow id="flowExclusivegatewayRecuperoDatiPolicy" sourceRef="recuperoDatiPolicy" targetRef="exclusivegatewayRecuperoDatiPolicy"></sequenceFlow>
+    <sequenceFlow id="flowSollecitoPolicyMancantiAPA" sourceRef="exclusivegatewayRecuperoDatiPolicy" targetRef="sollecitoPolicyMancantiAPA">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERROREDATIMANCANTI'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowNotificaErroreReperimentoPolicyAAmministratore" sourceRef="exclusivegatewayRecuperoDatiPolicy" targetRef="notificaErroreReperimentoPolicyAAmministratore">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERRORESISTEMA'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowRecuperoDatiMissioniCorrenti" sourceRef="exclusivegatewayRecuperoDatiPolicy" targetRef="recuperoDatiMissioniCorrenti">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusivegatewayRecuperoDatiMissioniCorrenti" name="Exclusive Gateway Recupero Dati Missioni Correnti"></exclusiveGateway>
+    <sequenceFlow id="flowExclusivegatewayRecuperoDatiMissioniCorrenti" sourceRef="recuperoDatiMissioniCorrenti" targetRef="exclusivegatewayRecuperoDatiMissioniCorrenti"></sequenceFlow>
+    <sequenceFlow id="flowNotificaErroreReperimentoMissioniAAmministratore" sourceRef="exclusivegatewayRecuperoDatiMissioniCorrenti" targetRef="notificaErroreReperimentoMissioniAAmministratore">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERRORESISTEMA'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowendNotificaErroreReperimentoPolicyAAmministratore" sourceRef="notificaErroreReperimentoPolicyAOperatoriLogistici" targetRef="exclusivegateway2"></sequenceFlow>
+    <sequenceFlow id="flowendSollecitoPolicyMancantiAPA" sourceRef="sollecitoPolicyMancantiAOperatoriLogistici" targetRef="exclusivegateway2"></sequenceFlow>
+    <sequenceFlow id="flowendExclusivegatewayRecuperoDatiMissioniCorrenti" sourceRef="exclusivegatewayRecuperoDatiMissioniCorrenti" targetRef="exclusivegateway4">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERROREDATIMANCANTI'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowendNotificaErroreReperimentoMissioniAAmministratore" sourceRef="notificaErroreReperimentoMissioniAOperatoriLogistici" targetRef="exclusivegateway4"></sequenceFlow>
+    <sequenceFlow id="flowElaborazioneRanking" sourceRef="exclusivegatewayRecuperoDatiMissioniCorrenti" targetRef="elaborazioneRanking">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowAggiornamentoRanking" sourceRef="elaborazioneRanking" targetRef="aggiornamentoRanking"></sequenceFlow>
+    <sequenceFlow id="flowExclusivegatewayAggiornamentoRanking" sourceRef="aggiornamentoRanking" targetRef="inclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flowNotificaErroreAggiornamentoRankingAAmministratore" sourceRef="inclusivegateway1" targetRef="notificaErroreAggiornamentoRankingAAmministratore">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERRORESISTEMA'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowendNotificaErroreAggiornamentoRankingAAmministratore" sourceRef="notificaErroreAggiornamentoRankingAOperatoriLogistici" targetRef="exclusivegateway3"></sequenceFlow>
+    <sequenceFlow id="flowendExclusivegatewayAggiornamentoRanking" sourceRef="inclusivegateway1" targetRef="notificaAggiornamentoRankingAOperatoriLogistici">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow1" sourceRef="exclusivegateway1" targetRef="endAutorizzaMissioni"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow2" sourceRef="exclusivegateway2" targetRef="exclusivegateway1"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
+    <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway4" targetRef="exclusivegateway1"></sequenceFlow>
+    <serviceTask id="sollecitoPolicyMancantiAOperatoriLogistici" name="Sollecito Policy mancanti a Operatori Logistici" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:expression>${operatorelogistico.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Sollecito Policy mancanti]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Sollecito Policy mancanti]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <sequenceFlow id="flow5" sourceRef="sollecitoPolicyMancantiAPA" targetRef="sollecitoPolicyMancantiAOperatoriLogistici"></sequenceFlow>
+    <serviceTask id="notificaErroreReperimentoPolicyAOperatoriLogistici" name="Notifica Errore Reperimento Policy a Operatori Logistici" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Policy]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Policy]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${operatorelogistico.email}</activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <sequenceFlow id="flow6" sourceRef="notificaErroreReperimentoPolicyAAmministratore" targetRef="notificaErroreReperimentoPolicyAOperatoriLogistici"></sequenceFlow>
+    <serviceTask id="notificaErroreReperimentoMissioniAOperatoriLogistici" name="Notifica Errore Reperimento Missioni a Operatori Logistici" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${operatorelogistico.email}</activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <serviceTask id="notificaErroreAggiornamentoRankingAOperatoriLogistici" name="Notifica Errore Aggiornamento Ranking a Operatori Logistici" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="from">
+          <activiti:expression>${amministratore.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Notifica Errore Aggiornamento Ranking]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Notifica Errore Aggiornamento Ranking]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="to">
+          <activiti:expression>${operatorelogistico.email}</activiti:expression>
+        </activiti:field>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+    </serviceTask>
+    <sequenceFlow id="flow7" sourceRef="notificaErroreReperimentoMissioniAAmministratore" targetRef="notificaErroreReperimentoMissioniAOperatoriLogistici"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="notificaErroreAggiornamentoRankingAAmministratore" targetRef="notificaErroreAggiornamentoRankingAOperatoriLogistici"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="exclusivegateway3" targetRef="exclusivegateway1"></sequenceFlow>
+    <callActivity id="notificaAggiornamentoRankingAOperatoriLogistici" name="Notifica Aggiornamento Ranking a Operatori Logistici" calledElement="segnalaNuoviRitiriProcesso">
+      <extensionElements>
+        <activiti:in sourceExpression="${operatorelogistico.ritiri}" target="ritiri"></activiti:in>
+        <activiti:in source="operatorilogistici" target="operatorilogistici"></activiti:in>
+        <activiti:in source="messaggio" target="messaggio"></activiti:in>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+    </callActivity>
+    <callActivity id="gestioneMissioni" name="Gestione Missioni" calledElement="gestioneMissioni">
+      <extensionElements>
+        <activiti:in source="missioni" target="missioni"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow11" sourceRef="inclusivegateway2" targetRef="exclusivegateway3"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="notificaAggiornamentoRankingAOperatoriLogistici" targetRef="inclusivegateway2"></sequenceFlow>
+    <inclusiveGateway id="inclusivegateway1" name="Inclusive Gateway"></inclusiveGateway>
+    <sequenceFlow id="flow13" sourceRef="inclusivegateway1" targetRef="gestioneMissioni">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+    </sequenceFlow>
+    <inclusiveGateway id="inclusivegateway2" name="Inclusive Gateway"></inclusiveGateway>
+    <sequenceFlow id="flow14" sourceRef="gestioneMissioni" targetRef="inclusivegateway2"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_autorizzaMissioni">
+    <bpmndi:BPMNPlane bpmnElement="autorizzaMissioni" id="BPMNPlane_autorizzaMissioni">
+      <bpmndi:BPMNShape bpmnElement="timerAutorizzaMissioni" id="BPMNShape_timerAutorizzaMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="80.0" y="194.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endAutorizzaMissioni" id="BPMNShape_endAutorizzaMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="962.0" y="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="recuperoDatiMissioniCorrenti" id="BPMNShape_recuperoDatiMissioniCorrenti">
+        <omgdc:Bounds height="81.0" width="131.0" x="230.0" y="278.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="elaborazioneRanking" id="BPMNShape_elaborazioneRanking">
+        <omgdc:Bounds height="65.0" width="121.0" x="485.0" y="540.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornamentoRanking" id="BPMNShape_aggiornamentoRanking">
+        <omgdc:Bounds height="71.0" width="111.0" x="772.0" y="500.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoPolicyMancantiAPA" id="BPMNShape_sollecitoPolicyMancantiAPA">
+        <omgdc:Bounds height="65.0" width="121.0" x="450.0" y="33.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoPolicyAAmministratore" id="BPMNShape_notificaErroreReperimentoPolicyAAmministratore">
+        <omgdc:Bounds height="71.0" width="125.0" x="410.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoMissioniAAmministratore" id="BPMNShape_notificaErroreReperimentoMissioniAAmministratore">
+        <omgdc:Bounds height="81.0" width="118.0" x="522.0" y="341.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreAggiornamentoRankingAAmministratore" id="BPMNShape_notificaErroreAggiornamentoRankingAAmministratore">
+        <omgdc:Bounds height="75.0" width="125.0" x="1140.0" y="527.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="recuperoDatiPolicy" id="BPMNShape_recuperoDatiPolicy">
+        <omgdc:Bounds height="65.0" width="115.0" x="140.0" y="74.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayRecuperoDatiPolicy" id="BPMNShape_exclusivegatewayRecuperoDatiPolicy">
+        <omgdc:Bounds height="40.0" width="40.0" x="350.0" y="110.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayRecuperoDatiMissioniCorrenti" id="BPMNShape_exclusivegatewayRecuperoDatiMissioniCorrenti">
+        <omgdc:Bounds height="40.0" width="40.0" x="370.0" y="400.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="959.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="780.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="1246.0" y="21.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
+        <omgdc:Bounds height="40.0" width="40.0" x="696.0" y="238.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoPolicyMancantiAOperatoriLogistici" id="BPMNShape_sollecitoPolicyMancantiAOperatoriLogistici">
+        <omgdc:Bounds height="88.0" width="109.0" x="660.0" y="10.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoPolicyAOperatoriLogistici" id="BPMNShape_notificaErroreReperimentoPolicyAOperatoriLogistici">
+        <omgdc:Bounds height="79.0" width="119.0" x="616.0" y="150.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoMissioniAOperatoriLogistici" id="BPMNShape_notificaErroreReperimentoMissioniAOperatoriLogistici">
+        <omgdc:Bounds height="79.0" width="117.0" x="656.0" y="401.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreAggiornamentoRankingAOperatoriLogistici" id="BPMNShape_notificaErroreAggiornamentoRankingAOperatoriLogistici">
+        <omgdc:Bounds height="80.0" width="125.0" x="1200.0" y="343.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaAggiornamentoRankingAOperatoriLogistici" id="BPMNShape_notificaAggiornamentoRankingAOperatoriLogistici">
+        <omgdc:Bounds height="93.0" width="141.0" x="909.0" y="251.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gestioneMissioni" id="BPMNShape_gestioneMissioni">
+        <omgdc:Bounds height="69.0" width="118.0" x="1120.0" y="217.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inclusivegateway1" id="BPMNShape_inclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="1110.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inclusivegateway2" id="BPMNShape_inclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="1099.0" y="151.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flowRecuperoDatiPolicy" id="BPMNEdge_flowRecuperoDatiPolicy">
+        <omgdi:waypoint x="97.0" y="194.0"></omgdi:waypoint>
+        <omgdi:waypoint x="197.0" y="139.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewayRecuperoDatiPolicy" id="BPMNEdge_flowExclusivegatewayRecuperoDatiPolicy">
+        <omgdi:waypoint x="255.0" y="106.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="130.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSollecitoPolicyMancantiAPA" id="BPMNEdge_flowSollecitoPolicyMancantiAPA">
+        <omgdi:waypoint x="370.0" y="110.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="82.0"></omgdi:waypoint>
+        <omgdi:waypoint x="450.0" y="65.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowNotificaErroreReperimentoPolicyAAmministratore" id="BPMNEdge_flowNotificaErroreReperimentoPolicyAAmministratore">
+        <omgdi:waypoint x="370.0" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="205.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="193.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowRecuperoDatiMissioniCorrenti" id="BPMNEdge_flowRecuperoDatiMissioniCorrenti">
+        <omgdi:waypoint x="370.0" y="150.0"></omgdi:waypoint>
+        <omgdi:waypoint x="295.0" y="278.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewayRecuperoDatiMissioniCorrenti" id="BPMNEdge_flowExclusivegatewayRecuperoDatiMissioniCorrenti">
+        <omgdi:waypoint x="295.0" y="359.0"></omgdi:waypoint>
+        <omgdi:waypoint x="390.0" y="400.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowNotificaErroreReperimentoMissioniAAmministratore" id="BPMNEdge_flowNotificaErroreReperimentoMissioniAAmministratore">
+        <omgdi:waypoint x="410.0" y="420.0"></omgdi:waypoint>
+        <omgdi:waypoint x="522.0" y="381.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendNotificaErroreReperimentoPolicyAAmministratore" id="BPMNEdge_flowendNotificaErroreReperimentoPolicyAAmministratore">
+        <omgdi:waypoint x="735.0" y="189.0"></omgdi:waypoint>
+        <omgdi:waypoint x="817.0" y="193.0"></omgdi:waypoint>
+        <omgdi:waypoint x="800.0" y="120.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendSollecitoPolicyMancantiAPA" id="BPMNEdge_flowendSollecitoPolicyMancantiAPA">
+        <omgdi:waypoint x="769.0" y="54.0"></omgdi:waypoint>
+        <omgdi:waypoint x="800.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendExclusivegatewayRecuperoDatiMissioniCorrenti" id="BPMNEdge_flowendExclusivegatewayRecuperoDatiMissioniCorrenti">
+        <omgdi:waypoint x="390.0" y="400.0"></omgdi:waypoint>
+        <omgdi:waypoint x="457.0" y="342.0"></omgdi:waypoint>
+        <omgdi:waypoint x="716.0" y="278.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendNotificaErroreReperimentoMissioniAAmministratore" id="BPMNEdge_flowendNotificaErroreReperimentoMissioniAAmministratore">
+        <omgdi:waypoint x="714.0" y="401.0"></omgdi:waypoint>
+        <omgdi:waypoint x="716.0" y="278.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowElaborazioneRanking" id="BPMNEdge_flowElaborazioneRanking">
+        <omgdi:waypoint x="390.0" y="440.0"></omgdi:waypoint>
+        <omgdi:waypoint x="545.0" y="540.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowAggiornamentoRanking" id="BPMNEdge_flowAggiornamentoRanking">
+        <omgdi:waypoint x="606.0" y="572.0"></omgdi:waypoint>
+        <omgdi:waypoint x="772.0" y="535.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewayAggiornamentoRanking" id="BPMNEdge_flowExclusivegatewayAggiornamentoRanking">
+        <omgdi:waypoint x="827.0" y="500.0"></omgdi:waypoint>
+        <omgdi:waypoint x="822.0" y="424.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1130.0" y="380.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowNotificaErroreAggiornamentoRankingAAmministratore" id="BPMNEdge_flowNotificaErroreAggiornamentoRankingAAmministratore">
+        <omgdi:waypoint x="1130.0" y="380.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1202.0" y="527.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendNotificaErroreAggiornamentoRankingAAmministratore" id="BPMNEdge_flowendNotificaErroreAggiornamentoRankingAAmministratore">
+        <omgdi:waypoint x="1262.0" y="343.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1266.0" y="61.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendExclusivegatewayAggiornamentoRanking" id="BPMNEdge_flowendExclusivegatewayAggiornamentoRanking">
+        <omgdi:waypoint x="1110.0" y="360.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="344.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="979.0" y="158.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="75.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="800.0" y="120.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="158.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="716.0" y="238.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="198.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="571.0" y="65.0"></omgdi:waypoint>
+        <omgdi:waypoint x="660.0" y="54.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="535.0" y="193.0"></omgdi:waypoint>
+        <omgdi:waypoint x="616.0" y="189.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="640.0" y="381.0"></omgdi:waypoint>
+        <omgdi:waypoint x="714.0" y="401.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="1202.0" y="527.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1262.0" y="423.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="1266.0" y="61.0"></omgdi:waypoint>
+        <omgdi:waypoint x="979.0" y="158.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="1119.0" y="151.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1266.0" y="61.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="979.0" y="251.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1119.0" y="191.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="1130.0" y="340.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1179.0" y="286.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="1179.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1119.0" y="191.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

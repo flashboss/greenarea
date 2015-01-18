@@ -1,0 +1,89 @@
+@import url(../activiti/styles.css);
+
+.header {
+	background-image: url('img/torino_banner.png');
+}
+
+.menu_wrapper {
+	background-image: url('img/menu_bg.png');
+}
+
+
+/*------------
+ * TABLE 
+ * -----------*/
+
+
+.v-table-header td {
+	background-color: #007dc3;
+}
+
+.v-table-row-odd {
+	background: #ccf1ff;
+}
+.v-table .v-selected, .black .v-table .v-selected {
+	background-color: #4d749f;
+}
+.v-table-cell-content-father {
+	background: none repeat scroll 0% 0% #007dc3;
+}
+.v-table.menu-left .v-selected {
+	color: #007dc3;
+}
+
+.v-table-header, .v-table-footer, .v-table-footer table {
+	background-color: #007dc3;
+}
+
+.pa-table .v-table-footer {
+	background-color: transparent;
+}
+
+.op-table .v-table-footer {
+	background-color: transparent;
+}
+
+
+/*------------
+ * Buttons 
+ * -----------*/
+
+.v-button:focus {
+	background-color: #00a3ff;
+}
+
+.v-button:focus .v-button-wrap {
+	background-color: #00a3ff;
+}
+
+.v-button:active,
+.v-button.v-pressed {
+	background-color: #00a3ff;
+}
+
+.v-button:active .v-button-wrap,
+.v-button.v-pressed .v-button-wrap {
+	background-color: #00a3ff;
+}
+
+.v-button,
+.v-disabled.v-button {
+	background-color: #007dc3;
+}
+
+
+/*------------
+ * Label 
+ * -----------*/
+ .v-label-h1, .v-label-h2, .v-caption-h1, .v-caption-h2, .white .v-label-h1, .white .v-label-h2, .white .v-caption-h1, .white .v-caption-h2 {
+ 	color: #007dc3;
+ }
+ 
+ .v-caption .v-captiontext {
+	color: #007dc3;
+}
+
+.v-table-cell-content-highlights {
+	background-color: #0aa0f3;
+}
+

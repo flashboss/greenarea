@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.EditFreightTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.EditFreightLabel_attachments}"
+					for="attachments" />
+				<h:outputText id="attachments"
+					value="#{freightController.selected.attachments}"
+					title="#{bundle.EditFreightTitle_attachments}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_codeId}"
+					for="codeId" />
+				<h:inputText id="codeId"
+					value="#{freightController.selected.codeId}"
+					title="#{bundle.EditFreightTitle_codeId}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_description}"
+					for="description" />
+				<h:inputText id="description"
+					value="#{freightController.selected.description}"
+					title="#{bundle.EditFreightTitle_description}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_height}"
+					for="height" />
+				<h:inputText id="height"
+					value="#{freightController.selected.height}"
+					title="#{bundle.EditFreightTitle_height}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_leng}" for="leng" />
+				<h:inputText id="leng" value="#{freightController.selected.leng}"
+					title="#{bundle.EditFreightTitle_leng}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_ft}" for="ft" />
+				<h:selectOneMenu id="ft" value="#{freightController.selected.ft}"
+					title="#{bundle.EditFreightTitle_ft}">
+					<f:selectItems
+						value="#{freightTypeController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditFreightLabel_volume}"
+					for="volume" />
+				<h:inputText id="volume"
+					value="#{freightController.selected.volume}"
+					title="#{bundle.EditFreightTitle_volume}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_weight}"
+					for="weight" />
+				<h:inputText id="weight"
+					value="#{freightController.selected.weight}"
+					title="#{bundle.EditFreightTitle_weight}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_width}" for="width" />
+				<h:inputText id="width" value="#{freightController.selected.width}"
+					title="#{bundle.EditFreightTitle_width}" />
+				<h:outputLabel value="#{bundle.EditFreightLabel_freightState}"
+					for="freightState" />
+				<h:selectOneMenu id="freightState"
+					value="#{freightController.selected.freightState}"
+					title="#{bundle.EditFreightTitle_freightState}" required="true"
+					requiredMessage="#{bundle.EditFreightRequiredMessage_freightState}">
+					<f:selectItems
+						value="#{freightStateController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditFreightLabel_transport}"
+					for="transport" />
+				<h:selectOneMenu id="transport"
+					value="#{freightController.selected.transport}"
+					title="#{bundle.EditFreightTitle_transport}">
+					<f:selectItems
+						value="#{transportController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditFreightLabel_dropDownPoint}"
+					for="dropDownPoint" />
+				<h:selectOneMenu id="dropDownPoint"
+					value="#{freightController.selected.dropDownPoint}"
+					title="#{bundle.EditFreightTitle_dropDownPoint}">
+					<f:selectItems
+						value="#{exchangeStopController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditFreightLabel_pickUpPoint}"
+					for="pickUpPoint" />
+				<h:selectOneMenu id="pickUpPoint"
+					value="#{freightController.selected.pickUpPoint}"
+					title="#{bundle.EditFreightTitle_pickUpPoint}">
+					<f:selectItems
+						value="#{exchangeStopController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:commandLink action="#{freightController.update}"
+				value="#{bundle.EditFreightSaveLink}" />
+			<br />
+			<br />
+			<h:link outcome="View" value="#{bundle.EditFreightViewLink}" />
+			<br />
+			<h:commandLink action="#{freightController.prepareList}"
+				value="#{bundle.EditFreightShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.EditFreightIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ViewTapOutDataTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.ViewTapOutDataLabel_id}" />
+				<h:outputText value="#{tapOutDataController.selected.id}"
+					title="#{bundle.ViewTapOutDataTitle_id}" />
+				<h:outputText value="#{bundle.ViewTapOutDataLabel_vin}" />
+				<h:outputText value="#{tapOutDataController.selected.vin}"
+					title="#{bundle.ViewTapOutDataTitle_vin}" />
+				<h:outputText value="#{bundle.ViewTapOutDataLabel_serviceProvider}" />
+				<h:outputText
+					value="#{tapOutDataController.selected.serviceProvider}"
+					title="#{bundle.ViewTapOutDataTitle_serviceProvider}" />
+				<h:outputText value="#{bundle.ViewTapOutDataLabel_codeFunction}" />
+				<h:outputText value="#{tapOutDataController.selected.codeFunction}"
+					title="#{bundle.ViewTapOutDataTitle_codeFunction}" />
+				<h:outputText value="#{bundle.ViewTapOutDataLabel_date}" />
+				<h:outputText value="#{tapOutDataController.selected.date.time}"
+					title="#{bundle.ViewTapOutDataTitle_date}">
+					<f:convertDateTime pattern="d-M-yyyy HH:mm:ss" />
+				</h:outputText>
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{tapOutDataController.destroyAndView}"
+				value="#{bundle.ViewTapOutDataDestroyLink}" />
+			<br />
+			<br />
+			<h:link outcome="Edit" value="#{bundle.ViewTapOutDataEditLink}" />
+			<br />
+			<h:commandLink action="#{tapOutDataController.prepareCreate}"
+				value="#{bundle.ViewTapOutDataCreateLink}" />
+			<br />
+			<h:commandLink action="#{tapOutDataController.prepareList}"
+				value="#{bundle.ViewTapOutDataShowAllLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.ViewTapOutDataIndexLink}" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

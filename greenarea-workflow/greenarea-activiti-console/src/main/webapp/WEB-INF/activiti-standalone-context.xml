@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+
+	<bean id="demoDataGenerator" class="it.vige.greenarea.bpm.custom.GreenareaDataGenerator"
+		init-method="init">
+		<property name="processEngine" ref="processEngine" />
+		<property name="createDemoUsersAndGroups" value="true" />
+		<property name="createDemoProcessDefinitions" value="false" />
+		<property name="createDemoModels" value="false" />
+		<property name="generateReportData" value="false" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:jboss/TransactionManager"></property>
+		<property name="resourceRef" value="true" />
+	</bean>
+
+	<!-- bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+		<property name="jndiName" value="jdbc/activitidb" /> </bean> <bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
+		<property name="dataSource" ref="dataSource" /> </bean -->
+
+	<bean id="processEngineConfiguration" class="org.activiti.cdi.CdiJtaProcessEngineConfiguration">
+		<!-- bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" -->
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="dataSourceJndiName" value="jdbc/activitidb" />
+		<property name="databaseSchemaUpdate" value="true" />
+		<property name="transactionsExternallyManaged" value="true" />
+		<property name="jobExecutorActivate" value="true" />
+		<property name="jobExecutor" ref="jobExecutor" />
+		<property name="enableDatabaseEventLogging" value="true" />
+		<property name="customFormTypes">
+			<list>
+				<bean class="org.activiti.explorer.form.UserFormType" />
+				<bean class="org.activiti.explorer.form.ProcessDefinitionFormType" />
+				<bean class="org.activiti.explorer.form.MonthFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniOPCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniPASintesiFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniOPSintesiFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniSTCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniTRCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniNoRankingFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriTsCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriLetturaCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PolicyCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.RichiesteCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PrezziCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.FiltriCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.VeicoliCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.VeicoliSTCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.FasceOrarieCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TimeFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DateViewFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DateSimulazioniViewFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioPolicyFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneSTFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneTRFormType" />
+				<bean class="it.vige.greenarea.bpm.form.OperatoreLogisticoFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TargaStFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TargaTrFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniStFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniTrFormType" />
+				<bean class="it.vige.greenarea.bpm.form.SimulazioniCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliTRCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType" />
+			</list>
+		</property>
+
+		<property name="deploymentResources" value="classpath*:/it/vige.greenarea/bpm/*/*.bpmn20.xml" />
+
+		<!-- notifiche via mail -->
+		<property name="mailServerDefaultFrom" value="${mailServerDefaultFrom}" />
+		<property name="mailServerHost" value="${mailServerHost}" />
+		<property name="mailServerPassword" value="${mailServerPassword}" />
+		<property name="mailServerPort" value="${mailServerPort}" />
+		<property name="mailServerUsername" value="${mailServerUsername}" />
+		<property name="mailServerUseTLS" value="${mailServerUseTLS}" />
+
+		<property name="history" value="${history}" />
+	</bean>
+
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
+		destroy-method="destroy">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
+
+	<bean id="activitiLoginHandler" class="org.activiti.explorer.ui.login.DefaultLoginHandler">
+		<property name="identityService" ref="identityService" />
+	</bean>
+
+	<bean id="jobExecutor" class="org.activiti.spring.SpringJobExecutor">
+		<property name="maxJobsPerAcquisition" value="30" />
+		<property name="waitTimeInMillis" value="5000" />
+		<property name="lockTimeInMillis" value="300000" />
+		<property name="taskExecutor" ref="taskExecutor" />
+	</bean>
+	<bean id="taskExecutor" class="org.springframework.core.task.SyncTaskExecutor" />
+</beans>

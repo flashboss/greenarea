@@ -1,0 +1,143 @@
+/* 
+    Document   : citiLog
+    Created on : 24-gen-2012, 12.09.46
+    Author     : 
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+
+/* CSS Document */
+
+h4{
+    text-align: center;
+    text-indent: 4px;
+    font-family:"Century Gothic";
+    font-size:14px;
+    font-weight:normal;
+    color: #fffefc;
+    line-height:25px;
+}
+
+h3 {
+
+    font-family:"Century Gothic";
+    font-size:14px;
+    color:#900;
+    font-weight:normal;
+    height:28px;
+    padding-left:7px;
+    line-height:25px;
+
+}
+
+h1 {
+    font-family:"Century Gothic";
+    font-size:21px;
+    color:#900;
+    font-weight:normal;
+    padding-top:5px;
+    padding-bottom:10px;
+    margin:0;
+}
+h2 {
+    font-family:"Century Gothic";
+    font-size:21px;
+    color:#fff;
+    font-weight:normal;
+    line-height:21px;
+    padding-left:5px;
+    padding-bottom:10px;
+    margin:0;
+}
+h5 {
+
+    font-family:"Century Gothic";
+    font-size:14px;
+    color:#FFF;
+    font-weight:bold;
+    height:28px;
+    width:690px;
+    padding-left:7px;
+    padding-top:5px;
+}
+
+.titoli{
+    font-family:"Century Gothic";
+    font-size:18px;
+    color:#FFF;
+    font-weight:normal;
+    height:28px;
+    padding-left:7px;
+    line-height:25px;
+
+}
+
+
+body {
+    font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+    padding-top: 0%;
+    padding-bottom: 0%;
+    text-align:center;
+    background: white no-repeat;
+}
+#container{
+    width: 320px;
+    height: 630px;
+    background: #fffeff;
+    margin: auto auto;
+    border-style: solid;
+    text-align:center;
+    align: center
+}
+
+
+#subcontainer1{
+    width: 100%;
+    height:25%;
+    background-color: #fffeff;
+}
+#subcontainer2{
+
+    width: 100%;
+    height:69%;
+    background-color: #fffeff;
+}
+#subcontainer3{
+    width:100%;
+    height:5%;
+    background-color: #fffeff;
+}
+#columnLeft{
+	width:29%;
+    height:100%;
+	float: left;
+	background-color: #ff4d55;
+}
+
+#central{
+	width:69%;
+    height:100%;
+	background-color: #6f6bf6;
+	float: right;
+}
+
+#top{
+	width:65%;
+    height:100%;
+	background-color: #ff9f72;
+	float: left;
+}
+
+#topRight{
+	width:35%;
+    height:100%;
+	background-color: #ff66f3;
+	float: right;
+}

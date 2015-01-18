@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/css/cityLog.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>#{messages.fasceorarie_greenarea}</title>
+	<style>
+div.ui-datepicker {
+	font-size: 12px !important;
+}
+</style>
+</h:head>
+<h:body>
+	#{addTimeSlotBean.clear()}
+	<div id="container">
+		<div id="subcontainerTop">
+			<div id="topLeft">
+				<ui:include src="/DivTopLeft.xhtml" />
+			</div>
+			<div id="topRight">
+				<ui:include src="/DivTopRight.xhtml" />
+			</div>
+		</div>
+		<div id="subcontainerCenterUp">
+			<ui:include src="/Barra.xhtml" />
+		</div>
+		<div id="subcontainerCenterDown">
+
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="#{messages.fasceorarie_creazione13}" />
+					</h1>
+					<p:panelGrid style="font-size:12px; width: 40%" columns="2">
+						<f:facet name="header">  
+                                #{messages.fasceorarie_calendario_fascia_oraria}
+                        </f:facet>
+                        
+						<h:outputLabel value="#{messages.fasceorarie_ga}"
+							for="ga" />
+						<h:inputText id="ga" value="#{addTimeSlotBean.ga}"
+							title="GA" />
+							
+						<h:outputLabel value="#{messages.fasceorarie_orario}"
+							for="startTS" />
+						<p:calendar id="startTS" value="#{addTimeSlotBean.startTS}"
+							pattern="HH:mm" stepMinute="5" timeOnly="true" title="StartTS" />
+						<h:outputLabel value="" for="finishTS" />
+						<p:calendar id="finishTS" value="#{addTimeSlotBean.finishTS}"
+							pattern="HH:mm" stepMinute="5" timeOnly="true" title="FinishTS" />
+
+
+						<h:outputLabel value="#{messages.fasceorarie_periodo}"
+							for="dayStart" />
+						<p:calendar id="dayStart" value="#{addTimeSlotBean.dayStart}"
+							pattern="dd-MM-yyyy" navigator="true" display="inline"
+							title="DayStart" />
+						<h:outputLabel value=" " for="dayFinish" />
+						<p:calendar id="dayFinish" value="#{addTimeSlotBean.dayFinish}"
+							pattern="dd-MM-yyyy" navigator="true" display="inline"
+							title="DayFinish" />
+
+						<h:outputLabel value="#{messages.fasceorarie_ripetizione}"
+							for="wmy" />
+						<h:selectOneMenu id="wmy" value="#{addTimeSlotBean.wmy}"
+							title="Wmy">
+							<f:selectItems value="#{addTimeSlotBean.ripetizioni}" />
+						</h:selectOneMenu>
+
+						<h:outputLabel value="#{messages.fasceorarie_aperturarichieste}"
+							for="timeToAcceptRequest" />
+						<h:selectOneMenu id="timeToAcceptRequest"
+							value="#{addTimeSlotBean.timeToAcceptRequest}"
+							title="TimeToAcceptRequest">
+							<f:selectItems value="#{addTimeSlotBean.aperturaRichieste}" />
+						</h:selectOneMenu>
+						<h:outputLabel value="#{messages.fasceorarie_chiusurarichieste}"
+							for="timeToStopRequest" />
+						<h:selectOneMenu id="timeToStopRequest"
+							value="#{addTimeSlotBean.timeToStopRequest}"
+							title="TimeToStopRequest">
+							<f:selectItems value="#{addTimeSlotBean.chiusuraRichieste}" />
+						</h:selectOneMenu>
+
+						<h:outputLabel
+							value="#{messages.fasceorarie_soglia_di_tolleranza}"
+							for="tollerance" />
+						<h:selectOneMenu id="tollerance"
+							value="#{addTimeSlotBean.tollerance}" title="Tollerance">
+							<f:selectItems value="#{addTimeSlotBean.tolleranze}" />
+						</h:selectOneMenu>
+						<h:outputLabel
+							value="#{messages.fasceorarie_tipologia_classifica}" for="vikInd" />
+						<h:selectOneMenu id="vikInd" value="#{addTimeSlotBean.vikInd}"
+							title="vikInd">
+							<f:selectItems value="#{addTimeSlotBean.tipologiaClassifiche}" />
+						</h:selectOneMenu>
+					</p:panelGrid>
+					<h:commandButton id="Aggiungi"
+						value="#{messages.fasceorarie_avanti}"
+						action="#{addTimeSlotBean.createTimeSlot()}" />
+
+				</h:form>
+			</f:view>
+
+		</div>
+		<div id="subcontainerDown">
+			<ui:include src="SubContainerDown.xhtml" />
+		</div>
+	</div>
+</h:body>
+</html>

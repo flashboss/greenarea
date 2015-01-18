@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListTransportTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListTransportEmpty}" rendered="#{transportController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{transportController.items.rowCount > 0}">
+                    <h:outputText value="#{transportController.pagination.pageFirstItem + 1}..#{transportController.pagination.pageLastItem + 1}/#{transportController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{transportController.previous}" value="#{bundle.Previous} #{transportController.pagination.pageSize}" rendered="#{transportController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{transportController.next}" value="#{bundle.Next} #{transportController.pagination.pageSize}" rendered="#{transportController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{transportController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_alfacode}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.alfacode}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_totalVolume}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.totalVolume}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_transportState}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.transportState}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_mission}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mission}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_source}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.source.zipCode} - #{item.source.city}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_destination}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.destination.zipCode} - #{item.destination.city}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_pickup}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pickup.street}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_dropdown}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dropdown.street}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_serviceClass}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.serviceClass}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_shippingOrder}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shippingOrder}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_timeAccept}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timeAccept}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_timeClosing}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timeClosing}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_timeRank}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timeRank}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_dateMiss}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dateMiss}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListTransportTitle_timeSlot}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.timeSlot}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{transportController.prepareView}" value="#{bundle.ListTransportViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{transportController.prepareEdit}" value="#{bundle.ListTransportEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{transportController.destroy}" value="#{bundle.ListTransportDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{transportController.prepareCreate}" value="#{bundle.ListTransportCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListTransportIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

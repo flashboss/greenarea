@@ -1,0 +1,13 @@
+.v-datefield-calendarpanel-day-disabled-day {
+   color: #c0c0c0;
+   cursor: default;
+}
+.birthday {
+   background-image:url('birthday-2.png');
+}
+.busy-day {
+   background-image:url('busy-day-2.png');
+}
+.free-day {
+   background-image:url('free-day-2.png');
+}

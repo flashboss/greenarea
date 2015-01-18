@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/css/cityLog.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{messages.fasceorarie_greenarea}</title>
+</h:head>
+<h:body>
+	<div id="container">
+		<div id="subcontainerTop">
+			<div id="topLeft">
+				<ui:include src="/DivTopLeft.xhtml" />
+			</div>
+			<div id="topRight">
+				<ui:include src="/DivTopRight.xhtml" />
+			</div>
+		</div>
+		<div id="subcontainerCenterUp">
+			<ui:include src="/Barra.xhtml" />
+		</div>
+		<div id="subcontainerCenterDown">
+
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText
+							value="#{messages.fasceorarie_storico_delle_fasce_orarie}" />
+					</h1>
+					<p:dataTable style="font-size:12px; width: 100%"
+						value="#{storicoBean.allTsStat()}" var="item"
+						paginatorAlwaysVisible="false" paginator="true" rows="12">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_data}" />
+							</f:facet>
+							<h:outputText value="#{item.dateMission}">
+								<f:convertDateTime pattern="d/M/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_tot_richieste}" />
+							</f:facet>
+							<h:outputText value="#{item.totalReq}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_accessi_consentiti}" />
+							</f:facet>
+							<h:outputText value="#{item.inOk}/#{item.totalReq}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_accessi_negati}" />
+							</f:facet>
+							<h:outputText value="#{item.inKo}/#{item.totalReq}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{messages.fasceorarie_accessi_pagamento}" />
+							</f:facet>
+							<h:outputText value="#{item.inWithPayment}/#{item.inOk}" />
+						</p:column>
+						<p:column>
+							<h:commandButton id="Dettaglio"
+								value="#{messages.fasceorarie_dettaglio}"
+								action="#{storicoBean.storico_BottoneDettaglio(item.dateMission, item.idTimeSlot)}" />
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</f:view>
+		</div>
+		<div id="subcontainerDown">
+			<ui:include src="SubContainerDown.xhtml" />
+		</div>
+	</div>
+</h:body>
+</html>

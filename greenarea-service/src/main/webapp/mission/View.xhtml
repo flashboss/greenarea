@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ViewMissionTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.ViewMissionLabel_id}" />
+				<h:outputText value="#{missionController.selected.id}"
+					title="#{bundle.ViewMissionTitle_id}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_startTime}" />
+				<h:outputText value="#{missionController.selected.startTime}"
+					title="#{bundle.ViewMissionTitle_startTime}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_expireTime}" />
+				<h:outputText value="#{missionController.selected.expireTime}"
+					title="#{bundle.ViewMissionTitle_expireTime}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_attachments}" />
+				<h:outputText value="#{missionController.selected.attachments}"
+					title="#{bundle.ViewMissionTitle_attachments}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_truck}" />
+				<h:outputText value="#{missionController.selected.truck}"
+					title="#{bundle.ViewMissionTitle_truck}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_description}" />
+				<h:outputText value="#{missionController.selected.description}"
+					title="#{bundle.ViewMissionTitle_description}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_missionState}" />
+				<h:outputText value="#{missionController.selected.missionState}"
+					title="#{bundle.ViewMissionTitle_missionState}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_ownerUser}" />
+				<h:outputText value="#{missionController.selected.ownerUser}"
+					title="#{bundle.ViewMissionTitle_ownerUser}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_name}" />
+				<h:outputText value="#{missionController.selected.name}"
+					title="#{bundle.ViewMissionTitle_name}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_company}" />
+				<h:outputText value="#{missionController.selected.company}"
+					title="#{bundle.ViewMissionTitle_company}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_timeSlot}" />
+				<h:outputText value="#{missionController.selected.timeSlot}"
+					title="#{bundle.ViewMissionTitle_timeSlot}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_addressList}" />
+				<h:outputText value="#{missionController.selected.addressList}"
+					title="#{bundle.ViewMissionTitle_addressList}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_valuesMission}" />
+				<h:outputText value="#{missionController.selected.valuesMission}"
+					title="#{bundle.ViewMissionTitle_valuesMission}" />
+				<h:outputText value="#{bundle.ViewMissionLabel_resVikor}" />
+				<h:outputText value="#{missionController.selected.resVikor}"
+					title="#{bundle.ViewMissionTitle_resVikor}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{missionController.destroyAndView}"
+				value="#{bundle.ViewMissionDestroyLink}" />
+			<br />
+			<br />
+			<h:link outcome="Edit" value="#{bundle.ViewMissionEditLink}" />
+			<br />
+			<h:commandLink action="#{missionController.prepareCreate}"
+				value="#{bundle.ViewMissionCreateLink}" />
+			<br />
+			<h:commandLink action="#{missionController.prepareList}"
+				value="#{bundle.ViewMissionShowAllLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.ViewMissionIndexLink}" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

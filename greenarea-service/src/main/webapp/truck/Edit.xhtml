@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.EditTruckTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.EditTruckLabel_attachments}"
+					for="attachments" />
+				<h:outputText id="attachments"
+					value="#{truckController.selected.attachments}"
+					title="#{bundle.EditTruckTitle_attachments}" />
+				<h:outputLabel value="#{bundle.EditTruckLabel_state}" for="state" />
+				<h:selectOneMenu id="state"
+					value="#{truckController.selected.state}"
+					title="#{bundle.EditTruckTitle_state}">
+					<f:selectItems
+						value="#{truckStateController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditTruckLabel_plateNumber}"
+					for="plateNumber" />
+				<h:inputText id="plateNumber"
+					value="#{truckController.selected.plateNumber}"
+					title="#{bundle.EditTruckTitle_plateNumber}" required="true"
+					requiredMessage="#{bundle.EditTruckRequiredMessage_plateNumber}" />
+				<h:outputLabel value="#{bundle.EditTruckLabel_serviceClass}"
+					for="serviceClass" />
+				<h:selectOneMenu id="serviceClass"
+					value="#{truckController.selected.serviceClass}"
+					title="#{bundle.EditTruckTitle_serviceClass}">
+					<f:selectItems
+						value="#{truckServiceClassController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:commandLink action="#{truckController.update}"
+				value="#{bundle.EditTruckSaveLink}" />
+			<br />
+			<br />
+			<h:link outcome="View" value="#{bundle.EditTruckViewLink}" />
+			<br />
+			<h:commandLink action="#{truckController.prepareList}"
+				value="#{bundle.EditTruckShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.EditTruckIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

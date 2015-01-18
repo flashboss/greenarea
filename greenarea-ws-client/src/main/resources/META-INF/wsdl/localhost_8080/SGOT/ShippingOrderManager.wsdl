@@ -1,0 +1,527 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservice.sgot.sgapl.greenarea.vige.it/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="ShippingOrderManager" targetNamespace="http://webservice.sgot.sgapl.greenarea.vige.it/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://webservice.sgot.sgapl.greenarea.vige.it/"
+			elementFormDefault="unqualified"
+			targetNamespace="http://webservice.sgot.sgapl.greenarea.vige.it/"
+			version="1.0">
+			<xs:element name="addShipping" type="tns:addShipping" />
+			<xs:element name="addShippingResponse" type="tns:addShippingResponse" />
+			<xs:element name="confirmShipping" type="tns:confirmShipping" />
+			<xs:element name="confirmShippingResponse" type="tns:confirmShippingResponse" />
+			<xs:element name="dropShipping" type="tns:dropShipping" />
+			<xs:element name="dropShippingResponse" type="tns:dropShippingResponse" />
+			<xs:element name="estimateShipping" type="tns:estimateShipping" />
+			<xs:element name="estimateShippingResponse" type="tns:estimateShippingResponse" />
+			<xs:element name="getShippingStatus" type="tns:getShippingStatus" />
+			<xs:element name="getShippingStatusResponse" type="tns:getShippingStatusResponse" />
+			<xs:element name="getShippings" type="tns:getShippings" />
+			<xs:element name="getShippingsResponse" type="tns:getShippingsResponse" />
+			<xs:element name="getTrackingUrl" type="tns:getTrackingUrl" />
+			<xs:element name="getTrackingUrlResponse" type="tns:getTrackingUrlResponse" />
+			<xs:element name="locateShipping" type="tns:locateShipping" />
+			<xs:element name="locateShippingResponse" type="tns:locateShippingResponse" />
+			<xs:element name="requestShipping" type="tns:requestShipping" />
+			<xs:element name="requestShippingResponse" type="tns:requestShippingResponse" />
+			<xs:element name="requestShippings" type="tns:requestShippings" />
+			<xs:element name="requestShippingsResponse" type="tns:requestShippingsResponse" />
+			<xs:element name="testNewOrder" type="tns:testNewOrder" />
+			<xs:element name="testNewOrderResponse" type="tns:testNewOrderResponse" />
+			<xs:complexType name="getShippings">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="operatoreLogistico"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getShippingsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:requestShippingsResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShippingsResponseData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="maxTimeShipment" type="xs:long" />
+					<xs:element minOccurs="0" name="maxTimeValidity" type="xs:long" />
+					<xs:element minOccurs="0" name="result"
+						type="tns:resultOperationResponse" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="shippings"
+						nillable="true" type="tns:shippingOrderData" />
+					<xs:element minOccurs="0" name="totalCost" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="resultOperationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCode" type="xs:string" />
+					<xs:element minOccurs="0" name="errorDescription" type="xs:string" />
+					<xs:element minOccurs="0" name="status" type="tns:resultStatus" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="shippingOrderData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="fromAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="fromName" type="xs:string" />
+					<xs:element minOccurs="0" name="note" type="xs:string" />
+					<xs:element minOccurs="0" name="operatoreLogistico"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="shipmentId" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="shippingItems" nillable="true" type="tns:shippingItemData" />
+					<xs:element name="terminiDiConsegna">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="0" name="key" type="xs:string" />
+											<xs:element minOccurs="0" name="value" type="xs:string" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="toAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="toName" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="address">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="city" type="xs:string" />
+					<xs:element minOccurs="0" name="country" type="xs:string" />
+					<xs:element minOccurs="0" name="number" type="xs:string" />
+					<xs:element minOccurs="0" name="province" type="xs:string" />
+					<xs:element minOccurs="0" name="region" type="xs:string" />
+					<xs:element minOccurs="0" name="street" type="xs:string" />
+					<xs:element minOccurs="0" name="zipCode" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="shippingItemData">
+				<xs:sequence>
+					<xs:element name="attributi">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="0" name="key" type="xs:string" />
+											<xs:element minOccurs="0" name="value" type="xs:string" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+					<xs:element minOccurs="0" name="itemID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="locateShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingOrderID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="locateShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:locateShippingResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="locateShippingResponseData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="address" type="xs:string" />
+					<xs:element minOccurs="0" name="exchangeSiteName" type="xs:string" />
+					<xs:element minOccurs="0" name="result"
+						type="tns:resultOperationResponse" />
+					<xs:element minOccurs="0" name="transportState" type="tns:transportState" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShippings">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="shippings"
+						type="tns:shippingOrderData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShippingsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:resultOperationResponse" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="confirmShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingOrderID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="confirmShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:resultOperationResponse" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="estimateShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingOrder" type="tns:shippingOrderData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="estimateShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:requestShippingResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShippingResponseData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="maxTimeShipment" type="xs:long" />
+					<xs:element minOccurs="0" name="maxTimeValidity" type="xs:long" />
+					<xs:element minOccurs="0" name="result"
+						type="tns:resultOperationResponse" />
+					<xs:element minOccurs="0" name="shippingOrderID" type="xs:string" />
+					<xs:element minOccurs="0" name="totalCost" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="testNewOrder">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="testNewOrderResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="fromName" type="xs:string" />
+					<xs:element minOccurs="0" name="fromAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="toName" type="xs:string" />
+					<xs:element minOccurs="0" name="toAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="shippingOrder" type="tns:shippingOrderData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="requestShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:requestShippingResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getShippingStatus">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getShippingStatusResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:getShippingStatusResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getShippingStatusResponseData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="result"
+						type="tns:resultOperationResponse" />
+					<xs:element minOccurs="0" name="shippingStatus" type="tns:stateValue" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTrackingUrl">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTrackingUrlResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:getTrackingUrlResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTrackingUrlResponseData">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="result"
+						type="tns:resultOperationResponse" />
+					<xs:element minOccurs="0" name="url" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="dropShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="shippingOrderID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="dropShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:resultOperationResponse" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addShipping">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="fromName" type="xs:string" />
+					<xs:element minOccurs="0" name="fromAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="toName" type="xs:string" />
+					<xs:element minOccurs="0" name="toAddress" type="tns:address" />
+					<xs:element minOccurs="0" name="shippingOrder" type="tns:shippingOrderData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addShippingResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:requestShippingResponseData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="resultStatus">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OK" />
+					<xs:enumeration value="NOK" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="transportState">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="waiting" />
+					<xs:enumeration value="assigned" />
+					<xs:enumeration value="on_delivery" />
+					<xs:enumeration value="aborted" />
+					<xs:enumeration value="incomplete" />
+					<xs:enumeration value="completed" />
+					<xs:enumeration value="rejected" />
+					<xs:enumeration value="unknown" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="stateValue">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="unknown" />
+					<xs:enumeration value="idle" />
+					<xs:enumeration value="suspended" />
+					<xs:enumeration value="ready" />
+					<xs:enumeration value="ongoing" />
+					<xs:enumeration value="returning" />
+					<xs:enumeration value="completed" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="requestShipping">
+		<wsdl:part element="tns:requestShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="testNewOrder">
+		<wsdl:part element="tns:testNewOrder" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTrackingUrlResponse">
+		<wsdl:part element="tns:getTrackingUrlResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getShippingsResponse">
+		<wsdl:part element="tns:getShippingsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="dropShippingResponse">
+		<wsdl:part element="tns:dropShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="confirmShipping">
+		<wsdl:part element="tns:confirmShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="dropShipping">
+		<wsdl:part element="tns:dropShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="confirmShippingResponse">
+		<wsdl:part element="tns:confirmShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="requestShippingResponse">
+		<wsdl:part element="tns:requestShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="locateShippingResponse">
+		<wsdl:part element="tns:locateShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="requestShippingsResponse">
+		<wsdl:part element="tns:requestShippingsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTrackingUrl">
+		<wsdl:part element="tns:getTrackingUrl" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="requestShippings">
+		<wsdl:part element="tns:requestShippings" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="estimateShipping">
+		<wsdl:part element="tns:estimateShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="estimateShippingResponse">
+		<wsdl:part element="tns:estimateShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="testNewOrderResponse">
+		<wsdl:part element="tns:testNewOrderResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getShippingStatus">
+		<wsdl:part element="tns:getShippingStatus" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getShippings">
+		<wsdl:part element="tns:getShippings" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="locateShipping">
+		<wsdl:part element="tns:locateShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addShippingResponse">
+		<wsdl:part element="tns:addShippingResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addShipping">
+		<wsdl:part element="tns:addShipping" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getShippingStatusResponse">
+		<wsdl:part element="tns:getShippingStatusResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="ShippingOrderManager">
+		<wsdl:operation name="getShippings">
+			<wsdl:input message="tns:getShippings" name="getShippings"></wsdl:input>
+			<wsdl:output message="tns:getShippingsResponse" name="getShippingsResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="locateShipping">
+			<wsdl:input message="tns:locateShipping" name="locateShipping"></wsdl:input>
+			<wsdl:output message="tns:locateShippingResponse" name="locateShippingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="requestShippings">
+			<wsdl:input message="tns:requestShippings" name="requestShippings"></wsdl:input>
+			<wsdl:output message="tns:requestShippingsResponse" name="requestShippingsResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="confirmShipping">
+			<wsdl:input message="tns:confirmShipping" name="confirmShipping"></wsdl:input>
+			<wsdl:output message="tns:confirmShippingResponse" name="confirmShippingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="estimateShipping">
+			<wsdl:input message="tns:estimateShipping" name="estimateShipping"></wsdl:input>
+			<wsdl:output message="tns:estimateShippingResponse" name="estimateShippingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="testNewOrder">
+			<wsdl:input message="tns:testNewOrder" name="testNewOrder"></wsdl:input>
+			<wsdl:output message="tns:testNewOrderResponse" name="testNewOrderResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="requestShipping">
+			<wsdl:input message="tns:requestShipping" name="requestShipping"></wsdl:input>
+			<wsdl:output message="tns:requestShippingResponse" name="requestShippingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getShippingStatus">
+			<wsdl:input message="tns:getShippingStatus" name="getShippingStatus"></wsdl:input>
+			<wsdl:output message="tns:getShippingStatusResponse"
+				name="getShippingStatusResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTrackingUrl">
+			<wsdl:input message="tns:getTrackingUrl" name="getTrackingUrl"></wsdl:input>
+			<wsdl:output message="tns:getTrackingUrlResponse" name="getTrackingUrlResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="dropShipping">
+			<wsdl:input message="tns:dropShipping" name="dropShipping"></wsdl:input>
+			<wsdl:output message="tns:dropShippingResponse" name="dropShippingResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addShipping">
+			<wsdl:input message="tns:addShipping" name="addShipping"></wsdl:input>
+			<wsdl:output message="tns:addShippingResponse" name="addShippingResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ShippingOrderManagerSoapBinding" type="tns:ShippingOrderManager">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getShippings">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getShippings">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getShippingsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="locateShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="locateShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="locateShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="requestShippings">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="requestShippings">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="requestShippingsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="confirmShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="confirmShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="confirmShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="estimateShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="estimateShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="estimateShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="testNewOrder">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="testNewOrder">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="testNewOrderResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="requestShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="requestShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="requestShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getShippingStatus">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getShippingStatus">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getShippingStatusResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTrackingUrl">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getTrackingUrl">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getTrackingUrlResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="dropShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="dropShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="dropShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addShipping">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="addShipping">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="addShippingResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ShippingOrderManager">
+		<wsdl:port binding="tns:ShippingOrderManagerSoapBinding"
+			name="ShippingOrderManagerPort">
+			<soap:address
+				location="http://MacBook-Vige-wifi.local:8080/greenarea-service/ShippingOrderManager" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

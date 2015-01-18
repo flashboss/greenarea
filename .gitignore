@@ -1,0 +1,10 @@
+.project
+.settings
+.classpath
+.checkstyle
+.externalToolBuilders
+.xml
+.log
+target
+generated
+bin

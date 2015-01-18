@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListFreightTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListFreightEmpty}" rendered="#{freightController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{freightController.items.rowCount > 0}">
+                    <h:outputText value="#{freightController.pagination.pageFirstItem + 1}..#{freightController.pagination.pageLastItem + 1}/#{freightController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{freightController.previous}" value="#{bundle.Previous} #{freightController.pagination.pageSize}" rendered="#{freightController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{freightController.next}" value="#{bundle.Next} #{freightController.pagination.pageSize}" rendered="#{freightController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{freightController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_codeId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codeId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_volume}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.volume}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_freightState}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.freightState}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_transport}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.transport}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_dropDownPoint}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dropDownPoint}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_pickUpPoint}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pickUpPoint}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_height}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.height}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_leng}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.leng}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_ft}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.ft}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_weight}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.weight}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFreightTitle_width}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.width}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{freightController.prepareView}" value="#{bundle.ListFreightViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{freightController.prepareEdit}" value="#{bundle.ListFreightEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{freightController.destroy}" value="#{bundle.ListFreightDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{freightController.prepareCreate}" value="#{bundle.ListFreightCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListFreightIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

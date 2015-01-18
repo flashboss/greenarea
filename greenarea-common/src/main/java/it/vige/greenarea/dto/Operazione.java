@@ -1,0 +1,5 @@
+package it.vige.greenarea.dto;
+
+public enum Operazione {
+	MODIFICA, CANCELLAZIONE, CHIUDI, DETTAGLIO, ELENCO, SIMULAZIONE, AVANTI, AGGIUNGI, INSERIMENTO
+}

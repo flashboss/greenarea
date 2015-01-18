@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.EditTruckServiceClassTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_id}"
+					for="id" />
+				<h:outputText id="id"
+					value="#{truckServiceClassController.selected.id}"
+					title="#{bundle.EditTruckServiceClassTitle_id}" />
+				<h:outputLabel
+					value="#{bundle.EditTruckServiceClassLabel_description}"
+					for="description" />
+				<h:inputText id="description"
+					value="#{truckServiceClassController.selected.description}"
+					title="#{bundle.EditTruckServiceClassTitle_description}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_model}"
+					for="model" />
+				<h:inputText id="model"
+					value="#{truckServiceClassController.selected.modelV}"
+					title="#{bundle.EditTruckServiceClassTitle_model}" required="true"
+					requiredMessage="#{bundle.EditTruckServiceClassRequiredMessage_model}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_baseName}"
+					for="baseName" />
+				<h:inputText id="baseName"
+					value="#{truckServiceClassController.selected.makeV}"
+					title="#{bundle.EditTruckServiceClassTitle_baseName}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_lenght}"
+					for="lenght" />
+				<h:inputText id="lenght"
+					value="#{truckServiceClassController.selected.lenghtV}"
+					title="#{bundle.EditTruckServiceClassTitle_lenght}" required="true"
+					requiredMessage="#{bundle.EditTruckServiceClassRequiredMessage_lenght}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_weight}"
+					for="weight" />
+				<h:inputText id="weight"
+					value="#{truckServiceClassController.selected.weightV}"
+					title="#{bundle.EditTruckServiceClassTitle_weight}" required="true"
+					requiredMessage="#{bundle.EditTruckServiceClassRequiredMessage_weight}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_emission}"
+					for="emission" />
+				<h:inputText id="emission"
+					value="#{truckServiceClassController.selected.emissionV}"
+					title="#{bundle.EditTruckServiceClassTitle_emission}"
+					required="true"
+					requiredMessage="#{bundle.EditTruckServiceClassRequiredMessage_emission}" />
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_fuel}"
+					for="fuel" />
+				<h:selectOneMenu id="fuel"
+					value="#{truckServiceClassController.selected.fuelV}"
+					title="#{bundle.EditTruckServiceClassTitle_fuel}">
+					<f:selectItems value="#{fuelController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.EditTruckServiceClassLabel_euro}"
+					for="euro" />
+				<h:inputText id="euro"
+					value="#{truckServiceClassController.selected.EURO}"
+					title="#{bundle.EditTruckServiceClassTitle_euro}" required="true"
+					requiredMessage="#{bundle.EditTruckServiceClassRequiredMessage_euro}" />
+			</h:panelGrid>
+			<h:commandLink action="#{truckServiceClassController.update}"
+				value="#{bundle.EditTruckServiceClassSaveLink}" />
+			<br />
+			<br />
+			<h:link outcome="View"
+				value="#{bundle.EditTruckServiceClassViewLink}" />
+			<br />
+			<h:commandLink action="#{truckServiceClassController.prepareList}"
+				value="#{bundle.EditTruckServiceClassShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index"
+				value="#{bundle.EditTruckServiceClassIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/css/cityLog.css" rel="stylesheet" type="text/css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>#{messages.fasceorarie_greenarea}</title>
+</h:head>
+<h:body>
+	<div id="container">
+		<div id="subcontainerTop">
+			<div id="topLeft">
+				<ui:include src="/DivTopLeft.xhtml" />
+			</div>
+			<div id="topRight">
+				<ui:include src="/DivTopRight.xhtml" />
+			</div>
+		</div>
+		<div id="subcontainerCenterUp">
+			<ui:include src="/Barra.xhtml" />
+		</div>
+		<div id="subcontainerCenterDown">
+
+
+			<f:view>
+				<h:form>
+					<h1>
+						<h:outputText value="#{messages.fasceorarie_creazione23}" />
+					</h1>
+					<h:panelGrid columns="2">
+						<h:outputLabel value="#{messages.fasceorarie_minimo}"
+							for="minValue" />
+						<h:inputText id="minValue" value="#{addTimeSlotBean.minVal}"
+							title="MinValue" />
+						<h:outputLabel value="#{messages.fasceorarie_massimo}"
+							for="maxValue" />
+						<h:inputText id="maxValue" value="#{addTimeSlotBean.maxVal}"
+							title="MaxValue" />
+						<h:outputLabel value="#{messages.fasceorarie_peso_title}"
+							for="weight" />
+						<h:selectOneMenu id="weight" value="#{addTimeSlotBean.weight}"
+							title="weight">
+							<f:selectItems value="#{addTimeSlotBean.pesi}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+					<h:commandButton id="Aggiungi"
+						value="#{messages.fasceorarie_setta}"
+						action="#{addTimeSlotBean.createParameterTS()}" />
+				</h:form>
+			</f:view>
+
+		</div>
+		<div id="subcontainerDown">
+			<ui:include src="SubContainerDown.xhtml" />
+		</div>
+	</div>
+</h:body>
+</html>

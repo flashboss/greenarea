@@ -1,0 +1,213 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservice.sgot.sgapl.greenarea.vige.it/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="SGOTadminService" targetNamespace="http://webservice.sgot.sgapl.greenarea.vige.it/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://webservice.sgot.sgapl.greenarea.vige.it/"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="http://webservice.sgot.sgapl.greenarea.vige.it/">
+			<xs:element name="getTransportInfo" type="tns:getTransportInfo" />
+			<xs:element name="getTransportInfoResponse" type="tns:getTransportInfoResponse" />
+			<xs:element name="loadOrderIDS" type="tns:loadOrderIDS" />
+			<xs:element name="loadOrderIDSResponse" type="tns:loadOrderIDSResponse" />
+			<xs:element name="showOrderDetails" type="tns:showOrderDetails" />
+			<xs:element name="showOrderDetailsResponse" type="tns:showOrderDetailsResponse" />
+			<xs:complexType name="showOrderDetails">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="showOrderDetailsResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return"
+						type="tns:shippingOrderDetails" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="shippingOrderDetails">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="cost" type="xs:string" />
+					<xs:element minOccurs="0" name="creationTimestamp" type="xs:string" />
+					<xs:element minOccurs="0" name="destinatario" type="tns:dbGeoLocation" />
+					<xs:element minOccurs="0" name="id" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="itemsList"
+						nillable="true" type="tns:shippingItemData" />
+					<xs:element minOccurs="0" name="mittente" type="tns:dbGeoLocation" />
+					<xs:element minOccurs="0" name="note" type="xs:string" />
+					<xs:element minOccurs="0" name="operatoreLogistico"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="ordinante" type="xs:string" />
+					<xs:element minOccurs="0" name="stato" type="xs:string" />
+					<xs:element name="terminiDiConsegna">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="0" name="key" type="xs:string" />
+											<xs:element minOccurs="0" name="value" type="xs:string" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="trackingURL" type="xs:string" />
+					<xs:element minOccurs="0" name="transportID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="dbGeoLocation">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="adminAreaLevel1" type="xs:string" />
+					<xs:element minOccurs="0" name="adminAreaLevel2" type="xs:string" />
+					<xs:element minOccurs="0" name="city" type="xs:string" />
+					<xs:element minOccurs="0" name="country" type="xs:string" />
+					<xs:element minOccurs="0" name="email" type="xs:string" />
+					<xs:element name="latitude" type="xs:double" />
+					<xs:element name="longitude" type="xs:double" />
+					<xs:element minOccurs="0" name="mobile" type="xs:string" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="number" type="xs:string" />
+					<xs:element minOccurs="0" name="phone" type="xs:string" />
+					<xs:element name="radius" type="xs:long" />
+					<xs:element minOccurs="0" name="street" type="xs:string" />
+					<xs:element minOccurs="0" name="surname" type="xs:string" />
+					<xs:element minOccurs="0" name="zipCode" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="shippingItemData">
+				<xs:sequence>
+					<xs:element name="attributi">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element minOccurs="0" name="key" type="xs:string" />
+											<xs:element minOccurs="0" name="value" type="xs:string" />
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element minOccurs="0" name="descrizione" type="xs:string" />
+					<xs:element minOccurs="0" name="itemID" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="loadOrderIDS">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="loadOrderIDSResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:shippingOrderDetails" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTransportInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="trId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTransportInfoResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:transportInfo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="transportInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="destinationSite" type="xs:string" />
+					<xs:element minOccurs="0" name="id" type="xs:string" />
+					<xs:element minOccurs="0" name="orderID" type="xs:string" />
+					<xs:element minOccurs="0" name="sourceSite" type="xs:string" />
+					<xs:element minOccurs="0" name="status" type="xs:string" />
+					<xs:element minOccurs="0" name="vettore" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GATException" type="tns:GATException" />
+			<xs:complexType name="GATException">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+					<xs:element minOccurs="0" name="errorCode" type="xs:string" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getTransportInfo">
+		<wsdl:part element="tns:getTransportInfo" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="loadOrderIDSResponse">
+		<wsdl:part element="tns:loadOrderIDSResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GATException">
+		<wsdl:part element="tns:GATException" name="GATException"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="showOrderDetailsResponse">
+		<wsdl:part element="tns:showOrderDetailsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="loadOrderIDS">
+		<wsdl:part element="tns:loadOrderIDS" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="showOrderDetails">
+		<wsdl:part element="tns:showOrderDetails" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTransportInfoResponse">
+		<wsdl:part element="tns:getTransportInfoResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="SGOTadminService">
+		<wsdl:operation name="showOrderDetails">
+			<wsdl:input message="tns:showOrderDetails" name="showOrderDetails"></wsdl:input>
+			<wsdl:output message="tns:showOrderDetailsResponse" name="showOrderDetailsResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="loadOrderIDS">
+			<wsdl:input message="tns:loadOrderIDS" name="loadOrderIDS"></wsdl:input>
+			<wsdl:output message="tns:loadOrderIDSResponse" name="loadOrderIDSResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTransportInfo">
+			<wsdl:input message="tns:getTransportInfo" name="getTransportInfo"></wsdl:input>
+			<wsdl:output message="tns:getTransportInfoResponse" name="getTransportInfoResponse"></wsdl:output>
+			<wsdl:fault message="tns:GATException" name="GATException"></wsdl:fault>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SGOTadminServiceSoapBinding" type="tns:SGOTadminService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="showOrderDetails">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="showOrderDetails">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="showOrderDetailsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="loadOrderIDS">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="loadOrderIDS">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="loadOrderIDSResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getTransportInfo">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getTransportInfo">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getTransportInfoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GATException">
+				<soap:fault name="GATException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SGOTadminService">
+		<wsdl:port binding="tns:SGOTadminServiceSoapBinding" name="SGOTadminServicePort">
+			<soap:address
+				location="http://MacBook-Vige-wifi.local:8080/greenarea-service/SGOTadminService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

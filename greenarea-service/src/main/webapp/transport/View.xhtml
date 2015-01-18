@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ViewTransportTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.ViewTransportLabel_attachments}" />
+				<h:outputText value="#{transportController.selected.attachments}"
+					title="#{bundle.ViewTransportTransport_attachments}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_source}" />
+				<h:outputText value="#{transportController.selected.source}"
+					title="#{bundle.ViewTransportTitle_source}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_destination}" />
+				<h:outputText value="#{transportController.selected.destination}"
+					title="#{bundle.ViewTransportTitle_destination}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_pickup}" />
+				<h:outputText value="#{transportController.selected.pickup}"
+					title="#{bundle.ViewTransportTitle_pickup}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_dropdown}" />
+				<h:outputText value="#{transportController.selected.dropdown}"
+					title="#{bundle.ViewTransportTitle_dropdown}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_serviceClass}" />
+				<h:outputText value="#{transportController.selected.serviceClass}"
+					title="#{bundle.ViewTransportTitle_serviceClass}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_alfacode}" />
+				<h:outputText value="#{transportController.selected.alfacode}"
+					title="#{bundle.ViewTransportTitle_alfacode}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_mission}" />
+				<h:outputText value="#{transportController.selected.mission}"
+					title="#{bundle.ViewTransportTitle_mission}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_shippingOrder}" />
+				<h:outputText value="#{transportController.selected.shippingOrder}"
+					title="#{bundle.ViewTransportTitle_shippingOrder}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_transportState}" />
+				<h:outputText value="#{transportController.selected.transportState}"
+					title="#{bundle.ViewTransportTitle_transportState}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_timeAccept}" />
+				<h:outputText value="#{transportController.selected.timeAccept}"
+					title="#{bundle.ViewTransportTransport_timeAccept}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_timeClosing}" />
+				<h:outputText value="#{transportController.selected.timeClosing}"
+					title="#{bundle.ViewTransportTransport_timeClosing}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_timeRank}" />
+				<h:outputText value="#{transportController.selected.timeRank}"
+					title="#{bundle.ViewTransportTransport_timeRank}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_dateMiss}" />
+				<h:outputText value="#{transportController.selected.dateMiss}"
+					title="#{bundle.ViewTransportTransport_dateMiss}" />
+				<h:outputText value="#{bundle.ViewTransportLabel_timeSlot}" />
+				<h:outputText value="#{transportController.selected.timeSlot}"
+					title="#{bundle.ViewTransportTransport_timeSlot}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{transportController.destroyAndView}"
+				value="#{bundle.ViewTransportDestroyLink}" />
+			<br />
+			<br />
+			<h:link outcome="Edit" value="#{bundle.ViewTransportEditLink}" />
+			<br />
+			<h:commandLink action="#{transportController.prepareCreate}"
+				value="#{bundle.ViewTransportCreateLink}" />
+			<br />
+			<h:commandLink action="#{transportController.prepareList}"
+				value="#{bundle.ViewTransportShowAllLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.ViewTransportIndexLink}" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

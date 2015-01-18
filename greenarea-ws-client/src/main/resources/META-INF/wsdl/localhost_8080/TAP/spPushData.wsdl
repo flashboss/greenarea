@@ -1,0 +1,103 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://tap.vige.it/spReceiver/ws"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="SpPushDataServiceService" targetNamespace="http://tap.vige.it/spReceiver/ws">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://tap.vige.it/spReceiver/ws"
+			targetNamespace="http://tap.vige.it/spReceiver/ws" version="1.0">
+			<xs:element name="keepAliveResponse" type="tns:keepAliveResponse" />
+			<xs:element name="outData" type="tns:outData" />
+			<xs:element name="pushResponse" type="tns:ackData" />
+			<xs:complexType name="outData">
+				<xs:sequence>
+					<xs:element name="vin" type="xs:string" />
+					<xs:element name="serviceProvider" type="xs:string" />
+					<xs:element name="codeFunction" type="xs:string" />
+					<xs:element name="date" type="xs:dateTime" />
+					<xs:element maxOccurs="unbounded" name="groups" type="tns:groupData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="groupData">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="params"
+						nillable="true" type="tns:paramData" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="paramData">
+				<xs:sequence>
+					<xs:element name="name" type="xs:string" />
+					<xs:element name="value" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ackData">
+				<xs:sequence>
+					<xs:element name="ack" type="tns:resultStatus" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="keepAliveResponse">
+				<xs:sequence>
+					<xs:element name="serviceProvider" type="xs:string" />
+					<xs:element name="status" type="tns:resultStatus" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="resultStatus">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OK" />
+					<xs:enumeration value="KO" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="keepAliveResponse">
+		<wsdl:part element="tns:keepAliveResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="keepAlive"></wsdl:message>
+	<wsdl:message name="pushData">
+		<wsdl:part element="tns:outData" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="pushDataResponse">
+		<wsdl:part element="tns:pushResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="spPushDataService">
+		<wsdl:operation name="pushData">
+			<wsdl:input message="tns:pushData" name="pushData"></wsdl:input>
+			<wsdl:output message="tns:pushDataResponse" name="pushDataResponse"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="keepAlive">
+			<wsdl:input message="tns:keepAlive" name="keepAlive"></wsdl:input>
+			<wsdl:output message="tns:keepAliveResponse" name="keepAliveResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SpPushDataServiceServiceSoapBinding"
+		type="tns:spPushDataService">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="pushData">
+			<soap:operation soapAction="pushData" style="document" />
+			<wsdl:input name="pushData">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="pushDataResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="keepAlive">
+			<soap:operation soapAction="keepAlive" style="document" />
+			<wsdl:input name="keepAlive">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="keepAliveResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SpPushDataServiceService">
+		<wsdl:port binding="tns:SpPushDataServiceServiceSoapBinding"
+			name="spPushDataServicePort">
+			<soap:address
+				location="http://localhost:8080/greenarea-service/SpPushDataService" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

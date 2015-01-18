@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="richiediReportMissioniOperatoreLogistico" name="Richiedi Report Missioni Operatore Logistico" isExecutable="true" activiti:candidateStarterGroups="operatorelogistico">
+    <startEvent id="starteventRichiediReportMissioniOperatoreLogistico" name="Start Richiedi Report Missioni Operatore Logistico" activiti:initiator="currentUserId">
+      <documentation>contiene:
+				&lt;UC9_2.5.1.2&gt;: &lt;Richiedi report
+				missioni&gt;</documentation>
+      <extensionElements>
+        <activiti:formProperty id="missioni_op_ga" name="GA" type="enum" variable="ga">
+          <activiti:value id="TUTTE" name="Tutte"></activiti:value>
+          <activiti:value id="CENTRALE" name="CENTRALE"></activiti:value>
+        </activiti:formProperty>
+        <activiti:formProperty id="missioni_op_dal" name="valido dal" type="date" variable="dal" datePattern="d-MM-yyyy"></activiti:formProperty>
+        <activiti:formProperty id="missioni_op_al" name="al" type="date" variable="al" datePattern="d-MM-yyyy"></activiti:formProperty>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="start" class="it.vige.greenarea.bpm.DeleteAllReports"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetInitiator"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="endeventRichiediReportMissioniOperatoreLogistico" name="End Richiedi Report Missioni Operatore Logistico"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="starteventRichiediReportMissioniOperatoreLogistico" targetRef="recuperaMissioni"></sequenceFlow>
+    <serviceTask id="recuperaMissioni" name="Recupera Missioni" activiti:class="it.vige.greenarea.bpm.operatorelogistico.richiedireportmissioni.RecuperaMissioni"></serviceTask>
+    <userTask id="visualizzaReportDettaglioMissioni" name="Visualizza Report Dettaglio Missioni" activiti:assignee="${initiator.id}" activiti:candidateUsers="${initiator.id}" activiti:candidateGroups="operatorelogistico">
+      <extensionElements>
+        <activiti:formProperty id="missioni_op_data" name="date" type="dateView" variable="missioni"></activiti:formProperty>
+        <activiti:formProperty id="missioni_op_missioni" name="missioni" type="missioniOPSintesi" variable="missioni" writable="false"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow12" sourceRef="visualizzaReportDettaglioMissioni" targetRef="endeventRichiediReportMissioniOperatoreLogistico"></sequenceFlow>
+    <subProcess id="eventsubprocessNotificaErroreReperimentoMissioni" name="Event sub Process Notifica Errore Reperimento Missioni" triggeredByEvent="true">
+      <serviceTask id="notificaErroreReperimentoMissioniAOperatoreLogistico" name="Notifica Errore Reperimento Missioni a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="from">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <startEvent id="errorstarteventNotificaErroreReperimentoMissioni" name="Error start Notifica Errore Reperimento Missioni">
+        <errorEventDefinition errorRef="erroreRecuperoMissioni"></errorEventDefinition>
+      </startEvent>
+      <endEvent id="endeventNotificaErroreReperimentoMissioni" name="End Notifica Errore Reperimento Missioni"></endEvent>
+      <sequenceFlow id="flow21" sourceRef="errorstarteventNotificaErroreReperimentoMissioni" targetRef="notificaErroreReperimentoMissioniAOperatoreLogistico"></sequenceFlow>
+      <serviceTask id="notificaErroreReperimentoMissioniAAmministratore" name="Notifica Errore Reperimento Missioni a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Notifica Errore Reperimento Missioni]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${initiator.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow25" sourceRef="notificaErroreReperimentoMissioniAOperatoreLogistico" targetRef="notificaErroreReperimentoMissioniAAmministratore"></sequenceFlow>
+      <sequenceFlow id="flow26" sourceRef="notificaErroreReperimentoMissioniAAmministratore" targetRef="endeventNotificaErroreReperimentoMissioni"></sequenceFlow>
+    </subProcess>
+    <endEvent id="errorendevent1" name="ErrorEnd">
+      <errorEventDefinition errorRef="erroreRecuperoMissioni"></errorEventDefinition>
+    </endEvent>
+    <dataObject id="tipo" name="tipo" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <activiti:value>report</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow38" sourceRef="recuperaMissioni" targetRef="exclusivegateway6"></sequenceFlow>
+    <sequenceFlow id="flow39" sourceRef="exclusivegateway6" targetRef="errorendevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria != 'OK'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow41" sourceRef="exclusivegateway6" targetRef="visualizzaReportDettaglioMissioni">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria == 'OK'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_richiediReportMissioniOperatoreLogistico">
+    <bpmndi:BPMNPlane bpmnElement="richiediReportMissioniOperatoreLogistico" id="BPMNPlane_richiediReportMissioniOperatoreLogistico">
+      <bpmndi:BPMNShape bpmnElement="starteventRichiediReportMissioniOperatoreLogistico" id="BPMNShape_starteventRichiediReportMissioniOperatoreLogistico">
+        <omgdc:Bounds height="35.0" width="35.0" x="81.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endeventRichiediReportMissioniOperatoreLogistico" id="BPMNShape_endeventRichiediReportMissioniOperatoreLogistico">
+        <omgdc:Bounds height="35.0" width="35.0" x="550.0" y="490.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="recuperaMissioni" id="BPMNShape_recuperaMissioni">
+        <omgdc:Bounds height="55.0" width="105.0" x="360.0" y="103.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="visualizzaReportDettaglioMissioni" id="BPMNShape_visualizzaReportDettaglioMissioni">
+        <omgdc:Bounds height="75.0" width="115.0" x="643.0" y="303.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="eventsubprocessNotificaErroreReperimentoMissioni" id="BPMNShape_eventsubprocessNotificaErroreReperimentoMissioni">
+        <omgdc:Bounds height="301.0" width="490.0" x="250.0" y="590.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoMissioniAOperatoreLogistico" id="BPMNShape_notificaErroreReperimentoMissioniAOperatoreLogistico">
+        <omgdc:Bounds height="81.0" width="126.0" x="290.0" y="650.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="errorstarteventNotificaErroreReperimentoMissioni" id="BPMNShape_errorstarteventNotificaErroreReperimentoMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="310.0" y="810.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endeventNotificaErroreReperimentoMissioni" id="BPMNShape_endeventNotificaErroreReperimentoMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="660.0" y="650.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreReperimentoMissioniAAmministratore" id="BPMNShape_notificaErroreReperimentoMissioniAAmministratore">
+        <omgdc:Bounds height="91.0" width="131.0" x="519.0" y="750.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="errorendevent1" id="BPMNShape_errorendevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="635.0" y="141.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
+        <omgdc:Bounds height="40.0" width="40.0" x="540.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="116.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="130.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="700.0" y="378.0"></omgdi:waypoint>
+        <omgdi:waypoint x="567.0" y="490.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="327.0" y="810.0"></omgdi:waypoint>
+        <omgdi:waypoint x="353.0" y="731.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="353.0" y="731.0"></omgdi:waypoint>
+        <omgdi:waypoint x="584.0" y="750.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+        <omgdi:waypoint x="584.0" y="750.0"></omgdi:waypoint>
+        <omgdi:waypoint x="677.0" y="685.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow38" id="BPMNEdge_flow38">
+        <omgdi:waypoint x="465.0" y="130.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="130.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="140.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow39" id="BPMNEdge_flow39">
+        <omgdi:waypoint x="580.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="635.0" y="158.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41">
+        <omgdi:waypoint x="560.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="700.0" y="303.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

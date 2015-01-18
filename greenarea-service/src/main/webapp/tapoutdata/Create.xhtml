@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.CreateTapOutDataTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.CreateTapOutDataLabel_vin}" for="vin" />
+				<h:inputText id="vin" value="#{tapOutDataController.selected.vin}"
+					title="#{bundle.CreateTapOutDataTitle_vin}" required="true"
+					requiredMessage="#{bundle.CreateTapOutDataRequiredMessage_vin}" />
+				<h:outputLabel
+					value="#{bundle.CreateTapOutDataLabel_serviceProvider}"
+					for="serviceProvider" />
+				<h:inputText id="serviceProvider"
+					value="#{tapOutDataController.selected.serviceProvider}"
+					title="#{bundle.CreateTapOutDataTitle_serviceProvider}" />
+				<h:outputLabel value="#{bundle.CreateTapOutDataLabel_codeFunction}"
+					for="codeFunction" />
+				<h:inputText id="codeFunction"
+					value="#{tapOutDataController.selected.codeFunction}"
+					title="#{bundle.CreateTapOutDataTitle_codeFunction}"
+					required="true"
+					requiredMessage="#{bundle.CreateTapOutDataRequiredMessage_codeFunction}" />
+				<h:outputLabel value="#{bundle.CreateTapOutDataLabel_date}"
+					for="date" />
+				<h:inputText id="date" value="#{tapOutDataController.selected.date.time}"
+					title="#{bundle.CreateTapOutDataTitle_date}" required="true"
+					requiredMessage="#{bundle.CreateTapOutDataRequiredMessage_date}">
+					<f:convertDateTime pattern="d-M-yyyy HH:mm:ss" />
+				</h:inputText>
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{tapOutDataController.create}"
+				value="#{bundle.CreateTapOutDataSaveLink}" />
+			<br />
+			<br />
+			<h:commandLink action="#{tapOutDataController.prepareList}"
+				value="#{bundle.CreateTapOutDataShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.CreateTapOutDataIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

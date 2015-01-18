@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.EditTapParamDataTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.EditTapParamDataLabel_id}" for="id" />
+				<h:outputText id="id" value="#{tapParamDataController.selected.id}"
+					title="#{bundle.EditTapParamDataTitle_id}" />
+				<h:outputLabel value="#{bundle.EditTapParamDataLabel_name}"
+					for="name" />
+				<h:inputText id="name"
+					value="#{tapParamDataController.selected.name}"
+					title="#{bundle.EditTapParamDataTitle_name}" />
+				<h:outputLabel value="#{bundle.EditTapParamDataLabel_value}"
+					for="value" />
+				<h:inputText id="value"
+					value="#{tapParamDataController.selected.value}"
+					title="#{bundle.EditTapParamDataTitle_value}" required="true"
+					requiredMessage="#{bundle.EditTapParamDataRequiredMessage_value}" />
+				<h:outputLabel value="#{bundle.EditTapParamDataLabel_tapGroupData}"
+					for="tapGroupData" />
+				<h:selectOneMenu id="tapGroupData"
+					value="#{tapParamDataController.selected.tapGroupData}"
+					title="#{bundle.EditTapParamDataTitle_tapGroupData}">
+					<f:selectItems
+						value="#{tapGroupDataController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:commandLink action="#{tapParamDataController.update}"
+				value="#{bundle.EditTapParamDataSaveLink}" />
+			<br />
+			<br />
+			<h:link outcome="View" value="#{bundle.EditTapParamDataViewLink}" />
+			<br />
+			<h:commandLink action="#{tapParamDataController.prepareList}"
+				value="#{bundle.EditTapParamDataShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.EditTapParamDataIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

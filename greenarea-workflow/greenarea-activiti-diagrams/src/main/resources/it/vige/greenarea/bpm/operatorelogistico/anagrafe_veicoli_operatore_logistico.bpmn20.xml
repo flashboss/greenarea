@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="anagrafeVeicoliOperatoreLogistico" name="Anagrafe Veicoli Operatore Logistico" isExecutable="true" activiti:candidateStarterGroups="operatorelogistico">
+    <startEvent id="startAnagrafeVeicoli" name="Start Anagrafe Veicoli" activiti:initiator="currentUserId">
+      <documentation>contiene:
+&lt;UC2_2.5.1.2&gt;: &lt;Aggiorna stato veicoli&gt;</documentation>
+      <extensionElements>
+        <activiti:formProperty id="stato_veicoli_op_targa" name="targa" type="string" variable="targa"></activiti:formProperty>
+        <activiti:executionListener event="start" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetInitiator"></activiti:executionListener>
+        <activiti:executionListener event="start" class="it.vige.greenarea.bpm.DeleteCurrentProcesses"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="endAnagrafeVeicoliOperatoreLogistico" name="End Anagrafe Veicoli Operatore Logistico"></endEvent>
+    <serviceTask id="richiediIVeicoli" name="Richiedi i veicoli" activiti:class="it.vige.greenarea.bpm.operatorelogistico.anagrafeveicoli.RichiediVeicoli"></serviceTask>
+    <sequenceFlow id="flow3" sourceRef="startAnagrafeVeicoli" targetRef="richiediIVeicoli"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="richiediIVeicoli" targetRef="elencoVeicoli"></sequenceFlow>
+    <userTask id="elencoVeicoli" name="Elenco Veicoli" activiti:assignee="${initiator.id}" activiti:candidateUsers="${initiator.id}" activiti:candidateGroups="operatorelogistico">
+      <extensionElements>
+        <activiti:formProperty id="stato_veicoli_op_veicoli" name="veicoli" type="veicoli" variable="veicoli" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="veicoli_operazione" name="operazione" type="enum" variable="operazione">
+          <activiti:value id="CHIUDI" name="CHIUDI"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow14" sourceRef="elencoVeicoli" targetRef="endAnagrafeVeicoliOperatoreLogistico"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_anagrafeVeicoliOperatoreLogistico">
+    <bpmndi:BPMNPlane bpmnElement="anagrafeVeicoliOperatoreLogistico" id="BPMNPlane_anagrafeVeicoliOperatoreLogistico">
+      <bpmndi:BPMNShape bpmnElement="startAnagrafeVeicoli" id="BPMNShape_startAnagrafeVeicoli">
+        <omgdc:Bounds height="35.0" width="35.0" x="263.0" y="79.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endAnagrafeVeicoliOperatoreLogistico" id="BPMNShape_endAnagrafeVeicoliOperatoreLogistico">
+        <omgdc:Bounds height="35.0" width="35.0" x="419.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="richiediIVeicoli" id="BPMNShape_richiediIVeicoli">
+        <omgdc:Bounds height="75.0" width="115.0" x="410.0" y="71.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="elencoVeicoli" id="BPMNShape_elencoVeicoli">
+        <omgdc:Bounds height="55.0" width="105.0" x="267.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="298.0" y="96.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="108.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="467.0" y="146.0"></omgdi:waypoint>
+        <omgdi:waypoint x="319.0" y="170.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="319.0" y="225.0"></omgdi:waypoint>
+        <omgdi:waypoint x="436.0" y="240.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.EditTapGroupDataTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.EditTapGroupDataLabel_id}" for="id" />
+				<h:outputText id="id" value="#{tapGroupDataController.selected.id}"
+					title="#{bundle.EditTapGroupDataTitle_id}" />
+				<h:outputLabel value="#{bundle.EditTapGroupDataLabel_name}"
+					for="name" />
+				<h:inputText id="name"
+					value="#{tapGroupDataController.selected.name}"
+					title="#{bundle.EditTapGroupDataTitle_name}" />
+				<h:outputLabel value="#{bundle.EditTapGroupDataLabel_tapOutData}"
+					for="tapOutData" />
+				<h:selectOneMenu id="tapOutData"
+					value="#{tapGroupDataController.selected.tapOutData}"
+					title="#{bundle.EditTapGroupDataTitle_tapOutData}">
+					<f:selectItems
+						value="#{tapOutDataController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<h:commandLink action="#{tapGroupDataController.update}"
+				value="#{bundle.EditTapGroupDataSaveLink}" />
+			<br />
+			<br />
+			<h:link outcome="View" value="#{bundle.EditTapGroupDataViewLink}" />
+			<br />
+			<h:commandLink action="#{tapGroupDataController.prepareList}"
+				value="#{bundle.EditTapGroupDataShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.EditTapGroupDataIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

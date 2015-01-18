@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+
+        <h:form>
+
+            <p:dataTable id="MonitorTable" value="#{monitorController.sbMonitor}" var="sbM"  paginator="true" paginatorAlwaysVisible="false" rows="4" paginatorPosition="bottom">
+                <p:column>
+                    <f:facet name="header">SOURCE</f:facet>  
+                    <h:outputText value="#{sbM.source}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">PROPS</f:facet>  
+                    <h:outputText value="#{sbM.props}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">MSG</f:facet>  
+                    <h:outputText value="#{sbM.msg}"/>
+                </p:column>
+                <f:facet name="footer">  
+                    <p:commandButton value="Clear" action="#{monitorController.clear()}"  ajax="false">
+                    </p:commandButton> 
+                </f:facet> 
+
+            </p:dataTable>
+        </h:form>
+
+</html>
+

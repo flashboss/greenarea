@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="processEngineConfiguration"
+		class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+		<property name="jdbcUrl" value="jdbc:h2:mem:activiti;DB_CLOSE_DELAY=1000" />
+		<property name="jdbcDriver" value="org.h2.Driver" />
+		<property name="jdbcUsername" value="sa" />
+		<property name="jdbcPassword" value="" />
+		<property name="mailServerHost" value="localhost" />
+		<property name="mailServerPort" value="25000" />
+
+		<!-- Database configurations -->
+		<property name="databaseSchemaUpdate" value="true" />
+
+		<!-- job executor configurations -->
+		<property name="jobExecutorActivate" value="false" />
+
+		<property name="createDiagramOnDeploy" value="false" />
+		<property name="history" value="full" />
+		<property name="customFormTypes">
+			<list>
+				<bean class="it.vige.greenarea.bpm.form.MissioniCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniOPCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniPASintesiFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniOPSintesiFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniSTCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniTRCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.MissioniNoRankingFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriTsCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriLetturaCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PolicyCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.RichiesteCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PrezziCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.FiltriCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.VeicoliCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.VeicoliSTCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.FasceOrarieCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TimeFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DateViewFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DateSimulazioniViewFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioPolicyFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneSTFormType" />
+				<bean class="it.vige.greenarea.bpm.form.DettaglioMissioneTRFormType" />
+				<bean class="it.vige.greenarea.bpm.form.OperatoreLogisticoFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TargaStFormType" />
+				<bean class="it.vige.greenarea.bpm.form.TargaTrFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniStFormType" />
+				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniTrFormType" />
+				<bean class="it.vige.greenarea.bpm.form.SimulazioniCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliTRCollectionFormType" />
+				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType" />
+			</list>
+		</property>
+
+	</bean>
+</beans>

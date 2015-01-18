@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.CreateMissionTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.CreateMissionLabel_startTime}"
+					for="startTime" />
+				<h:outputText id="startTime"
+					value="#{missionController.selected.startTime}"
+					title="#{bundle.CreateMissionTitle_startTime}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_expireTime}"
+					for="expireTime" />
+				<h:outputText id="expireTime"
+					value="#{missionController.selected.expireTime}"
+					title="#{bundle.CreateMissionTitle_expireTime}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_attachments}"
+					for="attachments" />
+				<h:outputText id="attachments"
+					value="#{missionController.selected.attachments}"
+					title="#{bundle.CreateMissionTitle_attachments}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_truck}"
+					for="truck" />
+				<h:selectOneMenu id="truck"
+					value="#{missionController.selected.truck}"
+					title="#{bundle.CreateMissionTitle_truck}">
+					<f:selectItems value="#{truckController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.CreateMissionLabel_description}"
+					for="description" />
+				<h:inputText id="description"
+					value="#{missionController.selected.description}"
+					title="#{bundle.CreateMissionTitle_description}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_missionState}"
+					for="missionState" />
+				<h:selectOneMenu id="missionState"
+					value="#{missionController.selected.missionState}"
+					title="#{bundle.CreateMissionTitle_missionState}" required="true"
+					requiredMessage="#{bundle.CreateMissionRequiredMessage_missionState}">
+					<f:selectItems
+						value="#{missionStateController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.CreateMissionLabel_ownerUser}"
+					for="ownerUser" />
+				<h:inputText id="ownerUser"
+					value="#{missionController.selected.ownerUser}"
+					title="#{bundle.CreateMissionTitle_ownerUser}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_name}" for="name" />
+				<h:inputText id="name" value="#{missionController.selected.name}"
+					title="#{bundle.CreateMissionTitle_name}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_company}"
+					for="company" />
+				<h:inputText id="company"
+					value="#{missionController.selected.company}"
+					title="#{bundle.CreateMissionTitle_company}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_timeSlot}"
+					for="timeSlot" />
+				<h:selectOneMenu id="timeSlot"
+					value="#{missionController.selected.timeSlot}"
+					title="#{bundle.CreateMissionTitle_timeSlot}">
+					<f:selectItems
+						value="#{timeSlotController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.CreateMissionLabel_addressList}"
+					for="addressList" />
+				<h:inputText id="addressList"
+					value="#{missionController.selected.addressList}"
+					title="#{bundle.CreateMissionTitle_addressList}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_valuesMission}"
+					for="valuesMission" />
+				<h:inputText id="valuesMission"
+					value="#{missionController.selected.valuesMission}"
+					title="#{bundle.CreateMissionTitle_valuesMission}" />
+				<h:outputLabel value="#{bundle.CreateMissionLabel_resVikor}"
+					for="resVikor" />
+				<h:inputText id="resVikor"
+					value="#{missionController.selected.resVikor}"
+					title="#{bundle.CreateMissionTitle_resVikor}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{missionController.create}"
+				value="#{bundle.CreateMissionSaveLink}" />
+			<br />
+			<br />
+			<h:commandLink action="#{missionController.prepareList}"
+				value="#{bundle.CreateMissionShowAllLink}" immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.CreateMissionIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

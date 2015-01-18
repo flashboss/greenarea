@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ViewFreightTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.ViewFreightLabel_attachments}" />
+				<h:outputText value="#{freightController.selected.attachments}"
+					title="#{bundle.ViewFreightTransport_attachments}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_codeId}" />
+				<h:outputText value="#{freightController.selected.codeId}"
+					title="#{bundle.ViewFreightTitle_codeId}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_description}" />
+				<h:outputText value="#{freightController.selected.description}"
+					title="#{bundle.ViewFreightTitle_description}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_attachments}" />
+				<h:outputText value="#{freightController.selected.attachments}"
+					title="#{bundle.ViewFreightTitle_attachments}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_height}" />
+				<h:outputText value="#{freightController.selected.height}"
+					title="#{bundle.ViewFreightTitle_height}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_leng}" />
+				<h:outputText value="#{freightController.selected.leng}"
+					title="#{bundle.ViewFreightTitle_leng}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_ft}" />
+				<h:outputText value="#{freightController.selected.ft}"
+					title="#{bundle.ViewFreightTitle_ft}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_volume}" />
+				<h:outputText value="#{freightController.selected.volume}"
+					title="#{bundle.ViewFreightTitle_volume}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_weight}" />
+				<h:outputText value="#{freightController.selected.weight}"
+					title="#{bundle.ViewFreightTitle_weight}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_width}" />
+				<h:outputText value="#{freightController.selected.width}"
+					title="#{bundle.ViewFreightTitle_width}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_freightState}" />
+				<h:outputText value="#{freightController.selected.freightState}"
+					title="#{bundle.ViewFreightTitle_freightState}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_transport}" />
+				<h:outputText value="#{freightController.selected.transport}"
+					title="#{bundle.ViewFreightTitle_transport}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_dropDownPoint}" />
+				<h:outputText value="#{freightController.selected.dropDownPoint}"
+					title="#{bundle.ViewFreightTitle_dropDownPoint}" />
+				<h:outputText value="#{bundle.ViewFreightLabel_pickUpPoint}" />
+				<h:outputText value="#{freightController.selected.pickUpPoint}"
+					title="#{bundle.ViewFreightTitle_pickUpPoint}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{freightController.destroyAndView}"
+				value="#{bundle.ViewFreightDestroyLink}" />
+			<br />
+			<br />
+			<h:link outcome="Edit" value="#{bundle.ViewFreightEditLink}" />
+			<br />
+			<h:commandLink action="#{freightController.prepareCreate}"
+				value="#{bundle.ViewFreightCreateLink}" />
+			<br />
+			<h:commandLink action="#{freightController.prepareList}"
+				value="#{bundle.ViewFreightShowAllLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index" value="#{bundle.ViewFreightIndexLink}" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

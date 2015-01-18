@@ -1,0 +1,160 @@
+17:19:53,121 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:19:53,126 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:19:53,635 DEBUG [BasicClientConnectionManager] Get connection for route {}->http://localhost:8080
+17:19:53,653 DEBUG [DefaultClientConnectionOperator] Connecting to localhost:8080
+17:19:53,733 DEBUG [RequestAddCookies] CookieSpec selected: best-match
+17:19:53,746 DEBUG [RequestAuthCache] Auth cache not set in the context
+17:19:53,747 DEBUG [RequestTargetAuthentication] Target auth state: UNCHALLENGED
+17:19:53,747 DEBUG [RequestProxyAuthentication] Proxy auth state: UNCHALLENGED
+17:19:53,748 DEBUG [DefaultHttpClient] Attempt 1 to execute request
+17:19:53,748 DEBUG [DefaultClientConnection] Sending request: GET /greenarea-service/resources/DataBase/addMission HTTP/1.1
+17:19:53,748 DEBUG [wire] >> "GET /greenarea-service/resources/DataBase/addMission HTTP/1.1[\r][\n]"
+17:19:53,750 DEBUG [wire] >> "Accept: text/plain[\r][\n]"
+17:19:53,750 DEBUG [wire] >> "Accept-Encoding: gzip, deflate[\r][\n]"
+17:19:53,750 DEBUG [wire] >> "Host: localhost:8080[\r][\n]"
+17:19:53,750 DEBUG [wire] >> "Connection: Keep-Alive[\r][\n]"
+17:19:53,750 DEBUG [wire] >> "[\r][\n]"
+17:19:53,750 DEBUG [headers] >> GET /greenarea-service/resources/DataBase/addMission HTTP/1.1
+17:19:53,750 DEBUG [headers] >> Accept: text/plain
+17:19:53,750 DEBUG [headers] >> Accept-Encoding: gzip, deflate
+17:19:53,750 DEBUG [headers] >> Host: localhost:8080
+17:19:53,750 DEBUG [headers] >> Connection: Keep-Alive
+17:22:50,628 DEBUG [wire] << "HTTP/1.1 500 Internal Server Error[\r][\n]"
+17:22:50,650 DEBUG [wire] << "Connection: keep-alive[\r][\n]"
+17:22:50,650 DEBUG [wire] << "Content-Type: text/html; charset=UTF-8[\r][\n]"
+17:22:50,650 DEBUG [wire] << "Content-Length: 8165[\r][\n]"
+17:22:50,650 DEBUG [wire] << "Date: Sun, 18 Jan 2015 16:22:50 GMT[\r][\n]"
+17:22:50,650 DEBUG [wire] << "[\r][\n]"
+17:22:50,651 DEBUG [DefaultClientConnection] Receiving response: HTTP/1.1 500 Internal Server Error
+17:22:50,652 DEBUG [headers] << HTTP/1.1 500 Internal Server Error
+17:22:50,652 DEBUG [headers] << Connection: keep-alive
+17:22:50,652 DEBUG [headers] << Content-Type: text/html; charset=UTF-8
+17:22:50,652 DEBUG [headers] << Content-Length: 8165
+17:22:50,652 DEBUG [headers] << Date: Sun, 18 Jan 2015 16:22:50 GMT
+17:22:50,659 DEBUG [DefaultHttpClient] Connection can be kept alive indefinitely
+17:22:50,668 DEBUG [wire] << "<html><head><title>ERROR</title><style>body {[\n]"
+17:22:50,668 DEBUG [wire] << "    font-family: "Lucida Grande", "Lucida Sans Unicode", "Trebuchet MS", Helvetica, Arial, Verdana, sans-serif;[\n]"
+17:22:50,668 DEBUG [wire] << "    margin: 5px;[\n]"
+17:22:50,668 DEBUG [wire] << "}[\n]"
+17:22:50,668 DEBUG [wire] << "[\n]"
+17:22:50,668 DEBUG [wire] << ".header {[\n]"
+17:22:50,668 DEBUG [wire] << "    background-image: linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);[\n]"
+17:22:50,668 DEBUG [wire] << "    background-image: -o-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);[\n]"
+17:22:50,668 DEBUG [wire] << "    background-image: -moz-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);[\n]"
+17:22:50,668 DEBUG [wire] << "    background-image: -webkit-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);[\n]"
+17:22:50,669 DEBUG [wire] << "    background-image: -ms-linear-gradient(bottom, rgb(153,151,153) 8%, rgb(199,199,199) 54%);[\n]"
+17:22:50,669 DEBUG [wire] << "    [\n]"
+17:22:50,669 DEBUG [wire] << "    background-image: -webkit-gradient([\n]"
+17:22:50,669 DEBUG [wire] << "        linear,[\n]"
+17:22:50,669 DEBUG [wire] << "        left bottom,[\n]"
+17:22:50,669 DEBUG [wire] << "        left top,[\n]"
+17:22:50,669 DEBUG [wire] << "        color-stop(0.08, rgb(153,151,153)),[\n]"
+17:22:50,669 DEBUG [wire] << "        color-stop(0.54, rgb(199,199,199))[\n]"
+17:22:50,669 DEBUG [wire] << "    );[\n]"
+17:22:50,669 DEBUG [wire] << "    color: black;[\n]"
+17:22:50,669 DEBUG [wire] << "    padding: 2px;[\n]"
+17:22:50,669 DEBUG [wire] << "    font-weight: normal;[\n]"
+17:22:50,669 DEBUG [wire] << "    border: solid 1px;[\n]"
+17:22:50,669 DEBUG [wire] << "    font-size: 170%;[\n]"
+17:22:50,669 DEBUG [wire] << "    text-align: left;[\n]"
+17:22:50,669 DEBUG [wire] << "    vertical-align: middle; [\n]"
+17:22:50,669 DEBUG [wire] << "    height: 32px"
+17:22:50,669 DEBUG [wire] << "; [\n]"
+17:22:50,670 DEBUG [wire] << "}[\n]"
+17:22:50,670 DEBUG [wire] << ".error-div {[\n]"
+17:22:50,670 DEBUG [wire] << "   display: inline-block;   width: 32px;   height: 32px;    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAgAAAAIACH+pydAAAGGElEQVRYw8WXW2wcVxnHf+fM7NXrdXbdtZ3ipGqCEzvQKmlFoUggwkvvGBoaqVVV5Y0nkCoQPPCAhMQbQlzUh/IWHoh6QUVKZVLxUCGogKZRW9uJkyg0iVzZ2dhre9c7u7M7c87hYWc2M7t2bBASI306O/85+v7/7zLn24H/8yV2u/EcFNvwVNK2X0DKw1qpYaX1gCWlY0m5arRe8JQ6I2DmaVj/nwk4CxO2Zf1aw9dKo6N67+eOZHN7x0gViiSHBmlXa7hrazjLt1i+eKmxUi5bwpg/e8a8PA3X/msBr0MyJ+WvgFOffehY8v7HH5OW78HqGjgOtNrge2AnIJWAgQEYLqBsm3/NvKM/mZ1rYczpRa2/9x3w/iMBM1BCiHfuGRmZevClF9NJ5cP1m9B0+/aa3t/ZDNw3TtuSfPy737trK6sXtTGPPwOruxLwNhSEEHMHpqZGDz93wubKFdio3ZXUGNOHs2cIDh/g6pt/9G8uXLnlGPP5k1Dt5bN60m6lhXj34OTkxKET37SZm4d6oz/KgFRH7yOrBozbwlTWGf7ql6RZrWTcytrxaTj9Ro9OGb3JS/mz0nDxgYnnvmWbuUsdJ6FTY2JmImShqZA83N90UbOXOXDiG4nCcPFoTsqfbluCP8DenJQLx1/+7pBcXILaZl9qo2svFmalb48xkM9hxkf5+29+u9HSenIayn0ZyEr5i0NHpnKy7aGrtW6UehsLozRBRlRQEh3BwzLpWh3h++yfPJRLSvnzvhK8DkPamOl7n3nCUjc"
+17:22:50,670 DEBUG [wire] << "XtyXuK0X0WViaAFc9QtSNJe594uu2MubZGcjHBGTgqeFiQQml0K12nDgSpd4iyi4uRMci6Q8xJSWq7SGEZCg/qD14LCYgIcTzoxMHc6qygYk40aETKTFSdh2aANOWhbEsjJSYCK6C/V0LcH+9xvCB/TlbiBdCAXbQMJPZ/fvQjUbXEULAa6/1deyuh0dwNU+e7DSzEOhmi8xn9iI+ujgVE6ChlBwpYcqVjuIgA3IXBMYYtNbd30IIpJQI0ZEa+gPQnk9ieA8GSrESaGNyiWIBrVQntUHqdrq01iiluo0WilBK4fs+WutOr4S9YAyJoRzamMGYAClEve046ETyTr13EKCU6kZ+N4GNCxfwKpVOryQSuOUVhBCbsRIIuN1cWRkaSCfRrdaOTncijgltNPDn5xHZLIn7x3GNh4CVmADgcv3a9YmBY0cxm06nAQH31KlOao3BL5fxbtzAOE73hAt7JXb6RU7PGO44WK5Do1ZHw6WYAN+YM+X5S8dLXziWizVNvY5aWcFfWuq8Idsctb1Yr8DwmRwrUr1yfVMbcyYmwIWZ2mbdai9+gvfBAsaAbrUwrrtllLuJPibIGGQ2hUlIHLdlA+diTXgSqkKIt5b/OevL+8bwqlWU63anW3jyhaa4c9T2Hs0hrsL5EOCJQ/sov7/gS8Mb07AZEwDgav2D5aVy3eSziEL+Dllk0PSRcmcMqx6BUeGykINsksrttboPP4w2aVfACVhGiFevvft+I/XwJCad3DF6tc2MiD4zmRSZhyZY/OusI4V4JTqKYwIA6lr/2Gm6s5/+7UMv/egDmEyqL7VbRR/LViR6sikGvniYpffm2m6r/VFd65/0vqZ9R/tbsMeG+WKpMDL+lWMJ58Jl/NVqvOG26PAoDmCXhhg4epDl9+a9zUp1uQkPbvWfcMvZchbuEXAuk0kf2X/84YxpuDQv3kA5zW1fw9CswSyZyXFEJsmnf/m46bntuTY8+SxUtuLadri9CokxeEUK8WJhtJgaeeSIxG3RurWGv+G"
+17:22:50,670 DEBUG [wire] << "g3RbaU5CwkOkU1lCWxFgBmbS4ff6qX7297rXh9Gn4/llobMcjtsFywACQ+zZMTsOP8vBIOpNS+bFiJj2cxx7MYg+k8ZwmrWqD9lqNjVvrTc9tWRtw/k345dtwFagDTmTdUUA2EDAYXffB2JPw6FH4ch7GUpCzIemD50J9A1Y+hH/8Cc4vdTq9Tud9D9dNOt+MajclyNL53xZmIhusmcBSQJLOd4UJnHqACzTppDy0kHizl/yuPRB5nggIM0A6IE4GuA34EQFtoBUQuwGm7kbwb+eaEEXmuV5dAAAAJXRFWHRjcmVhdGUtZGF0ZQAyMDA5LTExLTEwVDE5OjM4OjI0LTA3OjAwdDKp4gAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxMC0wMi0yMFQyMzoyNjoyNC0wNzowMC7DUNYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTAtMDEtMTFUMDg6NTc6MzUtMDc6MDCruapPAAAAMnRFWHRMaWNlbnNlAGh0dHA6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUHVibGljX2RvbWFpbj/96s8AAAAldEVYdG1vZGlmeS1kYXRlADIwMDktMTEtMTBUMTk6Mzg6MjQtMDc6MDArg9/WAAAAGXRFWHRTb3VyY2UAVGFuZ28gSWNvbiBMaWJyYXJ5VM/tggAAADp0RVh0U291cmNlX1VSTABodHRwOi8vdGFuZ28uZnJlZWRlc2t0b3Aub3JnL1RhbmdvX0ljb25fTGlicmFyebzIrdYAAAAASUVORK5CYII=') left center no-repeat;[\n]"
+17:22:50,671 DEBUG [wire] << "}.error-text-div {[\n]"
+17:22:50,671 DEBUG [wire] << "   display: inline-block;   vertical-align: top;   height: 32px;}.label {   font-weight:bold;   display: inline-block;}.value {   display: inline-block;}</style></head><body><div class=""
+17:22:50,671 DEBUG [wire] << "header"><div class="error-div"></div><div class="error-text-div">Error processing request</div></div><div class="label">Context Path:</div><div class="value">/greenarea-service</div><br/><div class="label">Servlet Path:</div><div class="value">/resources</div><br/><div class="label">Path Info:</div><div class="value">/DataBase/addMission</div><br/><div class="label">Query String:</div><div class="value">null</div><br/><b>Stack Trace</b><br/>org.jboss.resteasy.spi.UnhandledException: javax.ejb.EJBTransactionRolledbackException<br/>org.jboss.resteasy.core.ExceptionHandler.handleApplicationException(ExceptionHandler.java:76)<br/>org.jboss.resteasy.core.ExceptionHandler.handleException(ExceptionHandler.java:212)<br/>org.jboss.resteasy.core.SynchronousDispatcher.writeException(SynchronousDispatcher.java:149)<br/>org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:372)<br/>org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:179)<br/>org.jboss.resteasy.plugins."
+17:22:50,671 DEBUG [wire] << "server.servlet.ServletContainerDispatcher.service(ServletContainerDispatcher.java:220)<br/>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:56)<br/>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher.service(HttpServletDispatcher.java:51)<br/>javax.servlet.http.HttpServlet.service(HttpServlet.java:790)<br/>io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:85)<br/>io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:61)<br/>io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)<br/>org.wildfly.extension.undertow.security.SecurityContextAssociationHandler.handleRequest(SecurityContextAssociationHandler.java:78)<br/>io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)<br/>io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler"
+17:22:50,672 DEBUG [wire] << ".java:131)<br/>io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:56)<br/>io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)<br/>io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:45)<br/>io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:63)<br/>io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:58)<br/>io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:70)<br/>io.undertow.security.handlers.SecurityInitialHandler.handleRequest(SecurityInitialHandler.java:76)<br/>io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)<br/>org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler.handleRequest"
+17:22:50,672 DEBUG [wire] << "(JACCContextIdHandler.java:61)<br/>io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)<br/>io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)<br/>io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:261)<br/>io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:247)<br/>io.undertow.servlet.handlers.ServletInitialHandler.access$000(ServletInitialHandler.java:76)<br/>io.undertow.servlet.handlers.ServletInitialHandler$1.handleRequest(ServletInitialHandler.java:166)<br/>io.undertow.server.Connectors.executeRootHandler(Connectors.java:197)<br/>io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:759)<br/>java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)<br/>java.u"
+17:22:50,672 DEBUG [wire] << "til.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)<br/>java.lang.Thread.run(Thread.java:745)<br/></body></html>"
+17:22:50,672 DEBUG [BasicClientConnectionManager] Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@1198b989
+17:22:50,672 DEBUG [BasicClientConnectionManager] Connection can be kept alive indefinitely
+17:22:50,687 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:22:50,689 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:22:50,728 DEBUG [BasicClientConnectionManager] Get connection for route {}->http://localhost:8080
+17:22:50,729 DEBUG [DefaultClientConnectionOperator] Connecting to localhost:8080
+17:22:50,730 DEBUG [RequestAddCookies] CookieSpec selected: best-match
+17:22:50,730 DEBUG [RequestAuthCache] Auth cache not set in the context
+17:22:50,730 DEBUG [RequestTargetAuthentication] Target auth state: UNCHALLENGED
+17:22:50,730 DEBUG [RequestProxyAuthentication] Proxy auth state: UNCHALLENGED
+17:22:50,730 DEBUG [DefaultHttpClient] Attempt 1 to execute request
+17:22:50,730 DEBUG [DefaultClientConnection] Sending request: GET /greenarea-service/resources/DataBase/hello HTTP/1.1
+17:22:50,730 DEBUG [wire] >> "GET /greenarea-service/resources/DataBase/hello HTTP/1.1[\r][\n]"
+17:22:50,730 DEBUG [wire] >> "Accept: text/plain[\r][\n]"
+17:22:50,731 DEBUG [wire] >> "Accept-Encoding: gzip, deflate[\r][\n]"
+17:22:50,731 DEBUG [wire] >> "Host: localhost:8080[\r][\n]"
+17:22:50,731 DEBUG [wire] >> "Connection: Keep-Alive[\r][\n]"
+17:22:50,731 DEBUG [wire] >> "[\r][\n]"
+17:22:50,731 DEBUG [headers] >> GET /greenarea-service/resources/DataBase/hello HTTP/1.1
+17:22:50,731 DEBUG [headers] >> Accept: text/plain
+17:22:50,731 DEBUG [headers] >> Accept-Encoding: gzip, deflate
+17:22:50,731 DEBUG [headers] >> Host: localhost:8080
+17:22:50,732 DEBUG [headers] >> Connection: Keep-Alive
+17:22:50,738 DEBUG [wire] << "HTTP/1.1 200 OK[\r][\n]"
+17:22:50,738 DEBUG [wire] << "Connection: keep-alive[\r][\n]"
+17:22:50,738 DEBUG [wire] << "X-Powered-By: Undertow/1[\r][\n]"
+17:22:50,738 DEBUG [wire] << "Server: WildFly/8[\r][\n]"
+17:22:50,738 DEBUG [wire] << "Content-Type: text/plain[\r][\n]"
+17:22:50,738 DEBUG [wire] << "Content-Length: 6[\r][\n]"
+17:22:50,738 DEBUG [wire] << "Date: Sun, 18 Jan 2015 16:22:50 GMT[\r][\n]"
+17:22:50,738 DEBUG [wire] << "[\r][\n]"
+17:22:50,738 DEBUG [DefaultClientConnection] Receiving response: HTTP/1.1 200 OK
+17:22:50,738 DEBUG [headers] << HTTP/1.1 200 OK
+17:22:50,738 DEBUG [headers] << Connection: keep-alive
+17:22:50,739 DEBUG [headers] << X-Powered-By: Undertow/1
+17:22:50,739 DEBUG [headers] << Server: WildFly/8
+17:22:50,739 DEBUG [headers] << Content-Type: text/plain
+17:22:50,739 DEBUG [headers] << Content-Length: 6
+17:22:50,739 DEBUG [headers] << Date: Sun, 18 Jan 2015 16:22:50 GMT
+17:22:50,739 DEBUG [DefaultHttpClient] Connection can be kept alive indefinitely
+17:22:50,745 DEBUG [wire] << "Hello!"
+17:22:50,746 DEBUG [BasicClientConnectionManager] Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@37918c79
+17:22:50,746 DEBUG [BasicClientConnectionManager] Connection can be kept alive indefinitely
+17:22:50,746 INFO  [TestDataBase] Hello!
+17:22:50,749 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:22:50,751 DEBUG [DocumentProvider] Unable to retrieve config: expandEntityReferences defaults to true
+17:22:50,769 DEBUG [BasicClientConnectionManager] Get connection for route {}->http://localhost:8080
+17:22:50,769 DEBUG [DefaultClientConnectionOperator] Connecting to localhost:8080
+17:22:50,770 DEBUG [RequestAddCookies] CookieSpec selected: best-match
+17:22:50,770 DEBUG [RequestAuthCache] Auth cache not set in the context
+17:22:50,770 DEBUG [RequestTargetAuthentication] Target auth state: UNCHALLENGED
+17:22:50,770 DEBUG [RequestProxyAuthentication] Proxy auth state: UNCHALLENGED
+17:22:50,770 DEBUG [DefaultHttpClient] Attempt 1 to execute request
+17:22:50,770 DEBUG [DefaultClientConnection] Sending request: GET /greenarea-service/resources/DataBase/populateDB HTTP/1.1
+17:22:50,770 DEBUG [wire] >> "GET /greenarea-service/resources/DataBase/populateDB HTTP/1.1[\r][\n]"
+17:22:50,771 DEBUG [wire] >> "Accept: text/plain[\r][\n]"
+17:22:50,771 DEBUG [wire] >> "Accept-Encoding: gzip, deflate[\r][\n]"
+17:22:50,771 DEBUG [wire] >> "Host: localhost:8080[\r][\n]"
+17:22:50,771 DEBUG [wire] >> "Connection: Keep-Alive[\r][\n]"
+17:22:50,771 DEBUG [wire] >> "[\r][\n]"
+17:22:50,771 DEBUG [headers] >> GET /greenarea-service/resources/DataBase/populateDB HTTP/1.1
+17:22:50,771 DEBUG [headers] >> Accept: text/plain
+17:22:50,771 DEBUG [headers] >> Accept-Encoding: gzip, deflate
+17:22:50,771 DEBUG [headers] >> Host: localhost:8080
+17:22:50,771 DEBUG [headers] >> Connection: Keep-Alive
+17:22:51,011 DEBUG [wire] << "HTTP/1.1 200 OK[\r][\n]"
+17:22:51,011 DEBUG [wire] << "Connection: keep-alive[\r][\n]"
+17:22:51,011 DEBUG [wire] << "X-Powered-By: Undertow/1[\r][\n]"
+17:22:51,011 DEBUG [wire] << "Server: WildFly/8[\r][\n]"
+17:22:51,011 DEBUG [wire] << "Content-Type: text/plain[\r][\n]"
+17:22:51,011 DEBUG [wire] << "Content-Length: 2[\r][\n]"
+17:22:51,011 DEBUG [wire] << "Date: Sun, 18 Jan 2015 16:22:51 GMT[\r][\n]"
+17:22:51,011 DEBUG [wire] << "[\r][\n]"
+17:22:51,011 DEBUG [DefaultClientConnection] Receiving response: HTTP/1.1 200 OK
+17:22:51,011 DEBUG [headers] << HTTP/1.1 200 OK
+17:22:51,011 DEBUG [headers] << Connection: keep-alive
+17:22:51,011 DEBUG [headers] << X-Powered-By: Undertow/1
+17:22:51,011 DEBUG [headers] << Server: WildFly/8
+17:22:51,011 DEBUG [headers] << Content-Type: text/plain
+17:22:51,012 DEBUG [headers] << Content-Length: 2
+17:22:51,012 DEBUG [headers] << Date: Sun, 18 Jan 2015 16:22:51 GMT
+17:22:51,012 DEBUG [DefaultHttpClient] Connection can be kept alive indefinitely
+17:22:51,013 DEBUG [wire] << "ok"
+17:22:51,013 DEBUG [BasicClientConnectionManager] Releasing connection org.apache.http.impl.conn.ManagedClientConnectionImpl@222114ba
+17:22:51,013 DEBUG [BasicClientConnectionManager] Connection can be kept alive indefinitely
+17:22:51,013 INFO  [TestDataBase] ok

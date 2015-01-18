@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>
+        <p:wizard backLabel="#{bundle.wizardBack}" nextLabel="#{bundle.wizardNext}" style="height: auto" >
+            <p:tab title="#{bundle.newOrderTabFromTitle}" id="tabFrom">
+                <h:panelGrid columns="2" style="height:auto">
+                    <h:outputText value="#{bundle.newOrderTabFromName}" />  
+                    <p:inputText value="#{newOrderController.newOrderForm.fromName}"/>
+                    <h:outputText value="#{bundle.newOrderTabFromStreet}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.fromAddress.street}"/>
+                    <h:outputText value="#{bundle.newOrderTabFromNum}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.fromAddress.number}"/>
+                    <h:outputText value="#{bundle.newOrderTabFromCity}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.fromAddress.city}"/>
+
+                    <h:outputText value="#{bundle.newOrderTabFromProvince}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.fromAddress.province}"/>
+                    <h:outputText value="#{bundle.newOrderTabFromZip}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.fromAddress.zipCode}"/>
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="#{bundle.newOrderTabToTitle}" id="tabTO">
+                <h:panelGrid columns="2" style="height:auto">
+                    <h:outputText value="#{bundle.newOrderTabToName}" />  
+                    <p:inputText value="#{newOrderController.newOrderForm.toName}"/>
+                    <h:outputText value="#{bundle.newOrderTabToStreet}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.toAddress.street}"/>
+                    <h:outputText value="#{bundle.newOrderTabToNum}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.toAddress.number}"/>
+                    <h:outputText value="#{bundle.newOrderTabToCity}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.toAddress.city}"/>
+                    <h:outputText value="#{bundle.newOrderTabToProvince}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.toAddress.province}"/>
+                    <h:outputText value="#{bundle.newOrderTabToZip}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.toAddress.zipCode}"/>
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="#{bundle.newOrderTabOrderTitle}" id="tabOrder">
+                <h:panelGrid columns="2" style="vertical-align: text-top">
+                    <h:outputText value="#{bundle.newOrderTabOrdineClientAccount}" />  
+                    <p:inputText value="#{newOrderController.newOrderForm.clientAccountName}" required="true" requiredMessage="Il nome del client account e' obbligatorio"/>
+                    <h:outputText value="#{bundle.newOrderTabOrdineNote}" />
+                    <p:inputText value="#{newOrderController.newOrderForm.note}"/>
+                    <h:outputText value="#{bundle.newOrderTabOrdineTermini}" />
+                    <p:dataTable id="termTable" rowIndexVar="termIndex" value="#{newOrderController.termList}" rowKey="#{termID.index}"
+                                 var="termID" editable="true" editMode="cell"
+                                 selection="#{newOrderController.currentTerm}" >
+                        <p:column selectionMode="single" />  
+                        <p:column >
+                            <f:facet name="header">#{bundle.newOrderTabOrdineTerminiKey}</f:facet>
+                            <p:cellEditor >
+                                <f:facet name="output">
+                                    <h:outputText value="#{termID.key}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu value="#{termID.key}" style="width:100%">  
+                                        <f:selectItems value="#{newOrderController.termKeys}" var="termK" itemLabel="#{termK}" itemValue="#{termK}" />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{bundle.newOrderTabOrdineTerminiValue}</f:facet>
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{termID.val}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:inputText value="#{termID.val}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <f:facet name="footer">  
+                            <p:commandButton value="AddTermID" action="#{newOrderController.addTerm()}"  ajax="false">
+                            </p:commandButton>
+                            <p:commandButton value="removeTermID" action="#{newOrderController.removeTerm()}"  ajax="false">
+                            </p:commandButton>
+                        </f:facet> 
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="#{bundle.newOrderTabItemTitle}" id="tabItems">
+                <p:growl id="messages" showDetail="true"/> 
+                <p:dataTable id="itemTable" rowIndexVar="itemIndex" value="#{newOrderController.itemList}" var="item" 
+                             rowKey="#{item.index}" editable="true" editMode="cell"
+                             selection="#{newOrderController.currentItem}" >
+                    <p:ajax event="cellEdit" listener="#{newOrderController.onCellEdit}"/>  
+                    <p:column selectionMode="single" />  
+                    <p:column>
+                        <f:facet name="header">#{bundle.newOrderTabItemID}</f:facet>
+                        <p:cellEditor >
+                            <f:facet name="output">
+                                <h:outputText value="#{item.itemID}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{item.itemID}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">#{bundle.newOrderTabItemID}</f:facet>
+                        <p:cellEditor >
+                            <f:facet name="output">
+                                <h:outputText value="#{item.descrizione}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{item.descrizione}"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column >
+                        <f:facet name="header">#{bundle.newOrderTabAttrib}</f:facet>
+                        <p:cellEditor >
+                            <f:facet name="output">
+                                <h:outputText value="#{item.attributi}"/>
+                            </f:facet>
+                            <f:facet name="input">
+
+                                
+                                <p:overlayPanel id="attribListPanel" appendToBody="true" 
+                                                dynamic="true">
+
+                                    <p:dataTable id="attribLst" rowIndexVar="attribIndex" value="#{newOrderController.currentItem.attributi}" var="attr" rowKey="#{attr.index}"
+                                                 editable="true" editMode="cell"  >
+                                        <p:column selectionMode="single" />  
+                                        <p:column >
+                                            <f:facet name="header">#{bundle.newOrderTabOrdineTerminiKey}</f:facet>
+                                            <p:cellEditor >
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{attr.key}"/>
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <h:outputText value="#{attr.key}"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">#{bundle.newOrderTabOrdineTerminiValue}</f:facet>
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{attr.val}"/>
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <h:outputText value="#{attr.val}"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <f:facet name="footer">  
+                                            <p:commandButton value="AddAttr" action="#{newOrderController.addAttrib()}"  ajax="false">
+                                            </p:commandButton>
+                                            <p:commandButton value="removeAttrib" action="#{newOrderController.removeAttrib()}"  ajax="false">
+                                            </p:commandButton>
+                                        </f:facet> 
+                                    </p:dataTable>
+                                </p:overlayPanel>    
+                            </f:facet>
+                        </p:cellEditor>
+
+
+
+                    </p:column>
+                    <f:facet name="footer">  
+                        <p:commandButton value="AddItem" action="#{newOrderController.addItem()}"  ajax="false">
+                        </p:commandButton>
+                        <p:commandButton value="removeItem" action="#{newOrderController.removeItem()}"  ajax="false">
+                        </p:commandButton>
+                    </f:facet> 
+                </p:dataTable>
+
+            </p:tab>
+
+            <p:tab title="Confirmation" id="tabConfirm">
+                <p:panel header="confirm">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Mittente: " />  
+                        <h:outputText value="#{newOrderController.newOrderForm.fromName}"/>
+                        <h:outputText value="Via" />
+                        <h:outputText value="#{newOrderController.newOrderForm.fromAddress.street}, 
+                                      #{newOrderController.newOrderForm.fromAddress.number}" />
+                        <h:outputText value="citta'" />
+                        <h:outputText value="#{newOrderController.newOrderForm.fromAddress.zipCode} -
+                                      #{newOrderController.newOrderForm.fromAddress.city}"/>
+                        <h:outputText value="Desinatario " />  
+                        <h:outputText value="#{newOrderController.newOrderForm.toName}"/>
+                        <h:outputText value="Via" />
+                        <h:outputText value="#{newOrderController.newOrderForm.toAddress.street},
+                                      #{newOrderController.newOrderForm.toAddress.number}"/>
+                        <h:outputText value="citta'" />
+                        <h:outputText value="#{newOrderController.newOrderForm.toAddress.zipCode} -
+                                      #{newOrderController.newOrderForm.toAddress.city}"/>
+                    </h:panelGrid>
+                    <p:commandButton value="Submit"  action="#{newOrderController.addOrder()}" ajax="false"/>
+                </p:panel>                            
+            </p:tab>
+        </p:wizard>
+
+    </h:form>
+
+
+
+</html>
+

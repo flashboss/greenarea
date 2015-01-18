@@ -1,0 +1,196 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservices.sgrl.greenarea.vige.it/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="LogisticNetworkRouting" targetNamespace="http://webservices.sgrl.greenarea.vige.it/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://webservices.sgrl.greenarea.vige.it/"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="http://webservices.sgrl.greenarea.vige.it/">
+			<xs:element name="getLNPaths" type="tns:getLNPaths" />
+			<xs:element name="getLNPathsResponse" type="tns:getLNPathsResponse" />
+			<xs:element name="getRoutes" type="tns:getRoutes" />
+			<xs:element name="getRoutesResponse" type="tns:getRoutesResponse" />
+			<xs:element name="getSGRLRoutes" type="tns:getSGRLRoutes" />
+			<xs:element name="getSGRLRoutesResponse" type="tns:getSGRLRoutesResponse" />
+			<xs:complexType name="getRoutes">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="source" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="destination" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="options" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GeoLocation">
+				<xs:sequence>
+					<xs:element name="country" type="xs:string" />
+					<xs:element minOccurs="0" name="adminAreaLevel1" type="xs:string" />
+					<xs:element minOccurs="0" name="adminAreaLevel2" type="xs:string" />
+					<xs:element name="city" type="xs:string" />
+					<xs:element name="street" type="xs:string" />
+					<xs:element minOccurs="0" name="number" type="xs:string" />
+					<xs:element minOccurs="0" name="zipCode" type="xs:string" />
+					<xs:element name="latitude" type="xs:double" />
+					<xs:element name="longitude" type="xs:double" />
+					<xs:element name="radius" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getRoutesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLNPaths">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="source" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="destination" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="options" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLNPathsResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:sgrlLogisticPath" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="sgrlLogisticPath">
+				<xs:sequence>
+					<xs:element name="cost" type="xs:double" />
+					<xs:element minOccurs="0" name="geoFrom" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="geoTo" type="tns:GeoLocation" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="path"
+						nillable="true" type="xs:string" />
+					<xs:element minOccurs="0" name="timeStamp" type="xs:dateTime" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSGRLRoutes">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="source" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="destination" type="tns:GeoLocation" />
+					<xs:element minOccurs="0" name="options" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSGRLRoutesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:sgrlRoute" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="sgrlRoute">
+				<xs:sequence>
+					<xs:element name="cost" type="xs:double" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="route"
+						nillable="true" type="tns:sgrlNode" />
+					<xs:element minOccurs="0" name="timeStamp" type="xs:dateTime" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="sgrlNode">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="nameDetails" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="sgrlServiceError">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SYSTEM_ERROR" />
+					<xs:enumeration value="INVALID_PARAMETERS" />
+					<xs:enumeration value="INVALID_SOURCE_ADDRESS" />
+					<xs:enumeration value="INVALID_DESTINATION_ADDRESS" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SGRLServiceException" type="tns:SGRLServiceException" />
+			<xs:complexType name="SGRLServiceException">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="sGRLServiceError" type="tns:sgrlServiceError" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getLNPathsResponse">
+		<wsdl:part element="tns:getLNPathsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="SGRLServiceException">
+		<wsdl:part element="tns:SGRLServiceException" name="SGRLServiceException"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSGRLRoutesResponse">
+		<wsdl:part element="tns:getSGRLRoutesResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLNPaths">
+		<wsdl:part element="tns:getLNPaths" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSGRLRoutes">
+		<wsdl:part element="tns:getSGRLRoutes" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRoutes">
+		<wsdl:part element="tns:getRoutes" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getRoutesResponse">
+		<wsdl:part element="tns:getRoutesResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="LogisticNetworkRouting">
+		<wsdl:operation name="getRoutes">
+			<wsdl:input message="tns:getRoutes" name="getRoutes"></wsdl:input>
+			<wsdl:output message="tns:getRoutesResponse" name="getRoutesResponse"></wsdl:output>
+			<wsdl:fault message="tns:SGRLServiceException" name="SGRLServiceException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLNPaths">
+			<wsdl:input message="tns:getLNPaths" name="getLNPaths"></wsdl:input>
+			<wsdl:output message="tns:getLNPathsResponse" name="getLNPathsResponse"></wsdl:output>
+			<wsdl:fault message="tns:SGRLServiceException" name="SGRLServiceException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getSGRLRoutes">
+			<wsdl:input message="tns:getSGRLRoutes" name="getSGRLRoutes"></wsdl:input>
+			<wsdl:output message="tns:getSGRLRoutesResponse" name="getSGRLRoutesResponse"></wsdl:output>
+			<wsdl:fault message="tns:SGRLServiceException" name="SGRLServiceException"></wsdl:fault>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LogisticNetworkRoutingSoapBinding"
+		type="tns:LogisticNetworkRouting">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getRoutes">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getRoutes">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getRoutesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SGRLServiceException">
+				<soap:fault name="SGRLServiceException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLNPaths">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLNPaths">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLNPathsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SGRLServiceException">
+				<soap:fault name="SGRLServiceException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getSGRLRoutes">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getSGRLRoutes">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getSGRLRoutesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SGRLServiceException">
+				<soap:fault name="SGRLServiceException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LogisticNetworkRouting">
+		<wsdl:port binding="tns:LogisticNetworkRoutingSoapBinding"
+			name="LogisticNetworkRoutingPort">
+			<soap:address
+				location="http://MacBook-Vige-wifi.local:8080/greenarea-sgr/LogisticNetworkRouting" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

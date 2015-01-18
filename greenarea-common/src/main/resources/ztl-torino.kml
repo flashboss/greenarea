@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>ztl-torino.kml</name>
+	<open>1</open>
+	<StyleMap id="msn_ylw-pushpin3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin3</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sh_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>7fff5500</color>
+			<width>10</width>
+		</LineStyle>
+	</Style>
+	<Style id="sn_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7fff00ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin1">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>7fff00ff</color>
+			<width>10</width>
+		</LineStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin2</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin1</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin0">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f0000ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7fff00ff</color>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin0">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin2</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="msn_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin0</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin3">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff55</color>
+		</PolyStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>7fff5500</color>
+			<width>10</width>
+		</LineStyle>
+	</Style>
+	<StyleMap id="msn_ylw-pushpin1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin1</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="sn_ylw-pushpin2">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>7fff00ff</color>
+			<width>10</width>
+		</LineStyle>
+	</Style>
+	<Style id="sh_ylw-pushpin3">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffff0000</color>
+			<width>5</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>7f00ff55</color>
+		</PolyStyle>
+	</Style>
+	<Folder>
+		<name>ZTL torino</name>
+		<open>1</open>
+		<Folder>
+			<name>ztL centrale</name>
+			<open>1</open>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL area centrale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin3</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.676193843521462,45.07877001507558,0 7.674758686443224,45.07672104123586,0 7.673426647689325,45.07480173520953,0 7.672846687833226,45.07384442921409,0 7.671881419490529,45.0725473895895,0 7.671350108622987,45.07249659006117,0 7.67035311978608,45.07106117280432,0 7.669628836126671,45.07019170906591,0 7.668528044539169,45.06881397391286,0 7.669252629469005,45.0685232496351,0 7.670678616345366,45.0680261557098,0 7.672228056215193,45.06742409201,0 7.67417776328031,45.0668092563217,0 7.67533586861542,45.06631856050193,0 7.675602719682844,45.0661802504004,0 7.674551078972989,45.06466907471229,0 7.674444153835884,45.06458093944312,0 7.676052581470085,45.06404566164648,0 7.67866170336712,45.06304392524747,0 7.679342511166696,45.06412513328341,0 7.67885192261973,45.0642986846128,0 7.679109992120539,45.06466708495979,0 7.679621500833465,45.06444223843113,0 7.68020635263809,45.064509290836,0 7.680449818660772,45.06442312068894,0 7.680718667098225,45.06385490088032,0 7.681011585426518,45.06363050021212,0 7.68093870615494,45.06351006630639,0 7.680377988993339,45.06361448819749,0 7.679622826865429,45.06279192290749,0 7.679506788957326,45.06268309031566,0 7.681701976155024,45.061972219104,0 7.683938000659238,45.0611474773481,0 7.685036206099484,45.06080186902568,0 7.686478541819744,45.06031620039592,0 7.689518253219811,45.05926816856054,0 7.690504456354288,45.0588605517714,0 7.690982768457633,45.0590100518903,0 7.691779478101591,45.060124941949,0 7.692242245096514,45.06087922092567,0 7.693875727772676,45.06288682905266,0 7.694795262781353,45.06251139035829,0 7.696116927230136,45.06370115827463,0 7.693768639836078,45.06525894815789,0 7.69383927075663,45.06548411930628,0 7.693933701690103,45.06576094281374,0 7.694275460535707,45.06612435118925,0 7.694672121074742,45.06596908595839,0 7.694870015196431,45.06596928701552,0 7.697202370812812,45.06442010709095,0 7.698560639124956,45.06539945910708,0 7.697512958944087,45.06652913700287,0 7.69497087777598,45.06749517743572,0 7.69562255052918,45.06836640218475,0 7.692576166187193,45.07150432556171,0 7.691546598418433,45.07250843070779,0 7.690177601230321,45.07206682611021,0 7.689908350752068,45.07248191310347,0 7.689761290542359,45.07277628616716,0 7.689608958290826,45.07304624852527,0 7.689193489700674,45.07347784614968,0 7.688998123348439,45.07387492833842,0 7.689070412733936,45.07415266197512,0 7.689240252754743,45.07448311139336,0 7.689191283377451,45.07467336442571,0 7.685329647032997,45.07596480065105,0 7.685207312095097,45.07561935824799,0 7.684816080076155,45.07523854708609,0 7.68310829106291,45.07580366039596,0 7.682303580922307,45.07606208620533,0 7.682059872574985,45.0761995785573,0 7.681864838428291,45.07656109679229,0 7.682034632985666,45.07707971062459,0 7.67667449282528,45.07885010893941,0 7.676193843521462,45.07877001507558,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Area Romana</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.680319994248492,45.07674819262859,0 7.679714684894532,45.07578637048384,0 7.679518869357407,45.07564739590558,0 7.679322831841007,45.07564729582814,0 7.67835841801257,45.07608596265184,0 7.678098269845841,45.07575076820842,0 7.677610380490465,45.07516222378695,0 7.67765925603176,45.07496617022613,0 7.678653007176433,45.07467718088881,0 7.679993644820411,45.07412266791274,0 7.681387977290894,45.07367271067088,0 7.681922376027597,45.07438552525034,0 7.68232855316684,45.075060960162,0 7.682549864314467,45.07589325053351,0 7.681978464008557,45.07616602795432,0 7.681847069189272,45.07655370900224,0 7.680451145688201,45.07701466973831,0 7.680319994248492,45.07674819262859,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>ZTL TPL</name>
+			<open>1</open>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.683043480748315,45.07581834606302,0 7.682409633927305,45.07487119952069,0 7.681868783695185,45.07416077238863,0 7.68151465838447,45.07343885277235,0 7.680901990307398,45.07261376851078,0 7.680420114419306,45.07198619888498,0 7.679864871888833,45.07134610032295,0 7.679476407127355,45.07062758119076,0 7.679162358099192,45.07032811109049,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.678090614285456,45.07025074952045,0 7.679199346257408,45.07032811254192,0 7.679347281574225,45.07034113283576,0 7.680105506222931,45.07040519839435,0 7.681551156909032,45.07058469274945,0 7.682905629211689,45.07064915200365,0 7.683892544486493,45.07077806156256,0 7.684506844806924,45.0707379842753,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.68223803307108,45.06966684440722,0 7.68318458511059,45.07113334714407,0 7.684029160418979,45.07222143294323,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.681625384338475,45.0705583897773,0 7.68125435917864,45.07007474463353,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.681680950430883,45.06884526416194,0 7.68086364349875,45.06752588883018,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.68058635067173,45.06921188979943,0 7.679142988833401,45.06742349441834,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.67921693376342,45.06521291620462,0 7.680419440566853,45.06691184080336,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.677184428216892,45.0646127040038,0 7.676630159350588,45.06386860216875,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.678421934054396,45.0641026247391,0 7.677903559460686,45.0633965351646,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.678755386916059,45.06674080132591,0 7.677701902860248,45.06539605375257,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.685077377132408,45.06083984088213,0 7.688590987795527,45.06576724309326,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.689456385208217,45.06705444065361,0 7.690126519542222,45.06806662814319,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Trasporto pubblico</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin0</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.692533937481441,45.07143363584839,0 7.69153848040623,45.06998394751187,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+		</Folder>
+		<Folder>
+			<name>ztl pedonale</name>
+			<open>1</open>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.67661378805339,45.07351504921502,0 7.677144217441743,45.07330627130417,0 7.677526400040211,45.07317200088524,0 7.677696448222546,45.07300757336159,0 7.677697084065964,45.07278306405765,0 7.677358489842126,45.07233416476317,0 7.678101701760333,45.07206510728879,0 7.679141853319358,45.07185629356012,0 7.679885476511261,45.07164710894137,0 7.680267403133709,45.07205153132959,0 7.680776968803029,45.07281581027015,0 7.681204881158259,45.07346071822529,0 7.68045770931974,45.07371470961398,0 7.679478833156573,45.07405809224804,0 7.677502002871766,45.07472882771405,0 7.67661378805339,45.07351504921502,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.680673707576839,45.07205113052113,0 7.681055257503133,45.07182687082977,0 7.680233172255797,45.07065765313204,0 7.680571290502378,45.07070252160343,0 7.681014686741444,45.07110721781277,0 7.681415740102704,45.07170735486696,0 7.681989359447227,45.07160304596777,0 7.682436102586849,45.07133356681091,0 7.683052601253227,45.07113926689272,0 7.683433966038757,45.07176984492526,0 7.683731369902834,45.07205566466066,0 7.683816221811433,45.0722211077431,0 7.684007414132188,45.0724920430396,0 7.683091339567863,45.07280612791268,0 7.682921060588866,45.07283583416659,0 7.683026982311619,45.07301624910589,0 7.682388772010351,45.07311999118346,0 7.681751096953333,45.07331345582111,0 7.680673707576839,45.07205113052113,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.686119714202024,45.07184835271397,0 7.686610942370946,45.07255679379156,0 7.685734052088959,45.07282608661196,0 7.685094082587027,45.07210258802558,0 7.684435692118323,45.0709599675866,0 7.684947956968163,45.07073464975845,0 7.68620738494355,45.07041930297883,0 7.686804012444655,45.07088606816632,0 7.687274476723689,45.07127760013351,0 7.686119714202024,45.07184835271397,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.683792462950175,45.07343908581186,0 7.685520317345215,45.07293100242654,0 7.685776976459977,45.07362516179004,0 7.684260086026836,45.07405732120418,0 7.683792462950175,45.07343908581186,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.684812833594212,45.07517397668315,0 7.684235796905101,45.07532105671675,0 7.683747163435775,45.0745363634726,0 7.684152772877009,45.07435787837862,0 7.684812833594212,45.07517397668315,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin1</styleUrl>
+				<Polygon>
+					<tessellate>1</tessellate>
+					<outerBoundaryIs>
+						<LinearRing>
+							<coordinates>
+								7.686600140526688,45.0681652328715,0 7.686979365833963,45.06879862385451,0 7.68660805869245,45.06892612092605,0 7.686489814461863,45.0690411294456,0 7.686571266650837,45.06915644510165,0 7.685809487489125,45.06943680040033,0 7.685917799547688,45.06961641008585,0 7.68597106290823,45.07009672672788,0 7.68588028087388,45.07014746808813,0 7.685545019041284,45.07023556836565,0 7.684968564844768,45.06954333849944,0 7.684500857665841,45.06892353726924,0 7.686600140526688,45.0681652328715,0 
+							</coordinates>
+						</LinearRing>
+					</outerBoundaryIs>
+				</Polygon>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.673987515661612,45.07470630251789,0 7.674791220243298,45.07440919810367,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.674960504358463,45.07436468175861,0 7.675595792616923,45.07414158384713,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.675849996565973,45.0740672061738,0 7.676422273568959,45.07388869123084,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.684780962253366,45.06870653209676,0 7.684231806974776,45.06794026939318,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.684114784383338,45.06784436864484,0 7.683316061692671,45.06674814289293,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.683259630130528,45.06657311394466,0 7.682487072546542,45.06552179203661,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.682343269798214,45.06535610182751,0 7.681642644636087,45.06438762050522,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.681570761905279,45.06429840888424,0 7.681023367483468,45.06360485864111,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.681310822114186,45.06387863052306,0 7.68256572460219,45.06339850238225,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.68051507539377,45.06609555775941,0 7.679790025204403,45.06505396991391,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.679699524004029,45.06575137247343,0 7.68077748380521,45.06539152966764,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.68538862737037,45.06521084511203,0 7.685970095136727,45.06503817504539,0 7.686407466465422,45.06493545395834,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.693138909666628,45.06945291288837,0 7.692421160428385,45.06846871522113,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.694463725429321,45.06859247644381,0 7.693946249375633,45.06794853758133,0 7.693729869020101,45.06767367796672,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+			<Placemark>
+				<name>.</name>
+				<open>1</open>
+				<description><![CDATA[<p><strong>ZTL Torino</strong></p>
+<p>ZTL Pedonale</p>
+<p> Per informazioni sugli orari, regole e posizione delle telecamere della ZTL di Torino consulta <a href="http://www.accessibilitacentristorici.it/traffico-limitato/piemonte/torino.html">www.accessibilitacentristorici.it</a></p>]]></description>
+				<styleUrl>#msn_ylw-pushpin2</styleUrl>
+				<LineString>
+					<tessellate>1</tessellate>
+					<coordinates>
+						7.692576156265149,45.06838667443901,0 7.694961792553245,45.06749518428651,0 
+					</coordinates>
+				</LineString>
+			</Placemark>
+		</Folder>
+	</Folder>
+</Document>
+</kml>

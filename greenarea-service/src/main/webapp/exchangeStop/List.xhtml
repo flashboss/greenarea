@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListExchangeStopTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListExchangeStopEmpty}" rendered="#{exchangeStopController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{exchangeStopController.items.rowCount > 0}">
+                    <h:outputText value="#{exchangeStopController.pagination.pageFirstItem + 1}..#{exchangeStopController.pagination.pageLastItem + 1}/#{exchangeStopController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{exchangeStopController.previous}" value="#{bundle.Previous} #{exchangeStopController.pagination.pageSize}" rendered="#{exchangeStopController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{exchangeStopController.next}" value="#{bundle.Next} #{exchangeStopController.pagination.pageSize}" rendered="#{exchangeStopController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{exchangeStopController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExchangeStopTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExchangeStopTitle_location}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.location.street}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExchangeStopTitle_truckLoad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.truckLoad.volume}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListExchangeStopTitle_driverNotes}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.driverNotes}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{exchangeStopController.prepareView}" value="#{bundle.ListExchangeStopViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{exchangeStopController.prepareEdit}" value="#{bundle.ListExchangeStopEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{exchangeStopController.destroy}" value="#{bundle.ListExchangeStopDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{exchangeStopController.prepareCreate}" value="#{bundle.ListExchangeStopCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListExchangeStopIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="activiti-report">
+  <process id="accessoInGA" name="Accesso in GA" isExecutable="true" activiti:candidateStarterGroups="pa">
+    <startEvent id="startevent1" name="Start" activiti:initiator="currentUserId">
+      <extensionElements>
+        <activiti:formProperty id="accesso_in_ga_pa_ga" name="GA" type="enum" variable="ga">
+          <activiti:value id="TUTTE" name="Tutte"></activiti:value>
+          <activiti:value id="CENTRALE" name="CENTRALE"></activiti:value>
+        </activiti:formProperty>
+        <activiti:formProperty id="accesso_in_ga_dal" name="valido dal" type="date" variable="dal" datePattern="d-MM-yyyy"></activiti:formProperty>
+        <activiti:formProperty id="accesso_in_ga_al" name="al" type="date" variable="al" datePattern="d-MM-yyyy"></activiti:formProperty>
+        <activiti:formProperty id="accesso_in_ga_operatorelogistico" name="Operatore logistico" type="operatoreLogisticoEnum" variable="operatorelogistico"></activiti:formProperty>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetInitiator"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="theEnd"></endEvent>
+    <serviceTask id="richiediAccessiGa" name="Richiedi Accessi GA" activiti:class="it.vige.greenarea.bpm.pa.richiediaccessiga.RichiediAccessiGa"></serviceTask>
+    <serviceTask id="segnalazioneErroreRichiestaAccessiGaAOperatoreLogistico" name="Segnalazione Errore Richiesta Accessi GA a Operatore Logistico" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:expression>${initiator.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${initiator.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Segnalazione Errore Richiesta Accessi GA]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Segnalazione Errore Richiesta Accessi GA]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <boundaryEvent id="boundaryerror1" name="Error" attachedToRef="richiediAccessiGa">
+      <errorEventDefinition errorRef="errorerichiestaaccessiga"></errorEventDefinition>
+    </boundaryEvent>
+    <sequenceFlow id="flow6" sourceRef="boundaryerror1" targetRef="segnalazioneErroreRichiestaAccessiGaAOperatoreLogistico"></sequenceFlow>
+    <serviceTask id="segnalazioneErroreRichiestaAccessiGaAAmministratore" name="Segnalazione Errore Richiesta Accessi GA a Amministratore" activiti:type="mail">
+      <extensionElements>
+        <activiti:field name="to">
+          <activiti:expression>${initiator.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="from">
+          <activiti:expression>${initiator.email}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="subject">
+          <activiti:string><![CDATA[Segnalazione Errore Richiesta Accessi GA]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="html">
+          <activiti:string><![CDATA[Segnalazione Errore Richiesta Accessi GA]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow7" sourceRef="segnalazioneErroreRichiestaAccessiGaAOperatoreLogistico" targetRef="segnalazioneErroreRichiestaAccessiGaAAmministratore"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow8" sourceRef="richiediAccessiGa" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="segnalazioneErroreRichiestaAccessiGaAAmministratore" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="exclusivegateway1" targetRef="theEnd"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="startevent1" targetRef="richiediAccessiGa"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_accessoInGA">
+    <bpmndi:BPMNPlane bpmnElement="accessoInGA" id="BPMNPlane_accessoInGA">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="69.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="theEnd" id="BPMNShape_theEnd">
+        <omgdc:Bounds height="35.0" width="35.0" x="533.0" y="310.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="richiediAccessiGa" id="BPMNShape_richiediAccessiGa">
+        <omgdc:Bounds height="71.0" width="113.0" x="220.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreRichiestaAccessiGaAOperatoreLogistico" id="BPMNShape_segnalazioneErroreRichiestaAccessiGaAOperatoreLogistico">
+        <omgdc:Bounds height="91.0" width="141.0" x="330.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundaryerror1" id="BPMNShape_boundaryerror1">
+        <omgdc:Bounds height="30.0" width="30.0" x="303.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreRichiestaAccessiGaAAmministratore" id="BPMNShape_segnalazioneErroreRichiestaAccessiGaAAmministratore">
+        <omgdc:Bounds height="94.0" width="151.0" x="580.0" y="74.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="530.0" y="225.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="318.0" y="210.0"></omgdi:waypoint>
+        <omgdi:waypoint x="400.0" y="161.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="471.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="580.0" y="121.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="333.0" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="245.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="655.0" y="168.0"></omgdi:waypoint>
+        <omgdi:waypoint x="550.0" y="225.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="550.0" y="265.0"></omgdi:waypoint>
+        <omgdi:waypoint x="550.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="568.0" y="327.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="86.0" y="125.0"></omgdi:waypoint>
+        <omgdi:waypoint x="276.0" y="210.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

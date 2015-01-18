@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.ViewTruckServiceClassTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_id}" />
+				<h:outputText value="#{truckServiceClassController.selected.id}"
+					title="#{bundle.ViewTruckServiceClassTitle_id}" />
+				<h:outputText
+					value="#{bundle.ViewTruckServiceClassLabel_description}" />
+				<h:outputText
+					value="#{truckServiceClassController.selected.description}"
+					title="#{bundle.ViewTruckServiceClassTitle_description}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_model}" />
+				<h:outputText value="#{truckServiceClassController.selected.modelV}"
+					title="#{bundle.ViewTruckServiceClassTitle_model}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_baseName}" />
+				<h:outputText value="#{truckServiceClassController.selected.makeV}"
+					title="#{bundle.ViewTruckServiceClassTitle_baseName}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_lenght}" />
+				<h:outputText
+					value="#{truckServiceClassController.selected.lenghtV}"
+					title="#{bundle.ViewTruckServiceClassTitle_lenght}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_weight}" />
+				<h:outputText
+					value="#{truckServiceClassController.selected.weightV}"
+					title="#{bundle.ViewTruckServiceClassTitle_weight}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_emission}" />
+				<h:outputText
+					value="#{truckServiceClassController.selected.emissionV}"
+					title="#{bundle.ViewTruckServiceClassTitle_emission}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_fuel}" />
+				<h:outputText value="#{truckServiceClassController.selected.fuelV}"
+					title="#{bundle.ViewTruckServiceClassTitle_fuel}" />
+				<h:outputText value="#{bundle.ViewTruckServiceClassLabel_euro}" />
+				<h:outputText value="#{truckServiceClassController.selected.EURO}"
+					title="#{bundle.ViewTruckServiceClassTitle_euro}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{truckServiceClassController.destroyAndView}"
+				value="#{bundle.ViewTruckServiceClassDestroyLink}" />
+			<br />
+			<br />
+			<h:link outcome="Edit"
+				value="#{bundle.ViewTruckServiceClassEditLink}" />
+			<br />
+			<h:commandLink action="#{truckServiceClassController.prepareCreate}"
+				value="#{bundle.ViewTruckServiceClassCreateLink}" />
+			<br />
+			<h:commandLink action="#{truckServiceClassController.prepareList}"
+				value="#{bundle.ViewTruckServiceClassShowAllLink}" />
+			<br />
+			<br />
+			<h:link outcome="/index"
+				value="#{bundle.ViewTruckServiceClassIndexLink}" />
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

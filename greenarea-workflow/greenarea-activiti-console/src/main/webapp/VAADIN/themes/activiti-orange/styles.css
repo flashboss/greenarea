@@ -1,0 +1,84 @@
+@import url(../activiti/styles.css);
+
+.header {
+	background-image: url('img/tnt_banner.png');
+}
+
+.menu_wrapper {
+	background-image: url('img/menu_bg.png');
+}
+
+
+/*------------
+ * TABLE 
+ * -----------*/
+
+
+.v-table-header td {
+	background-color: #eb9e23;
+}
+.v-table-row-odd {
+	background: #ffddb7;
+}
+.v-table .v-selected, .black .v-table .v-selected {
+	background-color: #cc8616;
+}
+.v-table-cell-content-father {
+	background: none repeat scroll 0% 0% #eb9e23;
+}
+.v-table.menu-left .v-selected {
+	color: #eb9e23;
+}
+.v-table-header, .v-table-footer, .v-table-footer table {
+	background-color: #eb9e23;
+}
+.pa-table .v-table-footer {
+	background-color: transparent;
+}
+
+.op-table .v-table-footer {
+	background-color: transparent;
+}
+
+/*------------
+ * Buttons 
+ * -----------*/
+
+.v-button:focus {
+	background-color: #eb9e23;
+}
+
+.v-button:focus .v-button-wrap {
+	background-color: #eb9e23;
+}
+
+.v-button:active,
+.v-button.v-pressed {
+	background-color: #eb9e23;
+}
+
+.v-button:active .v-button-wrap,
+.v-button.v-pressed .v-button-wrap {
+	background-color: #eb9e23;
+}
+
+.v-button,
+.v-disabled.v-button {
+	background-color: #eb9e23;
+}
+
+
+/*------------
+ * Label 
+ * -----------*/
+ .v-label-h1, .v-label-h2, .v-caption-h1, .v-caption-h2, .white .v-label-h1, .white .v-label-h2, .white .v-caption-h1, .white .v-caption-h2 {
+ 	color: #eb9e23;
+ }
+ 
+.v-caption .v-captiontext {
+	color: #eb9e23;
+}
+
+.v-table-cell-content-highlights {
+	background-color: orange;
+}

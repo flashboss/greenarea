@@ -1,0 +1,330 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://webservice.gtg.greenarea.vige.it/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="GTGservice" targetNamespace="http://webservice.gtg.greenarea.vige.it/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://webservice.gtg.greenarea.vige.it/"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="http://webservice.gtg.greenarea.vige.it/">
+			<xs:element name="changeMissionState" type="tns:changeMissionState" />
+			<xs:element name="changeMissionStateResponse" type="tns:changeMissionStateResponse" />
+			<xs:element name="getMissions" type="tns:getMissions" />
+			<xs:element name="getMissionsResponse" type="tns:getMissionsResponse" />
+			<xs:element name="hello" type="tns:hello" />
+			<xs:element name="helloResponse" type="tns:helloResponse" />
+			<xs:element name="notifyFreightItemAction" type="tns:notifyFreightItemAction" />
+			<xs:element name="notifyFreightItemActionResponse" type="tns:notifyFreightItemActionResponse" />
+			<xs:element name="userLogin" type="tns:userLogin" />
+			<xs:element name="userLoginResponse" type="tns:userLoginResponse" />
+			<xs:complexType name="notifyFreightItemAction">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="freightItemsAction" type="tns:FreightAction" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="FreightAction">
+				<xs:sequence>
+					<xs:element name="code" type="xs:string" />
+					<xs:element minOccurs="0" name="cause" type="xs:int" />
+					<xs:element name="exchangeStopId" type="xs:long" />
+					<xs:element name="state" type="xs:int" />
+					<xs:element name="dateTime" type="xs:string" />
+					<xs:element minOccurs="0" name="note" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="notifyFreightItemActionResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="control">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType final="extension restriction" name="resultCode">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="changeMissionState">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="missionId" type="xs:long" />
+					<xs:element name="state" type="xs:int" />
+					<xs:element name="cause" type="xs:int" />
+					<xs:element minOccurs="0" name="note" type="xs:string" />
+					<xs:element minOccurs="0" name="dateTime" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="changeMissionStateResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getMissions">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="dateTime" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getMissionsResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:Mission" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Mission">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:long" />
+					<xs:element name="description" type="xs:string" />
+					<xs:element name="start" type="xs:string" />
+					<xs:element minOccurs="0" name="expire" type="xs:string" />
+					<xs:element name="state" type="xs:int" />
+					<xs:element minOccurs="0" name="truckInfo" type="tns:Truck" />
+					<xs:element maxOccurs="unbounded" name="exchangeStops"
+						type="tns:ExchangeStop" />
+					<xs:element maxOccurs="unbounded" name="transports"
+						type="tns:Transport" />
+					<xs:element maxOccurs="unbounded" name="freights" type="tns:Freight" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Truck">
+				<xs:sequence>
+					<xs:element name="plateNumber" type="xs:string" />
+					<xs:element minOccurs="0" name="model" type="xs:string" />
+					<xs:element minOccurs="0" name="serviceClass" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ExchangeStop">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:long" />
+					<xs:element minOccurs="0" name="description" type="xs:string" />
+					<xs:element minOccurs="0" name="geoLocation" type="tns:GeoLocation" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="collectingItems" nillable="true" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="deliveryItems" nillable="true" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GeoLocation">
+				<xs:sequence>
+					<xs:element name="country" type="xs:string" />
+					<xs:element minOccurs="0" name="adminAreaLevel1" type="xs:string" />
+					<xs:element minOccurs="0" name="adminAreaLevel2" type="xs:string" />
+					<xs:element name="city" type="xs:string" />
+					<xs:element name="street" type="xs:string" />
+					<xs:element minOccurs="0" name="number" type="xs:string" />
+					<xs:element minOccurs="0" name="zipCode" type="xs:string" />
+					<xs:element name="latitude" type="xs:double" />
+					<xs:element name="longitude" type="xs:double" />
+					<xs:element name="radius" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Transport">
+				<xs:sequence>
+					<xs:element name="code" type="xs:string" />
+					<xs:element minOccurs="0" name="serviceClass" type="xs:string" />
+					<xs:element name="sender" type="tns:GeoReference" />
+					<xs:element name="receiver" type="tns:GeoReference" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="GeoReference">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element name="surname" type="xs:string" />
+					<xs:element minOccurs="0" name="mobile" type="xs:string" />
+					<xs:element minOccurs="0" name="phone" type="xs:string" />
+					<xs:element minOccurs="0" name="email" type="xs:string" />
+					<xs:element name="geoLocation" type="tns:GeoLocation" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="Freight">
+				<xs:sequence>
+					<xs:element name="code" type="xs:string" />
+					<xs:element minOccurs="0" name="description" type="xs:string" />
+					<xs:element minOccurs="0" name="volume" type="xs:int" />
+					<xs:element minOccurs="0" name="height" type="xs:int" />
+					<xs:element minOccurs="0" name="lenght" type="xs:int" />
+					<xs:element minOccurs="0" name="width" type="xs:int" />
+					<xs:element minOccurs="0" name="weight" type="xs:int" />
+					<xs:element minOccurs="0" name="stackable" type="xs:boolean" />
+					<xs:element minOccurs="0" name="keepUpStanding" type="xs:boolean" />
+					<xs:element minOccurs="0" name="type" type="xs:string" />
+					<xs:element name="transportCode" type="xs:string" />
+					<xs:element minOccurs="0" name="state" type="xs:int" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="userLogin">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="userLoginResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="hello">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="helloResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="LDAPException" type="tns:LDAPException" />
+			<xs:complexType name="LDAPException">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="matchedDN" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="responseControls" type="tns:control" />
+					<xs:element minOccurs="0" name="resultCode" type="tns:resultCode" />
+					<xs:element minOccurs="0" name="diagnosticMessage" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="referralURLs" type="xs:string" />
+					<xs:element minOccurs="0" name="exceptionMessage" type="xs:string" />
+					<xs:element minOccurs="0" name="exceptionMessage" type="xs:string" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GTGexception" type="tns:GTGexception" />
+			<xs:complexType name="GTGexception">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCode" type="xs:string" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="changeMissionStateResponse">
+		<wsdl:part element="tns:changeMissionStateResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="hello">
+		<wsdl:part element="tns:hello" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="userLoginResponse">
+		<wsdl:part element="tns:userLoginResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="notifyFreightItemAction">
+		<wsdl:part element="tns:notifyFreightItemAction" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="GTGexception">
+		<wsdl:part element="tns:GTGexception" name="GTGexception"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="helloResponse">
+		<wsdl:part element="tns:helloResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="changeMissionState">
+		<wsdl:part element="tns:changeMissionState" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="LDAPException">
+		<wsdl:part element="tns:LDAPException" name="LDAPException"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMissions">
+		<wsdl:part element="tns:getMissions" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getMissionsResponse">
+		<wsdl:part element="tns:getMissionsResponse" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="notifyFreightItemActionResponse">
+		<wsdl:part element="tns:notifyFreightItemActionResponse"
+			name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="userLogin">
+		<wsdl:part element="tns:userLogin" name="parameters"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="GTGservice">
+		<wsdl:operation name="notifyFreightItemAction">
+			<wsdl:input message="tns:notifyFreightItemAction" name="notifyFreightItemAction"></wsdl:input>
+			<wsdl:output message="tns:notifyFreightItemActionResponse"
+				name="notifyFreightItemActionResponse"></wsdl:output>
+			<wsdl:fault message="tns:GTGexception" name="GTGexception"></wsdl:fault>
+			<wsdl:fault message="tns:LDAPException" name="LDAPException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="changeMissionState">
+			<wsdl:input message="tns:changeMissionState" name="changeMissionState"></wsdl:input>
+			<wsdl:output message="tns:changeMissionStateResponse"
+				name="changeMissionStateResponse"></wsdl:output>
+			<wsdl:fault message="tns:GTGexception" name="GTGexception"></wsdl:fault>
+			<wsdl:fault message="tns:LDAPException" name="LDAPException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getMissions">
+			<wsdl:input message="tns:getMissions" name="getMissions"></wsdl:input>
+			<wsdl:output message="tns:getMissionsResponse" name="getMissionsResponse"></wsdl:output>
+			<wsdl:fault message="tns:LDAPException" name="LDAPException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="userLogin">
+			<wsdl:input message="tns:userLogin" name="userLogin"></wsdl:input>
+			<wsdl:output message="tns:userLoginResponse" name="userLoginResponse"></wsdl:output>
+			<wsdl:fault message="tns:LDAPException" name="LDAPException"></wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="hello">
+			<wsdl:input message="tns:hello" name="hello"></wsdl:input>
+			<wsdl:output message="tns:helloResponse" name="helloResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="GTGserviceSoapBinding" type="tns:GTGservice">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="changeMissionState">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="changeMissionState">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="changeMissionStateResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GTGexception">
+				<soap:fault name="GTGexception" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="LDAPException">
+				<soap:fault name="LDAPException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="notifyFreightItemAction">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="notifyFreightItemAction">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="notifyFreightItemActionResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="GTGexception">
+				<soap:fault name="GTGexception" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="LDAPException">
+				<soap:fault name="LDAPException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getMissions">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getMissions">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getMissionsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="LDAPException">
+				<soap:fault name="LDAPException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="hello">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="hello">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="helloResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="userLogin">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="userLogin">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="userLoginResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="LDAPException">
+				<soap:fault name="LDAPException" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="GTGservice">
+		<wsdl:port binding="tns:GTGserviceSoapBinding" name="GTGservicePort">
+			<soap:address
+				location="http://MacBook-Vige-wifi.local:8080/greenarea-service/GTGservice" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="title">
+		<h:outputText value="#{bundle.CreateTruckServiceClassTitle}"></h:outputText>
+	</ui:define>
+	<ui:define name="body">
+		<h:panelGroup id="messagePanel" layout="block">
+			<h:messages errorStyle="color: red" infoStyle="color: green"
+				layout="table" />
+		</h:panelGroup>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel
+					value="#{bundle.CreateTruckServiceClassLabel_description}"
+					for="description" />
+				<h:inputText id="description"
+					value="#{truckServiceClassController.selected.description}"
+					title="#{bundle.CreateTruckServiceClassTitle_description}" />
+				<h:outputLabel value="#{bundle.CreateTruckServiceClassLabel_model}"
+					for="model" />
+				<h:inputText id="model"
+					value="#{truckServiceClassController.selected.modelV}"
+					title="#{bundle.CreateTruckServiceClassTitle_model}"
+					required="true"
+					requiredMessage="#{bundle.CreateTruckServiceClassRequiredMessage_model}" />
+				<h:outputLabel
+					value="#{bundle.CreateTruckServiceClassLabel_baseName}"
+					for="baseName" />
+				<h:inputText id="baseName"
+					value="#{truckServiceClassController.selected.makeV}"
+					title="#{bundle.CreateTruckServiceClassTitle_baseName}" />
+				<h:outputLabel value="#{bundle.CreateTruckServiceClassLabel_lenght}"
+					for="lenght" />
+				<h:inputText id="lenght"
+					value="#{truckServiceClassController.selected.lenghtV}"
+					title="#{bundle.CreateTruckServiceClassTitle_lenght}"
+					required="true"
+					requiredMessage="#{bundle.CreateTruckServiceClassRequiredMessage_lenght}" />
+				<h:outputLabel value="#{bundle.CreateTruckServiceClassLabel_weight}"
+					for="weight" />
+				<h:inputText id="weight"
+					value="#{truckServiceClassController.selected.weightV}"
+					title="#{bundle.CreateTruckServiceClassTitle_weight}"
+					required="true"
+					requiredMessage="#{bundle.CreateTruckServiceClassRequiredMessage_weight}" />
+				<h:outputLabel
+					value="#{bundle.CreateTruckServiceClassLabel_emission}"
+					for="emission" />
+				<h:inputText id="emission"
+					value="#{truckServiceClassController.selected.emissionV}"
+					title="#{bundle.CreateTruckServiceClassTitle_emission}"
+					required="true"
+					requiredMessage="#{bundle.CreateTruckServiceClassRequiredMessage_emission}" />
+				<h:outputLabel value="#{bundle.CreateTruckServiceClassLabel_fuel}"
+					for="fuel" />
+				<h:selectOneMenu id="fuel"
+					value="#{truckServiceClassController.selected.fuelV}"
+					title="#{bundle.CreateTruckServiceClassTitle_fuel}">
+					<f:selectItems value="#{fuelController.itemsAvailableSelectOne}" />
+				</h:selectOneMenu>
+				<h:outputLabel value="#{bundle.CreateTruckServiceClassLabel_euro}"
+					for="euro" />
+				<h:inputText id="euro"
+					value="#{truckServiceClassController.selected.EURO}"
+					title="#{bundle.CreateTruckServiceClassTitle_euro}" required="true"
+					requiredMessage="#{bundle.CreateTruckServiceClassRequiredMessage_euro}" />
+			</h:panelGrid>
+			<br />
+			<h:commandLink action="#{truckServiceClassController.create}"
+				value="#{bundle.CreateTruckServiceClassSaveLink}" />
+			<br />
+			<br />
+			<h:commandLink action="#{truckServiceClassController.prepareList}"
+				value="#{bundle.CreateTruckServiceClassShowAllLink}"
+				immediate="true" />
+			<br />
+			<br />
+			<h:link outcome="/index"
+				value="#{bundle.CreateTruckServiceClassIndexLink}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
