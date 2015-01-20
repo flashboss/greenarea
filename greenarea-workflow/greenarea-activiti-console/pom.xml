@@ -8,6 +8,13 @@
 	<name>Greenarea - Workflow - Activiti Console</name>
 	<description>Greenarea - Activiti Console per il workflow</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
 	<parent>
 		<groupId>it.vige.greenarea</groupId>
 		<artifactId>greenarea-workflow</artifactId>

@@ -13,6 +13,13 @@
 	<name>Greenarea - Logistics Editor</name>
 	<description>Greenarea - Logistics Editor</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
 	<build>
 		<finalName>greenarea-logistics-editor</finalName>
 	</build>

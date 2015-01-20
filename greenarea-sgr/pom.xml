@@ -13,6 +13,13 @@
 	<name>Greenarea - SGR</name>
 	<description>Greenarea - SGR Service</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+	
 	<build>
 		<finalName>greenarea-sgr</finalName>
 		<plugins>

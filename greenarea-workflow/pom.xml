@@ -12,6 +12,13 @@
 	<name>Greenarea - Workflow</name>
 	<description>Greenarea - Workflow</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
 	<properties>
 		<activiti.version>5.16</activiti.version>
 		<jbpmn.version>6.1.0.Final</jbpmn.version>

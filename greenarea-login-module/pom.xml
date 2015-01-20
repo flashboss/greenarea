@@ -13,6 +13,13 @@
 	<name>Greenarea - Login Module</name>
 	<description>Greenarea - Login Module</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
 	<build>
 		<finalName>greenarea-login-module</finalName>
 		<plugins>

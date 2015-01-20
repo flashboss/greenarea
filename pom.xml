@@ -10,6 +10,13 @@
 	<name>Greenarea - Parent</name>
 	<description>Greenarea - Parent</description>
 
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
 	<build>
 		<plugins>
 			<plugin>
