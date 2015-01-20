@@ -8,6 +8,11 @@
 	<name>Greenarea - Workflow - Activiti Console</name>
 	<description>Greenarea - Activiti Console per il workflow</description>
 
+	<organization>
+		<name>Vige</name>
+		<url>http://www.vige.it</url>
+	</organization>
+
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License Version 2.0</name>

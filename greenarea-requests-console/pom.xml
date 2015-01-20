@@ -13,6 +13,11 @@
 	<name>Greenarea - Requests Console</name>
 	<description>Greenarea - Requests Console</description>
 
+	<organization>
+		<name>Vige</name>
+		<url>http://www.vige.it</url>
+	</organization>
+
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License Version 2.0</name>

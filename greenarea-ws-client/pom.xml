@@ -13,6 +13,11 @@
 	<name>Greenarea - WS Client</name>
 	<description>Greenarea - WS Client</description>
 
+	<organization>
+		<name>Vige</name>
+		<url>http://www.vige.it</url>
+	</organization>
+
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License Version 2.0</name>
