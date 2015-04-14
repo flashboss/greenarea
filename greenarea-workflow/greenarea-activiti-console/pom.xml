@@ -67,9 +67,9 @@
 							<goal>add-resource</goal>
 						</goals>
 						<configuration>
+							<address>subsystem=datasources,data-source=jdbc/activitidb</address>
 							<resources>
 								<resource>
-									<address>subsystem=datasources,data-source=jdbc/activitidb</address>
 									<properties>
 										<jndi-name>java:/jdbc/activitidb</jndi-name>
 										<enabled>true</enabled>
