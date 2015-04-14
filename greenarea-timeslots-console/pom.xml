@@ -25,6 +25,13 @@
 		</license>
 	</licenses>
 
+	<repositories>
+		<repository>
+			<id>primefaces</id>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
+
 	<build>
 		<finalName>greenarea-timeslots-console</finalName>
 		<plugins>

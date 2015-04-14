@@ -73,10 +73,10 @@
 									<properties>
 										<jndi-name>java:/jdbc/activitidb</jndi-name>
 										<enabled>true</enabled>
-										<connection-url>jdbc:mysql://localhost:3306/activiti</connection-url>
-										<driver-name>mysql-connector-java-5.1.34-bin.jar_com.mysql.jdbc.Driver_5_1</driver-name>
-										<user-name>alfresco</user-name>
-										<password>alfresco</password>
+										<enable>true</enable>
+										<connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
+										<driver-name>h2</driver-name>
+										<user-name>sa</user-name>
 										<min-pool-size>5</min-pool-size>
 										<max-pool-size>20</max-pool-size>
 									</properties>
@@ -383,9 +383,9 @@
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-		   <groupId>org.vaadin.addons</groupId>
-		   <artifactId>pagedtable</artifactId>
-		   <version>0.6.3</version>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>pagedtable</artifactId>
+			<version>0.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.vol</groupId>
@@ -393,9 +393,9 @@
 			<version>1.3.1</version>
 		</dependency>
 		<dependency>
-		   <groupId>org.vaadin.addons</groupId>
-		   <artifactId>rangedatefield</artifactId>
-		   <version>6.0</version>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>rangedatefield</artifactId>
+			<version>6.0</version>
 		</dependency>
 	</dependencies>
 
