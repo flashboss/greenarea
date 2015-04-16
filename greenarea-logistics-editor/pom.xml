@@ -54,6 +54,12 @@
 		</dependency>
 		<dependency>
 			<groupId>it.vige.greenarea</groupId>
+			<artifactId>greenarea-service</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>it.vige.greenarea</groupId>
 			<artifactId>greenarea-sgr-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>

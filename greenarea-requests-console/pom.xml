@@ -105,6 +105,12 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>it.vige.greenarea</groupId>
+			<artifactId>greenarea-service</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.6</version>

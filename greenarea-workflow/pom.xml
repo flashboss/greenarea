@@ -158,7 +158,12 @@
 				<artifactId>jackson-mapper-asl</artifactId>
 				<version>1.9.9</version>
 			</dependency>
-
+			<dependency>
+				<groupId>it.vige.greenarea</groupId>
+				<artifactId>greenarea-service</artifactId>
+				<version>${project.version}</version>
+				<scope>provided</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

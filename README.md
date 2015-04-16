@@ -20,6 +20,8 @@ PRE INSTALLATION:
   javax.xml.accessExternalSchema = all
 
   or add the property -Djavax.xml.accessExternalSchema=all when you compile the projects that work with web service with maven
+  
+- start wildfly with command: ./standalone.sh -c standalone-full.xml
 
 
 INSTALLATION:

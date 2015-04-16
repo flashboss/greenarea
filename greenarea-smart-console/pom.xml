@@ -24,7 +24,7 @@
 			<url>http://www.gnu.org/licenses/lgpl.html</url>
 		</license>
 	</licenses>
-	
+
 	<build>
 		<finalName>greenarea-smart-console</finalName>
 		<plugins>
@@ -64,6 +64,12 @@
 		<dependency>
 			<groupId>it.vige.greenarea</groupId>
 			<artifactId>greenarea-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>it.vige.greenarea</groupId>
+			<artifactId>greenarea-service</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>struts</groupId>
