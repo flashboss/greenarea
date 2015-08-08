@@ -18,6 +18,8 @@ PRE INSTALLATION:
 - if you use java 8 you must create a file in the /jre/lib directory of JVM named: jaxp.properties and add the row:
 
   javax.xml.accessExternalSchema = all
+  
+  or use -Djavax.xml.accessExternalSchema=all when you build with maven
 
   or add the property -Djavax.xml.accessExternalSchema=all when you compile the projects that work with web service with maven
   
