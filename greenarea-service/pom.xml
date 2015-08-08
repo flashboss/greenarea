@@ -91,7 +91,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-topic=GatTopic</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/topic/GatTopic",
+										<entries>!!["GatTopic",
 											"java:/jms/topic/GatTopic"]</entries>
 									</properties>
 								</resource>
@@ -99,7 +99,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-topic=VectorTopic</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/topic/VectorTopic",
+										<entries>!!["VectorTopic",
 											"java:/jms/topic/VectorTopic"]</entries>
 									</properties>
 								</resource>
@@ -107,7 +107,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyLogger</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/ItseasyLogger",
+										<entries>!!["ItseasyLogger",
 											"java:/jms/queue/ItseasyLogger"]</entries>
 									</properties>
 								</resource>
@@ -115,7 +115,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyDest</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/ItseasyDest",
+										<entries>!!["ItseasyDest",
 											"java:/jms/queue/ItseasyDest"]</entries>
 									</properties>
 								</resource>
@@ -123,7 +123,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesTimeSlot</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesTimeSlot",
+										<entries>!!["mesTimeSlot",
 											"java:/jms/queue/mesTimeSlot"]</entries>
 									</properties>
 								</resource>
@@ -131,7 +131,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesParameterGen</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesParameterGen",
+										<entries>!!["mesParameterGen",
 											"java:/jms/queue/mesParameterGen"]</entries>
 									</properties>
 								</resource>
@@ -139,7 +139,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=messParameterTS</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messParameterTS",
+										<entries>!!["messParameterTS",
 											"java:/jms/queue/messParameterTS"]</entries>
 									</properties>
 								</resource>
@@ -147,7 +147,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesMission</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesMission",
+										<entries>!!["mesMission",
 											"java:/jms/queue/mesMission"]</entries>
 									</properties>
 								</resource>
@@ -155,7 +155,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesPrice</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesPrice",
+										<entries>!!["mesPrice",
 											"java:/jms/queue/mesPrice"]</entries>
 									</properties>
 								</resource>
@@ -163,7 +163,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=messValueMessage</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messValueMessage",
+										<entries>!!["messValueMessage",
 											"java:/jms/queue/messValueMessage"]</entries>
 									</properties>
 								</resource>
@@ -171,7 +171,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=messSchedule</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messSchedule",
+										<entries>!!["messSchedule",
 											"java:/jms/queue/messSchedule"]</entries>
 									</properties>
 								</resource>
@@ -179,7 +179,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVehicle</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesVehicle",
+										<entries>!!["mesVehicle",
 											"java:/jms/queue/mesVehicle"]</entries>
 									</properties>
 								</resource>
@@ -187,7 +187,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=messTsStat</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messTsStat",
+										<entries>!!["messTsStat",
 											"java:/jms/queue/messTsStat"]</entries>
 									</properties>
 								</resource>
@@ -195,7 +195,7 @@
 									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVikorResult</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesVikorResult",
+										<entries>!!["mesVikorResult",
 											"java:/jms/queue/mesVikorResult"]</entries>
 									</properties>
 								</resource>
