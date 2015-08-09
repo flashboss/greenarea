@@ -210,7 +210,7 @@ public class MissionHandlerBean {
 		sb.append("Mission state changed at ").append(dateTime);
 		sb.append(" note: ").append(note);
 		a.setContents(sb.toString());
-		mission.getAttachments().add(a);
+		//mission.getAttachments().add(a);
 		missionFacade.edit(mission);
 	}
 
@@ -280,7 +280,7 @@ public class MissionHandlerBean {
 			}
 			sb.append(" notes: ").append(fia.getNote());
 			a.setContents(sb.toString());
-			f.getAttachments().add(a);
+			//f.getAttachments().add(a);
 			freightFacade.changeFreightStatus(f.getCodeId(), newState);
 		}
 	}

@@ -14,11 +14,6 @@
 package it.vige.greenarea.gtg.db.facades;
 
 import static it.vige.greenarea.cl.library.entities.FreightType.DOCUMENTI;
-import it.vige.greenarea.cl.library.entities.Attachment;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.FreightItemState;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.itseasy.lib.mqData.MqFreightData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +26,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+
+import it.vige.greenarea.cl.library.entities.Attachment;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.FreightItemState;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.itseasy.lib.mqData.MqFreightData;
 
 @Stateless
 public class FreightFacade extends AbstractFacade<Freight, String> {
@@ -60,8 +61,7 @@ public class FreightFacade extends AbstractFacade<Freight, String> {
 	}
 
 	public List<Freight> findAll(Transport transport) {
-		Query query = em
-				.createQuery("select f from Freight f where f.transport = :transport");
+		Query query = em.createQuery("select f from Freight f where f.transport = :transport");
 		query.setParameter("transport", transport);
 		return query.getResultList();
 	}
@@ -69,8 +69,7 @@ public class FreightFacade extends AbstractFacade<Freight, String> {
 	public Map<Transport, List<Freight>> findAll(List<Transport> transports) {
 		Map<Transport, List<Freight>> resultFr = new HashMap<Transport, List<Freight>>();
 		if (transports.size() > 0) {
-			Query query = em
-					.createQuery("select f from Freight f where f.transport in :transports");
+			Query query = em.createQuery("select f from Freight f where f.transport in :transports");
 			query.setParameter("transports", transports);
 			List<Freight> resultTr = query.getResultList();
 			for (Freight freight : resultTr) {
@@ -94,13 +93,10 @@ public class FreightFacade extends AbstractFacade<Freight, String> {
 		f.setDescription(mqF.getDescrizione());
 		f.setFt(DOCUMENTI);
 		f.setHeight((mqF.getHeight() == null) ? 0 : mqF.getHeight());
-		f.setKeepUpStanding((mqF.getKeepUpStanding() == null) ? false : mqF
-				.getKeepUpStanding());
+		f.setKeepUpStanding((mqF.getKeepUpStanding() == null) ? false : mqF.getKeepUpStanding());
 		f.setLeng((mqF.getLenght() == null) ? 0 : mqF.getLenght());
-		f.setStackable((mqF.getStackable() == null) ? false : mqF
-				.getStackable());
-		f.setVolume(((mqF.getVolume() == null) || (mqF.getVolume() == 0)) ? 10
-				: mqF.getVolume());
+		f.setStackable((mqF.getStackable() == null) ? false : mqF.getStackable());
+		f.setVolume(((mqF.getVolume() == null) || (mqF.getVolume() == 0)) ? 10 : mqF.getVolume());
 		f.setWeight((mqF.getWeight() == null) ? 0 : mqF.getWeight());
 		f.setWidth((mqF.getWidth() == null) ? 0 : mqF.getWidth());
 		// creo degli attachment con gli attributi???
@@ -110,7 +106,6 @@ public class FreightFacade extends AbstractFacade<Freight, String> {
 				att = new Attachment();
 				att.setName(s);
 				att.setContents(mqF.getAttributi().get(s));
-				f.getAttachments().add(att);
 			}
 		}
 		create(f);

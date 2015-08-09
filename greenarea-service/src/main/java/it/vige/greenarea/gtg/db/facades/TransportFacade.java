@@ -16,28 +16,7 @@ package it.vige.greenarea.gtg.db.facades;
 import static it.vige.greenarea.Utilities.createMockShippingId;
 import static it.vige.greenarea.dto.TipoRichiesta.CONSEGNA;
 import static it.vige.greenarea.dto.TipoRichiesta.RITIRO;
-import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertMyAttachment;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Attachment;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.FreightItemState;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.cl.library.entities.TransportServiceClass;
-import it.vige.greenarea.cl.library.entities.Transport_;
-import it.vige.greenarea.cl.library.entities.Transport.TransportState;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.TipiRichiesta;
-import it.vige.greenarea.dto.TipoRichiesta;
-import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
-import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
-import it.vige.greenarea.itseasy.lib.mqData.MY_Attachment;
-import it.vige.greenarea.itseasy.lib.mqData.MqFreightData;
-import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
-import it.vige.greenarea.utilities.Application;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +42,25 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.FreightItemState;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.Transport.TransportState;
+import it.vige.greenarea.cl.library.entities.TransportServiceClass;
+import it.vige.greenarea.cl.library.entities.Transport_;
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.dto.TipiRichiesta;
+import it.vige.greenarea.dto.TipoRichiesta;
+import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
+import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
+import it.vige.greenarea.itseasy.lib.mqData.MqFreightData;
+import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
+import it.vige.greenarea.utilities.Application;
 
 @Stateless
 public class TransportFacade extends AbstractFacade<Transport, String> {
@@ -99,8 +97,7 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 	@Override
 	public void create(Transport t) {
 		if (t.getAlfacode() == null) {
-			throw new PersistenceException(
-					"Transport ID alfacode cannot be null");
+			throw new PersistenceException("Transport ID alfacode cannot be null");
 		}
 		// calcolo il total volume:
 		t.setTotalVolume(0);
@@ -136,8 +133,7 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 		Date dataInizio = richiesta.getOrarioInizio();
 		Date dataFine = richiesta.getOrarioFine();
 		if (tipo != null) {
-			TipiRichiesta tipiRichiesta = TipiRichiesta.valueOf(richiesta
-					.getTipo());
+			TipiRichiesta tipiRichiesta = TipiRichiesta.valueOf(richiesta.getTipo());
 			switch (tipiRichiesta) {
 			case CONSEGNE:
 				tipoRichiesta = CONSEGNA;
@@ -197,20 +193,17 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 		return q.getResultList();
 	}
 
-	public List<Transport> findSySelection(Transport.TransportState state,
-			String serviceClass) {
+	public List<Transport> findSySelection(Transport.TransportState state, String serviceClass) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery cq = cb.createQuery();
 		Root<Transport> trRoot = cq.from(Transport.class);
-		List<TransportServiceClass> transportClassList = transportServiceClassFacade
-				.findBySelection(serviceClass);
+		List<TransportServiceClass> transportClassList = transportServiceClassFacade.findBySelection(serviceClass);
 
 		if ((transportClassList == null) || (transportClassList.isEmpty())) {
 			return null;
 		}
-		logger.debug(String.format(
-				"->Found %d classes for \"%s\" service class\n",
-				transportClassList.size(), serviceClass));
+		logger.debug(String.format("->Found %d classes for \"%s\" service class\n", transportClassList.size(),
+				serviceClass));
 		Path<TransportServiceClass> tsc = trRoot.get(Transport_.serviceClass);
 		Path<TransportState> tsc2 = trRoot.get(Transport_.transportState);
 		Predicate ptsc = cb.equal(tsc, transportClassList.get(0));
@@ -254,17 +247,14 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 		// TransportID
 		properties.put(MqConstants.MQ_KEY_TRANSPORT_ID, t.getAlfacode());
 
-		properties.put(MqConstants.MQ_KEY_VECTOR_NAME,
-				Application.getProperty("TransportCarrier.name"));
+		properties.put(MqConstants.MQ_KEY_VECTOR_NAME, Application.getProperty("TransportCarrier.name"));
 
 		// CAUSE
-		properties.put(MqConstants.MQ_KEY_CAUSE,
-				SGAPLconstants.ON_DELIVERY_STATUS);
+		properties.put(MqConstants.MQ_KEY_CAUSE, SGAPLconstants.ON_DELIVERY_STATUS);
 
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		producer.publishTextMessage(gatTopic, jmsProducer, "Caricato",
-				properties);
+		producer.publishTextMessage(gatTopic, jmsProducer, "Caricato", properties);
 
 	}
 
@@ -288,16 +278,14 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 		// TransportID
 		properties.put(MqConstants.MQ_KEY_TRANSPORT_ID, t.getAlfacode());
 
-		properties.put(MqConstants.MQ_KEY_VECTOR_NAME,
-				Application.getProperty("TransportCarrier.name"));
+		properties.put(MqConstants.MQ_KEY_VECTOR_NAME, Application.getProperty("TransportCarrier.name"));
 
 		// CAUSE
 		properties.put(MqConstants.MQ_KEY_CAUSE, SGAPLconstants.DONE_STATUS);
 
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		producer.publishTextMessage(gatTopic, jmsProducer, "Consegnato",
-				properties);
+		producer.publishTextMessage(gatTopic, jmsProducer, "Consegnato", properties);
 	}
 
 	// questo metodo riceve uno shippingOrderData e crea tutte le entity
@@ -317,8 +305,7 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 			// se non c'e' una classe devo mettere un default:
 			trCl = "FURGONATO";
 		}
-		List<TransportServiceClass> trClassLIst = transportServiceClassFacade
-				.findBySelection(trCl);
+		List<TransportServiceClass> trClassLIst = transportServiceClassFacade.findBySelection(trCl);
 		TransportServiceClass trClassEntity;
 		if ((trClassLIst == null) || (trClassLIst.isEmpty())) {
 			// se la classe non c'e' la creo
@@ -326,14 +313,9 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 			trClassEntity.setDescription(trCl);
 			transportServiceClassFacade.create(trClassEntity);
 		}
-		tr.setServiceClass(transportServiceClassFacade.findBySelection(trCl)
-				.get(0));
+		tr.setServiceClass(transportServiceClassFacade.findBySelection(trCl).get(0));
 		tr.setShippingOrder(shippingOrderFacade.find(sod.getShId()));
 
-		tr.setAttachments(new ArrayList<Attachment>());
-		for (MY_Attachment m : sod.getAttachments()) {
-			tr.getAttachments().add(convertMyAttachment(m));
-		}
 		create(tr);
 
 		for (MqFreightData sid : sod.getShippingItems()) {
@@ -347,10 +329,8 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 		edit(tr);
 	}
 
-	public List<Transport> listByExample(Transport exampleInstance,
-			String orderCol, boolean asc) {
-		StringBuilder queryString = new StringBuilder(
-				"select t from Transport t ");
+	public List<Transport> listByExample(Transport exampleInstance, String orderCol, boolean asc) {
+		StringBuilder queryString = new StringBuilder("select t from Transport t ");
 		queryString.append(" where t.id=t.id ");
 		ArrayList<Object> values = new ArrayList<Object>();
 		int params = 1;
@@ -360,13 +340,11 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 				values.add(exampleInstance.getAlfacode());
 			}
 			if (exampleInstance.getShippingOrder() != null) {
-				queryString.append(" and t.shippingOrder.id = ?").append(
-						params++);
+				queryString.append(" and t.shippingOrder.id = ?").append(params++);
 				values.add(exampleInstance.getShippingOrder().getId());
 			}
 			if (exampleInstance.getTransportState() != null) {
-				queryString.append(" and t.transportState = ?")
-						.append(params++);
+				queryString.append(" and t.transportState = ?").append(params++);
 				values.add(exampleInstance.getTransportState());
 			}
 			if ((orderCol) != null) {

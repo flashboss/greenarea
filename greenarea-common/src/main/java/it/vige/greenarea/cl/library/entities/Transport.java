@@ -15,11 +15,7 @@ package it.vige.greenarea.cl.library.entities;
 
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.waiting;
 import static javax.persistence.CascadeType.REMOVE;
-import static javax.persistence.FetchType.EAGER;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.Leg;
-import it.vige.greenarea.dto.TipoRichiesta;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +26,6 @@ import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -40,6 +35,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.Leg;
+import it.vige.greenarea.dto.TipoRichiesta;
 
 @Entity
 @XmlRootElement
@@ -58,40 +57,38 @@ public class Transport implements Serializable {
 	@Lob
 	private GeoLocation destination;
 	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "name", column = @Column(name = "src_name")),
-			@AttributeOverride(name = "surname", column = @Column(name = "src_surname")),
-			@AttributeOverride(name = "mobile", column = @Column(name = "src_mobile")),
-			@AttributeOverride(name = "phone", column = @Column(name = "src_phone")),
-			@AttributeOverride(name = "email", column = @Column(name = "src_email")),
-			@AttributeOverride(name = "country", column = @Column(name = "src_country")),
-			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "src_adminAreaLevel1")),
-			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "src_adminAreaLevel2")),
-			@AttributeOverride(name = "city", column = @Column(name = "src_city")),
-			@AttributeOverride(name = "street", column = @Column(name = "src_street")),
-			@AttributeOverride(name = "number", column = @Column(name = "src_number")),
-			@AttributeOverride(name = "zipCode", column = @Column(name = "src_zipCode")),
-			@AttributeOverride(name = "latitude", column = @Column(name = "src_latitude")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "src_longitude")),
-			@AttributeOverride(name = "radius", column = @Column(name = "src_radius")) })
+	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "src_name") ),
+			@AttributeOverride(name = "surname", column = @Column(name = "src_surname") ),
+			@AttributeOverride(name = "mobile", column = @Column(name = "src_mobile") ),
+			@AttributeOverride(name = "phone", column = @Column(name = "src_phone") ),
+			@AttributeOverride(name = "email", column = @Column(name = "src_email") ),
+			@AttributeOverride(name = "country", column = @Column(name = "src_country") ),
+			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "src_adminAreaLevel1") ),
+			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "src_adminAreaLevel2") ),
+			@AttributeOverride(name = "city", column = @Column(name = "src_city") ),
+			@AttributeOverride(name = "street", column = @Column(name = "src_street") ),
+			@AttributeOverride(name = "number", column = @Column(name = "src_number") ),
+			@AttributeOverride(name = "zipCode", column = @Column(name = "src_zipCode") ),
+			@AttributeOverride(name = "latitude", column = @Column(name = "src_latitude") ),
+			@AttributeOverride(name = "longitude", column = @Column(name = "src_longitude") ),
+			@AttributeOverride(name = "radius", column = @Column(name = "src_radius") ) })
 	private DBGeoLocation pickup;
 	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "name", column = @Column(name = "dst_name")),
-			@AttributeOverride(name = "surname", column = @Column(name = "dst_surname")),
-			@AttributeOverride(name = "mobile", column = @Column(name = "dst_mobile")),
-			@AttributeOverride(name = "phone", column = @Column(name = "dst_phone")),
-			@AttributeOverride(name = "email", column = @Column(name = "dst_email")),
-			@AttributeOverride(name = "country", column = @Column(name = "dst_country")),
-			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "dst_adminAreaLevel1")),
-			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "dst_adminAreaLevel2")),
-			@AttributeOverride(name = "city", column = @Column(name = "dst_city")),
-			@AttributeOverride(name = "street", column = @Column(name = "dst_street")),
-			@AttributeOverride(name = "number", column = @Column(name = "dst_number")),
-			@AttributeOverride(name = "zipCode", column = @Column(name = "dst_zipCode")),
-			@AttributeOverride(name = "latitude", column = @Column(name = "dst_latitude")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "dst_longitude")),
-			@AttributeOverride(name = "radius", column = @Column(name = "dst_radius")) })
+	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "dst_name") ),
+			@AttributeOverride(name = "surname", column = @Column(name = "dst_surname") ),
+			@AttributeOverride(name = "mobile", column = @Column(name = "dst_mobile") ),
+			@AttributeOverride(name = "phone", column = @Column(name = "dst_phone") ),
+			@AttributeOverride(name = "email", column = @Column(name = "dst_email") ),
+			@AttributeOverride(name = "country", column = @Column(name = "dst_country") ),
+			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "dst_adminAreaLevel1") ),
+			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "dst_adminAreaLevel2") ),
+			@AttributeOverride(name = "city", column = @Column(name = "dst_city") ),
+			@AttributeOverride(name = "street", column = @Column(name = "dst_street") ),
+			@AttributeOverride(name = "number", column = @Column(name = "dst_number") ),
+			@AttributeOverride(name = "zipCode", column = @Column(name = "dst_zipCode") ),
+			@AttributeOverride(name = "latitude", column = @Column(name = "dst_latitude") ),
+			@AttributeOverride(name = "longitude", column = @Column(name = "dst_longitude") ),
+			@AttributeOverride(name = "radius", column = @Column(name = "dst_radius") ) })
 	private DBGeoLocation dropdown;
 	@ManyToOne
 	private Mission mission;
@@ -99,8 +96,6 @@ public class Transport implements Serializable {
 	private TransportServiceClass serviceClass;
 	@OneToMany(mappedBy = "transport", cascade = REMOVE)
 	private List<Freight> freightItems;
-	@ElementCollection(fetch = EAGER)
-	private List<Attachment> attachments;
 	@OneToOne(mappedBy = "transport", optional = false, cascade = REMOVE)
 	private ShippingOrder shippingOrder;
 	private double cost;
@@ -126,7 +121,6 @@ public class Transport implements Serializable {
 
 	public Transport() {
 		freightItems = new ArrayList<Freight>();
-		attachments = new ArrayList<Attachment>();
 	}
 
 	public Transport(String alfacode) {
@@ -165,14 +159,6 @@ public class Transport implements Serializable {
 
 	public void setDropdown(DBGeoLocation dropdown) {
 		this.dropdown = dropdown;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
 	}
 
 	public TransportServiceClass getServiceClass() {
@@ -323,7 +309,7 @@ public class Transport implements Serializable {
 	public void setOperatoreLogistico(String operatoreLogistico) {
 		this.operatoreLogistico = operatoreLogistico;
 	}
-	
+
 	public String getCodiceFiliale() {
 		return codiceFiliale;
 	}
@@ -356,8 +342,7 @@ public class Transport implements Serializable {
 		}
 		Transport other = (Transport) object;
 		if ((this.alfacode == null && other.alfacode != null)
-				|| (this.alfacode != null && !this.alfacode
-						.equals(other.alfacode))) {
+				|| (this.alfacode != null && !this.alfacode.equals(other.alfacode))) {
 			return false;
 		}
 		return true;

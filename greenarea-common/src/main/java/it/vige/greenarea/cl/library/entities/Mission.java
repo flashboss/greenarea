@@ -17,14 +17,12 @@ import static it.vige.greenarea.dto.StatoMissione.WAITING;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
-import it.vige.greenarea.dto.StatoMissione;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,6 +32,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.StatoMissione;
 
 @Entity
 @XmlRootElement
@@ -58,9 +58,6 @@ public class Mission implements Serializable {
 	@ManyToOne
 	private Vehicle truck;
 
-	@ElementCollection(fetch = EAGER)
-	private List<Attachment> attachments;
-
 	private String description;
 	private StatoMissione missionState;
 	private String ownerUser;
@@ -83,7 +80,7 @@ public class Mission implements Serializable {
 	public Mission() {
 		exchangeStops = new ArrayList<ExchangeStop>();
 		transports = new ArrayList<Transport>();
-		attachments = new ArrayList<Attachment>();
+		// attachments = new ArrayList<Attachment>();
 		description = "";
 		missionState = WAITING;
 	}
@@ -110,14 +107,6 @@ public class Mission implements Serializable {
 
 	public void setExpireTime(Timestamp expireTime) {
 		this.expireTime = expireTime;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
 	}
 
 	public List<ExchangeStop> getExchangeStops() {
@@ -231,8 +220,7 @@ public class Mission implements Serializable {
 			return false;
 		}
 		Mission other = (Mission) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;

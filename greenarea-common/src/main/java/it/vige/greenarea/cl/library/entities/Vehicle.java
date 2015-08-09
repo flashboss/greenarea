@@ -13,21 +13,19 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import static javax.persistence.FetchType.EAGER;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.StatoVeicolo;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.StatoVeicolo;
 
 @Entity
 @XmlRootElement
@@ -40,8 +38,6 @@ public class Vehicle implements Serializable {
 	private String plateNumber;
 	@Column(name = "TRUCKSTATE")
 	private StatoVeicolo state;
-	@ElementCollection(fetch = EAGER)
-	private List<Attachment> attachments;
 	@ManyToOne
 	private TruckServiceClass serviceClass;
 	@XmlElement
@@ -64,14 +60,6 @@ public class Vehicle implements Serializable {
 		this();
 		this.plateNumber = plateNumber;
 		this.state = StatoVeicolo.IDLE;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
 	}
 
 	public StatoVeicolo getState() {
@@ -151,12 +139,8 @@ public class Vehicle implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((autista == null) ? 0 : autista.hashCode());
-		result = prime
-				* result
-				+ ((operatoreLogistico == null) ? 0 : operatoreLogistico
-						.hashCode());
-		result = prime * result
-				+ ((plateNumber == null) ? 0 : plateNumber.hashCode());
+		result = prime * result + ((operatoreLogistico == null) ? 0 : operatoreLogistico.hashCode());
+		result = prime * result + ((plateNumber == null) ? 0 : plateNumber.hashCode());
 		return result;
 	}
 
@@ -189,9 +173,7 @@ public class Vehicle implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Vehicle [plateNumber=" + plateNumber + ", state=" + state
-				+ ", attachments=" + attachments + ", serviceClass="
-				+ serviceClass + ", autista=" + autista
-				+ ", operatoreLogistico=" + operatoreLogistico + "]";
+		return "Vehicle [plateNumber=" + plateNumber + ", state=" + state + ", serviceClass=" + serviceClass
+				+ ", autista=" + autista + ", operatoreLogistico=" + operatoreLogistico + "]";
 	}
 }

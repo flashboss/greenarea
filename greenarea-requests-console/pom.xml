@@ -107,6 +107,7 @@
 		<dependency>
 			<groupId>it.vige.greenarea</groupId>
 			<artifactId>greenarea-service</artifactId>
+			<type>war</type>
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
