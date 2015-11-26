@@ -330,6 +330,10 @@
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-simple-workflow</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-cdi</artifactId>
+		</dependency>
 
 		<!-- Running example processes -->
 		<dependency>
@@ -365,11 +369,6 @@
 		<dependency>
 			<groupId>it.vige.greenarea</groupId>
 			<artifactId>greenarea-activiti-diagrams</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>it.vige.greenarea</groupId>
-			<artifactId>greenarea-activiti-cdi</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

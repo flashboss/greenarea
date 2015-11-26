@@ -25,8 +25,7 @@
 	</licenses>
 
 	<properties>
-		<activiti.version>5.16</activiti.version>
-		<jbpmn.version>6.1.0.Final</jbpmn.version>
+		<activiti.version>5.20.0-SNAPSHOT</activiti.version>
 	</properties>
 
 	<repositories>
@@ -38,7 +37,6 @@
 
 	<modules>
 		<module>greenarea-activiti-console</module>
-		<module>greenarea-activiti-cdi</module>
 		<module>greenarea-activiti-diagrams</module>
 	</modules>
 
@@ -52,6 +50,11 @@
 			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-spring</artifactId>
+				<version>${activiti.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.activiti</groupId>
+				<artifactId>activiti-cdi</artifactId>
 				<version>${activiti.version}</version>
 			</dependency>
 			<dependency>
@@ -88,36 +91,6 @@
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-bpmn-layout</artifactId>
 				<version>${activiti.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.activiti</groupId>
-				<artifactId>activiti-cdi</artifactId>
-				<version>${activiti.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-bpmn2</artifactId>
-				<version>${jbpmn.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-test</artifactId>
-				<version>${jbpmn.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-shared-services</artifactId>
-				<version>${jbpmn.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-workitems</artifactId>
-				<version>${jbpmn.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jbpm</groupId>
-				<artifactId>jbpm-runtime-manager</artifactId>
-				<version>${jbpmn.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
