@@ -34,7 +34,7 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
 		<property name="dataSource" ref="dataSource" /> </bean -->
 
-	<bean id="processEngineConfiguration" class="org.activiti.cdi.CdiJtaProcessEngineConfiguration">
+	<bean id="processEngineConfiguration" class="it.vige.greenarea.bpm.custom.GreenareaProcessEngineConfiguration">
 		<!-- bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" -->
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="dataSourceJndiName" value="jdbc/activitidb" />
