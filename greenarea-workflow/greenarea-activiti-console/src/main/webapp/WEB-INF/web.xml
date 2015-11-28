@@ -12,11 +12,6 @@
 		<param-value>true</param-value>
 	</context-param>
 
-	<!-- To allow session-scoped beans in Spring -->
-	<listener>
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
-
 	<filter>
 		<filter-name>UIFilter</filter-name>
 		<filter-class>org.activiti.explorer.filter.ExplorerFilter</filter-class>
@@ -29,7 +24,7 @@
 
 	<servlet>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
-		<servlet-class>org.activiti.explorer.servlet.ExplorerApplicationServlet</servlet-class>
+		<servlet-class>it.vige.greenarea.bpm.custom.servlet.GreenareaExplorerApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>widgetset</param-name>
 			<param-value>org.activiti.explorer.CustomWidgetset</param-value>
