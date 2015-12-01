@@ -15,12 +15,12 @@ package it.vige.greenarea.bpm;
 
 import static it.vige.greenarea.Constants.ANONYMOUS;
 import static it.vige.greenarea.Constants.AUTISTA;
-import static it.vige.greenarea.Constants.GENOVA;
-import static it.vige.greenarea.Constants.MILANO;
+import static it.vige.greenarea.Constants.POMEZIA;
+import static it.vige.greenarea.Constants.LIVORNO;
 import static it.vige.greenarea.Constants.OPERATORE_LOGISTICO;
 import static it.vige.greenarea.Constants.PA;
 import static it.vige.greenarea.Constants.SOCIETA_DI_TRASPORTO;
-import static it.vige.greenarea.Constants.TORINO;
+import static it.vige.greenarea.Constants.GUIDONIA;
 import static it.vige.greenarea.Constants.TRASPORTATORE_AUTONOMO;
 import static java.util.Arrays.asList;
 import static org.activiti.engine.impl.util.IoUtil.readInputStream;
@@ -118,18 +118,18 @@ public class GreenareaDemoData {
 				"org/activiti/explorer/images/fozzie.jpg",
 				asList(OPERATORE_LOGISTICO, "user"), null);
 		identityService.setUserInfo("tnt", "creditoMobilita", "1000");
-		createUser(identityService, "patorino", "Gan", "Dalf", "vulit",
+		createUser(identityService, "paguidonia", "Gan", "Dalf", "vulit",
 				"gandalf@vige.it",
 				"org/activiti/explorer/images/fozzie.jpg",
-				asList(PA, TORINO, "user"), null);
-		createUser(identityService, "pamilano", "Ara", "Gorn", "vulit",
+				asList(PA, GUIDONIA, "user"), null);
+		createUser(identityService, "palivorno", "Ara", "Gorn", "vulit",
 				"aragorne@vige.it",
 				"org/activiti/explorer/images/kermit.jpg",
-				asList(PA, MILANO, "user"), null);
-		createUser(identityService, "pagenova", "Boro", "Mir", "vulit",
+				asList(PA, LIVORNO, "user"), null);
+		createUser(identityService, "papomezia", "Boro", "Mir", "vulit",
 				"boromir@vige.it",
 				"org/activiti/explorer/images/kermit.jpg",
-				asList(PA, GENOVA, "user"), null);
+				asList(PA, POMEZIA, "user"), null);
 		createUser(identityService, "buscar", "Cele", "Born", "vulit",
 				"celeborn@vige.it",
 				"org/activiti/explorer/images/gonzo.jpg",
@@ -193,7 +193,7 @@ public class GreenareaDemoData {
 	}
 
 	public void initDemoGroups(IdentityService identityService) {
-		String[] assignmentGroups = new String[] { PA, MILANO, TORINO, GENOVA,
+		String[] assignmentGroups = new String[] { PA, LIVORNO, GUIDONIA, POMEZIA,
 				OPERATORE_LOGISTICO, SOCIETA_DI_TRASPORTO,
 				TRASPORTATORE_AUTONOMO, AUTISTA };
 		for (String groupId : assignmentGroups) {

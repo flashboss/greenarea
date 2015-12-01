@@ -63,19 +63,19 @@ public class GreenareaLoginModule extends UsernamePasswordLoginModule {
 
 					@Override
 					public String getName() {
-						return "patorino";
+						return "paguidonia";
 					}
 				}, new Principal() {
 
 					@Override
 					public String getName() {
-						return "pagenova";
+						return "papomezia";
 					}
 				}, new Principal() {
 
 					@Override
 					public String getName() {
-						return "pamilano";
+						return "palivorno";
 					}
 				}).toArray(new Principal[0]);
 				return new Enumeration<Principal>() {

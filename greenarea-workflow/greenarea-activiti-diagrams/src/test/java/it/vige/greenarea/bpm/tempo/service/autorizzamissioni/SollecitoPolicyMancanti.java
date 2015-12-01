@@ -49,7 +49,7 @@ public class SollecitoPolicyMancanti extends EmptyRecuperoDatiPolicy {
 			List<User> pubblicheAmministrazioni = (List<User>) execution
 					.getVariableLocal("pubblicheamministrazioni");
 			pubblicheAmministrazioni.add(identityService.createUserQuery()
-					.userId("patorino").singleResult());
+					.userId("paguidonia").singleResult());
 		}
 	}
 

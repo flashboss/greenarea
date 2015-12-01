@@ -61,7 +61,7 @@ public class RecuperaFasceOrariePopolate extends EmptyRecuperaFasceOrarie {
 						MAI.name(),
 						_30_PER_CENTO.name(),
 						CLASSIFICA_STANDARD.name(),
-						new GreenareaUser("patorino"),
+						new GreenareaUser("paguidonia"),
 						asList(new Parametro[] { new Parametro("nome3",
 								"descrizione3", "unitaMisura3", CONTATORE
 										.name(), true, 0.0, 2.3, NESSUNO.name()) }),
@@ -76,7 +76,7 @@ public class RecuperaFasceOrariePopolate extends EmptyRecuperaFasceOrarie {
 				"2014-lug-02"), getDateInstance().parse("2011-lug-02"),
 				new Date(), new Date(), _12_GIORNI_PRIMA.name(), _4_ORE_PRIMA
 						.name(), FESTIVI.name(), _30_PER_CENTO.name(),
-				CLASSIFICA_STANDARD.name(), new GreenareaUser("patorino"),
+				CLASSIFICA_STANDARD.name(), new GreenareaUser("paguidonia"),
 				asList(new Parametro[] { new Parametro("nome4", "descrizione4",
 						"unitaMisura4", BOOLEANO.name(), false, 1.0, 3.8, BASSO
 								.name()) }), asList(new Prezzo[] {

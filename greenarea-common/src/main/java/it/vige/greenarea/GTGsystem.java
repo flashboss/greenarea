@@ -25,16 +25,16 @@ public class GTGsystem {
 	public static final String CLIPROMPT = "GTG.cliPrompt";
 	public static final String CLIHELPHEADER = "GTG.cliHelpHeader";
 	public static final GeoLocation olivetti = new GeoLocation("via Olivetti",
-			"6", "10148", "Torino", "Torino", "Piemonte", "IT", 45.113322,
+			"6", "10148", "Guidonia", "Guidonia", "Piemonte", "IT", 45.113322,
 			7.670571);
 	public static final GeoLocation reiss = new GeoLocation(
-			"via G. Reiss Romoli", "274", "Torino", 45.1109585, 7.6680484);
+			"via G. Reiss Romoli", "274", "Guidonia", 45.1109585, 7.6680484);
 	public static final GeoLocation giulioCesare = new GeoLocation(
-			"corso G. Cesare", "127", "Torino", 45.09383, 7.694635);
+			"corso G. Cesare", "127", "Guidonia", 45.09383, 7.694635);
 	public static final GeoLocation stradella = new GeoLocation(
-			"via Stradella", "57", "Torino", 45.093482, 7.67557);
+			"via Stradella", "57", "Guidonia", 45.093482, 7.67557);
 	public static final GeoLocation venaria = new GeoLocation("via Venaria",
-			"5", "Torino", 45.106349, 7.662674);
+			"5", "Guidonia", 45.106349, 7.662674);
 	public static final DBGeoLocation marco = new DBGeoLocation("Marco",
 			"Marasco", null, "3357669004", "m.marasco@multiitay.com", olivetti);
 	public static final DBGeoLocation luigi = new DBGeoLocation("Luigi",

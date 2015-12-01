@@ -378,7 +378,7 @@ public class Utilities {
 	public static Poligono getPoligonoPerGA() {
 		if (poligono == null) {
 			Kml unmarshal = unmarshal(Utilities.class.getClassLoader()
-					.getResourceAsStream("ztl-torino.kml"));
+					.getResourceAsStream("ztl-guidonia.kml"));
 			Document doc = (Document) unmarshal.getFeature();
 			Folder folder = (Folder) doc.getFeature().get(0);
 			Folder folder2 = (Folder) folder.getFeature().get(0);

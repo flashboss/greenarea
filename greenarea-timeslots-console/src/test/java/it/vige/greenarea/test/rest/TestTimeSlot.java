@@ -79,7 +79,7 @@ public class TestTimeSlot {
 		timeSlot.setTollerance(_50_PER_CENTO);
 		timeSlot.setVikInd(CLASSIFICA_STANDARD);
 		timeSlot.setWmy(FESTIVI);
-		timeSlot.setPa("pagenova");
+		timeSlot.setPa("papomezia");
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON),
 				TimeSlot.class);
 		assertNotNull(response);
@@ -105,7 +105,7 @@ public class TestTimeSlot {
 		timeSlot.setTollerance(_50_PER_CENTO);
 		timeSlot.setVikInd(CLASSIFICA_STANDARD);
 		timeSlot.setWmy(FESTIVI);
-		timeSlot.setPa("pagenova");
+		timeSlot.setPa("papomezia");
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON),
 				TimeSlot.class);
 		assertNotNull(response);
@@ -250,7 +250,7 @@ public class TestTimeSlot {
 	public void testFindAllTimeSlotsOfUser() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot/patorino")
+		Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot/paguidonia")
 				.request(APPLICATION_JSON);
 		List<TimeSlot> response = bldr.get(new GenericType<List<TimeSlot>>() {
 		});
@@ -340,7 +340,7 @@ public class TestTimeSlot {
 		timeSlot.setTollerance(_50_PER_CENTO);
 		timeSlot.setVikInd(CLASSIFICA_STANDARD);
 		timeSlot.setWmy(FESTIVI);
-		timeSlot.setPa("pagenova");
+		timeSlot.setPa("papomezia");
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON),
 				TimeSlot.class);
 		assertNotNull(response);

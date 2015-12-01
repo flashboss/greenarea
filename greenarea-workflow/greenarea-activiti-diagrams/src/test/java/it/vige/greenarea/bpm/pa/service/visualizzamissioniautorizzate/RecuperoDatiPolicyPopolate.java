@@ -43,12 +43,12 @@ public class RecuperoDatiPolicyPopolate extends EmptyRecuperoDatiPolicy {
 		policy.add(new FasciaOraria("06", new Date(), new Date(), new Date(),
 				new Date(), _12_GIORNI_PRIMA.name(), _4_ORE_PRIMA.name(),
 				TUTTI_I_GIORNI.name(), _20_PER_CENTO.name(),
-				PREMIA_RISPOSTA_LOCALE.name(), new GreenareaUser("patorino"),
+				PREMIA_RISPOSTA_LOCALE.name(), new GreenareaUser("paguidonia"),
 				asList(new Parametro[] {}), asList(new Prezzo[] {})));
 		policy.add(new FasciaOraria("02", new Date(), new Date(), new Date(),
 				new Date(), _12_GIORNI_PRIMA.name(), _4_ORE_PRIMA.name(), MAI
 						.name(), _20_PER_CENTO.name(), PREMIA_RISPOSTA_GLOBALE
-						.name(), new GreenareaUser("pamilano"),
+						.name(), new GreenareaUser("palivorno"),
 				asList(new Parametro[] {}), asList(new Prezzo[] {})));
 	}
 }
