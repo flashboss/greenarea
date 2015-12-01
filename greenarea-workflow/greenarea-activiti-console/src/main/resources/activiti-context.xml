@@ -2,10 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
@@ -14,7 +16,7 @@
 		<!-- Allow other PropertyPlaceholderConfigurer to run as well -->
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
-	
+
 	<bean id="demoDataGenerator" class="it.vige.greenarea.bpm.custom.GreenareaDataGenerator"
 		init-method="init">
 		<property name="processEngine" ref="processEngine" />
@@ -34,7 +36,8 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> 
 		<property name="dataSource" ref="dataSource" /> </bean -->
 
-	<bean id="processEngineConfiguration" class="it.vige.greenarea.bpm.custom.GreenareaProcessEngineConfiguration">
+	<bean id="processEngineConfiguration"
+		class="it.vige.greenarea.bpm.custom.GreenareaProcessEngineConfiguration">
 		<!-- bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" -->
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="dataSourceJndiName" value="jdbc/activitidb" />
@@ -57,10 +60,13 @@
 				<bean class="it.vige.greenarea.bpm.form.MissioniNoRankingFormType" />
 				<bean class="it.vige.greenarea.bpm.form.ParametriCollectionFormType" />
 				<bean class="it.vige.greenarea.bpm.form.ParametriTsCollectionFormType" />
-				<bean class="it.vige.greenarea.bpm.form.ParametriLetturaCollectionFormType" />
-				<bean class="it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType" />
+				<bean
+					class="it.vige.greenarea.bpm.form.ParametriLetturaCollectionFormType" />
+				<bean
+					class="it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType" />
 				<bean class="it.vige.greenarea.bpm.form.PolicyCollectionFormType" />
-				<bean class="it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType" />
+				<bean
+					class="it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType" />
 				<bean class="it.vige.greenarea.bpm.form.RichiesteCollectionFormType" />
 				<bean class="it.vige.greenarea.bpm.form.PrezziCollectionFormType" />
 				<bean class="it.vige.greenarea.bpm.form.FiltriCollectionFormType" />
@@ -81,12 +87,15 @@
 				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniStFormType" />
 				<bean class="it.vige.greenarea.bpm.form.ElencoMissioniTrFormType" />
 				<bean class="it.vige.greenarea.bpm.form.SimulazioniCollectionFormType" />
-				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliTRCollectionFormType" />
-				<bean class="it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType" />
+				<bean
+					class="it.vige.greenarea.bpm.form.PerformanceVeicoliTRCollectionFormType" />
+				<bean
+					class="it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType" />
 			</list>
 		</property>
 
-		<property name="deploymentResources" value="classpath*:/it/vige.greenarea/bpm/*/*.bpmn20.xml" />
+		<property name="deploymentResources"
+			value="classpath*:/it/vige.greenarea/bpm/*/*.bpmn20.xml" />
 
 		<!-- notifiche via mail -->
 		<property name="mailServerDefaultFrom" value="${mailServerDefaultFrom}" />
@@ -124,4 +133,203 @@
 		<property name="taskExecutor" ref="taskExecutor" />
 	</bean>
 	<bean id="taskExecutor" class="org.springframework.core.task.SyncTaskExecutor" />
+
+	<!-- Global scoped beans -->
+
+	<bean name="navigatorManager" class="org.activiti.explorer.navigation.NavigatorManager" />
+
+	<bean name="attachmentRendererManager"
+		class="org.activiti.explorer.ui.content.AttachmentRendererManager" />
+
+	<!-- Custom form property renderers can be plugged in here -->
+	<bean id="formPropertyRendererManager"
+		class="org.activiti.explorer.ui.form.FormPropertyRendererManager"
+		lazy-init="true">
+		<!-- Default renderer -->
+		<property name="noTypePropertyRenderer">
+			<bean
+				class="it.vige.greenarea.bpm.custom.ui.form.StringFormPropertyRenderer" />
+		</property>
+		<!-- Renderers by property type -->
+		<property name="propertyRenderers">
+			<list>
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.StringFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.EnumFormPropertyRenderer" />
+				<bean
+					class="org.activiti.explorer.ui.form.ProcessDefinitionFormPropertyRenderer" />
+				<bean class="org.activiti.explorer.ui.form.MonthFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.TimeFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DateViewFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DateSimulazioniViewFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.LongFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DoubleFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DateFormPropertyRenderer" />
+				<bean class="org.activiti.explorer.ui.form.UserFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.BooleanFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ImpattoAmbientaleCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.PolicyCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.PrezziCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.FiltriCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniOPCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniPASintesiFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniOPSintesiFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniSTCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniTRCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.RichiesteCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ParametriCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ParametriTsCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ParametriLetturaCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ParametriAggiuntiCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.VeicoliCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.VeicoliSTCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.FasceOrarieCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.SimulazioniCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.MissioniNoRankingFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DettaglioPolicyFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DettaglioMissioneFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DettaglioMissioneSTFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.DettaglioMissioneTRFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.OperatoreLogisticoFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.TargaStFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.TargaTrFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ElencoMissioniFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ElencoMissioniStFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.ElencoMissioniTrFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.PerformanceVeicoliTRCollectionFormPropertyRenderer" />
+				<bean
+					class="it.vige.greenarea.bpm.custom.ui.form.PerformanceVeicoliSTCollectionFormPropertyRenderer" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Variable value rendering -->
+	<bean id="variableRendererManager"
+		class="org.activiti.explorer.ui.variable.VariableRendererManager" />
+
+	<bean name="componentFactories"
+		class="it.vige.greenarea.bpm.custom.GreenareaComponentFactories">
+		<property name="environment" value="${activiti.ui.environment}" />
+	</bean>
+
+	<bean name="processDefinitionFilterFactory"
+		class="org.activiti.explorer.ui.process.ProcessDefinitionFilterFactory">
+		<property name="componentFactories" ref="componentFactories" />
+	</bean>
+
+	<bean name="deploymentFilterFactory"
+		class="org.activiti.explorer.ui.management.deployment.DeploymentFilterFactory">
+		<property name="componentFactories" ref="componentFactories" />
+	</bean>
+
+	<!-- Session scoped UI beans -->
+
+	<bean name="navigationFragmentChangeListener"
+		class="org.activiti.explorer.navigation.NavigationFragmentChangeListener"
+		scope="session">
+		<property name="navigatorManager" ref="navigatorManager" />
+	</bean>
+
+	<bean name="mainWindow" class="it.vige.greenarea.bpm.custom.ui.GreenareaMainWindow"
+		scope="session">
+		<property name="navigationFragmentChangeListener" ref="navigationFragmentChangeListener" />
+		<property name="i18nManager" ref="i18nManager" />
+	</bean>
+
+	<bean name="explorerApp" class="it.vige.greenarea.bpm.custom.GreenareaExplorerApp"
+		scope="session">
+		<property name="environment" value="${activiti.ui.environment}" />
+		<property name="useJavascriptDiagram" value="${activiti.ui.jsdiagram}" />
+		<property name="i18nManager" ref="i18nManager" />
+		<property name="viewManager" ref="viewManager" />
+		<property name="notificationManager" ref="notificationManager" />
+		<property name="attachmentRendererManager" ref="attachmentRendererManager" />
+		<property name="formPropertyRendererManager" ref="formPropertyRendererManager" />
+		<property name="variableRendererManager" ref="variableRendererManager" />
+		<property name="applicationMainWindow" ref="mainWindow" />
+		<property name="componentFactories" ref="componentFactories" />
+		<property name="workflowDefinitionConversionFactory" ref="workflowDefinitionConversionFactory" />
+		<property name="loginHandler" ref="activitiLoginHandler" />
+		<property name="simpleWorkflowJsonConverter" ref="simpleWorkflowJsonConverter" />
+	</bean>
+
+	<bean id="simpleWorkflowJsonConverter"
+		class="org.activiti.workflow.simple.converter.json.SimpleWorkflowJsonConverter" />
+
+	<bean name="i18nManager" class="org.activiti.explorer.I18nManager"
+		scope="session">
+		<property name="messageSource" ref="messageSource" />
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>greenareamessages</value>
+				<value>messages</value>
+			</list>
+		</property>
+		<aop:scoped-proxy proxy-target-class="false" /> <!-- Needed for session serialization -->
+	</bean>
+
+	<bean name="notificationManager" class="org.activiti.explorer.NotificationManager"
+		scope="session">
+		<property name="mainWindow" ref="mainWindow" />
+		<property name="i18nManager" ref="i18nManager" />
+	</bean>
+
+	<bean name="viewManager"
+		class="it.vige.greenarea.bpm.custom.GreenareaViewManagerFactoryBean"
+		scope="session">
+		<property name="mainWindow" ref="mainWindow" />
+		<property name="environment" value="${activiti.ui.environment}" />
+	</bean>
+
+	<bean name="workflowDefinitionConversionFactory"
+		class="org.activiti.workflow.simple.converter.WorkflowDefinitionConversionFactory" />
+
+	<bean id="activitiLoginHandler" class="org.activiti.explorer.ui.login.DefaultLoginHandler">
+		<property name="identityService" ref="identityService" />
+	</bean>
+
 </beans>

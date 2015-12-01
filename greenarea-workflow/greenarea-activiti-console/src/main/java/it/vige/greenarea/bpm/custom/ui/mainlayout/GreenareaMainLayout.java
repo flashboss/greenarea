@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.mainlayout;
 
-import static it.vige.greenarea.Constants.GENOVA;
-import static it.vige.greenarea.Constants.MILANO;
+import static it.vige.greenarea.Constants.POMEZIA;
+import static it.vige.greenarea.Constants.LIVORNO;
 import static it.vige.greenarea.Constants.PA;
-import static it.vige.greenarea.Constants.TORINO;
+import static it.vige.greenarea.Constants.GUIDONIA;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_NAV;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_MAIN_CONTENT;
@@ -78,14 +78,14 @@ public class GreenareaMainLayout extends MainLayout {
 				.isUserInGroup(get().getLoggedInUser().getGroups(), PA)) {
 
 			if (userConverter.isUserInGroup(
-					get().getLoggedInUser().getGroups(), TORINO))
-				title = new CustomLayout("logotorino");
+					get().getLoggedInUser().getGroups(), GUIDONIA))
+				title = new CustomLayout("logoguidonia");
 			else if (userConverter.isUserInGroup(get().getLoggedInUser()
-					.getGroups(), GENOVA))
-				title = new CustomLayout("logogenova");
+					.getGroups(), POMEZIA))
+				title = new CustomLayout("logopomezia");
 			else if (userConverter.isUserInGroup(get().getLoggedInUser()
-					.getGroups(), MILANO))
-				title = new CustomLayout("logomilano");
+					.getGroups(), LIVORNO))
+				title = new CustomLayout("logolivorno");
 			customLayout.addComponent(title, "logo");
 
 		}

@@ -20,20 +20,20 @@ import static com.vaadin.ui.themes.Reindeer.LABEL_H2;
 import static com.vaadin.ui.themes.Reindeer.LABEL_SMALL;
 import static com.vaadin.ui.themes.Reindeer.PANEL_LIGHT;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.AREA_RISERVATA_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.GENOVA_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.POMEZIA_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.LOGIN;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.MILANO_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.LIVORNO_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PASSWORD_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.SPERIMENTAZIONI_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.TORINO_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.GUIDONIA_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.USER_NAME_TITLE;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_GENOVA;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_MILANO;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_TORINO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_POMEZIA;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_LIVORNO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_GUIDONIA;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_SPERIMENTAZIONI;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_GENOVA;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_MILANO;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_TORINO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_POMEZIA;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_LIVORNO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_GUIDONIA;
 import static org.activiti.explorer.Environments.ALFRESCO;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.LOGIN_FAILED_HEADER;
@@ -125,12 +125,12 @@ public class LoginPanel extends Panel {
 	}
 
 	private void addRegions() {
-		initTorino();
-		initMilano();
-		initGenova();
+		initGuidonia();
+		initLivorno();
+		initPomezia();
 	}
 
-	private void initTorino() {
+	private void initGuidonia() {
 		HorizontalLayout panel = new HorizontalLayout();
 		panel.setHeight(90, UNITS_PIXELS);
 		Label title = new Label();
@@ -140,12 +140,12 @@ public class LoginPanel extends Panel {
 		if (get().getEnvironment().equals(ALFRESCO)) {
 			title.addStyleName(STYLE_WORKFLOW_CONSOLE_LOGO);
 		} else {
-			title.addStyleName(STYLE_APPLICATION_MINI_TORINO);
+			title.addStyleName(STYLE_APPLICATION_MINI_GUIDONIA);
 		}
 		Label city = new Label();
 		city.addStyleName(LABEL_H1);
-		city.setValue(i18nManager.getMessage(TORINO_TITLE));
-		city.addStyleName(STYLE_APPLICATION_TITLE_TORINO);
+		city.setValue(i18nManager.getMessage(GUIDONIA_TITLE));
+		city.addStyleName(STYLE_APPLICATION_TITLE_GUIDONIA);
 		city.setWidth(310, UNITS_PIXELS);
 
 		panel.addComponent(title);
@@ -154,7 +154,7 @@ public class LoginPanel extends Panel {
 		sperimentazioni.addComponent(panel);
 	}
 
-	private void initMilano() {
+	private void initLivorno() {
 		HorizontalLayout panel = new HorizontalLayout();
 		panel.setHeight(90, UNITS_PIXELS);
 		Label title = new Label();
@@ -164,12 +164,12 @@ public class LoginPanel extends Panel {
 		if (get().getEnvironment().equals(ALFRESCO)) {
 			title.addStyleName(STYLE_WORKFLOW_CONSOLE_LOGO);
 		} else {
-			title.addStyleName(STYLE_APPLICATION_MINI_MILANO);
+			title.addStyleName(STYLE_APPLICATION_MINI_LIVORNO);
 		}
 		Label city = new Label();
 		city.addStyleName(LABEL_H1);
-		city.setValue(i18nManager.getMessage(MILANO_TITLE));
-		city.addStyleName(STYLE_APPLICATION_TITLE_MILANO);
+		city.setValue(i18nManager.getMessage(LIVORNO_TITLE));
+		city.addStyleName(STYLE_APPLICATION_TITLE_LIVORNO);
 		city.setWidth(310, UNITS_PIXELS);
 
 		panel.addComponent(title);
@@ -178,7 +178,7 @@ public class LoginPanel extends Panel {
 		sperimentazioni.addComponent(panel);
 	}
 
-	private void initGenova() {
+	private void initPomezia() {
 		HorizontalLayout panel = new HorizontalLayout();
 		panel.setHeight(90, UNITS_PIXELS);
 		Label title = new Label();
@@ -188,12 +188,12 @@ public class LoginPanel extends Panel {
 		if (get().getEnvironment().equals(ALFRESCO)) {
 			title.addStyleName(STYLE_WORKFLOW_CONSOLE_LOGO);
 		} else {
-			title.addStyleName(STYLE_APPLICATION_MINI_GENOVA);
+			title.addStyleName(STYLE_APPLICATION_MINI_POMEZIA);
 		}
 		Label city = new Label();
 		city.addStyleName(LABEL_H1);
-		city.setValue(i18nManager.getMessage(GENOVA_TITLE));
-		city.addStyleName(STYLE_APPLICATION_TITLE_GENOVA);
+		city.setValue(i18nManager.getMessage(POMEZIA_TITLE));
+		city.addStyleName(STYLE_APPLICATION_TITLE_POMEZIA);
 		city.setWidth(310, UNITS_PIXELS);
 
 		panel.addComponent(title);

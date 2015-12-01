@@ -201,7 +201,7 @@ public class KmlDocumentViewer extends OpenLayersMap {
 
 	private void loadDocument() {
 		Kml unmarshal = unmarshal(DefinizioneAreaGeografica.class
-				.getClassLoader().getResourceAsStream("ztl-torino.kml"));
+				.getClassLoader().getResourceAsStream("ztl-guidonia.kml"));
 		doc = (Document) unmarshal.getFeature();
 	}
 

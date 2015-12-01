@@ -93,8 +93,8 @@ body {
 	float: left;
 }
 
-.logo-torino {
-	background-image: url('img/logo_torino.png');
+.logo-guidonia {
+	background-image: url('img/logo_guidonia.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	width: 200px;
@@ -105,8 +105,8 @@ body {
 	z-index: 100;
 }
 
-.logo-genova {
-	background-image: url('img/logo_genova.png');
+.logo-pomezia {
+	background-image: url('img/logo_pomezia.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	width: 200px;
@@ -117,8 +117,8 @@ body {
 	z-index: 100;
 }
 
-.logo-milano {
-	background-image: url('img/logo_milano.png');
+.logo-livorno {
+	background-image: url('img/logo_livorno.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	width: 200px;
@@ -129,43 +129,43 @@ body {
 	z-index: 100;
 }
 
-.mini-torino {
+.mini-guidonia {
 	width: 80px;
-	background-image: url('img/logo_torino.png');
+	background-image: url('img/logo_guidonia.png');
 	height: 80px;
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
 
-.mini-milano {
+.mini-livorno {
 	width: 80px;
-	background-image: url('img/logo_milano.png');
+	background-image: url('img/logo_livorno.png');
 	height: 80px;
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
 
-.mini-genova {
+.mini-pomezia {
 	width: 80px;
-	background-image: url('img/logo_genova.png');
+	background-image: url('img/logo_pomezia.png');
 	height: 80px;
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
 
-.title-torino {
+.title-guidonia {
 	height: 80px;
 	line-height: 80px;
 	margin-left: 10px;
 }
 
-.title-milano {
+.title-livorno {
 	height: 80px;
 	line-height: 80px;
 	margin-left: 10px;
 }
 
-.title-genova {
+.title-pomezia {
 	height: 80px;
 	line-height: 80px;
 	margin-left: 10px;

@@ -75,7 +75,7 @@ public class GreenareaMainWindow extends MainWindow {
 	}
 
 	private void changeImage() {
-		String variables = "var images = ['banner_vige.png', 'torino_banner.png', 'tnt_banner.png', 'banner_iveco.png'];"
+		String variables = "var images = ['banner_vige.png', 'guidonia_banner.png', 'tnt_banner.png', 'banner_iveco.png'];"
 				+ "var i = 0; var header = document.getElementById('header'); ";
 		String changeImage = "console.log(i);"
 				+ "if (header != null) { header.style.backgroundImage = 'url(/greenarea-activiti-console/VAADIN/themes/activiti/img/'+images[i]+')';"

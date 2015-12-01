@@ -29,11 +29,11 @@ public interface Constants {
 
 	String PA = "pa";
 
-	String TORINO = "Torino";
+	String GUIDONIA = "Guidonia";
 
-	String MILANO = "Milano";
+	String LIVORNO = "Livorno";
 
-	String GENOVA = "Genova";
+	String POMEZIA = "Pomezia";
 
 	String OPERATORE_LOGISTICO = "operatorelogistico";
 
