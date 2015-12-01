@@ -31,8 +31,9 @@ public class SendMailTest {
 			email.setSmtpPort(587);
 			email.setHostName("smtp.gmail.com");
 			email.setFrom("greenareavige@gmail.com");
-			email.setAuthentication("greenareavige@gmail.com", "vulitgreenarea");
+			email.setAuthentication("greenareavige@gmail.com", "uzouytyrpeocmvaf");
 			email.setTLS(true);
+			email.setDebug(true);
 			email.send();
 		} catch (EmailException e) {
 			fail();

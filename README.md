@@ -23,6 +23,8 @@ PRE INSTALLATION:
 
   or add the property -Djavax.xml.accessExternalSchema=all when you compile the projects that work with web service with maven
   
+- create a directory 'greenarea' in the home folder whom starts wildfly
+
 - start wildfly with command: ./standalone.sh -c standalone-full.xml
 
 

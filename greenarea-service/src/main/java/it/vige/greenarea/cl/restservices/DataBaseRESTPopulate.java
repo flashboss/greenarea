@@ -31,6 +31,21 @@ import static it.vige.greenarea.dto.TipologiaParametro.BENEFICIO;
 import static it.vige.greenarea.dto.TipologiaParametro.COSTO;
 import static it.vige.greenarea.dto.Tolleranza._20_PER_CENTO;
 import static it.vige.greenarea.dto.Tolleranza._40_PER_CENTO;
+import static java.util.Arrays.asList;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import it.vige.greenarea.cl.control.TimeSlotControl;
 import it.vige.greenarea.cl.control.UserControl;
 import it.vige.greenarea.cl.library.entities.Mission;
@@ -40,19 +55,6 @@ import it.vige.greenarea.cl.library.entities.Price;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.ValueMission;
 import it.vige.greenarea.cl.library.entities.Vehicle;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 /**
  * <p>
@@ -78,35 +80,28 @@ public class DataBaseRESTPopulate {
 		// Creo una fascia oraria
 
 		int[] idTs = new int[3];
-		TimeSlot st = tsc.addSlotTime(_2_GIORNI_PRIMA, _1_GIORNO_PRIMA,
-				_1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI, "9:30",
-				"11:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
+		TimeSlot st = tsc.addSlotTime(_2_GIORNI_PRIMA, _1_GIORNO_PRIMA, _1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI,
+				"9:30", "11:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
 		idTs[0] = st.getIdTS();
-		TimeSlot st1 = tsc.addSlotTime(_3_GIORNI_PRIMA, _1_GIORNO_PRIMA,
-				_1_GIORNO_PRIMA, _40_PER_CENTO, TUTTI_I_GIORNI, "11:30",
-				"13:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
+		TimeSlot st1 = tsc.addSlotTime(_3_GIORNI_PRIMA, _1_GIORNO_PRIMA, _1_GIORNO_PRIMA, _40_PER_CENTO, TUTTI_I_GIORNI,
+				"11:30", "13:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
 		idTs[1] = st1.getIdTS();
 		ParameterGen pg;
 		int[] idAr = new int[5];
 		// Creo 6 parametri generali
-		pg = tsc.addParameterGen("lunghezza", COSTO, "m", true,
-				"Lunghezza veicolo da libretto");
+		pg = tsc.addParameterGen("lunghezza", COSTO, "m", true, "Lunghezza veicolo da libretto");
 
 		idAr[0] = pg.getId();
-		pg = tsc.addParameterGen("carico", BENEFICIO, "Numero", true,
-				"Rapporto da bolla di accompagnamento");
+		pg = tsc.addParameterGen("carico", BENEFICIO, "Numero", true, "Rapporto da bolla di accompagnamento");
 		idAr[1] = pg.getId();
 
-		pg = tsc.addParameterGen("tappe", BENEFICIO, "Numero", true,
-				"Tappe nel ciclo di consegna");
+		pg = tsc.addParameterGen("tappe", BENEFICIO, "Numero", true, "Tappe nel ciclo di consegna");
 		idAr[2] = pg.getId();
 
-		pg = tsc.addParameterGen("peso", COSTO, "kg", true,
-				"Peso del veicolo da libretto");
+		pg = tsc.addParameterGen("peso", COSTO, "kg", true, "Peso del veicolo da libretto");
 		idAr[3] = pg.getId();
 
-		pg = tsc.addParameterGen("euro", COSTO, "", true,
-				"Categoria Euro da libretto");
+		pg = tsc.addParameterGen("euro", COSTO, "", true, "Categoria Euro da libretto");
 		idAr[4] = pg.getId();
 
 		// Configuro i parametri
@@ -281,8 +276,8 @@ public class DataBaseRESTPopulate {
 		ValueMission valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(0.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -305,8 +300,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -329,8 +324,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -353,8 +348,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -377,8 +372,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m.setTimeSlot(new TimeSlot(101));
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
@@ -400,8 +395,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -424,8 +419,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -448,8 +443,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -472,8 +467,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(new TimeSlot(101));
@@ -496,8 +491,8 @@ public class DataBaseRESTPopulate {
 		valueMission5 = new ValueMission();
 		valueMission5.setIdParameter(7);
 		valueMission5.setValuePar(1.6);
-		m.setValuesMission(Arrays.asList(new ValueMission[] { valueMission1,
-				valueMission2, valueMission3, valueMission4, valueMission5 }));
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		return "Mission added";
 	}
