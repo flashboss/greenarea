@@ -25,21 +25,6 @@ import static it.vige.greenarea.itseasy.lib.configurationData.MqConstants.MQ_KEY
 import static it.vige.greenarea.sgapl.sgot.business.exception.GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID;
 import static java.lang.String.valueOf;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgrl.webservices.GeoLocation;
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting_Service;
-import it.vige.greenarea.sgrl.webservices.SGRLServiceException_Exception;
-import it.vige.greenarea.sgrl.webservices.SgrlRoute;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.ShippingItem;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.gtg.db.facades.FreightFacade;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
-import it.vige.greenarea.itseasy.lib.logger.ItseasyLogger;
-import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +42,22 @@ import javax.jms.Queue;
 import javax.xml.ws.WebServiceRef;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.ShippingItem;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.gtg.db.facades.FreightFacade;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
+import it.vige.greenarea.itseasy.lib.logger.ItseasyLogger;
+import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
+import it.vige.greenarea.sgrl.webservices.GeoLocation;
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting_Service;
+import it.vige.greenarea.sgrl.webservices.SGRLServiceException_Exception;
+import it.vige.greenarea.sgrl.webservices.SgrlRoute;
 
 @Stateless
 public class GATbean {
@@ -96,8 +97,7 @@ public class GATbean {
 		if (t == null) {
 			ArrayList<String> param = new ArrayList<String>();
 			param.add(so.getId().toString());
-			throw new GATException(
-					GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
+			throw new GATException(GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
 		}
 		t.setTransportState(assigned);
 		transportFacade.edit(t);
@@ -119,11 +119,9 @@ public class GATbean {
 			t.setTipo(RITIRO);
 		t.setSource(convertiGeoLocationInterfaceToGeoLocation(so.getMittente()));
 		t.setPickup(so.getMittente());
-		t.setDestination(convertiGeoLocationInterfaceToGeoLocation(so
-				.getDestinatario()));
+		t.setDestination(convertiGeoLocationInterfaceToGeoLocation(so.getDestinatario()));
 		t.setDropdown(so.getDestinatario());
-		t.setServiceClass(transportServiceClassFacade.findBySelection(
-				"FURGONATO").get(0));
+		t.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 		t.setTransportState(waiting);
 		t.setOperatoreLogistico(so.getOperatoreLogistico());
 		t.setDateMiss(t.getDateMiss());
@@ -146,9 +144,8 @@ public class GATbean {
 		return valueOf(t.getCost());
 	}
 
-	public String estimateTransportCost(DBGeoLocation source,
-			DBGeoLocation destination, HashMap<String, String> attributes)
-			throws GATException {
+	public String estimateTransportCost(DBGeoLocation source, DBGeoLocation destination,
+			HashMap<String, String> attributes) throws GATException {
 		ArrayList<String> errorParams = new ArrayList<String>();
 		errorParams.add(source.toString());
 		errorParams.add(destination.toString());
@@ -163,15 +160,12 @@ public class GATbean {
 			Date now = new Date();
 			Map<String, String> properties = new HashMap<String, String>();
 			properties.put(MQ_KEY_TIMESTAMP, now.toString());
-			itseasyLoggerUtil
-					.logMessage("GATbean", "ERROR", properties, "*** ERROR: "
-							+ ex.getMessage(), itseasyLogger, jmsProducer);
-			throw new GATException(GATException.GATerrorCodes.CANNOT_ESTIMATE,
-					errorParams);
+			itseasyLoggerUtil.logMessage("GATbean", "ERROR", properties, "*** ERROR: " + ex.getMessage(), itseasyLogger,
+					jmsProducer);
+			throw new GATException(GATException.GATerrorCodes.CANNOT_ESTIMATE, errorParams);
 		}
 		if ((routeList == null) || (routeList.isEmpty())) {
-			throw new GATException(GATException.GATerrorCodes.CANNOT_ESTIMATE,
-					errorParams);
+			throw new GATException(GATException.GATerrorCodes.CANNOT_ESTIMATE, errorParams);
 		}
 		return valueOf(routeList.get(0).getCost());
 	}
@@ -181,8 +175,7 @@ public class GATbean {
 		if (t == null) {
 			ArrayList<String> param = new ArrayList<String>();
 			param.add(tID.toString());
-			throw new GATException(
-					GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
+			throw new GATException(GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
 		}
 		return valueOf(t.getCost());
 	}
@@ -193,8 +186,7 @@ public class GATbean {
 		if (t == null) {
 			ArrayList<String> param = new ArrayList<String>();
 			param.add(so.getId().toString());
-			throw new GATException(
-					GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
+			throw new GATException(GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, param);
 		}
 		// Rimuovo il trasporto: dovrei verificare che non sia partito ma non e'
 		// possibile
@@ -214,8 +206,7 @@ public class GATbean {
 		return "";// todo BISOGNA CREARLA.... t.getTrackingURL();
 	}
 
-	private String geoLocationToString(
-			it.vige.greenarea.sgrl.webservices.GeoLocation geoLoc) {
+	private String geoLocationToString(it.vige.greenarea.sgrl.webservices.GeoLocation geoLoc) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(geoLoc.getStreet()).append(", ").append(geoLoc.getNumber());
 		sb.append(" - ").append(geoLoc.getZipCode());
@@ -228,8 +219,8 @@ public class GATbean {
 
 	private java.util.List<it.vige.greenarea.sgrl.webservices.SgrlRoute> getSGRLRoutes(
 			it.vige.greenarea.sgrl.webservices.GeoLocation source,
-			it.vige.greenarea.sgrl.webservices.GeoLocation destination,
-			java.lang.String options) throws SGRLServiceException_Exception {
+			it.vige.greenarea.sgrl.webservices.GeoLocation destination, java.lang.String options)
+					throws SGRLServiceException_Exception {
 
 		Date now = new Date();
 		Map<String, String> properties = new HashMap<String, String>();
@@ -241,14 +232,11 @@ public class GATbean {
 		sb.append(geoLocationToString(source));
 		sb.append(" a ").append(geoLocationToString(destination));
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		itseasyLoggerUtil.logMessage("GATbean", "INFO", properties,
-				sb.toString(), itseasyLogger, jmsProducer);
-		it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting port = service
-				.getLogisticNetworkRoutingPort();
+		itseasyLoggerUtil.logMessage("GATbean", "INFO", properties, sb.toString(), itseasyLogger, jmsProducer);
+		it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting port = service.getLogisticNetworkRoutingPort();
 		List<SgrlRoute> route;
 
-		logger.debug("invio getSGRLRoutes da:" + source.getCity() + " --> "
-				+ destination.getCity());
+		logger.debug("invio getSGRLRoutes da:" + source.getCity() + " --> " + destination.getCity());
 
 		route = port.getSGRLRoutes(source, destination, options);
 

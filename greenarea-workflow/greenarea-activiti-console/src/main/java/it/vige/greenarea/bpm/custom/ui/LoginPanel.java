@@ -20,20 +20,20 @@ import static com.vaadin.ui.themes.Reindeer.LABEL_H2;
 import static com.vaadin.ui.themes.Reindeer.LABEL_SMALL;
 import static com.vaadin.ui.themes.Reindeer.PANEL_LIGHT;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.AREA_RISERVATA_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.POMEZIA_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.LOGIN;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.LIVORNO_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.PASSWORD_TITLE;
-import static it.vige.greenarea.bpm.custom.GreenareaMessages.SPERIMENTAZIONI_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.GUIDONIA_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.LIVORNO_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.LOGIN;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.PASSWORD_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.POMEZIA_TITLE;
+import static it.vige.greenarea.bpm.custom.GreenareaMessages.SPERIMENTAZIONI_TITLE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.USER_NAME_TITLE;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_POMEZIA;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_LIVORNO;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_GUIDONIA;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_LIVORNO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_MINI_POMEZIA;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_SPERIMENTAZIONI;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_POMEZIA;
-import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_LIVORNO;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_GUIDONIA;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_LIVORNO;
+import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_APPLICATION_TITLE_POMEZIA;
 import static org.activiti.explorer.Environments.ALFRESCO;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.LOGIN_FAILED_HEADER;
@@ -111,15 +111,13 @@ public class LoginPanel extends Panel {
 	}
 
 	private void addTitle() {
-		Label areaRiservataTitle = new Label(
-				i18nManager.getMessage(AREA_RISERVATA_TITLE));
+		Label areaRiservataTitle = new Label(i18nManager.getMessage(AREA_RISERVATA_TITLE));
 		areaRiservataTitle.addStyleName(LABEL_H2);
 		loginPanel.addComponent(areaRiservataTitle);
 	}
 
 	private void addTitle2() {
-		Label sperimentazioniTitle = new Label(
-				i18nManager.getMessage(SPERIMENTAZIONI_TITLE));
+		Label sperimentazioniTitle = new Label(i18nManager.getMessage(SPERIMENTAZIONI_TITLE));
 		sperimentazioniTitle.addStyleName(LABEL_H2);
 		sperimentazioni.addComponent(sperimentazioniTitle);
 	}
@@ -234,8 +232,7 @@ public class LoginPanel extends Panel {
 			private static final long serialVersionUID = 6928598745792215505L;
 
 			public void handleAction(Action action, Object sender, Object target) {
-				login(userNameInputField.getValue().toString(),
-						passwordInputField.getValue().toString());
+				login(userNameInputField.getValue().toString(), passwordInputField.getValue().toString());
 			}
 
 			public Action[] getActions(Object target, Object sender) {
@@ -250,15 +247,13 @@ public class LoginPanel extends Panel {
 			private static final long serialVersionUID = 7781253151592188006L;
 
 			public void buttonClick(ClickEvent event) {
-				login(userNameInputField.getValue().toString(),
-						passwordInputField.getValue().toString());
+				login(userNameInputField.getValue().toString(), passwordInputField.getValue().toString());
 			}
 		});
 	}
 
 	private void login(String userName, String password) {
-		LoggedInUser loggedInUser = loginHandler.authenticate(userName,
-				password);
+		LoggedInUser loggedInUser = loginHandler.authenticate(userName, password);
 		if (loggedInUser != null) {
 			get().setUser(loggedInUser);
 			viewManager.showDefaultPage();

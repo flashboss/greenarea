@@ -28,8 +28,7 @@ public class DataTools {
 		return es;
 	}
 
-	public static Mission newMission(ExchangeStop beginEs, ExchangeStop endEs,
-			Vehicle truck, Mission m) {
+	public static Mission newMission(ExchangeStop beginEs, ExchangeStop endEs, Vehicle truck, Mission m) {
 		if (beginEs == null || endEs == null || truck == null)
 			throw new IllegalArgumentException();
 		m.getExchangeStops().add(beginEs);

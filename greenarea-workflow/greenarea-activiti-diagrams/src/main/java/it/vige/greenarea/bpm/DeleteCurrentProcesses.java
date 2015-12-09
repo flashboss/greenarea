@@ -28,25 +28,18 @@ public class DeleteCurrentProcesses implements ExecutionListener {
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		RuntimeService runtimeService = execution.getEngineServices()
-				.getRuntimeService();
-		TaskService taskService = execution.getEngineServices()
-				.getTaskService();
-		String currentUserId = (String) execution
-				.getVariableLocal("currentUserId");
-		List<ProcessInstance> processInstances = runtimeService
-				.createProcessInstanceQuery()
-				.processDefinitionKey(
-						execution.getProcessDefinitionId().split(":")[0])
-				.involvedUser(currentUserId).list();
+		RuntimeService runtimeService = execution.getEngineServices().getRuntimeService();
+		TaskService taskService = execution.getEngineServices().getTaskService();
+		String currentUserId = (String) execution.getVariableLocal("currentUserId");
+		List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery()
+				.processDefinitionKey(execution.getProcessDefinitionId().split(":")[0]).involvedUser(currentUserId)
+				.list();
 		for (ProcessInstance processInstance : processInstances) {
-			List<Task> tasks = taskService.createTaskQuery()
-					.processInstanceId(processInstance.getId()).list();
+			List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
 			for (Task task : tasks) {
 				taskService.resolveTask(task.getId());
 			}
-			runtimeService.deleteProcessInstance(processInstance.getId(),
-					"Il processo deve essere rigenerato");
+			runtimeService.deleteProcessInstance(processInstance.getId(), "Il processo deve essere rigenerato");
 		}
 
 	}

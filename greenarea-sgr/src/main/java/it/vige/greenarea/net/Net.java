@@ -26,8 +26,7 @@ public abstract class Net implements Serializable {
 	protected HashSet<Edge> edges = new HashSet<Edge>();
 
 	public boolean addLeg(Node source, Edge link, Node target) {
-		if (source == null || link == null || target == null
-				|| link.getSource() != null || link.getTarget() != null)
+		if (source == null || link == null || target == null || link.getSource() != null || link.getTarget() != null)
 			return false;
 		nodes.add(source.addEdge(link));
 		nodes.add(target.addEdge(link));
@@ -56,8 +55,7 @@ public abstract class Net implements Serializable {
 		while (!toBeExplored.isEmpty()) {
 			Node n = toBeExplored.remove(0);
 			for (Edge e : n.getEdges()) {
-				Node opposite = (e.getSource() == n ? e.getTarget() : e
-						.getSource());
+				Node opposite = (e.getSource() == n ? e.getTarget() : e.getSource());
 				if (reached.add(opposite))
 					toBeExplored.add(opposite);
 			}

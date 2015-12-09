@@ -20,8 +20,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.activiti.engine.ProcessEngines.getDefaultProcessEngine;
 import static org.activiti.explorer.ExplorerApp.get;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -34,6 +32,9 @@ import javax.ws.rs.core.GenericType;
 import org.activiti.engine.IdentityService;
 
 import com.vaadin.ui.Table;
+
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
 
 public class OperatoreLogisticoTable extends Table {
 
@@ -55,22 +56,16 @@ public class OperatoreLogisticoTable extends Table {
 	public String counter() {
 		String counter = "0";
 		try {
-			IdentityService identityService = getDefaultProcessEngine()
-					.getIdentityService();
+			IdentityService identityService = getDefaultProcessEngine().getIdentityService();
 			String operatoreLogistico = get().getLoggedInUser().getId();
-			String creditoMobilitaIniziale = identityService.getUserInfo(
-					operatoreLogistico, "creditoMobilita");
+			String creditoMobilitaIniziale = identityService.getUserInfo(operatoreLogistico, "creditoMobilita");
 
 			RichiestaMissioni richiestaMissioniOP = new RichiestaMissioni();
-			richiestaMissioniOP
-					.setOperatoriLogistici(asList(new String[] { operatoreLogistico }));
+			richiestaMissioniOP.setOperatoriLogistici(asList(new String[] { operatoreLogistico }));
 
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-					APPLICATION_JSON);
-			List<Missione> response = bldr.post(
-					entity(richiestaMissioniOP, APPLICATION_JSON),
+			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
+			List<Missione> response = bldr.post(entity(richiestaMissioniOP, APPLICATION_JSON),
 					new GenericType<List<Missione>>() {
 					});
 
@@ -79,12 +74,10 @@ public class OperatoreLogisticoTable extends Table {
 				Date date = new Date();
 				for (Missione missioneOp : response) {
 					if (missioneOp.getDataInizio().compareTo(date) <= 0)
-						creditoMobilita += missioneOp.getCreditoMobilita()
-								- missioneOp.getBonus();
+						creditoMobilita += missioneOp.getCreditoMobilita() - missioneOp.getBonus();
 				}
 			}
-			double doubleValue = new Double(creditoMobilitaIniziale)
-					- creditoMobilita;
+			double doubleValue = new Double(creditoMobilitaIniziale) - creditoMobilita;
 			counter = df.format(doubleValue);
 		} catch (Exception ex) {
 

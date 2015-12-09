@@ -19,6 +19,20 @@ import static it.vige.greenarea.dto.StatoMissione.values;
 import static it.vige.greenarea.dto.TipoParametro.DA_DECIDERE;
 import static java.util.Arrays.asList;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 import it.vige.greenarea.cl.library.entities.Filter;
@@ -32,10 +46,10 @@ import it.vige.greenarea.cl.library.entities.ShippingItem;
 import it.vige.greenarea.cl.library.entities.ShippingOrder;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 import it.vige.greenarea.cl.library.entities.ValueMission;
 import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 import it.vige.greenarea.dto.AccessoVeicoli;
 import it.vige.greenarea.dto.Address;
 import it.vige.greenarea.dto.AperturaRichieste;
@@ -45,6 +59,7 @@ import it.vige.greenarea.dto.Filtro;
 import it.vige.greenarea.dto.Fuel;
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.Indirizzo;
 import it.vige.greenarea.dto.Missione;
 import it.vige.greenarea.dto.OperatoreLogistico;
@@ -61,22 +76,8 @@ import it.vige.greenarea.dto.TipoRichiesta;
 import it.vige.greenarea.dto.TipologiaClassifica;
 import it.vige.greenarea.dto.TipologiaParametro;
 import it.vige.greenarea.dto.Tolleranza;
-import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.ValoriVeicolo;
 import it.vige.greenarea.dto.Veicolo;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
 
 public class Conversioni {
 
@@ -87,19 +88,15 @@ public class Conversioni {
 		if (missione != null) {
 			mission = new Request();
 			mission.setCompany(missione.getCompagnia());
-			mission.setIdMission(missione.getNome() != null ? new Integer(
-					missione.getNome()) : 0);
+			mission.setIdMission(missione.getNome() != null ? new Integer(missione.getNome()) : 0);
 			mission.setDateMiss(missione.getDataInizio());
-			mission.setIdTimeSlot(missione.getFasciaOraria() != null ? missione
-					.getFasciaOraria().getId() : 0);
-			mission.setCarPlate(missione.getVeicolo() != null ? missione
-					.getVeicolo().getTarga() : null);
+			mission.setIdTimeSlot(missione.getFasciaOraria() != null ? missione.getFasciaOraria().getId() : 0);
+			mission.setCarPlate(missione.getVeicolo() != null ? missione.getVeicolo().getTarga() : null);
 		}
 		return mission;
 	}
 
-	public static List<Request> convertiMissioniToRequests(
-			List<Missione> missioni) {
+	public static List<Request> convertiMissioniToRequests(List<Missione> missioni) {
 		List<Request> missions = null;
 		if (missioni != null) {
 			missions = new ArrayList<Request>();
@@ -112,17 +109,14 @@ public class Conversioni {
 	public static Missione convertiRequestToMissione(Request mission) {
 		Missione missione = null;
 		if (mission != null) {
-			missione = new Missione(mission.getIdMission() + "",
-					mission.getCompany(), "", "", "", "", "", null, null,
-					new Veicolo("", mission.getCarPlate()), new Timestamp(
-							mission.getDateMiss().getTime()), new FasciaOraria(
-							mission.getIdTimeSlot(), null));
+			missione = new Missione(mission.getIdMission() + "", mission.getCompany(), "", "", "", "", "", null, null,
+					new Veicolo("", mission.getCarPlate()), new Timestamp(mission.getDateMiss().getTime()),
+					new FasciaOraria(mission.getIdTimeSlot(), null));
 		}
 		return missione;
 	}
 
-	public static List<Missione> convertiRequestsToMissioni(
-			List<Request> missions) {
+	public static List<Missione> convertiRequestsToMissioni(List<Request> missions) {
 		List<Missione> missioni = null;
 		if (missions != null) {
 			missioni = new ArrayList<Missione>();
@@ -139,36 +133,28 @@ public class Conversioni {
 			mission.setCompany(missione.getCompagnia());
 			mission.setMissionState(missione.getStato());
 			mission.setName(missione.getNome());
-			mission.setOwnerUser(missione.getVeicolo().getOperatoreLogistico()
-					.getId());
+			mission.setOwnerUser(missione.getVeicolo().getOperatoreLogistico().getId());
 			mission.setStartTime(missione.getDataInizio());
-			mission.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione
-					.getFasciaOraria()));
+			mission.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione.getFasciaOraria()));
 			mission.setTruck(convertiVeicoloToVehicle(missione.getVeicolo()));
 			ValueMission lunghezza = new ValueMission();
-			lunghezza.setValuePar(missione.getLunghezza() == null
-					|| missione.getLunghezza().isEmpty() ? 0.0 : new Double(
-					missione.getLunghezza()));
+			lunghezza.setValuePar(missione.getLunghezza() == null || missione.getLunghezza().isEmpty() ? 0.0
+					: new Double(missione.getLunghezza()));
 			ValueMission euro = new ValueMission();
-			euro.setValuePar(missione.getEuro() == null
-					|| missione.getEuro().isEmpty() ? 0.0 : new Double(missione
-					.getEuro()));
+			euro.setValuePar(
+					missione.getEuro() == null || missione.getEuro().isEmpty() ? 0.0 : new Double(missione.getEuro()));
 			ValueMission peso = new ValueMission();
-			peso.setValuePar(missione.getPeso() == null
-					|| missione.getPeso().isEmpty() ? 0.0 : new Double(missione
-					.getPeso()));
+			peso.setValuePar(
+					missione.getPeso() == null || missione.getPeso().isEmpty() ? 0.0 : new Double(missione.getPeso()));
 			ValueMission tappe = new ValueMission();
-			tappe.setValuePar(missione.getTappe() == null
-					|| missione.getTappe().isEmpty() ? 0.0 : new Double(
-					missione.getTappe()));
-			mission.setValuesMission(asList(new ValueMission[] { lunghezza,
-					euro, peso, tappe }));
+			tappe.setValuePar(missione.getTappe() == null || missione.getTappe().isEmpty() ? 0.0
+					: new Double(missione.getTappe()));
+			mission.setValuesMission(asList(new ValueMission[] { lunghezza, euro, peso, tappe }));
 		}
 		return mission;
 	}
 
-	public static List<Mission> convertiMissioniToMissions(
-			List<Missione> missioni) {
+	public static List<Mission> convertiMissioniToMissions(List<Missione> missioni) {
 		List<Mission> missions = null;
 		if (missioni != null) {
 			missions = new ArrayList<Mission>();
@@ -181,21 +167,16 @@ public class Conversioni {
 	public static Missione convertiMissionToMissione(Mission mission) {
 		Missione missione = null;
 		if (mission != null) {
-			missione = new Missione(mission.getName(), mission.getCompany(),
-					"", "", "", "", "", mission.getMissionState(),
-					convertiTransportsToRichieste(mission.getTransports()),
-					convertiVehicleToVeicolo(mission.getTruck()),
-					mission.getStartTime(), convertiTimeSlotToFasciaOraria(
-							mission.getTimeSlot(),
-							asList(new ParameterTS[] {}),
-							asList(new ParameterGen[] {}),
-							asList(new Price[] {})));
+			missione = new Missione(mission.getName(), mission.getCompany(), "", "", "", "", "",
+					mission.getMissionState(), convertiTransportsToRichieste(mission.getTransports()),
+					convertiVehicleToVeicolo(mission.getTruck()), mission.getStartTime(),
+					convertiTimeSlotToFasciaOraria(mission.getTimeSlot(), asList(new ParameterTS[] {}),
+							asList(new ParameterGen[] {}), asList(new Price[] {})));
 		}
 		return missione;
 	}
 
-	public static List<Missione> convertiMissionsToMissioni(
-			List<Mission> missions) {
+	public static List<Missione> convertiMissionsToMissioni(List<Mission> missions) {
 		List<Missione> missioni = null;
 		if (missions != null) {
 			missioni = new ArrayList<Missione>();
@@ -212,17 +193,14 @@ public class Conversioni {
 			freight.setCodeId(pacco.getItemID());
 			freight.setDescription(pacco.getDescrizione());
 			String tipo = pacco.getAttributi().get("Type");
-			freight.setFt(tipo.equals(DOCUMENTI.name()) ? DOCUMENTI
-					: ALTRO_TIPO);
+			freight.setFt(tipo.equals(DOCUMENTI.name()) ? DOCUMENTI : ALTRO_TIPO);
 			freight.setVolume(new Double(pacco.getAttributi().get("Volume")));
 			freight.setWeight(new Double(pacco.getAttributi().get("Weight")));
 			freight.setWidth(new Double(pacco.getAttributi().get("Width")));
 			freight.setLeng(new Double(pacco.getAttributi().get("Length")));
 			freight.setHeight(new Double(pacco.getAttributi().get("Height")));
-			freight.setStackable(new Boolean(pacco.getAttributi().get(
-					"Stackable")));
-			freight.setKeepUpStanding(new Boolean(pacco.getAttributi().get(
-					"KeepUpStanding")));
+			freight.setStackable(new Boolean(pacco.getAttributi().get("Stackable")));
+			freight.setKeepUpStanding(new Boolean(pacco.getAttributi().get("KeepUpStanding")));
 			String state = pacco.getAttributi().get("State");
 			if (state != null)
 				freight.setFreightState(FreightItemState.valueOf(state));
@@ -254,16 +232,14 @@ public class Conversioni {
 			attributes.put("Length", pacco.getAttributi().get("Length"));
 			attributes.put("Height", pacco.getAttributi().get("Height"));
 			attributes.put("Stackable", pacco.getAttributi().get("Stackable"));
-			attributes.put("KeepUpStanding",
-					pacco.getAttributi().get("KeepUpStanding"));
+			attributes.put("KeepUpStanding", pacco.getAttributi().get("KeepUpStanding"));
 			attributes.put("Type", pacco.getAttributi().get("Type"));
 			attributes.put("State", pacco.getAttributi().get("State"));
 		}
 		return shippingItem;
 	}
 
-	public static List<ShippingItem> convertiPacchiToShippingItems(
-			List<Pacco> pacchi) {
+	public static List<ShippingItem> convertiPacchiToShippingItems(List<Pacco> pacchi) {
 		List<ShippingItem> shippingItems = null;
 		if (pacchi != null) {
 			shippingItems = new ArrayList<ShippingItem>();
@@ -285,10 +261,8 @@ public class Conversioni {
 			attributi.put("Width", freight.getWidth() + "");
 			attributi.put("Stackable", freight.isStackable() + "");
 			attributi.put("KeepUpStanding", freight.isKeepUpStanding() + "");
-			attributi.put("State", freight.getFreightState() != null ? freight
-					.getFreightState().name() : "");
-			pacco = new Pacco(freight.getCodeId(), freight.getDescription(),
-					attributi);
+			attributi.put("State", freight.getFreightState() != null ? freight.getFreightState().name() : "");
+			pacco = new Pacco(freight.getCodeId(), freight.getDescription(), attributi);
 		}
 		return pacco;
 	}
@@ -303,8 +277,7 @@ public class Conversioni {
 		return pacchi;
 	}
 
-	public static TimeSlot convertiFasciaOrariaToTimeSlot(
-			FasciaOraria fasciaOraria) {
+	public static TimeSlot convertiFasciaOrariaToTimeSlot(FasciaOraria fasciaOraria) {
 		TimeSlot timeSlot = null;
 		if (fasciaOraria != null) {
 			timeSlot = new TimeSlot(fasciaOraria.getId());
@@ -315,25 +288,18 @@ public class Conversioni {
 			timeSlot.setPa(fasciaOraria.getPa().getId());
 			timeSlot.setStartTS(orario.format(fasciaOraria.getOrarioInizio()));
 			timeSlot.setFinishTS(orario.format(fasciaOraria.getOrarioFine()));
-			timeSlot.setTimeToAcceptRequest(AperturaRichieste
-					.valueOf(fasciaOraria.getAperturaRichieste()));
-			timeSlot.setTimeToRun(ChiusuraRichieste.valueOf(fasciaOraria
-					.getChiusuraRichieste()));
-			timeSlot.setTimeToStopRequest(ChiusuraRichieste
-					.valueOf(fasciaOraria.getChiusuraRichieste()));
-			timeSlot.setTollerance(Tolleranza.valueOf(fasciaOraria
-					.getTolleranza()));
-			timeSlot.setVikInd(TipologiaClassifica.valueOf(fasciaOraria
-					.getTipologiaClassifica()));
-			timeSlot.setWmy(Ripetizione.valueOf(fasciaOraria
-					.getRipetitivitaPolicy()));
+			timeSlot.setTimeToAcceptRequest(AperturaRichieste.valueOf(fasciaOraria.getAperturaRichieste()));
+			timeSlot.setTimeToRun(ChiusuraRichieste.valueOf(fasciaOraria.getChiusuraRichieste()));
+			timeSlot.setTimeToStopRequest(ChiusuraRichieste.valueOf(fasciaOraria.getChiusuraRichieste()));
+			timeSlot.setTollerance(Tolleranza.valueOf(fasciaOraria.getTolleranza()));
+			timeSlot.setVikInd(TipologiaClassifica.valueOf(fasciaOraria.getTipologiaClassifica()));
+			timeSlot.setWmy(Ripetizione.valueOf(fasciaOraria.getRipetitivitaPolicy()));
 			timeSlot.setRoundCode(fasciaOraria.getGa());
 		}
 		return timeSlot;
 	}
 
-	public static List<TimeSlot> convertiFasceOrarieToTimeSlots(
-			List<FasciaOraria> fasceOrarie) {
+	public static List<TimeSlot> convertiFasceOrarieToTimeSlots(List<FasciaOraria> fasceOrarie) {
 		List<TimeSlot> timeSlots = null;
 		if (fasceOrarie != null) {
 			timeSlots = new ArrayList<TimeSlot>();
@@ -343,8 +309,7 @@ public class Conversioni {
 		return timeSlots;
 	}
 
-	public static FasciaOraria convertiTimeSlotToFasciaOraria(
-			TimeSlot timeSlot, List<ParameterTS> parameterTSs,
+	public static FasciaOraria convertiTimeSlotToFasciaOraria(TimeSlot timeSlot, List<ParameterTS> parameterTSs,
 			List<ParameterGen> parameterGens, List<Price> prices) {
 		FasciaOraria fasciaOraria = null;
 		if (timeSlot != null) {
@@ -354,38 +319,26 @@ public class Conversioni {
 			fasciaOraria.setId(timeSlot.getIdTS());
 			try {
 				if (timeSlot.getDayFinish() != null)
-					fasciaOraria.setDataFine(giornata.parse(timeSlot
-							.getDayFinish()));
+					fasciaOraria.setDataFine(giornata.parse(timeSlot.getDayFinish()));
 				if (timeSlot.getDayStart() != null)
-					fasciaOraria.setDataInizio(giornata.parse(timeSlot
-							.getDayStart()));
+					fasciaOraria.setDataInizio(giornata.parse(timeSlot.getDayStart()));
 				if (timeSlot.getFinishTS() != null)
-					fasciaOraria.setOrarioFine(orario.parse(timeSlot
-							.getFinishTS()));
+					fasciaOraria.setOrarioFine(orario.parse(timeSlot.getFinishTS()));
 				if (timeSlot.getStartTS() != null)
-					fasciaOraria.setOrarioInizio(orario.parse(timeSlot
-							.getStartTS()));
+					fasciaOraria.setOrarioInizio(orario.parse(timeSlot.getStartTS()));
 			} catch (ParseException e) {
 				logger.error("conversione date", e);
 			}
-			fasciaOraria
-					.setTipologiaClassifica(timeSlot.getVikInd() == null ? null
-							: timeSlot.getVikInd().name());
-			fasciaOraria.setTolleranza(timeSlot.getTollerance() == null ? null
-					: timeSlot.getTollerance().name());
-			fasciaOraria.setRipetitivitaPolicy(timeSlot.getWmy() == null ? null
-					: timeSlot.getWmy().name());
-			fasciaOraria
-					.setAperturaRichieste(timeSlot.getTimeToAcceptRequest() == null ? null
-							: timeSlot.getTimeToAcceptRequest().name());
-			fasciaOraria
-					.setChiusuraRichieste(timeSlot.getTimeToStopRequest() == null ? null
-							: timeSlot.getTimeToStopRequest().name());
+			fasciaOraria.setTipologiaClassifica(timeSlot.getVikInd() == null ? null : timeSlot.getVikInd().name());
+			fasciaOraria.setTolleranza(timeSlot.getTollerance() == null ? null : timeSlot.getTollerance().name());
+			fasciaOraria.setRipetitivitaPolicy(timeSlot.getWmy() == null ? null : timeSlot.getWmy().name());
+			fasciaOraria.setAperturaRichieste(
+					timeSlot.getTimeToAcceptRequest() == null ? null : timeSlot.getTimeToAcceptRequest().name());
+			fasciaOraria.setChiusuraRichieste(
+					timeSlot.getTimeToStopRequest() == null ? null : timeSlot.getTimeToStopRequest().name());
 			fasciaOraria.setGa("");
-			fasciaOraria
-					.setParametri(convertiParameterGensToParametri(parameterGens));
-			fasciaOraria.setPrezzi(convertiPricesToPrezzi(prices, parameterTSs,
-					parameterGens));
+			fasciaOraria.setParametri(convertiParameterGensToParametri(parameterGens));
+			fasciaOraria.setPrezzi(convertiPricesToPrezzi(prices, parameterTSs, parameterGens));
 			fasciaOraria.setPa(new GreenareaUser(timeSlot.getPa()));
 			fasciaOraria.setGa(timeSlot.getRoundCode());
 		}
@@ -400,24 +353,18 @@ public class Conversioni {
 			fasciaOraria = new FasciaOraria();
 			fasciaOraria.setId(timeSlot.getIdTS());
 			try {
-				fasciaOraria.setDataFine(giornata.parse(timeSlot.getDayFinish()
-						+ " " + timeSlot.getFinishTS()));
-				fasciaOraria.setDataInizio(giornata.parse(timeSlot
-						.getDayStart() + " " + timeSlot.getStartTS()));
-				fasciaOraria
-						.setOrarioFine(orario.parse(timeSlot.getFinishTS()));
-				fasciaOraria
-						.setOrarioInizio(orario.parse(timeSlot.getStartTS()));
+				fasciaOraria.setDataFine(giornata.parse(timeSlot.getDayFinish() + " " + timeSlot.getFinishTS()));
+				fasciaOraria.setDataInizio(giornata.parse(timeSlot.getDayStart() + " " + timeSlot.getStartTS()));
+				fasciaOraria.setOrarioFine(orario.parse(timeSlot.getFinishTS()));
+				fasciaOraria.setOrarioInizio(orario.parse(timeSlot.getStartTS()));
 			} catch (ParseException e) {
 				logger.error("conversione date", e);
 			}
 			fasciaOraria.setTipologiaClassifica(timeSlot.getVikInd().name());
 			fasciaOraria.setTolleranza(timeSlot.getTollerance().name());
 			fasciaOraria.setRipetitivitaPolicy(timeSlot.getWmy().name());
-			fasciaOraria.setAperturaRichieste(timeSlot.getTimeToAcceptRequest()
-					.name());
-			fasciaOraria.setChiusuraRichieste(timeSlot.getTimeToStopRequest()
-					.name());
+			fasciaOraria.setAperturaRichieste(timeSlot.getTimeToAcceptRequest().name());
+			fasciaOraria.setChiusuraRichieste(timeSlot.getTimeToStopRequest().name());
 			fasciaOraria.setGa("");
 			fasciaOraria.setPa(new GreenareaUser(timeSlot.getPa()));
 			fasciaOraria.setGa(timeSlot.getRoundCode());
@@ -425,21 +372,18 @@ public class Conversioni {
 		return fasciaOraria;
 	}
 
-	public static List<FasciaOraria> convertiTimeSlotsToFasceOrarie(
-			List<TimeSlot> timeSlots, List<ParameterTS> parameterTSs,
-			List<ParameterGen> parameterGens, List<Price> prices) {
+	public static List<FasciaOraria> convertiTimeSlotsToFasceOrarie(List<TimeSlot> timeSlots,
+			List<ParameterTS> parameterTSs, List<ParameterGen> parameterGens, List<Price> prices) {
 		List<FasciaOraria> fascieOrarie = null;
 		if (timeSlots != null) {
 			fascieOrarie = new ArrayList<FasciaOraria>();
 			for (TimeSlot timeSlot : timeSlots)
-				fascieOrarie.add(convertiTimeSlotToFasciaOraria(timeSlot,
-						parameterTSs, parameterGens, prices));
+				fascieOrarie.add(convertiTimeSlotToFasciaOraria(timeSlot, parameterTSs, parameterGens, prices));
 		}
 		return fascieOrarie;
 	}
 
-	public static List<FasciaOraria> convertiTimeSlotsToFasceOrarie(
-			List<TimeSlot> timeSlots) {
+	public static List<FasciaOraria> convertiTimeSlotsToFasceOrarie(List<TimeSlot> timeSlots) {
 		List<FasciaOraria> fascieOrarie = null;
 		if (timeSlots != null) {
 			fascieOrarie = new ArrayList<FasciaOraria>();
@@ -457,11 +401,9 @@ public class Conversioni {
 			vehicle.setRoundCode(veicolo.getRoundCode());
 			vehicle.setVin(veicolo.getVin());
 			vehicle.setCodiceFiliale(veicolo.getCodiceFiliale());
-			vehicle.setOperatoreLogistico(veicolo.getOperatoreLogistico()
-					.getId());
+			vehicle.setOperatoreLogistico(veicolo.getOperatoreLogistico().getId());
 			vehicle.setPlateNumber(veicolo.getTarga());
-			vehicle.setSocietaDiTrasporto(veicolo.getSocietaDiTrasporto()
-					.getId());
+			vehicle.setSocietaDiTrasporto(veicolo.getSocietaDiTrasporto().getId());
 			vehicle.setState(StatoVeicolo.valueOf(veicolo.getStato()));
 			ValoriVeicolo valori = veicolo.getValori();
 			if (valori != null) {
@@ -497,13 +439,11 @@ public class Conversioni {
 		if (vehicle != null) {
 			veicolo = new Veicolo();
 			veicolo.setAutista(new GreenareaUser(vehicle.getAutista()));
-			veicolo.setOperatoreLogistico(new OperatoreLogistico(
-					new GreenareaUser(vehicle.getOperatoreLogistico())));
+			veicolo.setOperatoreLogistico(new OperatoreLogistico(new GreenareaUser(vehicle.getOperatoreLogistico())));
 			veicolo.setRoundCode(vehicle.getRoundCode());
 			veicolo.setCodiceFiliale(vehicle.getCodiceFiliale());
 			veicolo.setVin(vehicle.getVin());
-			veicolo.setSocietaDiTrasporto(new GreenareaUser(vehicle
-					.getSocietaDiTrasporto()));
+			veicolo.setSocietaDiTrasporto(new GreenareaUser(vehicle.getSocietaDiTrasporto()));
 			veicolo.setStato(vehicle.getState().name());
 			veicolo.setTarga(vehicle.getPlateNumber());
 			TruckServiceClass truckServiceClass = vehicle.getServiceClass();
@@ -537,8 +477,7 @@ public class Conversioni {
 		return geoLocation;
 	}
 
-	public static List<GeoLocation> convertiIndirizziToGeoLocations(
-			List<Indirizzo> indirizzi) {
+	public static List<GeoLocation> convertiIndirizziToGeoLocations(List<Indirizzo> indirizzi) {
 		List<GeoLocation> geoLocations = null;
 		if (indirizzi != null) {
 			geoLocations = new ArrayList<GeoLocation>();
@@ -548,8 +487,7 @@ public class Conversioni {
 		return geoLocations;
 	}
 
-	public static Indirizzo convertiGeoLocationToIndirizzo(
-			GeoLocation geoLocation) {
+	public static Indirizzo convertiGeoLocationToIndirizzo(GeoLocation geoLocation) {
 		Indirizzo indirizzo = new Indirizzo();
 		indirizzo.setRegion(geoLocation.getAdminAreaLevel1());
 		indirizzo.setProvince(geoLocation.getAdminAreaLevel2());
@@ -563,8 +501,7 @@ public class Conversioni {
 		return indirizzo;
 	}
 
-	public static List<Indirizzo> convertiGeoLocationsToIndirizzi(
-			List<GeoLocation> geoLocations) {
+	public static List<Indirizzo> convertiGeoLocationsToIndirizzi(List<GeoLocation> geoLocations) {
 		List<Indirizzo> indirizzi = null;
 		if (geoLocations != null) {
 			indirizzi = new ArrayList<Indirizzo>();
@@ -574,8 +511,7 @@ public class Conversioni {
 		return indirizzi;
 	}
 
-	public static Indirizzo convertiDBGeoLocationToIndirizzo(
-			DBGeoLocation dbGeoLocation) {
+	public static Indirizzo convertiDBGeoLocationToIndirizzo(DBGeoLocation dbGeoLocation) {
 		Indirizzo indirizzo = new Indirizzo();
 		indirizzo.setRegion(dbGeoLocation.getAdminAreaLevel1());
 		indirizzo.setProvince(dbGeoLocation.getAdminAreaLevel2());
@@ -589,8 +525,7 @@ public class Conversioni {
 		return indirizzo;
 	}
 
-	public static List<Indirizzo> convertiDBGeoLocationsToIndirizzi(
-			List<DBGeoLocation> dbGeoLocations) {
+	public static List<Indirizzo> convertiDBGeoLocationsToIndirizzi(List<DBGeoLocation> dbGeoLocations) {
 		List<Indirizzo> indirizzi = null;
 		if (dbGeoLocations != null) {
 			indirizzi = new ArrayList<Indirizzo>();
@@ -612,8 +547,7 @@ public class Conversioni {
 		return address;
 	}
 
-	public static List<Address> convertiIndirizziToAddresses(
-			List<Indirizzo> indirizzi) {
+	public static List<Address> convertiIndirizziToAddresses(List<Indirizzo> indirizzi) {
 		List<Address> addresses = null;
 		if (indirizzi != null) {
 			addresses = new ArrayList<Address>();
@@ -623,8 +557,7 @@ public class Conversioni {
 		return addresses;
 	}
 
-	public static DBGeoLocation convertiIndirizzoToDBGeoLocation(
-			Indirizzo indirizzo) {
+	public static DBGeoLocation convertiIndirizzoToDBGeoLocation(Indirizzo indirizzo) {
 		DBGeoLocation geoLocation = new DBGeoLocation();
 		geoLocation.setAdminAreaLevel1(indirizzo.getRegion());
 		geoLocation.setAdminAreaLevel2(indirizzo.getProvince());
@@ -638,8 +571,7 @@ public class Conversioni {
 		return geoLocation;
 	}
 
-	public static List<DBGeoLocation> convertiIndirizziToDBGeoLocations(
-			List<Indirizzo> indirizzi) {
+	public static List<DBGeoLocation> convertiIndirizziToDBGeoLocations(List<Indirizzo> indirizzi) {
 		List<DBGeoLocation> dbGeoLocations = null;
 		if (indirizzi != null) {
 			dbGeoLocations = new ArrayList<DBGeoLocation>();
@@ -654,24 +586,18 @@ public class Conversioni {
 		if (richiesta != null) {
 			transport = new Transport();
 			transport.setAlfacode(richiesta.getShipmentId());
-			transport.setDestination(convertiIndirizzoToGeoLocation(richiesta
-					.getToAddress()));
-			transport.setDropdown(convertiIndirizzoToDBGeoLocation(richiesta
-					.getToAddress()));
+			transport.setDestination(convertiIndirizzoToGeoLocation(richiesta.getToAddress()));
+			transport.setDropdown(convertiIndirizzoToDBGeoLocation(richiesta.getToAddress()));
 			transport.getDropdown().setName(richiesta.getToName());
-			transport.setFreightItems(convertiPacchiToFreights(asList(richiesta
-					.getPacchi())));
-			transport.setPickup(convertiIndirizzoToDBGeoLocation(richiesta
-					.getFromAddress()));
+			transport.setFreightItems(convertiPacchiToFreights(asList(richiesta.getPacchi())));
+			transport.setPickup(convertiIndirizzoToDBGeoLocation(richiesta.getFromAddress()));
 			transport.getPickup().setName(richiesta.getFromName());
-			transport.setSource(convertiIndirizzoToGeoLocation(richiesta
-					.getFromAddress()));
+			transport.setSource(convertiIndirizzoToGeoLocation(richiesta.getFromAddress()));
 			transport.setTimeAccept(richiesta.getOrarioInizio());
 			transport.setTimeClosing(richiesta.getOrarioFine());
 			transport.setTimeRank(richiesta.getOrarioFine());
 			transport.setTipo(TipoRichiesta.valueOf(richiesta.getTipo()));
-			transport.setTransportState(TransportState.valueOf(richiesta
-					.getStato()));
+			transport.setTransportState(TransportState.valueOf(richiesta.getStato()));
 			if (transport.getFreightItems() != null) {
 				double totalVolume = 0;
 				for (Freight freight : transport.getFreightItems()) {
@@ -682,16 +608,14 @@ public class Conversioni {
 			}
 			transport.setDateMiss(richiesta.getDataMissione());
 			if (richiesta.getOperatoreLogistico() != null)
-				transport.setOperatoreLogistico(richiesta
-						.getOperatoreLogistico().getId());
+				transport.setOperatoreLogistico(richiesta.getOperatoreLogistico().getId());
 			transport.setCodiceFiliale(richiesta.getCodiceFiliale());
 			transport.setRoundCode(richiesta.getRoundCode());
 		}
 		return transport;
 	}
 
-	public static List<Transport> convertiRichiesteToTransports(
-			List<Richiesta> richieste) {
+	public static List<Transport> convertiRichiesteToTransports(List<Richiesta> richieste) {
 		List<Transport> transports = null;
 		if (richieste != null) {
 			transports = new ArrayList<Transport>();
@@ -701,37 +625,29 @@ public class Conversioni {
 		return transports;
 	}
 
-	public static ShippingOrder convertiRichiestaToShippingOrder(
-			Richiesta richiesta) {
+	public static ShippingOrder convertiRichiestaToShippingOrder(Richiesta richiesta) {
 		ShippingOrder shippingOrder = null;
 		if (richiesta != null) {
 			shippingOrder = new ShippingOrder();
 			shippingOrder.setId(richiesta.getShipmentId());
-			DBGeoLocation destinatario = convertiIndirizzoToDBGeoLocation(richiesta
-					.getToAddress());
+			DBGeoLocation destinatario = convertiIndirizzoToDBGeoLocation(richiesta.getToAddress());
 			destinatario.setName(richiesta.getToName());
 			shippingOrder.setDestinatario(destinatario);
-			DBGeoLocation mittente = convertiIndirizzoToDBGeoLocation(richiesta
-					.getFromAddress());
+			DBGeoLocation mittente = convertiIndirizzoToDBGeoLocation(richiesta.getFromAddress());
 			mittente.setName(richiesta.getFromName());
 			shippingOrder.setMittente(mittente);
-			shippingOrder
-					.setShippingItems(convertiPacchiToShippingItems(asList(richiesta
-							.getPacchi())));
+			shippingOrder.setShippingItems(convertiPacchiToShippingItems(asList(richiesta.getPacchi())));
 			if (richiesta.getOperatoreLogistico() != null)
-				shippingOrder.setOperatoreLogistico(richiesta
-						.getOperatoreLogistico().getId());
+				shippingOrder.setOperatoreLogistico(richiesta.getOperatoreLogistico().getId());
 			if (richiesta.getOrarioInizio() != null)
-				shippingOrder.setCreationTimestamp(new Timestamp(richiesta
-						.getOrarioInizio().getTime()));
+				shippingOrder.setCreationTimestamp(new Timestamp(richiesta.getOrarioInizio().getTime()));
 			shippingOrder.setRoundCode(richiesta.getRoundCode());
 			shippingOrder.setCodiceFiliale(richiesta.getCodiceFiliale());
 		}
 		return shippingOrder;
 	}
 
-	public static List<ShippingOrder> convertiRichiesteToShippingOrders(
-			List<Richiesta> richieste) {
+	public static List<ShippingOrder> convertiRichiesteToShippingOrders(List<Richiesta> richieste) {
 		List<ShippingOrder> shippingOrders = null;
 		if (richieste != null) {
 			shippingOrders = new ArrayList<ShippingOrder>();
@@ -746,14 +662,11 @@ public class Conversioni {
 		if (transport != null) {
 			richiesta = new Richiesta();
 			if (transport.getSource() != null)
-				richiesta
-						.setFromAddress(convertiGeoLocationToIndirizzo(transport
-								.getSource()));
+				richiesta.setFromAddress(convertiGeoLocationToIndirizzo(transport.getSource()));
 			if (transport.getPickup() != null)
 				richiesta.setFromName(transport.getPickup().getName());
 			if (transport.getDestination() != null)
-				richiesta.setToAddress(convertiGeoLocationToIndirizzo(transport
-						.getDestination()));
+				richiesta.setToAddress(convertiGeoLocationToIndirizzo(transport.getDestination()));
 			if (transport.getDropdown() != null)
 				richiesta.setToName(transport.getDropdown().getName());
 			if (transport.getShippingOrder() != null)
@@ -761,29 +674,25 @@ public class Conversioni {
 			richiesta.setOrarioFine(transport.getTimeClosing());
 			richiesta.setOrarioInizio(transport.getTimeAccept());
 			if (transport.getFreightItems() != null)
-				richiesta.setPacchi(convertiFreightsToPacchi(
-						transport.getFreightItems()).toArray(new Pacco[0]));
+				richiesta.setPacchi(convertiFreightsToPacchi(transport.getFreightItems()).toArray(new Pacco[0]));
 			richiesta.setShipmentId(transport.getAlfacode());
 			if (transport.getTransportState() != null)
 				richiesta.setStato(transport.getTransportState().name());
 			if (transport.getShippingOrder() != null)
-				richiesta.setTerminiDiConsegna(transport.getShippingOrder()
-						.getDeliveryTerms());
+				richiesta.setTerminiDiConsegna(transport.getShippingOrder().getDeliveryTerms());
 			if (transport.getTipo() != null)
 				richiesta.setTipo(transport.getTipo().name());
 			richiesta.setDataMissione(transport.getDateMiss());
-			richiesta.setOperatoreLogistico(new OperatoreLogistico(
-					new GreenareaUser(transport.getOperatoreLogistico())));
+			richiesta.setOperatoreLogistico(
+					new OperatoreLogistico(new GreenareaUser(transport.getOperatoreLogistico())));
 			richiesta.setCodiceFiliale(transport.getCodiceFiliale());
-			richiesta.setFasciaOraria(convertiTimeSlotToFasciaOraria(transport
-					.getTimeSlot()));
+			richiesta.setFasciaOraria(convertiTimeSlotToFasciaOraria(transport.getTimeSlot()));
 			richiesta.setRoundCode(transport.getRoundCode());
 		}
 		return richiesta;
 	}
 
-	public static List<Richiesta> convertiTransportsToRichieste(
-			List<Transport> transports) {
+	public static List<Richiesta> convertiTransportsToRichieste(List<Transport> transports) {
 		List<Richiesta> richieste = null;
 		if (transports != null) {
 			richieste = new ArrayList<Richiesta>();
@@ -793,33 +702,26 @@ public class Conversioni {
 		return richieste;
 	}
 
-	public static Richiesta convertiShippingOrderToRichiesta(
-			ShippingOrder shippingOrder) {
+	public static Richiesta convertiShippingOrderToRichiesta(ShippingOrder shippingOrder) {
 		Richiesta richiesta = null;
 		if (shippingOrder != null) {
 			richiesta = new Richiesta();
 			if (shippingOrder.getMittente() != null) {
-				richiesta
-						.setFromAddress(convertiDBGeoLocationToIndirizzo(shippingOrder
-								.getMittente()));
+				richiesta.setFromAddress(convertiDBGeoLocationToIndirizzo(shippingOrder.getMittente()));
 				richiesta.setFromName(shippingOrder.getMittente().getName());
 			}
 			richiesta.setNote(shippingOrder.getNote());
 			if (shippingOrder.getShippingItems() != null)
-				richiesta
-						.setPacchi(convertiShippingItemsToPacchi(
-								shippingOrder.getShippingItems()).toArray(
-								new Pacco[0]));
+				richiesta.setPacchi(
+						convertiShippingItemsToPacchi(shippingOrder.getShippingItems()).toArray(new Pacco[0]));
 			richiesta.setShipmentId(shippingOrder.getId());
 			richiesta.setTerminiDiConsegna(shippingOrder.getDeliveryTerms());
-			richiesta
-					.setToAddress(convertiDBGeoLocationToIndirizzo(shippingOrder
-							.getDestinatario()));
+			richiesta.setToAddress(convertiDBGeoLocationToIndirizzo(shippingOrder.getDestinatario()));
 			if (shippingOrder.getDestinatario() != null)
 				richiesta.setToName(shippingOrder.getDestinatario().getName());
 			richiesta.setDataMissione(shippingOrder.getCreationTimestamp());
-			richiesta.setOperatoreLogistico(new OperatoreLogistico(
-					new GreenareaUser(shippingOrder.getOperatoreLogistico())));
+			richiesta.setOperatoreLogistico(
+					new OperatoreLogistico(new GreenareaUser(shippingOrder.getOperatoreLogistico())));
 			richiesta.setOrarioInizio(shippingOrder.getCreationTimestamp());
 			richiesta.setOrarioFine(shippingOrder.getCreationTimestamp());
 			richiesta.setCodiceFiliale(shippingOrder.getCodiceFiliale());
@@ -828,8 +730,7 @@ public class Conversioni {
 		return richiesta;
 	}
 
-	public static List<Richiesta> convertiShippingOrdersToRichieste(
-			List<ShippingOrder> shippingOrders) {
+	public static List<Richiesta> convertiShippingOrdersToRichieste(List<ShippingOrder> shippingOrders) {
 		List<Richiesta> richieste = null;
 		if (shippingOrders != null) {
 			richieste = new ArrayList<Richiesta>();
@@ -847,13 +748,9 @@ public class Conversioni {
 			TimeSlot timeSlot = transport.getTimeSlot();
 			if (timeSlot != null) {
 				sched.setIdTimeSlot(timeSlot.getIdTS());
-				String timeTS = timeSlot.getStartTS() + " "
-						+ timeSlot.getFinishTS();
+				String timeTS = timeSlot.getStartTS() + " " + timeSlot.getFinishTS();
 				DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-				String dateTs = fmt
-						.format(addDays(transport.getDateMiss(), -1))
-						+ " "
-						+ timeTS;
+				String dateTs = fmt.format(addDays(transport.getDateMiss(), -1)) + " " + timeTS;
 				sched.setTimeSlot(dateTs);
 			}
 			ShippingOrder shippingOrder = transport.getShippingOrder();
@@ -867,8 +764,7 @@ public class Conversioni {
 		return sched;
 	}
 
-	public static List<Sched> convertiTransportsToScheds(
-			List<Transport> transports) {
+	public static List<Sched> convertiTransportsToScheds(List<Transport> transports) {
 		List<Sched> scheds = null;
 		if (transports != null) {
 			scheds = new ArrayList<Sched>();
@@ -935,8 +831,7 @@ public class Conversioni {
 		return null;
 	}
 
-	public static GeoLocation convertiGeoLocationInterfaceToGeoLocation(
-			GeoLocationInterface add) {
+	public static GeoLocation convertiGeoLocationInterfaceToGeoLocation(GeoLocationInterface add) {
 		GeoLocation geoLoc = null;
 		if (add != null) {
 			geoLoc = new GeoLocation();
@@ -954,8 +849,7 @@ public class Conversioni {
 		return geoLoc;
 	}
 
-	public static Parametro convertiParameterGenToParametro(
-			ParameterGen parameterGen) {
+	public static Parametro convertiParameterGenToParametro(ParameterGen parameterGen) {
 		Parametro parametro = null;
 		if (parameterGen != null) {
 			parametro = new Parametro();
@@ -969,15 +863,13 @@ public class Conversioni {
 		return parametro;
 	}
 
-	public static ParameterGen convertiParametroToParameterGen(
-			Parametro parametro) {
+	public static ParameterGen convertiParametroToParameterGen(Parametro parametro) {
 		ParameterGen parameterGen = null;
 		if (parametro != null) {
 			parameterGen = new ParameterGen();
 			parameterGen.setDescription(parametro.getDescrizione());
 			parameterGen.setId(parametro.getIdGen());
-			parameterGen.setTypePG(TipologiaParametro.valueOf(parametro
-					.getTipo()));
+			parameterGen.setTypePG(TipologiaParametro.valueOf(parametro.getTipo()));
 			parameterGen.setMeasureUnit(parametro.getUnitaMisura());
 			parameterGen.setNamePG(parametro.getNome());
 			parameterGen.setUseType(parametro.isAttivo());
@@ -985,8 +877,7 @@ public class Conversioni {
 		return parameterGen;
 	}
 
-	public static List<Parametro> convertiParameterGensToParametri(
-			List<ParameterGen> parameterGens) {
+	public static List<Parametro> convertiParameterGensToParametri(List<ParameterGen> parameterGens) {
 		List<Parametro> parametri = null;
 		if (parameterGens != null) {
 			parametri = new ArrayList<Parametro>();
@@ -996,8 +887,7 @@ public class Conversioni {
 		return parametri;
 	}
 
-	public static List<ParameterGen> convertiParametriToParameterGens(
-			List<Parametro> parametri) {
+	public static List<ParameterGen> convertiParametriToParameterGens(List<Parametro> parametri) {
 		List<ParameterGen> parameterGens = null;
 		if (parametri != null) {
 			parameterGens = new ArrayList<ParameterGen>();
@@ -1007,14 +897,13 @@ public class Conversioni {
 		return parameterGens;
 	}
 
-	public static Prezzo convertiPriceToPrezzo(Price price,
-			List<ParameterTS> parameterTSs, List<ParameterGen> parameterGens) {
+	public static Prezzo convertiPriceToPrezzo(Price price, List<ParameterTS> parameterTSs,
+			List<ParameterGen> parameterGens) {
 		Prezzo prezzo = null;
 		if (price != null) {
-			prezzo = new Prezzo(convertiTimeSlotToFasciaOraria(price.getTs(),
-					parameterTSs, parameterGens, null), price.getColor(),
-					price.getMaxPrice(), price.getMinPrice(),
-					price.getFixPrice(), price.getTypeEntry().name());
+			prezzo = new Prezzo(convertiTimeSlotToFasciaOraria(price.getTs(), parameterTSs, parameterGens, null),
+					price.getColor(), price.getMaxPrice(), price.getMinPrice(), price.getFixPrice(),
+					price.getTypeEntry().name());
 		}
 		return prezzo;
 	}
@@ -1022,9 +911,8 @@ public class Conversioni {
 	public static Prezzo convertiPriceToPrezzo(Price price) {
 		Prezzo prezzo = null;
 		if (price != null) {
-			prezzo = new Prezzo(convertiTimeSlotToFasciaOraria(price.getTs()),
-					price.getColor(), price.getMaxPrice(), price.getMinPrice(),
-					price.getFixPrice(), price.getTypeEntry().name());
+			prezzo = new Prezzo(convertiTimeSlotToFasciaOraria(price.getTs()), price.getColor(), price.getMaxPrice(),
+					price.getMinPrice(), price.getFixPrice(), price.getTypeEntry().name());
 		}
 		return prezzo;
 	}
@@ -1043,14 +931,13 @@ public class Conversioni {
 		return price;
 	}
 
-	public static List<Prezzo> convertiPricesToPrezzi(List<Price> prices,
-			List<ParameterTS> parameterTSs, List<ParameterGen> parameterGens) {
+	public static List<Prezzo> convertiPricesToPrezzi(List<Price> prices, List<ParameterTS> parameterTSs,
+			List<ParameterGen> parameterGens) {
 		List<Prezzo> prezzi = null;
 		if (prices != null) {
 			prezzi = new ArrayList<Prezzo>();
 			for (Price price : prices)
-				prezzi.add(convertiPriceToPrezzo(price, parameterTSs,
-						parameterGens));
+				prezzi.add(convertiPriceToPrezzo(price, parameterTSs, parameterGens));
 		}
 		return prezzi;
 	}
@@ -1075,8 +962,7 @@ public class Conversioni {
 		return prices;
 	}
 
-	public static ParameterTS convertiParametroToParameterTS(
-			Parametro parametro, FasciaOraria fasciaOraria) {
+	public static ParameterTS convertiParametroToParameterTS(Parametro parametro, FasciaOraria fasciaOraria) {
 		ParameterTS parameterTS = null;
 		if (parametro != null) {
 			parameterTS = new ParameterTS(parametro.getId());
@@ -1090,27 +976,24 @@ public class Conversioni {
 		return parameterTS;
 	}
 
-	public static List<ParameterTS> convertiParametriToParameterTSs(
-			List<Parametro> parametri, FasciaOraria fasciaOraria) {
+	public static List<ParameterTS> convertiParametriToParameterTSs(List<Parametro> parametri,
+			FasciaOraria fasciaOraria) {
 		List<ParameterTS> parameterTss = null;
 		if (parametri != null) {
 			parameterTss = new ArrayList<ParameterTS>();
 			for (Parametro parametro : parametri)
-				parameterTss.add(convertiParametroToParameterTS(parametro,
-						fasciaOraria));
+				parameterTss.add(convertiParametroToParameterTS(parametro, fasciaOraria));
 		}
 		return parameterTss;
 	}
 
 	public static Filter convertiFiltroToFilter(Filtro filtro) {
-		Filter filter = new Filter(filtro.getRoundCode(),
-				filtro.getOperatoreLogistico());
+		Filter filter = new Filter(filtro.getRoundCode(), filtro.getOperatoreLogistico());
 		return filter;
 	}
 
 	public static Filtro convertiFilterToFiltro(Filter filter) {
-		Filtro filtro = new Filtro(filter.getId().getRoundCode(), filter
-				.getId().getOperatoreLogistico());
+		Filtro filtro = new Filtro(filter.getId().getRoundCode(), filter.getId().getOperatoreLogistico());
 		return filtro;
 	}
 
@@ -1134,8 +1017,7 @@ public class Conversioni {
 		return filtri;
 	}
 
-	public static Freight convertiShippingItemToFreight(
-			ShippingItem shippingItem) {
+	public static Freight convertiShippingItemToFreight(ShippingItem shippingItem) {
 		Freight freight = new Freight(shippingItem.getId());
 		freight.setDescription(shippingItem.getDescription());
 		Map<String, String> attributi = shippingItem.getAttributes();
@@ -1144,8 +1026,7 @@ public class Conversioni {
 		freight.setWidth(new Double(attributi.get("Width")));
 		freight.setWeight(new Double(attributi.get("Weight")));
 		freight.setVolume(new Double(attributi.get("Volume")));
-		freight.setFt(attributi.get("Type").equals("B") ? DOCUMENTI
-				: ALTRO_TIPO);
+		freight.setFt(attributi.get("Type").equals("B") ? DOCUMENTI : ALTRO_TIPO);
 		return freight;
 	}
 
@@ -1163,8 +1044,7 @@ public class Conversioni {
 		return shippingItem;
 	}
 
-	public static List<Freight> convertiShippingItemsToFreights(
-			List<ShippingItem> shippingItems) {
+	public static List<Freight> convertiShippingItemsToFreights(List<ShippingItem> shippingItems) {
 		List<Freight> freights = null;
 		if (shippingItems != null) {
 			freights = new ArrayList<Freight>();
@@ -1175,14 +1055,12 @@ public class Conversioni {
 	}
 
 	public static Pacco convertiShippingItemToPacco(ShippingItem shippingItem) {
-		Pacco pacco = new Pacco(shippingItem.getId(),
-				shippingItem.getDescription(), shippingItem.getAttributes());
+		Pacco pacco = new Pacco(shippingItem.getId(), shippingItem.getDescription(), shippingItem.getAttributes());
 		pacco.setAttributi(shippingItem.getAttributes());
 		return pacco;
 	}
 
-	public static List<Pacco> convertiShippingItemsToPacchi(
-			List<ShippingItem> shippingItems) {
+	public static List<Pacco> convertiShippingItemsToPacchi(List<ShippingItem> shippingItems) {
 		List<Pacco> pacchi = null;
 		if (shippingItems != null) {
 			pacchi = new ArrayList<Pacco>();
@@ -1192,8 +1070,7 @@ public class Conversioni {
 		return pacchi;
 	}
 
-	public static List<ShippingItem> convertiFreightsToShippingItems(
-			List<Freight> freights) {
+	public static List<ShippingItem> convertiFreightsToShippingItems(List<Freight> freights) {
 		List<ShippingItem> shippingItems = null;
 		if (freights != null) {
 			shippingItems = new ArrayList<ShippingItem>();

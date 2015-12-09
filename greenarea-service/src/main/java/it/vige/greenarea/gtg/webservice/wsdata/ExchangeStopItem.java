@@ -13,10 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.ExchangeStop;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.dto.GeoLocation;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +21,14 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import it.vige.greenarea.cl.library.entities.ExchangeStop;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.dto.GeoLocation;
+
 @XmlType(name = "ExchangeStop")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ExchangeStopItem implements Serializable {
-	
+
 	private static final long serialVersionUID = -446417671520983480L;
 	Long id;
 	String description;

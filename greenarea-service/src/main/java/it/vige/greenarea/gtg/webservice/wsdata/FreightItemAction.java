@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.FreightItemState;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,10 +20,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import it.vige.greenarea.cl.library.entities.FreightItemState;
+
 @XmlType(name = "FreightAction")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FreightItemAction implements Serializable {
-	
+
 	private static final long serialVersionUID = -442395450963415478L;
 	@XmlElement(required = true, name = "code")
 	private String freightItemCode;
@@ -48,8 +48,8 @@ public class FreightItemAction implements Serializable {
 		this.note = "";
 	}
 
-	public FreightItemAction(String freightItemCode, Long exchangeStopId,
-			int state, int cause, String dateTime, String note) {
+	public FreightItemAction(String freightItemCode, Long exchangeStopId, int state, int cause, String dateTime,
+			String note) {
 		this.freightItemCode = freightItemCode;
 		this.exchangeStopId = exchangeStopId;
 		this.state = state;

@@ -34,37 +34,24 @@ public class GATException extends Exception {
 
 	private static final EnumMap<GATerrorCodes, GATerrorMessage> GATerrorDesc = new EnumMap<GATerrorCodes, GATerrorMessage>(
 			GATerrorCodes.class);
+
 	static {
-		GATerrorDesc.put(GATerrorCodes.UNSOPPORTED_OPERATION,
-				new GATerrorMessage("Not supported yet.", 0));
-		GATerrorDesc.put(GATerrorCodes.GET_TRANSPORT_NULL_SHIPPING_ID,
-				new GATerrorMessage("Shipping ID is null", 0));
-		GATerrorDesc
-				.put(GATerrorCodes.GET_TRANSPORT_NO_DEST,
-						new GATerrorMessage(
-								"GetTransport request with null Destination Address",
-								0));
-		GATerrorDesc
-				.put(GATerrorCodes.ESTIMATE_TRANSPORT_NO_SOURCE,
-						new GATerrorMessage(
-								"EstimateTransport request with null Source Address",
-								0));
-		GATerrorDesc
-				.put(GATerrorCodes.ESTIMATE_TRANSPORT_NO_DEST,
-						new GATerrorMessage(
-								"EstimateTransport request with null Destination Address",
-								0));
+		GATerrorDesc.put(GATerrorCodes.UNSOPPORTED_OPERATION, new GATerrorMessage("Not supported yet.", 0));
+		GATerrorDesc.put(GATerrorCodes.GET_TRANSPORT_NULL_SHIPPING_ID, new GATerrorMessage("Shipping ID is null", 0));
+		GATerrorDesc.put(GATerrorCodes.GET_TRANSPORT_NO_DEST,
+				new GATerrorMessage("GetTransport request with null Destination Address", 0));
+		GATerrorDesc.put(GATerrorCodes.ESTIMATE_TRANSPORT_NO_SOURCE,
+				new GATerrorMessage("EstimateTransport request with null Source Address", 0));
+		GATerrorDesc.put(GATerrorCodes.ESTIMATE_TRANSPORT_NO_DEST,
+				new GATerrorMessage("EstimateTransport request with null Destination Address", 0));
 		GATerrorDesc.put(GATerrorCodes.GET_TRANSPORT_NO_SOURCE,
-				new GATerrorMessage(
-						"GetTransport request with null Source Address", 0));
-		GATerrorDesc.put(GATerrorCodes.UNKNOWN_TRANSPORT_ID,
-				new GATerrorMessage("Transport ID {0} is unknown", 1));
-		GATerrorDesc.put(GATerrorCodes.NO_TRANSPORT, new GATerrorMessage(
-				"No transport available for ShippinhOrderID={0}", 1));
-		GATerrorDesc.put(GATerrorCodes.CANNOT_LOCATE, new GATerrorMessage(
-				"Cannot locate ShippinhOrderID={0}", 1));
-		GATerrorDesc.put(GATerrorCodes.CANNOT_ESTIMATE, new GATerrorMessage(
-				"Cannot estimate cost for transport from {0} to {1}", 2));
+				new GATerrorMessage("GetTransport request with null Source Address", 0));
+		GATerrorDesc.put(GATerrorCodes.UNKNOWN_TRANSPORT_ID, new GATerrorMessage("Transport ID {0} is unknown", 1));
+		GATerrorDesc.put(GATerrorCodes.NO_TRANSPORT,
+				new GATerrorMessage("No transport available for ShippinhOrderID={0}", 1));
+		GATerrorDesc.put(GATerrorCodes.CANNOT_LOCATE, new GATerrorMessage("Cannot locate ShippinhOrderID={0}", 1));
+		GATerrorDesc.put(GATerrorCodes.CANNOT_ESTIMATE,
+				new GATerrorMessage("Cannot estimate cost for transport from {0} to {1}", 2));
 	};
 
 	private GATerrorCodes errorCode;
@@ -97,11 +84,9 @@ public class GATException extends Exception {
 		super();
 		String desc = "Unknown error message...";
 		GATerrorMessage gatMessage = GATerrorDesc.get(errorCode);
-		logger.debug("%%% GAT message: " + gatMessage.getErrorDescription()
-				+ "args:" + gatMessage.getArgsNum());
+		logger.debug("%%% GAT message: " + gatMessage.getErrorDescription() + "args:" + gatMessage.getArgsNum());
 		if (variables.size() == gatMessage.getArgsNum()) {
-			desc = MessageFormat.format(gatMessage.getErrorDescription(),
-					variables.toArray());
+			desc = MessageFormat.format(gatMessage.getErrorDescription(), variables.toArray());
 		}
 		this.errorCode = errorCode;
 		this.message = desc;

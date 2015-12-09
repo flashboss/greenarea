@@ -14,15 +14,6 @@
 package it.vige.greenarea.itseasy.ln.swing;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.geo.GisService;
-import it.vige.greenarea.geo.GisService.GeoCodingException;
-import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeditorEvent;
-import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeventType;
-import it.vige.greenarea.ln.model.LNSite;
 
 import java.awt.Color;
 import java.awt.Dialog;
@@ -34,13 +25,22 @@ import org.slf4j.Logger;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 
-public class FullAddressLocationPanel extends javax.swing.JPanel implements
-		LNeditorComponentInterface {
-	
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.geo.GisService;
+import it.vige.greenarea.geo.GisService.GeoCodingException;
+import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeditorEvent;
+import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeventType;
+import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
+import it.vige.greenarea.ln.model.LNSite;
+
+public class FullAddressLocationPanel extends javax.swing.JPanel implements LNeditorComponentInterface {
+
 	private static final long serialVersionUID = 3676534001124058746L;
 
 	private Logger logger = getLogger(getClass());
-	
+
 	private LNSite site = new LNSite("XXX");
 	private mxCell editingCell;
 	private mxGraphComponent graphComponent;
@@ -48,8 +48,7 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 	private LNeditorEventHandlerInterface eventHandler;
 
 	/** Creates new form TestTabPanel */
-	public FullAddressLocationPanel(mxGraphComponent graphComponent,
-			Dialog parent) {
+	public FullAddressLocationPanel(mxGraphComponent graphComponent, Dialog parent) {
 		this.graphComponent = graphComponent;
 		initComponents();
 	}
@@ -89,8 +88,7 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 		zipField = new javax.swing.JTextField();
 		jLabel2 = new javax.swing.JLabel();
 
-		saveConfirmDialog
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		saveConfirmDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		saveConfirmDialog.setAlwaysOnTop(true);
 		saveConfirmDialog.setResizable(false);
 
@@ -113,54 +111,24 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 		javax.swing.GroupLayout saveConfirmDialogLayout = new javax.swing.GroupLayout(
 				saveConfirmDialog.getContentPane());
 		saveConfirmDialog.getContentPane().setLayout(saveConfirmDialogLayout);
-		saveConfirmDialogLayout
-				.setHorizontalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		saveConfirmDialogLayout.setHorizontalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap()
+						.addGroup(saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(dialogMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										saveConfirmDialogLayout.createSequentialGroup().addComponent(cancelButton)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												.addComponent(okButton)))
+						.addContainerGap()));
+		saveConfirmDialogLayout.setVerticalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap().addComponent(dialogMessage)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
 						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																dialogMessage,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																376,
-																Short.MAX_VALUE)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																saveConfirmDialogLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				cancelButton)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				okButton)))
-										.addContainerGap()));
-		saveConfirmDialogLayout
-				.setVerticalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(dialogMessage)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												233, Short.MAX_VALUE)
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(okButton)
-														.addComponent(
-																cancelButton))
-										.addContainerGap()));
+								saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(okButton).addComponent(cancelButton))
+						.addContainerGap()));
 
 		provinceField.setText("jTextField1");
 		provinceField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -169,11 +137,9 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 			}
 		});
 
-		countryLabel1
-				.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+		countryLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 		countryLabel1.setText(I18N.getString("Country"));
-		countryLabel1
-				.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+		countryLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
 		countryField.setText("jTextField2");
 		countryField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -182,11 +148,9 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 			}
 		});
 
-		regionLabel1
-				.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+		regionLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 		regionLabel1.setText(I18N.getString("Region"));
-		regionLabel1
-				.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+		regionLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
 		regionField.setText("jTextField1");
 		regionField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -248,20 +212,18 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 		});
 
 		saveLocationChangeButton.setText(I18N.getString("Save"));
-		saveLocationChangeButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						saveLocationChangeButtonActionPerformed(evt);
-					}
-				});
+		saveLocationChangeButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				saveLocationChangeButtonActionPerformed(evt);
+			}
+		});
 
 		resetLocationValuesButton.setText(I18N.getString("RESET"));
-		resetLocationValuesButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						resetLocationValuesButtonActionPerformed(evt);
-					}
-				});
+		resetLocationValuesButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				resetLocationValuesButtonActionPerformed(evt);
+			}
+		});
 
 		jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 		jLabel1.setText(I18N.getString("ZIP"));
@@ -273,260 +235,111 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(49, 49, 49)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(
-														resetLocationValuesButton)
-												.addComponent(
-														saveLocationChangeButton)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addGap(35,
-																										35,
-																										35)
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
-																												.addGroup(
-																														layout.createParallelGroup(
-																																javax.swing.GroupLayout.Alignment.TRAILING)
-																																.addComponent(
-																																		countryLabel1)
-																																.addComponent(
-																																		regionLabel1)
-																																.addComponent(
-																																		jLabel1)
-																																.addComponent(
-																																		jLabel12)
-																																.addComponent(
-																																		jLabel11)
-																																.addComponent(
-																																		jLabel3))
-																												.addComponent(
-																														jLabel2,
-																														javax.swing.GroupLayout.PREFERRED_SIZE,
-																														77,
-																														javax.swing.GroupLayout.PREFERRED_SIZE))
-																								.addGap(18,
-																										18,
-																										18)
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
-																												.addGroup(
-																														layout.createSequentialGroup()
-																																.addGroup(
-																																		layout.createParallelGroup(
-																																				javax.swing.GroupLayout.Alignment.LEADING)
-																																				.addComponent(
-																																						regionField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						countryField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						zipField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						streetField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						cityField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE)
-																																				.addComponent(
-																																						provinceField,
-																																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																																						250,
-																																						Short.MAX_VALUE))
-																																.addGap(21,
-																																		21,
-																																		21))
-																												.addComponent(
-																														numberField,
-																														javax.swing.GroupLayout.PREFERRED_SIZE,
-																														120,
-																														javax.swing.GroupLayout.PREFERRED_SIZE)))
-																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addComponent(
-																										doGeocodeButton,
-																										javax.swing.GroupLayout.PREFERRED_SIZE,
-																										152,
-																										javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addGap(18,
-																										18,
-																										18)
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING,
-																												false)
-																												.addComponent(
-																														latitudeField)
-																												.addComponent(
-																														longitudeField,
-																														javax.swing.GroupLayout.DEFAULT_SIZE,
-																														144,
-																														Short.MAX_VALUE))
-																								.addPreferredGap(
-																										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
-																												.addComponent(
-																														jLabel13)
-																												.addComponent(
-																														jLabel14))))
-																.addGap(144,
-																		144,
-																		144)))
-								.addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(35, 35, 35)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														countryField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(countryLabel1))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														regionField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(regionLabel1))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														provinceField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel2))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-										8, Short.MAX_VALUE)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														cityField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addGap(49, 49, 49)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(resetLocationValuesButton).addComponent(saveLocationChangeButton)
+						.addGroup(layout.createSequentialGroup().addGroup(layout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup().addGap(35, 35, 35).addGroup(layout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(countryLabel1).addComponent(regionLabel1)
+												.addComponent(jLabel1).addComponent(jLabel12).addComponent(jLabel11)
 												.addComponent(jLabel3))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														streetField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
+										.addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 77,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(18, 18, 18)
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(layout.createSequentialGroup().addGroup(layout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(regionField, javax.swing.GroupLayout.DEFAULT_SIZE,
+																250, Short.MAX_VALUE)
+														.addComponent(countryField,
+																javax.swing.GroupLayout.DEFAULT_SIZE, 250,
+																Short.MAX_VALUE)
+														.addComponent(zipField, javax.swing.GroupLayout.DEFAULT_SIZE,
+																250, Short.MAX_VALUE)
+														.addComponent(streetField, javax.swing.GroupLayout.DEFAULT_SIZE,
+																250, Short.MAX_VALUE)
+														.addComponent(cityField, javax.swing.GroupLayout.DEFAULT_SIZE,
+																250, Short.MAX_VALUE)
+														.addComponent(provinceField,
+																javax.swing.GroupLayout.DEFAULT_SIZE, 250,
+																Short.MAX_VALUE))
+														.addGap(21, 21, 21))
+												.addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
+														javax.swing.GroupLayout.PREFERRED_SIZE)))
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(doGeocodeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGap(18, 18, 18)
+										.addGroup(layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+												.addComponent(latitudeField).addComponent(longitudeField,
+														javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(jLabel13).addComponent(jLabel14))))
+								.addGap(144, 144, 144)))
+				.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(35, 35, 35)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(countryLabel1))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(regionField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(regionLabel1))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(provinceField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel2))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel3))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel11))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel12)
+						.addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(zipField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel1))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						layout.createSequentialGroup().addGroup(layout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(longitudeField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 16,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGap(13, 13, 13))
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+								layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(doGeocodeButton)
+												.addComponent(latitudeField, javax.swing.GroupLayout.PREFERRED_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel11))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(jLabel12)
-												.addComponent(
-														numberField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														zipField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel1))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.BASELINE)
-																				.addComponent(
-																						longitudeField,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						jLabel14,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						16,
-																						javax.swing.GroupLayout.PREFERRED_SIZE))
-																.addGap(13, 13,
-																		13))
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.BASELINE)
-																				.addComponent(
-																						doGeocodeButton)
-																				.addComponent(
-																						latitudeField,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						jLabel13))
-																.addGap(43, 43,
-																		43)))
-								.addComponent(resetLocationValuesButton)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(saveLocationChangeButton)
-								.addGap(25, 25, 25)));
+												.addComponent(jLabel13))
+										.addGap(43, 43, 43)))
+						.addComponent(resetLocationValuesButton)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(saveLocationChangeButton).addGap(25, 25, 25)));
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void addressChangedEvent() {
@@ -583,8 +396,7 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 
 	}// GEN-LAST:event_doGeocodeButtonActionPerformed
 
-	private void saveLocationChangeButtonActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveLocationChangeButtonActionPerformed
+	private void saveLocationChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveLocationChangeButtonActionPerformed
 		doConfirmDialog();
 	}// GEN-LAST:event_saveLocationChangeButtonActionPerformed
 
@@ -594,8 +406,7 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 		this.setEnabled(false);
 	}
 
-	private void resetLocationValuesButtonActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_resetLocationValuesButtonActionPerformed
+	private void resetLocationValuesButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_resetLocationValuesButtonActionPerformed
 		displayLocation(site);
 		disableButton(saveLocationChangeButton);
 		disableButton(doGeocodeButton);
@@ -612,16 +423,14 @@ public class FullAddressLocationPanel extends javax.swing.JPanel implements
 		disableButton(saveLocationChangeButton);
 		disableButton(resetLocationValuesButton);
 		if (eventHandler != null)
-			eventHandler.handleEvent(new LNeditorEvent(LNeventType.save, site,
-					null));
+			eventHandler.handleEvent(new LNeditorEvent(LNeventType.save, site, null));
 	}// GEN-LAST:event_okButtonActionPerformed
 
 	private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cancelButtonActionPerformed
 		saveConfirmDialog.setVisible(false);
 		this.setEnabled(true);
 		if (eventHandler != null)
-			eventHandler.handleEvent(new LNeditorEvent(LNeventType.cancel,
-					null, null));
+			eventHandler.handleEvent(new LNeditorEvent(LNeventType.cancel, null, null));
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
 	private void provinceFieldKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_provinceFieldKeyTyped

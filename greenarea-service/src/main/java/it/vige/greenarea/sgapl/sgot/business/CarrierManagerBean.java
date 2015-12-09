@@ -30,18 +30,6 @@ import static it.vige.greenarea.sgapl.sgot.business.exception.GATException.GATer
 import static it.vige.greenarea.sgapl.sgot.business.exception.GATException.GATerrorCodes.UNSOPPORTED_OPERATION;
 import static it.vige.greenarea.sgapl.sgot.mqHandlers.SGOTmessageHandler.getSGOTmessagHandler;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Carrier;
-import it.vige.greenarea.cl.library.entities.OrderStatus;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.dto.Leg;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyConsumer;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
-import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
-import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
-import it.vige.greenarea.sgapl.sgot.facade.CarrierFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +46,19 @@ import javax.jms.JMSProducer;
 import javax.jms.Topic;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Carrier;
+import it.vige.greenarea.cl.library.entities.OrderStatus;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.dto.Leg;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyConsumer;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
+import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
+import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
+import it.vige.greenarea.sgapl.sgot.facade.CarrierFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 @Stateless
 public class CarrierManagerBean {
@@ -112,11 +113,9 @@ public class CarrierManagerBean {
 		// TransportID
 		properties.put(MQ_KEY_TRANSPORT_ID, t.getAlfacode());
 		// ShippingOrderID
-		properties.put(MQ_KEY_SHIPPING_ID, t.getShippingOrder().getId()
-				.toString());
+		properties.put(MQ_KEY_SHIPPING_ID, t.getShippingOrder().getId().toString());
 
-		properties.put(MQ_KEY_VECTOR_NAME,
-				t.getRoute().get(t.getActiveLegIndex()).getVector());
+		properties.put(MQ_KEY_VECTOR_NAME, t.getRoute().get(t.getActiveLegIndex()).getVector());
 
 		// CAUSE
 		properties.put(MQ_KEY_CAUSE, READY_STATUS);
@@ -127,18 +126,15 @@ public class CarrierManagerBean {
 		} else {
 			// TODO va gestito il caso in cui non trovo il vettore....
 		}
-		logger.debug("l'ordine " + t.getShippingOrder().getId()
-				+ "del trasporto " + t.getAlfacode() + " e' pronto !");
-		logger.debug("Lo invio a "
-				+ t.getRoute().get(t.getActiveLegIndex()).getVector());
+		logger.debug("l'ordine " + t.getShippingOrder().getId() + "del trasporto " + t.getAlfacode() + " e' pronto !");
+		logger.debug("Lo invio a " + t.getRoute().get(t.getActiveLegIndex()).getVector());
 
 		// Invio il messaggio a Vector
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
 
 		producer.publishObjectMessage(vectorTopic, jmsProducer, sod, properties);
-		ItseasyConsumer consumer = getSGOTmessagHandler().getConsumer(
-				t.getAlfacode());
+		ItseasyConsumer consumer = getSGOTmessagHandler().getConsumer(t.getAlfacode());
 		getSGOTmessagHandler().putConsumer(t.getAlfacode(), consumer);
 	}
 

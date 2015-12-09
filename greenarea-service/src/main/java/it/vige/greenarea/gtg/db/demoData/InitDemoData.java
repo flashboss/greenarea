@@ -48,6 +48,28 @@ import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.GenericType;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.GTGsystem;
 import it.vige.greenarea.NoDuplicatesList;
 import it.vige.greenarea.cl.control.TimeSlotControl;
@@ -74,9 +96,9 @@ import it.vige.greenarea.cl.sessions.TsStatFacade;
 import it.vige.greenarea.cl.sessions.ValueMissionFacade;
 import it.vige.greenarea.cl.sessions.VikorResultFacade;
 import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.OperatoreLogistico;
 import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.file.ImportaCSVFile;
 import it.vige.greenarea.file.ImportaFile;
 import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
@@ -98,27 +120,6 @@ import it.vige.greenarea.tap.facades.TapGroupDataFacade;
 import it.vige.greenarea.tap.facades.TapOutDataFacade;
 import it.vige.greenarea.tap.facades.TapParamDataFacade;
 import it.vige.greenarea.vo.RichiestaXML;
-
-import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.inject.Inject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.core.GenericType;
-
-import org.slf4j.Logger;
 
 /**
  * 
@@ -184,18 +185,12 @@ public class InitDemoData extends GTGsystem {
 		c.add(Calendar.DATE, 4); // Adding 5 days
 		String dataFine = dateFormat.format(c.getTime());
 		for (TimeSlot timeSlot : allTimeSlots)
-			if (timeSlot.getDayFinish().equals("12-12-2014")
-					&& timeSlot.getDayStart().equals("11-12-2014")
-					|| timeSlot.getDayFinish().equals("13-12-2014")
-					&& timeSlot.getDayStart().equals("12-12-2014")
-					|| timeSlot.getDayFinish().equals("14-12-2014")
-					&& timeSlot.getDayStart().equals("13-12-2014")
-					|| timeSlot.getDayFinish().equals("15-12-2014")
-					&& timeSlot.getDayStart().equals("14-12-2014")
-					|| timeSlot.getDayFinish().equals("16-12-2014")
-					&& timeSlot.getDayStart().equals("15-12-2014")
-					|| timeSlot.getDayFinish().equals(dataFine)
-					&& timeSlot.getDayStart().equals(dataInizio))
+			if (timeSlot.getDayFinish().equals("12-12-2014") && timeSlot.getDayStart().equals("11-12-2014")
+					|| timeSlot.getDayFinish().equals("13-12-2014") && timeSlot.getDayStart().equals("12-12-2014")
+					|| timeSlot.getDayFinish().equals("14-12-2014") && timeSlot.getDayStart().equals("13-12-2014")
+					|| timeSlot.getDayFinish().equals("15-12-2014") && timeSlot.getDayStart().equals("14-12-2014")
+					|| timeSlot.getDayFinish().equals("16-12-2014") && timeSlot.getDayStart().equals("15-12-2014")
+					|| timeSlot.getDayFinish().equals(dataFine) && timeSlot.getDayStart().equals(dataInizio))
 				timeSlots.add(timeSlot);
 
 		if (timeSlots.isEmpty()) {
@@ -1385,8 +1380,7 @@ public class InitDemoData extends GTGsystem {
 		List<Mission> allMissions = missionFacade.findAll();
 		if (!allMissions.isEmpty())
 			for (Mission mission : allMissions)
-				tsc.getRank(mission.getStartTime(), mission.getTimeSlot()
-						.getIdTS());
+				tsc.getRank(mission.getStartTime(), mission.getTimeSlot().getIdTS());
 	}
 
 	public void caricaTrasporti() {
@@ -1402,9 +1396,8 @@ public class InitDemoData extends GTGsystem {
 		Date oldDayFourth = addDays(dayFirst, -4);
 		Date oldDayFive = addDays(dayFirst, -5);
 
-		List<Date> datePerTrasporti = asList(new Date[] { oldDayFive,
-				oldDayFourth, oldDayThird, oldDaySecond, oldDayFirst, dayFirst,
-				daySecond, dayThird, dayFourth });
+		List<Date> datePerTrasporti = asList(new Date[] { oldDayFive, oldDayFourth, oldDayThird, oldDaySecond,
+				oldDayFirst, dayFirst, daySecond, dayThird, dayFourth });
 
 		List<Transport> allTransports = sc.getAllSchedule();
 		String[] roundCodes = new String[] { "01", "02", "03", "01", "02" };
@@ -1426,8 +1419,7 @@ public class InitDemoData extends GTGsystem {
 				tr1.setPickup(lella);
 				tr1.setDestination(new GeoLocation(enzo));
 				tr1.setDropdown(enzo);
-				tr1.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr1.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr1.setTransportState(waiting);
 				tr1.setTipo(CONSEGNA);
 				tr1.setOperatoreLogistico("tnt");
@@ -1489,8 +1481,7 @@ public class InitDemoData extends GTGsystem {
 				tr2.setPickup(vige);
 				tr2.setDestination(new GeoLocation(enzo));
 				tr2.setDropdown(enzo);
-				tr2.setServiceClass(transportServiceClassFacade
-						.findBySelection("Frigo").get(0));
+				tr2.setServiceClass(transportServiceClassFacade.findBySelection("Frigo").get(0));
 				tr2.setTransportState(waiting);
 				tr2.setTipo(CONSEGNA);
 				tr2.setOperatoreLogistico("tnt");
@@ -1540,8 +1531,7 @@ public class InitDemoData extends GTGsystem {
 				tr3.setPickup(luigi);
 				tr3.setDestination(new GeoLocation(enzo));
 				tr3.setDropdown(enzo);
-				tr3.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr3.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr3.setTransportState(waiting);
 				tr3.setTipo(CONSEGNA);
 				tr3.setOperatoreLogistico("tnt");
@@ -1591,8 +1581,7 @@ public class InitDemoData extends GTGsystem {
 				tr4.setPickup(marco);
 				tr4.setDestination(new GeoLocation(lella));
 				tr4.setDropdown(lella);
-				tr4.setServiceClass(transportServiceClassFacade
-						.findBySelection("Frigo").get(0));
+				tr4.setServiceClass(transportServiceClassFacade.findBySelection("Frigo").get(0));
 				tr4.setTransportState(waiting);
 				tr4.setTipo(CONSEGNA);
 				tr4.setOperatoreLogistico("tnt");
@@ -1654,8 +1643,7 @@ public class InitDemoData extends GTGsystem {
 				tr5.setPickup(vige);
 				tr5.setDestination(new GeoLocation(luigi));
 				tr5.setDropdown(luigi);
-				tr5.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr5.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr5.setTransportState(waiting);
 				tr5.setTipo(RITIRO);
 				tr5.setOperatoreLogistico("tnt");
@@ -1721,119 +1709,86 @@ public class InitDemoData extends GTGsystem {
 		if (allTransports.isEmpty()) {
 			try {
 				Client client = newClient();
-				Builder bldr = client.target(
-						BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt")
-						.request(APPLICATION_JSON);
-				List<Filter> filters = bldr
-						.get(new GenericType<List<Filter>>() {
-						});
-				InputStream inputStream = currentThread()
-						.getContextClassLoader().getResourceAsStream(
-								"demofile/TO1_ORD_141211_0900.csv");
-				ImportaFile importaFile = new ImportaCSVFile(
-						getOperatoreLogistico(), oldDayFourth);
-				List<RichiestaXML> richiesteXML = importaFile.prelevaDati(
-						inputStream, convertiFiltersToFiltri(filters));
-				List<Richiesta> richieste = importaFile.convertiARichieste(
-						richiesteXML, new OperatoreLogistico(new GreenareaUser(
-								"tnt")));
+				Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt").request(APPLICATION_JSON);
+				List<Filter> filters = bldr.get(new GenericType<List<Filter>>() {
+				});
+				InputStream inputStream = currentThread().getContextClassLoader()
+						.getResourceAsStream("demofile/TO1_ORD_141211_0900.csv");
+				ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayFourth);
+				List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
+						convertiFiltersToFiltri(filters));
+				List<Richiesta> richieste = importaFile.convertiARichieste(richiesteXML,
+						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141211_0903.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayFourth);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayFourth);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141212_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141212_0904Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141212_0904Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141215_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayFirst);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayFirst);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141215_0903.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayFirst);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayFirst);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141216_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						daySecond);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), daySecond);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141216_0903Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						daySecond);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141216_0903Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), daySecond);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141217_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141217_0903Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141217_0903Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
@@ -1847,8 +1802,7 @@ public class InitDemoData extends GTGsystem {
 	private OperatoreLogistico getOperatoreLogistico() {
 		GreenareaUser greenareaUser = new GreenareaUser();
 		greenareaUser.setId("tnt");
-		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(
-				greenareaUser);
+		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(greenareaUser);
 		return operatoreLogistico;
 	}
 
@@ -1863,8 +1817,7 @@ public class InitDemoData extends GTGsystem {
 				String codice = roundCode + dateStr;
 				if (!codiciPerTrasporti.contains(codice)) {
 					try {
-						gTGmanagerBean.buildMission(dateFormat.parse(dateStr),
-								roundCode);
+						gTGmanagerBean.buildMission(dateFormat.parse(dateStr), roundCode);
 						codiciPerTrasporti.add(codice);
 					} catch (ParseException e) {
 						logger.error("formattazione della data", e);
@@ -1994,8 +1947,7 @@ public class InitDemoData extends GTGsystem {
 		// scarico tr2 in via olivetti
 		mi1276.getDeliveryItems().add(fi1tr2.getCode());
 
-		Timestamp start = new Timestamp(
-				new GregorianCalendar(Locale.ITALIAN).getTimeInMillis());
+		Timestamp start = new Timestamp(new GregorianCalendar(Locale.ITALIAN).getTimeInMillis());
 		Timestamp end = new Timestamp(start.getTime() + 14400000);// (4 * 60 *
 																	// 60 *
 																	// 1000));
@@ -2063,8 +2015,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento1() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd")
-				.format(addDays(new Date(), -5));
+		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd").format(addDays(new Date(), -5));
 		TapParamData tapParamData1 = new TapParamData();
 		tapParamData1.setName("TOTAL_ODOMETER");
 		tapParamData1.setValue("0");
@@ -3626,8 +3577,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento2() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd")
-				.format(addDays(new Date(), -4));
+		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd").format(addDays(new Date(), -4));
 		TapParamData tapParamData278 = new TapParamData();
 		tapParamData278.setName("TOTAL_ODOMETER");
 		tapParamData278.setValue("0");

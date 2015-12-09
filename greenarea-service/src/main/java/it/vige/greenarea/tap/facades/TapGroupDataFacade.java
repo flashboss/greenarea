@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.tap.facades;
 
-import it.vige.greenarea.cl.library.entities.TapGroupData;
-import it.vige.greenarea.cl.library.entities.TapGroupData_;
-import it.vige.greenarea.cl.library.entities.TapOutData;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +25,11 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import it.vige.greenarea.cl.library.entities.TapGroupData;
+import it.vige.greenarea.cl.library.entities.TapGroupData_;
+import it.vige.greenarea.cl.library.entities.TapOutData;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 @Stateless
 public class TapGroupDataFacade extends AbstractFacade<TapGroupData, Integer> {
@@ -56,33 +56,27 @@ public class TapGroupDataFacade extends AbstractFacade<TapGroupData, Integer> {
 	}
 
 	public List<TapGroupData> findByName(String name) {
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
-		javax.persistence.criteria.CriteriaQuery cq = criteriaBuilder
-				.createQuery();
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		javax.persistence.criteria.CriteriaQuery cq = criteriaBuilder.createQuery();
 		Root<TapGroupData> root = cq.from(TapGroupData.class);
 		cq = cq.select(root);
-		Predicate wherePredicate = criteriaBuilder.and(criteriaBuilder.equal(
-				root.get(TapGroupData_.name), name));
+		Predicate wherePredicate = criteriaBuilder.and(criteriaBuilder.equal(root.get(TapGroupData_.name), name));
 		cq = cq.where(wherePredicate);
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 
 	public List<TapGroupData> findByOutData(TapOutData tapOutData) {
-		CriteriaBuilder criteriaBuilder = getEntityManager()
-				.getCriteriaBuilder();
-		javax.persistence.criteria.CriteriaQuery cq = criteriaBuilder
-				.createQuery();
+		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+		javax.persistence.criteria.CriteriaQuery cq = criteriaBuilder.createQuery();
 		Root<TapGroupData> root = cq.from(TapGroupData.class);
 		cq = cq.select(root);
-		Predicate wherePredicate = criteriaBuilder.and(criteriaBuilder.equal(
-				root.get(TapGroupData_.tapOutData), tapOutData));
+		Predicate wherePredicate = criteriaBuilder
+				.and(criteriaBuilder.equal(root.get(TapGroupData_.tapOutData), tapOutData));
 		cq = cq.where(wherePredicate);
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 
-	public Map<TapOutData, List<TapGroupData>> findByOutData(
-			List<TapOutData> tapOutDatas) {
+	public Map<TapOutData, List<TapGroupData>> findByOutData(List<TapOutData> tapOutDatas) {
 		String query = "select a from TapGroupData a where a.tapOutData in :id and a.name = 'GPS_DATA'";
 		Query q = getEntityManager().createQuery(query);
 		q.setParameter("id", tapOutDatas);

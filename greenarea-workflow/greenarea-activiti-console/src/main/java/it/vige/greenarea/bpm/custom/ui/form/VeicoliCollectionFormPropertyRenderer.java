@@ -21,8 +21,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.form.VeicoliCollectionFormType;
-import it.vige.greenarea.dto.Veicolo;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,8 +36,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public class VeicoliCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Veicolo> {
+import it.vige.greenarea.bpm.form.VeicoliCollectionFormType;
+import it.vige.greenarea.dto.Veicolo;
+
+public class VeicoliCollectionFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Veicolo> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<Veicolo> table;
@@ -53,25 +53,20 @@ public class VeicoliCollectionFormPropertyRenderer extends
 	@Override
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
-		values = (Map<String, Veicolo>) formProperty.getType().getInformation(
-				"values");
-		table = new GreenareaPagedTable<Veicolo>(values.values(),
-				getGreenareaFormPropertiesForm());
+		values = (Map<String, Veicolo>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<Veicolo>(values.values(), getGreenareaFormPropertiesForm());
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(false);
 		table.setStyleName(STYLE_COLLECTION);
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ "codiceFiliale");
+			String id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "codiceFiliale");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ "societaDiTrasporto");
+			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "societaDiTrasporto");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "marcaVeicolo");
 			table.addContainerProperty(id, String.class, null);
@@ -79,16 +74,13 @@ public class VeicoliCollectionFormPropertyRenderer extends
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "tipoVeicolo");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ "classeEcologica");
+			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "classeEcologica");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ "tipoAlimentazione");
+			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "tipoAlimentazione");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "targa");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ "consumiPresunti");
+			id = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "consumiPresunti");
 			table.addContainerProperty(id, String.class, null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);
@@ -123,22 +115,18 @@ public class VeicoliCollectionFormPropertyRenderer extends
 		I18nManager i18nManager = get().getI18nManager();
 		List<Object> result = new ArrayList<Object>();
 		result.add(type.getCodiceFiliale());
-		if (type.getSocietaDiTrasporto() != null
-				&& type.getSocietaDiTrasporto().getId() != null
+		if (type.getSocietaDiTrasporto() != null && type.getSocietaDiTrasporto().getId() != null
 				&& !type.getSocietaDiTrasporto().getId().trim().equals(""))
 			result.add(type.getSocietaDiTrasporto());
 		else
 			result.add(type.getAutista());
-		result.add(type.getValori().getBaseName() + " "
-				+ type.getValori().getModel());
+		result.add(type.getValori().getBaseName() + " " + type.getValori().getModel());
 		result.add(type.getRoundCode());
 		result.add(type.getValori().getDescription());
-		result.add(i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "euro_value")
-				+ " " + type.getValori().getEuro());
+		result.add(i18nManager.getMessage(VEICOLI_TABLE_FIELDS + "euro_value") + " " + type.getValori().getEuro());
 		String tipoAlimentazione = type.getValori().getFuel();
 		try {
-			tipoAlimentazione = i18nManager.getMessage(VEICOLI_TABLE_FIELDS
-					+ tipoAlimentazione);
+			tipoAlimentazione = i18nManager.getMessage(VEICOLI_TABLE_FIELDS + tipoAlimentazione);
 		} catch (Exception ex) {
 			logger.error("errore internazionalizzazione ", tipoAlimentazione);
 		}
@@ -154,8 +142,7 @@ public class VeicoliCollectionFormPropertyRenderer extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);

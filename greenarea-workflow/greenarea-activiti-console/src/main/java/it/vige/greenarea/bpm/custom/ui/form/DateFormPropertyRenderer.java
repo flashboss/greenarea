@@ -28,8 +28,7 @@ import org.vaadin.addons.rangedatefield.RangeDateField;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 
-public class DateFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+public class DateFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 8276247490292946211L;
 
@@ -40,8 +39,7 @@ public class DateFormPropertyRenderer<T> extends
 	@Override
 	public Field getPropertyField(FormProperty formProperty) {
 		// Writable string
-		RangeDateField dateField = new RangeDateField(
-				getPropertyLabel(formProperty));
+		RangeDateField dateField = new RangeDateField(getPropertyLabel(formProperty));
 		dateField.setResolution(DateField.RESOLUTION_DAY);
 
 		switch (formProperty.getId()) {
@@ -134,12 +132,10 @@ public class DateFormPropertyRenderer<T> extends
 			dateField.setValue(date);
 			break;
 		}
-		String datePattern = (String) formProperty.getType().getInformation(
-				"datePattern");
+		String datePattern = (String) formProperty.getType().getInformation("datePattern");
 		dateField.setDateFormat(datePattern);
 		dateField.setRequired(formProperty.isRequired());
-		dateField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		dateField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		dateField.setEnabled(formProperty.isWritable());
 
 		if (formProperty.getValue() != null) {
@@ -163,8 +159,7 @@ public class DateFormPropertyRenderer<T> extends
 
 		if (selectedDate != null) {
 			// Use the datePattern specified in the form property type
-			String datePattern = (String) formProperty.getType()
-					.getInformation("datePattern");
+			String datePattern = (String) formProperty.getType().getInformation("datePattern");
 			SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
 			return dateFormat.format(selectedDate);
 		}

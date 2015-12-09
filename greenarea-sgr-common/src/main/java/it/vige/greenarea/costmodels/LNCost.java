@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.costmodels;
 
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.ln.model.LNCell;
-import it.vige.greenarea.utilities.LNutilities;
-
 import java.util.Collection;
 
 import com.mxgraph.analysis.mxICostFunction;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
+
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.ln.model.LNCell;
+import it.vige.greenarea.utilities.LNutilities;
 
 public class LNCost implements mxICostFunction {
 
@@ -51,8 +51,7 @@ public class LNCost implements mxICostFunction {
 		for (mxCell c : path) {
 			o = c.getValue();
 			if (o instanceof LNCell)
-				result += ((LNCell) o).getCostFunction().getCost(
-						getCellState(c));
+				result += ((LNCell) o).getCostFunction().getCost(getCellState(c));
 		}
 		return result;
 	}

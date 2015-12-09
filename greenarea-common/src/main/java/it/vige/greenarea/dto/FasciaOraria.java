@@ -58,11 +58,9 @@ public class FasciaOraria implements Serializable {
 
 	}
 
-	public FasciaOraria(String ga, Date dataInizio, Date dataFine,
-			Date orarioInizio, Date orarioFine, String aperturaRichieste,
-			String chiusuraRichieste, String ripetitivitaPolicy,
-			String tolleranza, String tipologiaClassifica, GreenareaUser pa,
-			List<Parametro> parametri, List<Prezzo> prezzi) {
+	public FasciaOraria(String ga, Date dataInizio, Date dataFine, Date orarioInizio, Date orarioFine,
+			String aperturaRichieste, String chiusuraRichieste, String ripetitivitaPolicy, String tolleranza,
+			String tipologiaClassifica, GreenareaUser pa, List<Parametro> parametri, List<Prezzo> prezzi) {
 		super();
 		this.ga = ga;
 		this.dataInizio = dataInizio;
@@ -77,10 +75,8 @@ public class FasciaOraria implements Serializable {
 		this.pa = pa;
 		this.parametri = parametri;
 		this.prezzi = prezzi;
-		this.nome = orario.format(orarioInizio) + " - "
-				+ orario.format(orarioFine);
-		this.validita = "dal " + data.format(dataInizio) + " al "
-				+ data.format(dataFine);
+		this.nome = orario.format(orarioInizio) + " - " + orario.format(orarioFine);
+		this.validita = "dal " + data.format(dataInizio) + " al " + data.format(dataFine);
 	}
 
 	public FasciaOraria(int id, List<Parametro> parametri) {
@@ -231,13 +227,11 @@ public class FasciaOraria implements Serializable {
 
 	@Override
 	public String toString() {
-		if (data == null || dataInizio == null || orario == null
-				|| orarioInizio == null || dataFine == null
+		if (data == null || dataInizio == null || orario == null || orarioInizio == null || dataFine == null
 				|| orarioFine == null)
 			return super.toString();
 		else
-			return data.format(dataInizio) + " " + data.format(dataFine)
-					+ " | " + orario.format(orarioInizio) + " "
+			return data.format(dataInizio) + " " + data.format(dataFine) + " | " + orario.format(orarioInizio) + " "
 					+ orario.format(orarioFine);
 	}
 }

@@ -54,8 +54,7 @@ public class SaveConfirmDialog extends java.awt.Dialog {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		ConfirmMessageArea = new javax.swing.JTextArea();
 
-		saveConfirmDialog
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		saveConfirmDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		saveConfirmDialog.setAlwaysOnTop(true);
 		saveConfirmDialog.setResizable(false);
 
@@ -63,11 +62,9 @@ public class SaveConfirmDialog extends java.awt.Dialog {
 				saveConfirmDialog.getContentPane());
 		saveConfirmDialog.getContentPane().setLayout(saveConfirmDialogLayout);
 		saveConfirmDialogLayout.setHorizontalGroup(saveConfirmDialogLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 400, Short.MAX_VALUE));
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 400, Short.MAX_VALUE));
 		saveConfirmDialogLayout.setVerticalGroup(saveConfirmDialogLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 300, Short.MAX_VALUE));
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 300, Short.MAX_VALUE));
 
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -108,58 +105,26 @@ public class SaveConfirmDialog extends java.awt.Dialog {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(10, 10,
-																		10)
-																.addComponent(
-																		jScrollPane1,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		320,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(90, 90,
-																		90)
-																.addComponent(
-																		cancelButton,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		110,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addGap(9, 9, 9)
-																.addComponent(
-																		okButton,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		120,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(10, 10, 10)
-								.addComponent(jScrollPane1,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										150,
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup().addGap(10, 10, 10).addComponent(jScrollPane1,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGroup(layout.createSequentialGroup().addGap(90, 90, 90)
+								.addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(10, 10, 10)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														cancelButton,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(okButton))
-								.addContainerGap()));
+								.addGap(9, 9, 9).addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120,
+										javax.swing.GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(10, 10, 10)
+						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addGap(10, 10, 10)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(okButton)).addContainerGap()));
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents

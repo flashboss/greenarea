@@ -27,8 +27,7 @@ public class GreenareaExplorerApp extends ExplorerApp {
 	private static final long serialVersionUID = -2184179337810106886L;
 
 	@Override
-	public void onRequestStart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		// Set current application object as thread-local to make it easy
 		// accessible
 		current.set(this);

@@ -16,6 +16,17 @@ package it.vige.greenarea.cl.restservices;
 import static it.vige.greenarea.Conversioni.convertiTransportsToRichieste;
 import static it.vige.greenarea.dto.TipoRichiesta.CONSEGNA;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
+import java.util.List;
+import java.util.SortedSet;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+
 import it.vige.greenarea.cl.control.MissionControl;
 import it.vige.greenarea.cl.library.entities.ExchangeStop;
 import it.vige.greenarea.cl.library.entities.Transport;
@@ -28,16 +39,6 @@ import it.vige.greenarea.dto.PerformanceVeicoli;
 import it.vige.greenarea.dto.Richiesta;
 import it.vige.greenarea.dto.RichiestaMissioni;
 import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
-
-import java.util.List;
-import java.util.SortedSet;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 
 /**
  * <p>
@@ -81,8 +82,7 @@ public class RichiesteRESTService {
 		return richieste;
 	}
 
-	private void aggiungiIDStop(List<Richiesta> richieste,
-			List<ExchangeStop> exchangeStops) {
+	private void aggiungiIDStop(List<Richiesta> richieste, List<ExchangeStop> exchangeStops) {
 		for (Richiesta richiesta : richieste) {
 			for (ExchangeStop exchangeStop : exchangeStops) {
 				Indirizzo indirizzoRichiesta = null;
@@ -90,10 +90,8 @@ public class RichiesteRESTService {
 					indirizzoRichiesta = richiesta.getToAddress();
 				else
 					indirizzoRichiesta = richiesta.getFromAddress();
-				if (exchangeStop.getLocation().getLatitude() == indirizzoRichiesta
-						.getLatitude()
-						&& exchangeStop.getLocation().getLongitude() == indirizzoRichiesta
-								.getLongitude())
+				if (exchangeStop.getLocation().getLatitude() == indirizzoRichiesta.getLatitude()
+						&& exchangeStop.getLocation().getLongitude() == indirizzoRichiesta.getLongitude())
 					richiesta.setIdStop(exchangeStop.getId());
 			}
 		}
@@ -115,10 +113,8 @@ public class RichiesteRESTService {
 	@Path("/getDettaglioMissioni")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public SortedSet<DettaglioMissione> getDettaglioMissioni(
-			RichiestaMissioni richiesta) {
-		SortedSet<DettaglioMissione> missioni = mc
-				.getDettaglioMissioni(richiesta);
+	public SortedSet<DettaglioMissione> getDettaglioMissioni(RichiestaMissioni richiesta) {
+		SortedSet<DettaglioMissione> missioni = mc.getDettaglioMissioni(richiesta);
 		return missioni;
 	}
 
@@ -137,8 +133,7 @@ public class RichiesteRESTService {
 	@Path("/getImpattoAmbientale")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public List<ImpattoAmbientale> getImpattoAmbientale(
-			RichiestaMissioni richiesta) {
+	public List<ImpattoAmbientale> getImpattoAmbientale(RichiestaMissioni richiesta) {
 		List<ImpattoAmbientale> missioni = mc.getImpattoAmbientale(richiesta);
 		return missioni;
 	}
@@ -158,8 +153,7 @@ public class RichiesteRESTService {
 	@Path("/getPerformanceVeicoli")
 	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public List<PerformanceVeicoli> getPerformanceVeicoli(
-			RichiestaMissioni richiesta) {
+	public List<PerformanceVeicoli> getPerformanceVeicoli(RichiestaMissioni richiesta) {
 		List<PerformanceVeicoli> missioni = mc.getPerformanceVeicoli(richiesta);
 		return missioni;
 	}

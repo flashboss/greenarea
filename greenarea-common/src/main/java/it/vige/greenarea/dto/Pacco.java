@@ -30,8 +30,7 @@ public class Pacco implements Serializable {
 		this.attributi = new HashMap<String, String>();
 	}
 
-	public Pacco(String itemID, String descrizione,
-			Map<String, String> attributi) {
+	public Pacco(String itemID, String descrizione, Map<String, String> attributi) {
 		this.itemID = itemID;
 		this.descrizione = descrizione;
 		this.attributi = attributi;

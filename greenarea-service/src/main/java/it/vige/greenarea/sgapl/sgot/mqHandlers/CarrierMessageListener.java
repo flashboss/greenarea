@@ -19,8 +19,6 @@ import static it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants.DON
 import static it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants.ON_DELIVERY_STATUS;
 import static it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants.REJECT_STATUS;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgapl.sgot.business.CarrierManagerBean;
-import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -30,6 +28,9 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.sgapl.sgot.business.CarrierManagerBean;
+import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
 
 @MessageDriven(mappedName = "java:/jms/topic/GatTopic", activationConfig = {
 		@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),

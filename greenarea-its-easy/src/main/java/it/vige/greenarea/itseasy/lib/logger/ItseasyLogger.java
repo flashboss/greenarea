@@ -13,20 +13,19 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.lib.logger;
 
-import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
-
 import java.util.Date;
 import java.util.Map;
 
 import javax.jms.Destination;
 import javax.jms.JMSProducer;
 
+import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
+
 public class ItseasyLogger implements MqConstants {
 	private ItseasyProducer producer = new ItseasyProducer();
 
-	public void logMessage(String source, String eventType,
-			Map<String, String> properties, String message,
+	public void logMessage(String source, String eventType, Map<String, String> properties, String message,
 			Destination destination, JMSProducer jmsProducer) {
 
 		Date now = new Date();
@@ -40,8 +39,7 @@ public class ItseasyLogger implements MqConstants {
 		properties.put("LOG_EVENT", eventType);
 
 		// Invio il messaggio alla destinazione Itseasy per il Log
-		producer.publishTextMessage(destination, jmsProducer, message,
-				properties);
+		producer.publishTextMessage(destination, jmsProducer, message, properties);
 	}
 
 }

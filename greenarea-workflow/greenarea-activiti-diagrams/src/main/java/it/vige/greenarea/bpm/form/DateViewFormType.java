@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.form;
 
-import it.vige.greenarea.dto.Missione;
-
 import java.io.Serializable;
 import java.text.Format;
 import java.util.Date;
@@ -22,6 +20,8 @@ import java.util.List;
 
 import org.activiti.engine.form.AbstractFormType;
 import org.apache.commons.lang3.time.FastDateFormat;
+
+import it.vige.greenarea.dto.Missione;
 
 public class DateViewFormType extends AbstractFormType implements Serializable {
 

@@ -65,8 +65,7 @@ public class TruckLoadDescriptor implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((attachmentID == null) ? 0 : attachmentID.hashCode());
+		result = prime * result + ((attachmentID == null) ? 0 : attachmentID.hashCode());
 		result = prime * result + ((volume == null) ? 0 : volume.hashCode());
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
@@ -101,8 +100,7 @@ public class TruckLoadDescriptor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TruckLoadDescriptor [volume=" + volume + ", weight=" + weight
-				+ ", attachmentID=" + attachmentID + "]";
+		return "TruckLoadDescriptor [volume=" + volume + ", weight=" + weight + ", attachmentID=" + attachmentID + "]";
 	}
 
 }

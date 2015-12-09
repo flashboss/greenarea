@@ -15,10 +15,6 @@ package it.vige.greenarea.gtg.webservice.wsdata;
 
 import static it.vige.greenarea.Conversioni.convertTimestampToString;
 import static it.vige.greenarea.dto.StatoMissione.WAITING;
-import it.vige.greenarea.cl.library.entities.ExchangeStop;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.Transport;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,6 +26,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import it.vige.greenarea.cl.library.entities.ExchangeStop;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.Transport;
 
 @XmlType(name = "Mission")
 @XmlAccessorType(XmlAccessType.FIELD)

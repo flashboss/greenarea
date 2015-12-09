@@ -15,10 +15,6 @@ package it.vige.greenarea.file;
 
 import static java.lang.System.getenv;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.dto.Filtro;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.vo.RichiestaXML;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -35,6 +31,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.dto.Filtro;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.vo.RichiestaXML;
 
 public class ImportaXLSFile implements ImportaFile {
 
@@ -77,8 +78,7 @@ public class ImportaXLSFile implements ImportaFile {
 	}
 
 	@Override
-	public List<Richiesta> convertiARichieste(List<RichiestaXML> richiesteXML,
-			OperatoreLogistico operatoreLogistico) {
+	public List<Richiesta> convertiARichieste(List<RichiestaXML> richiesteXML, OperatoreLogistico operatoreLogistico) {
 		List<Richiesta> richieste = new ArrayList<Richiesta>();
 		for (RichiestaXML richiestaXML : richiesteXML) {
 			Richiesta richiesta = new Richiesta(richiestaXML);
@@ -89,8 +89,7 @@ public class ImportaXLSFile implements ImportaFile {
 	}
 
 	@Override
-	public List<RichiestaXML> prelevaDati(InputStream inputStream,
-			List<Filtro> filtri) throws Exception {
+	public List<RichiestaXML> prelevaDati(InputStream inputStream, List<Filtro> filtri) throws Exception {
 		if (filtri != null)
 			acceptedRoundCodes.addAll(filtri);
 		XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
@@ -139,15 +138,13 @@ public class ImportaXLSFile implements ImportaFile {
 
 	@Override
 	public File getDirectory() {
-		File importDirectory = new File(IMPORT_FOLDER + "/"
-				+ operatoreLogistico.getId());
+		File importDirectory = new File(IMPORT_FOLDER + "/" + operatoreLogistico.getId());
 		if (!importDirectory.exists())
 			importDirectory.mkdir();
 		return importDirectory;
 	}
 
-	private void aggiungiCampoARichiestaXML(RichiestaXML richiestaXML,
-			Cell cell, int posizione) throws Exception {
+	private void aggiungiCampoARichiestaXML(RichiestaXML richiestaXML, Cell cell, int posizione) throws Exception {
 		switch (posizione) {
 		case 0:
 			richiestaXML.setShipmentId((long) cell.getNumericCellValue() + "");

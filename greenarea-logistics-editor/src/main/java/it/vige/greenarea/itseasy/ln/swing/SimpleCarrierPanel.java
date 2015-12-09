@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.costmodels.ConstantCost;
-import it.vige.greenarea.ln.model.LNNode;
-import it.vige.greenarea.ln.model.LNSimpleCarrier;
-
 import java.awt.Color;
 import java.awt.Dialog;
 
@@ -28,6 +23,11 @@ import javax.swing.JTextField;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.costmodels.ConstantCost;
+import it.vige.greenarea.ln.model.LNNode;
+import it.vige.greenarea.ln.model.LNSimpleCarrier;
 
 public class SimpleCarrierPanel extends javax.swing.JPanel {
 	/**
@@ -69,8 +69,7 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		costField = new javax.swing.JTextField();
 		costErrorField = new javax.swing.JTextField();
 
-		saveConfirmDialog
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		saveConfirmDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		saveConfirmDialog.setAlwaysOnTop(true);
 		saveConfirmDialog.setResizable(false);
 
@@ -93,54 +92,24 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		javax.swing.GroupLayout saveConfirmDialogLayout = new javax.swing.GroupLayout(
 				saveConfirmDialog.getContentPane());
 		saveConfirmDialog.getContentPane().setLayout(saveConfirmDialogLayout);
-		saveConfirmDialogLayout
-				.setHorizontalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		saveConfirmDialogLayout.setHorizontalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap()
+						.addGroup(saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(dialogMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										saveConfirmDialogLayout.createSequentialGroup().addComponent(cancelButton)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												.addComponent(okButton)))
+						.addContainerGap()));
+		saveConfirmDialogLayout.setVerticalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap().addComponent(dialogMessage)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
 						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																dialogMessage,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																376,
-																Short.MAX_VALUE)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																saveConfirmDialogLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				cancelButton)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				okButton)))
-										.addContainerGap()));
-		saveConfirmDialogLayout
-				.setVerticalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(dialogMessage)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												233, Short.MAX_VALUE)
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(okButton)
-														.addComponent(
-																cancelButton))
-										.addContainerGap()));
+								saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(okButton).addComponent(cancelButton))
+						.addContainerGap()));
 
 		saveDataButton.setText(I18N.getString("Save"));
 		saveDataButton.addActionListener(new java.awt.event.ActionListener() {
@@ -150,25 +119,21 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		});
 
 		resetValuesButton.setText(I18N.getString("RESET"));
-		resetValuesButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						resetValuesButtonActionPerformed(evt);
-					}
-				});
+		resetValuesButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				resetValuesButtonActionPerformed(evt);
+			}
+		});
 
 		biDirectionalCheckBox.setText(I18N.getString("BiDirectional"));
-		biDirectionalCheckBox.setBorder(new javax.swing.border.LineBorder(
-				new java.awt.Color(0, 0, 0), 1, true));
-		biDirectionalCheckBox
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						biDirectionalCheckBoxActionPerformed(evt);
-					}
-				});
+		biDirectionalCheckBox.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+		biDirectionalCheckBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				biDirectionalCheckBoxActionPerformed(evt);
+			}
+		});
 
-		jPanel1.setBorder(javax.swing.BorderFactory
-				.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 		jPanel1.setForeground(new java.awt.Color(102, 102, 102));
 		jPanel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
 
@@ -203,88 +168,39 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		targetNodeNameField.setEnabled(false);
 		targetNodeNameField.setFocusable(false);
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
-				jPanel1);
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout
-				.setHorizontalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jLabel7,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																124,
-																Short.MAX_VALUE)
-														.addComponent(
-																jLabel2,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																124,
-																Short.MAX_VALUE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				targetNodeNameField,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				159,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addGap(27,
-																				27,
-																				27))
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addComponent(
-																				sourceNodeNameField,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				174,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addContainerGap()))));
-		jPanel1Layout
-				.setVerticalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel2)
-														.addComponent(
-																sourceNodeNameField,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel7)
-														.addComponent(
-																targetNodeNameField,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(24, 24, 24)));
+				.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
+								.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 124,
+												Short.MAX_VALUE)
+								.addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+								.addGroup(jPanel1Layout.createSequentialGroup()
+										.addComponent(targetNodeNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 159,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGap(27, 27, 27))
+								.addGroup(
+										jPanel1Layout.createSequentialGroup()
+												.addComponent(sourceNodeNameField,
+														javax.swing.GroupLayout.PREFERRED_SIZE, 174,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addContainerGap()))));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel2).addComponent(sourceNodeNameField,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel7).addComponent(targetNodeNameField,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(24, 24, 24)));
 
 		jLabel1.setText(I18N.getString("cost"));
 
@@ -307,108 +223,46 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												false)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(124,
-																		124,
-																		124)
-																.addComponent(
-																		biDirectionalCheckBox))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(37, 37,
-																		37)
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addComponent(
-																										jLabel1,
-																										javax.swing.GroupLayout.PREFERRED_SIZE,
-																										101,
-																										javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																								.addComponent(
-																										costField,
-																										javax.swing.GroupLayout.PREFERRED_SIZE,
-																										114,
-																										javax.swing.GroupLayout.PREFERRED_SIZE)
-																								.addPreferredGap(
-																										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																								.addComponent(
-																										costErrorField,
-																										javax.swing.GroupLayout.DEFAULT_SIZE,
-																										208,
-																										Short.MAX_VALUE))
-																				.addComponent(
-																						jPanel1,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addGroup(
-																						layout.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								false)
-																								.addComponent(
-																										resetValuesButton,
-																										javax.swing.GroupLayout.Alignment.LEADING,
-																										javax.swing.GroupLayout.DEFAULT_SIZE,
-																										javax.swing.GroupLayout.DEFAULT_SIZE,
-																										Short.MAX_VALUE)
-																								.addComponent(
-																										saveDataButton,
-																										javax.swing.GroupLayout.Alignment.LEADING,
-																										javax.swing.GroupLayout.DEFAULT_SIZE,
-																										javax.swing.GroupLayout.DEFAULT_SIZE,
-																										Short.MAX_VALUE)))))
-								.addContainerGap(
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(27, 27, 27)
-								.addComponent(jPanel1,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(60, 60, 60)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING)
-												.addComponent(jLabel1)
-												.addGroup(
-														layout.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-																.addComponent(
-																		costField,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addComponent(
-																		costErrorField,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-								.addGap(26, 26, 26)
-								.addComponent(biDirectionalCheckBox)
-								.addGap(18, 18, 18)
-								.addComponent(resetValuesButton)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(saveDataButton)
-								.addContainerGap(59, Short.MAX_VALUE)));
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+								.addGroup(layout.createSequentialGroup().addGap(124, 124, 124)
+										.addComponent(biDirectionalCheckBox))
+						.addGroup(layout.createSequentialGroup().addGap(37, 37, 37).addGroup(layout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(costField, javax.swing.GroupLayout.PREFERRED_SIZE, 114,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(costErrorField, javax.swing.GroupLayout.DEFAULT_SIZE, 208,
+												Short.MAX_VALUE))
+								.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+										.addComponent(resetValuesButton, javax.swing.GroupLayout.Alignment.LEADING,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(saveDataButton, javax.swing.GroupLayout.Alignment.LEADING,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(27, 27, 27)
+						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addGap(60, 60, 60)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jLabel1)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(costField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(costErrorField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+				.addGap(26, 26, 26).addComponent(biDirectionalCheckBox).addGap(18, 18, 18)
+				.addComponent(resetValuesButton).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addComponent(saveDataButton).addContainerGap(59, Short.MAX_VALUE)));
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void saveDataButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveDataButtonActionPerformed
@@ -443,8 +297,7 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		this.setEnabled(true);
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
-	private void biDirectionalCheckBoxActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_biDirectionalCheckBoxActionPerformed
+	private void biDirectionalCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_biDirectionalCheckBoxActionPerformed
 		enableButton(saveDataButton);
 		enableButton(resetValuesButton);
 	}// GEN-LAST:event_biDirectionalCheckBoxActionPerformed
@@ -468,14 +321,12 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		sourceNodeNameField.setText(carrier.getFromNodeName());
 		targetNodeNameField.setText(carrier.getToNodeName());
 		biDirectionalCheckBox.setSelected(carrier.isBiDirectional());
-		costField.setText(Double.toString(((ConstantCost) carrier
-				.getCostFunction()).getKcost()));
+		costField.setText(Double.toString(((ConstantCost) carrier.getCostFunction()).getKcost()));
 	}
 
 	private void saveData(LNSimpleCarrier carrier) {
 		carrier.setBiDirectional(biDirectionalCheckBox.isSelected());
-		((ConstantCost) carrier.getCostFunction()).setKcost(Double
-				.parseDouble(costField.getText()));
+		((ConstantCost) carrier.getCostFunction()).setKcost(Double.parseDouble(costField.getText()));
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
@@ -503,10 +354,8 @@ public class SimpleCarrierPanel extends javax.swing.JPanel {
 		carrier = (LNSimpleCarrier) editingCell.getValue();
 		mxCell source = (mxCell) editingCell.getSource();
 		mxCell target = (mxCell) editingCell.getTarget();
-		carrier.setFromNodeName(source != null ? ((LNNode) source.getValue())
-				.getName() : I18N.getString("UNDEFINED"));
-		carrier.setToNodeName(target != null ? ((LNNode) target.getValue())
-				.getName() : I18N.getString("UNDEFINED"));
+		carrier.setFromNodeName(source != null ? ((LNNode) source.getValue()).getName() : I18N.getString("UNDEFINED"));
+		carrier.setToNodeName(target != null ? ((LNNode) target.getValue()).getName() : I18N.getString("UNDEFINED"));
 		displayData(carrier);
 		disableButton(saveDataButton);
 		disableButton(resetValuesButton);

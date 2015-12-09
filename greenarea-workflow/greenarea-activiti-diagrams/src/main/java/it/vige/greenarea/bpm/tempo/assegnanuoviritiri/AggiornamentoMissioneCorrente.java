@@ -18,8 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
-public class AggiornamentoMissioneCorrente extends
-		EmptyAssegnazioneRitiroAMissioneCorrente {
+public class AggiornamentoMissioneCorrente extends EmptyAssegnazioneRitiroAMissioneCorrente {
 
 	private Logger logger = getLogger(getClass());
 

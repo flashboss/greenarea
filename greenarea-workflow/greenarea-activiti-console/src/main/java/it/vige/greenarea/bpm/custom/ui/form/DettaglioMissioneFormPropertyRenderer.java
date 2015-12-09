@@ -13,17 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.form;
 
-import it.vige.greenarea.bpm.form.DettaglioMissioneFormType;
-import it.vige.greenarea.dto.Missione;
-
 import java.lang.reflect.Method;
 
 import org.activiti.engine.form.FormProperty;
 
 import com.vaadin.ui.Field;
 
-public class DettaglioMissioneFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.form.DettaglioMissioneFormType;
+import it.vige.greenarea.dto.Missione;
+
+public class DettaglioMissioneFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 	/**
 	 * 
 	 */
@@ -45,8 +44,7 @@ public class DettaglioMissioneFormPropertyRenderer<T> extends
 		Missione missione = null;
 		if (value != null)
 			missione = (Missione) arg0.getType().getInformation(value);
-		DettaglioMissioneField<T> field = new DettaglioMissioneField<T>(arg0, this,
-				missione);
+		DettaglioMissioneField<T> field = new DettaglioMissioneField<T>(arg0, this, missione);
 		return field;
 	}
 }

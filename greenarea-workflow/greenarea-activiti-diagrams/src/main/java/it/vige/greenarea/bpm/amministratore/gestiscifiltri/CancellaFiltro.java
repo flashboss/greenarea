@@ -21,9 +21,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.cl.library.entities.Filter;
-import it.vige.greenarea.dto.Filtro;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
@@ -31,6 +28,10 @@ import javax.ws.rs.client.Invocation;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.cl.library.entities.Filter;
+import it.vige.greenarea.dto.Filtro;
 
 public class CancellaFiltro extends EmptyCancellaFiltro {
 
@@ -43,14 +44,10 @@ public class CancellaFiltro extends EmptyCancellaFiltro {
 			logger.info("CDI Cancella Filtro");
 			Filtro filtro = (Filtro) execution.getVariable("filtro");
 			Client client = newClient();
-			Invocation.Builder bldr = client.target(
-					BASE_URI_ADMINISTRATOR + "/deleteFilter").request(
-					APPLICATION_JSON);
-			bldr.post(entity(convertiFiltroToFilter(filtro), APPLICATION_JSON),
-					Filter.class);
+			Invocation.Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/deleteFilter").request(APPLICATION_JSON);
+			bldr.post(entity(convertiFiltroToFilter(filtro), APPLICATION_JSON), Filter.class);
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorecancellazionefiltro");

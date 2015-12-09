@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom;
 
+import org.activiti.explorer.DefaultViewManager;
+
 import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
 import it.vige.greenarea.bpm.custom.ui.home.DetailHomePage;
-
-import org.activiti.explorer.DefaultViewManager;
 
 public class GreenareaViewManager extends DefaultViewManager {
 
@@ -35,8 +35,7 @@ public class GreenareaViewManager extends DefaultViewManager {
 	}
 
 	public void showDettaglioPage(String processInstanceId) {
-		switchView(new DettaglioPage(processInstanceId, null),
-				MAIN_NAVIGATION_HOME, null);
+		switchView(new DettaglioPage(processInstanceId, null), MAIN_NAVIGATION_HOME, null);
 	}
 
 	@Override

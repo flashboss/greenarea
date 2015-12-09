@@ -18,6 +18,7 @@ import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_FISSO;
 import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_VARIABILE;
 import static it.vige.greenarea.dto.AperturaRichieste._2_GIORNI_PRIMA;
 import static it.vige.greenarea.dto.AperturaRichieste._3_GIORNI_PRIMA;
+import static it.vige.greenarea.dto.ChiusuraRichieste._12_ORE_PRIMA;
 import static it.vige.greenarea.dto.ChiusuraRichieste._1_GIORNO_PRIMA;
 import static it.vige.greenarea.dto.Color.GIALLO;
 import static it.vige.greenarea.dto.Color.ROSSO;
@@ -27,6 +28,7 @@ import static it.vige.greenarea.dto.Peso.MEDIO;
 import static it.vige.greenarea.dto.Ripetizione.TUTTI_I_GIORNI;
 import static it.vige.greenarea.dto.TipoParametro.DA_DECIDERE;
 import static it.vige.greenarea.dto.TipologiaClassifica.PREMIA_RISPOSTA_GLOBALE;
+import static it.vige.greenarea.dto.TipologiaClassifica.PREMIA_RISPOSTA_LOCALE;
 import static it.vige.greenarea.dto.TipologiaParametro.BENEFICIO;
 import static it.vige.greenarea.dto.TipologiaParametro.COSTO;
 import static it.vige.greenarea.dto.Tolleranza._20_PER_CENTO;
@@ -255,10 +257,12 @@ public class DataBaseRESTPopulate {
 	@Path("/addMission")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addMission() throws ParseException {
+		TimeSlot timeSlot = tsc.addSlotTime(_2_GIORNI_PRIMA, _12_ORE_PRIMA, _1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI,
+				"9:30", "11:30", "1-01", "31-12", PREMIA_RISPOSTA_LOCALE);
 		Mission m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("Mario Consegne");
 		m.setName("Mario");
 		ValueMission valueMission1 = new ValueMission();
@@ -280,9 +284,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX123DE"));
+		m.setTruck(new Vehicle("555MK"));
 		m.setCompany("ElisFast");
 		m.setName("Carlo");
 		valueMission1 = new ValueMission();
@@ -304,9 +308,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Giorgio");
 		valueMission1 = new ValueMission();
@@ -328,9 +332,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Gianfranco");
 		valueMission1 = new ValueMission();
@@ -352,9 +356,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("Vachecisiamo");
 		m.setName("Silvio");
 		valueMission1 = new ValueMission();
@@ -375,9 +379,9 @@ public class DataBaseRESTPopulate {
 		m.setValuesMission(new ArrayList<ValueMission>(asList(
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Domenico");
 		valueMission1 = new ValueMission();
@@ -399,9 +403,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Fabrizio");
 		valueMission1 = new ValueMission();
@@ -423,9 +427,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Francesco");
 		valueMission1 = new ValueMission();
@@ -447,9 +451,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Yuri");
 		valueMission1 = new ValueMission();
@@ -471,9 +475,9 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		m = new Mission();
-		m.setTimeSlot(new TimeSlot(101));
+		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
-		m.setTruck(new Vehicle("XX000ZZ"));
+		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("ElisFast");
 		m.setName("Chiara");
 		valueMission1 = new ValueMission();

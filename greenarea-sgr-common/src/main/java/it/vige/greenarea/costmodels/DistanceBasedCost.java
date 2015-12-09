@@ -13,13 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.costmodels;
 
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.ln.model.LNNode;
-
 import org.w3c.dom.Element;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxCellState;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.ln.model.LNNode;
 
 public class DistanceBasedCost implements LNICostFunction {
 	/**
@@ -35,8 +35,7 @@ public class DistanceBasedCost implements LNICostFunction {
 		if (cell instanceof mxCell) {
 			mxCell source = (mxCell) ((mxCell) cell).getSource();
 			mxCell target = (mxCell) ((mxCell) cell).getTarget();
-			return getCost(((LNNode) source.getValue()).locate(),
-					((LNNode) target.getValue()).locate(), state);
+			return getCost(((LNNode) source.getValue()).locate(), ((LNNode) target.getValue()).locate(), state);
 		} else
 			return 0.;
 	}

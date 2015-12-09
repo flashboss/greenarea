@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.costmodels;
 
-import it.vige.greenarea.dto.GeoLocation;
-
 import org.w3c.dom.Element;
 
 import com.mxgraph.view.mxCellState;
 
+import it.vige.greenarea.dto.GeoLocation;
+
 public class ConstantCost implements LNICostFunction {
-	
+
 	private static final long serialVersionUID = -7931139019457314774L;
 	public static final String COST_K = "COST_K";
 	private double kcost = 0.;

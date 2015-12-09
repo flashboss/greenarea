@@ -14,11 +14,12 @@
 package it.vige.greenarea.bpm.custom.ui.pa;
 
 import static com.vaadin.ui.themes.Reindeer.LAYOUT_WHITE;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.KmlDocumentViewer;
 
 import org.activiti.explorer.ui.custom.DetailPanel;
 
 import com.vaadin.ui.VerticalLayout;
+
+import it.vige.greenarea.bpm.custom.ui.dettaglio.KmlDocumentViewer;
 
 public class DefinizioneAreaGeografica extends DetailPanel {
 

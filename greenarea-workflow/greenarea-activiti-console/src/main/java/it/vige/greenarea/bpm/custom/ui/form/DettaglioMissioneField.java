@@ -24,7 +24,6 @@ import static it.vige.greenarea.dto.Color.GIALLO;
 import static it.vige.greenarea.dto.Color.ROSSO;
 import static it.vige.greenarea.dto.Color.VERDE;
 import static org.activiti.explorer.ExplorerApp.get;
-import it.vige.greenarea.dto.Missione;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,62 +46,48 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
-public class DettaglioMissioneField<T> extends HorizontalLayout implements
-		Field {
+import it.vige.greenarea.dto.Missione;
+
+public class DettaglioMissioneField<T> extends HorizontalLayout implements Field {
 	private static final long serialVersionUID = 1L;
 	protected TextField wrappedField;
 	protected Button policyDetailsButton;
 	private DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 
-	public DettaglioMissioneField(
-			FormProperty formProperty,
-			GreenareaAbstractFormPropertyRenderer<T> greenareaAbstractFormPropertyRenderer,
-			Missione missione) {
+	public DettaglioMissioneField(FormProperty formProperty,
+			GreenareaAbstractFormPropertyRenderer<T> greenareaAbstractFormPropertyRenderer, Missione missione) {
 		I18nManager i18nManager = get().getI18nManager();
 		String caption = i18nManager.getMessage(DETTAGLIO_MISSIONE_TITLE);
 		setSpacing(true);
 		setCaption(caption);
 		setHeight(Sizeable.SIZE_UNDEFINED, 0);
 		Label missionIdLabel = new Label();
-		missionIdLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_ID_MISSIONE)
-				+ " "
-				+ missione.getNome());
+		missionIdLabel.setValue(i18nManager.getMessage(DETTAGLIO_MISSIONE_ID_MISSIONE) + " " + missione.getNome());
 		missionIdLabel.setStyleName("missione_label");
 		Label missionDateLabel = new Label();
-		missionDateLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_DATA_MISSIONE)
-				+ " "
+		missionDateLabel.setValue(i18nManager.getMessage(DETTAGLIO_MISSIONE_DATA_MISSIONE) + " "
 				+ dateFormat.format(missione.getDataInizio()));
 		missionDateLabel.setStyleName("missione_label");
 		Label agencyCodeLabel = new Label();
-		agencyCodeLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_CODICE_FILIALE)
-				+ " "
-				+ missione.getCodiceFiliale());
+		agencyCodeLabel.setValue(
+				i18nManager.getMessage(DETTAGLIO_MISSIONE_CODICE_FILIALE) + " " + missione.getCodiceFiliale());
 		agencyCodeLabel.setStyleName("missione_label");
 		Label rankingLabel = new Label();
-		rankingLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_RANKING));
+		rankingLabel.setValue(i18nManager.getMessage(DETTAGLIO_MISSIONE_RANKING));
 		Embedded rankingImage = null;
 		if (missione.getRanking() != null) {
 			if (missione.getRanking().equals(VERDE))
-				rankingImage = new Embedded(null, new ThemeResource(
-						"img/circle_green.png"));
+				rankingImage = new Embedded(null, new ThemeResource("img/circle_green.png"));
 			else if (missione.getRanking().equals(GIALLO))
-				rankingImage = new Embedded(null, new ThemeResource(
-						"img/circle_orange.png"));
+				rankingImage = new Embedded(null, new ThemeResource("img/circle_orange.png"));
 			else if (missione.getRanking().equals(ROSSO))
-				rankingImage = new Embedded(null, new ThemeResource(
-						"img/circle_red.png"));
+				rankingImage = new Embedded(null, new ThemeResource("img/circle_red.png"));
 			rankingImage.setWidth(20, UNITS_PIXELS);
 			rankingImage.setStyleName("missione_label");
 		}
 		Label mobilityCreditLabel = new Label();
-		mobilityCreditLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_CREDITO_DI_MOBILITA)
-				+ " "
-				+ missione.getCreditoMobilita());
+		mobilityCreditLabel.setValue(
+				i18nManager.getMessage(DETTAGLIO_MISSIONE_CREDITO_DI_MOBILITA) + " " + missione.getCreditoMobilita());
 		mobilityCreditLabel.setStyleName("missione_label");
 		addComponent(missionIdLabel);
 		addComponent(missionDateLabel);
@@ -114,16 +99,13 @@ public class DettaglioMissioneField<T> extends HorizontalLayout implements
 		setStyleName("dettaglio-missione");
 
 		policyDetailsButton = new Button();
-		policyDetailsButton.setCaption(i18nManager
-				.getMessage(DETTAGLIO_MISSIONE_BUTTON));
+		policyDetailsButton.setCaption(i18nManager.getMessage(DETTAGLIO_MISSIONE_BUTTON));
 		final GreenareaAbstractFormPropertyRenderer<?> fGreenareaAbstractFormPropertyRenderer = greenareaAbstractFormPropertyRenderer;
 		policyDetailsButton.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			public void buttonClick(ClickEvent event) {
-				fGreenareaAbstractFormPropertyRenderer
-						.getGreenareaFormPropertiesForm().getSubmitFormButton()
-						.click();
+				fGreenareaAbstractFormPropertyRenderer.getGreenareaFormPropertiesForm().getSubmitFormButton().click();
 			}
 		});
 
@@ -155,8 +137,7 @@ public class DettaglioMissioneField<T> extends HorizontalLayout implements
 		return wrappedField.isWriteThrough();
 	}
 
-	public void setWriteThrough(boolean writeThrough) throws SourceException,
-			InvalidValueException {
+	public void setWriteThrough(boolean writeThrough) throws SourceException, InvalidValueException {
 		wrappedField.setWriteThrough(true);
 	}
 
@@ -196,8 +177,7 @@ public class DettaglioMissioneField<T> extends HorizontalLayout implements
 		return wrappedField.isInvalidAllowed();
 	}
 
-	public void setInvalidAllowed(boolean invalidValueAllowed)
-			throws UnsupportedOperationException {
+	public void setInvalidAllowed(boolean invalidValueAllowed) throws UnsupportedOperationException {
 		wrappedField.setInvalidAllowed(invalidValueAllowed);
 	}
 
@@ -205,8 +185,7 @@ public class DettaglioMissioneField<T> extends HorizontalLayout implements
 		return wrappedField.getValue();
 	}
 
-	public void setValue(Object newValue) throws ReadOnlyException,
-			ConversionException {
+	public void setValue(Object newValue) throws ReadOnlyException, ConversionException {
 		wrappedField.setValue(newValue);
 	}
 

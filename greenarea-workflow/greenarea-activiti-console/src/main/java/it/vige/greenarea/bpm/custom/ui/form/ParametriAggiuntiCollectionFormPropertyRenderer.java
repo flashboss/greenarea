@@ -22,8 +22,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType;
-import it.vige.greenarea.dto.Parametro;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -41,8 +39,10 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public class ParametriAggiuntiCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Parametro> {
+import it.vige.greenarea.bpm.form.ParametriAggiuntiCollectionFormType;
+import it.vige.greenarea.dto.Parametro;
+
+public class ParametriAggiuntiCollectionFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Parametro> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private Logger logger = getLogger(getClass());
@@ -56,37 +56,32 @@ public class ParametriAggiuntiCollectionFormPropertyRenderer extends
 	@Override
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
-		values = (Map<String, Parametro>) formProperty.getType()
-				.getInformation("values");
+		values = (Map<String, Parametro>) formProperty.getType().getInformation("values");
 		if (values != null && values.size() > 0) {
-			table = new GreenareaPagedTable<Parametro>(values.values(),
-					getGreenareaFormPropertiesForm(), 25);
+			table = new GreenareaPagedTable<Parametro>(values.values(), getGreenareaFormPropertiesForm(), 25);
 			table.setCaption(getPropertyLabel(formProperty));
 			table.setRequired(formProperty.isRequired());
-			table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-					getPropertyLabel(formProperty)));
+			table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 			table.setEnabled(formProperty.isReadable());
 			table.setSelectable(false);
 			table.setStyleName(STYLE_COLLECTION);
 
-			Class<Parametro> genericClass = (Class<Parametro>) values.values()
-					.iterator().next().getClass();
+			Class<Parametro> genericClass = (Class<Parametro>) values.values().iterator().next().getClass();
 			Method[] methods = genericClass.getMethods();
 			java.lang.reflect.Field[] fields = genericClass.getDeclaredFields();
 			I18nManager i18nManager = get().getI18nManager();
 			for (java.lang.reflect.Field field : fields)
 				if (visible(methods, field))
-					table.addContainerProperty(i18nManager
-							.getMessage(PARAMETRI_AGGIUNTI_TABLE_FIELDS
-									+ field.getName()), String.class, null);
+					table.addContainerProperty(
+							i18nManager.getMessage(PARAMETRI_AGGIUNTI_TABLE_FIELDS + field.getName()), String.class,
+							null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);
 			for (Map.Entry<String, Parametro> enumEntry : values.entrySet()) {
 
 				String id = enumEntry.getKey();
 				Parametro value = enumEntry.getValue();
-				table.addItem(getValues(fields, methods, value, formProperty),
-						id);
+				table.addItem(getValues(fields, methods, value, formProperty), id);
 
 				if (enumEntry.getValue() != null) {
 				}
@@ -109,19 +104,15 @@ public class ParametriAggiuntiCollectionFormPropertyRenderer extends
 	@Override
 	protected boolean visible(Method method, java.lang.reflect.Field field) {
 		String methodName = method.getName();
-		if (methodName.startsWith("get")
-				&& methodName.substring(3).equalsIgnoreCase(field.getName())
-				&& field.getType() != List.class
-				&& field.getType() != Collection.class
-				&& field.getType() != Map.class
-				&& !field.getName().equalsIgnoreCase("id")
-				&& !field.getName().equalsIgnoreCase("idGen"))
+		if (methodName.startsWith("get") && methodName.substring(3).equalsIgnoreCase(field.getName())
+				&& field.getType() != List.class && field.getType() != Collection.class && field.getType() != Map.class
+				&& !field.getName().equalsIgnoreCase("id") && !field.getName().equalsIgnoreCase("idGen"))
 			return true;
 		return false;
 	}
 
-	private Object[] getValues(java.lang.reflect.Field[] fields,
-			Method[] methods, Parametro type, FormProperty formProperty) {
+	private Object[] getValues(java.lang.reflect.Field[] fields, Method[] methods, Parametro type,
+			FormProperty formProperty) {
 		List<Object> result = new ArrayList<Object>();
 		try {
 			for (java.lang.reflect.Field field : fields)
@@ -131,8 +122,8 @@ public class ParametriAggiuntiCollectionFormPropertyRenderer extends
 				}
 			if (formProperty.isWritable())
 				result.add(getButtons(type.toString(), table));
-		} catch (UnsupportedOperationException | IllegalArgumentException
-				| IllegalAccessException | InvocationTargetException e) {
+		} catch (UnsupportedOperationException | IllegalArgumentException | IllegalAccessException
+				| InvocationTargetException e) {
 			logger.error("formattazione della collection", e.getMessage());
 		}
 		return result.toArray();
@@ -142,16 +133,14 @@ public class ParametriAggiuntiCollectionFormPropertyRenderer extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);
 		buttons.setWidth(53, UNITS_PIXELS);
 		buttons.addStyleName(STYLE_DETAIL_BLOCK);
 		for (String operation : mapOperations.keySet()) {
-			if (operation.equals(MODIFICA.name())
-					|| operation.equals(CANCELLAZIONE.name())) {
+			if (operation.equals(MODIFICA.name()) || operation.equals(CANCELLAZIONE.name())) {
 				addButton(operation, buttons, item, table);
 			}
 		}

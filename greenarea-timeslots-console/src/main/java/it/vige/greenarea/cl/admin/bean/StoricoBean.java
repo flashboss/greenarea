@@ -14,15 +14,16 @@
 package it.vige.greenarea.cl.admin.bean;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.library.entities.TsStat;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.library.entities.TsStat;
 
 /**
  * <p>
@@ -75,8 +76,7 @@ public class StoricoBean implements Serializable {
 	 * @param
 	 * @return
 	 */
-	public List<Request> storico_BottoneDettaglio(Date data, String IdTs)
-			throws Exception {
+	public List<Request> storico_BottoneDettaglio(Date data, String IdTs) throws Exception {
 		TimeSlotRestClient rcStorico_Dettaglio = new TimeSlotRestClient();
 		listaStorico_Dettaglio = rcStorico_Dettaglio.getStoryBoard(IdTs, data);
 		for (int i = 0; i < listaStorico_Dettaglio.size(); i++) {

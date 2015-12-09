@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.Freight;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import it.vige.greenarea.cl.library.entities.Freight;
 
 @XmlType(name = "Freight")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -51,11 +51,11 @@ public class FreightItem implements Serializable {
 		this.description = f.getDescription();
 		this.freightState = f.getFreightState().ordinal();
 		this.transportCode = f.getTransport().getAlfacode();
-		this.volume = (int)f.getVolume();
-		this.height = (int)f.getHeight();
-		this.lenght = (int)f.getLeng();
-		this.width = (int)f.getWidth();
-		this.weight = (int)f.getWeight();
+		this.volume = (int) f.getVolume();
+		this.height = (int) f.getHeight();
+		this.lenght = (int) f.getLeng();
+		this.width = (int) f.getWidth();
+		this.weight = (int) f.getWeight();
 		this.stackable = f.isStackable();
 		this.keepUpStanding = f.isKeepUpStanding();
 		this.type = f.getFt().name();
@@ -172,8 +172,7 @@ public class FreightItem implements Serializable {
 			return false;
 		}
 		FreightItem other = (FreightItem) object;
-		if ((this.code == null && other.code != null)
-				|| (this.code != null && !this.code.equals(other.code))) {
+		if ((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code))) {
 			return false;
 		}
 		return true;

@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.operatorelogistico.verificastatoconsegneeritiri;
 
-import it.vige.greenarea.dto.Missione;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Missione;
 
 public class RecuperaMissioniSelezionate implements TaskListener {
 
@@ -27,8 +27,7 @@ public class RecuperaMissioniSelezionate implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<Missione> missioni = (Collection<Missione>) delegateTask
-				.getVariable("missioni");
+		Collection<Missione> missioni = (Collection<Missione>) delegateTask.getVariable("missioni");
 		delegateTask.setVariable("missioniselezionate", missioni);
 	}
 

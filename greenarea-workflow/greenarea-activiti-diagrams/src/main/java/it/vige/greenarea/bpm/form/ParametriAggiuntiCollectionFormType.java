@@ -21,8 +21,7 @@ import java.util.Map;
 
 import org.activiti.engine.form.AbstractFormType;
 
-public class ParametriAggiuntiCollectionFormType<T> extends AbstractFormType
-		implements Serializable {
+public class ParametriAggiuntiCollectionFormType<T> extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = 9024440563703707858L;
 	private Map<String, T> values = new HashMap<String, T>();

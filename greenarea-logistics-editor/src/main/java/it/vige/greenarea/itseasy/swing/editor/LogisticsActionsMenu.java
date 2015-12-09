@@ -14,16 +14,6 @@
 package it.vige.greenarea.itseasy.swing.editor;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkManagement;
-import it.vige.greenarea.sgrl.webservices.UnsupportedEncodingException_Exception;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.itseasy.routing.swing.PathFinderDialog;
-import it.vige.greenarea.itseasy.routing.swing.RootUrlConfigurationDialog;
-import it.vige.greenarea.itseasy.routing.swing.RouteFinderDialog;
-import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkManagementService;
-import it.vige.greenarea.ln.model.LogisticNetwork;
-import it.vige.greenarea.utilities.LNutilities;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -40,6 +30,17 @@ import org.w3c.dom.Document;
 
 import com.mxgraph.io.mxCodec;
 import com.mxgraph.util.mxXmlUtils;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.itseasy.routing.swing.PathFinderDialog;
+import it.vige.greenarea.itseasy.routing.swing.RootUrlConfigurationDialog;
+import it.vige.greenarea.itseasy.routing.swing.RouteFinderDialog;
+import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkManagementService;
+import it.vige.greenarea.ln.model.LogisticNetwork;
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkManagement;
+import it.vige.greenarea.sgrl.webservices.UnsupportedEncodingException_Exception;
+import it.vige.greenarea.utilities.LNutilities;
 
 /**
  * 
@@ -79,13 +80,10 @@ public class LogisticsActionsMenu extends JMenu {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Container container = LogisticsNetEditor.getEditor().getRootPane()
-					.getParent();
+			Container container = LogisticsNetEditor.getEditor().getRootPane().getParent();
 			routeFinderDialog.setLocation(
-					container.getX() + container.getWidth() / 2
-							- routeFinderDialog.getWidth() / 2,
-					container.getY() + container.getHeight() / 2
-							- routeFinderDialog.getHeight() / 2);
+					container.getX() + container.getWidth() / 2 - routeFinderDialog.getWidth() / 2,
+					container.getY() + container.getHeight() / 2 - routeFinderDialog.getHeight() / 2);
 			routeFinderDialog.setGeoTo(new GeoLocation(0., 0.));
 			routeFinderDialog.setGeoFrom(new GeoLocation(0., 0.));
 			routeFinderDialog.display(e);
@@ -118,17 +116,16 @@ public class LogisticsActionsMenu extends JMenu {
 			LogisticNetwork logisticNetwork = LNutilities.getLogisticNetwork();
 			mxCodec codec = new mxCodec();
 			try {
-				String xml = URLEncoder.encode(mxXmlUtils.getXml(codec
-						.encode(logisticNetwork.getModel())), "UTF-8");
+				String xml = URLEncoder.encode(mxXmlUtils.getXml(codec.encode(logisticNetwork.getModel())), "UTF-8");
 				upload("LogisticNetwork", xml);
 			} catch (UnsupportedEncodingException ex) {
 				logger.error("logistic editor", ex);
 			}
 
 			/*
-			 * FileUploader fu = new
-			 * FileUploader("http://10.229.16.57:8080/SGRL/Commonsfileuploadservlet"
-			 * ); try { fu.doUpload(
+			 * FileUploader fu = new FileUploader(
+			 * "http://10.229.16.57:8080/SGRL/Commonsfileuploadservlet" ); try {
+			 * fu.doUpload(
 			 * "C:\\Users\\00917308\\Desktop\\GRAPH_Editing\\NetbeansProject\\LogisticEditor\\LogisticNetwork.mxe"
 			 * ); } catch (IOException ex) {
 			 * Logger.getLogger(LogisticsActionsMenu
@@ -151,11 +148,9 @@ public class LogisticsActionsMenu extends JMenu {
 
 			Document document;
 			try {
-				document = mxXmlUtils.parseXml(URLDecoder.decode(xmlGraph,
-						"UTF-8"));
+				document = mxXmlUtils.parseXml(URLDecoder.decode(xmlGraph, "UTF-8"));
 				mxCodec codec = new mxCodec(document);
-				codec.decode(document.getDocumentElement(), LNutilities
-						.getLogisticNetwork().getModel());
+				codec.decode(document.getDocumentElement(), LNutilities.getLogisticNetwork().getModel());
 			} catch (UnsupportedEncodingException ex) {
 				logger.error("logistic editor", ex);
 			}
@@ -169,32 +164,22 @@ public class LogisticsActionsMenu extends JMenu {
 	public LogisticsActionsMenu(final BasicGraphEditor editor) {
 		super(I18N.getString("LogisticsActionsMenu"));
 		LogisticsActionsMenu.editor = editor;
-		super.add(editor.bind(I18N.getString("ServerSetUp"),
-				new ServerSetUpAction()));
-		super.add(editor.bind(I18N.getString("PathFinder"),
-				new PathFinderAction()));
-		super.add(editor.bind(I18N.getString("RouteFinder"),
-				new RouteFinderAction()));
-		super.add(editor.bind(I18N.getString("LogisticNetworkUpload"),
-				new UploadAction()));
-		super.add(editor.bind(I18N.getString("LogisticNetworkDownload"),
-				new DownloadAction()));
-		pathFinderDialog = new PathFinderDialog((JFrame) (editor.getParent()),
-				true);
+		super.add(editor.bind(I18N.getString("ServerSetUp"), new ServerSetUpAction()));
+		super.add(editor.bind(I18N.getString("PathFinder"), new PathFinderAction()));
+		super.add(editor.bind(I18N.getString("RouteFinder"), new RouteFinderAction()));
+		super.add(editor.bind(I18N.getString("LogisticNetworkUpload"), new UploadAction()));
+		super.add(editor.bind(I18N.getString("LogisticNetworkDownload"), new DownloadAction()));
+		pathFinderDialog = new PathFinderDialog((JFrame) (editor.getParent()), true);
 		pathFinderDialog.setVisible(false);
-		routeFinderDialog = new RouteFinderDialog(
-				(JFrame) (editor.getParent()), true);
+		routeFinderDialog = new RouteFinderDialog((JFrame) (editor.getParent()), true);
 		routeFinderDialog.setVisible(false);
-		rootUrlConfigurationDialog = new RootUrlConfigurationDialog(
-				(JFrame) (editor.getParent()), true);
+		rootUrlConfigurationDialog = new RootUrlConfigurationDialog((JFrame) (editor.getParent()), true);
 		rootUrlConfigurationDialog.setVisible(false);
 	}
 
-	private static String upload(java.lang.String name,
-			java.lang.String xmlGraph) {
+	private static String upload(java.lang.String name, java.lang.String xmlGraph) {
 		LogisticNetworkManagementService service = new LogisticNetworkManagementService();
-		LogisticNetworkManagement port = service
-				.getLogisticNetworkManagementPort();
+		LogisticNetworkManagement port = service.getLogisticNetworkManagementPort();
 		String result = null;
 		try {
 			result = port.upload(name, xmlGraph);
@@ -206,8 +191,7 @@ public class LogisticsActionsMenu extends JMenu {
 
 	private static String downLoad(java.lang.String name) {
 		LogisticNetworkManagementService service = new LogisticNetworkManagementService();
-		LogisticNetworkManagement port = service
-				.getLogisticNetworkManagementPort();
+		LogisticNetworkManagement port = service.getLogisticNetworkManagementPort();
 		return port.download(name);
 	}
 

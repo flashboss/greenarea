@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
+import java.util.EventObject;
+
 import com.mxgraph.swing.mxGraphComponent;
 
-import it.vige.greenarea.I18N.*;
+import it.vige.greenarea.I18N.I18N;
 import it.vige.greenarea.ln.model.LNSitesSet;
-
-import java.util.EventObject;
 
 public class LNSitesSetEditor extends LNCellEditorDialog {
 	/**
@@ -33,10 +33,8 @@ public class LNSitesSetEditor extends LNCellEditorDialog {
 		/* mio codice */
 		simpleNamePanel = new SimpleNamePanel();
 		sitesSetPanel = new SitesSetPanel(gc, this);
-		super.getEditorTabPanel().addTab(I18N.getString("GeneralMenu"),
-				simpleNamePanel);
-		super.getEditorTabPanel().addTab(I18N.getString("Locations"),
-				sitesSetPanel);
+		super.getEditorTabPanel().addTab(I18N.getString("GeneralMenu"), simpleNamePanel);
+		super.getEditorTabPanel().addTab(I18N.getString("Locations"), sitesSetPanel);
 	}
 
 	@Override
@@ -71,8 +69,7 @@ public class LNSitesSetEditor extends LNCellEditorDialog {
 
 	@Override
 	public void saveData(Object o) {
-		LNSitesSet lnss = ((o == null || !(o instanceof LNSitesSet)) ? new LNSitesSet()
-				: (LNSitesSet) o);
+		LNSitesSet lnss = ((o == null || !(o instanceof LNSitesSet)) ? new LNSitesSet() : (LNSitesSet) o);
 		lnss.setName(simpleNamePanel.getCellName());
 		lnss.setDescription(simpleNamePanel.getDescription());
 	}

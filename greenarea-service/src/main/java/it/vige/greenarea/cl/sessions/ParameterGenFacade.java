@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.sessions;
 
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 /**
  *

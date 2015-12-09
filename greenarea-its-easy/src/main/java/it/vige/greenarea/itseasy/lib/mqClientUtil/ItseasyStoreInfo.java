@@ -95,17 +95,15 @@ public class ItseasyStoreInfo implements MqConstants {
 		int hash = 5;
 		hash = 89 * hash + this.objStoreType;
 		hash = 89 * hash + (this.url != null ? this.url.hashCode() : 0);
-		hash = 89 * hash
-				+ (this.principal != null ? this.principal.hashCode() : 0);
-		hash = 89 * hash
-				+ (this.credentials != null ? this.credentials.hashCode() : 0);
+		hash = 89 * hash + (this.principal != null ? this.principal.hashCode() : 0);
+		hash = 89 * hash + (this.credentials != null ? this.credentials.hashCode() : 0);
 		return hash;
 	}
 
 	@Override
 	public String toString() {
-		return "STORE INFO: URL-->" + this.url + " | principal-->"
-				+ this.principal + " | credentials-->" + this.credentials;
+		return "STORE INFO: URL-->" + this.url + " | principal-->" + this.principal + " | credentials-->"
+				+ this.credentials;
 
 	}
 }

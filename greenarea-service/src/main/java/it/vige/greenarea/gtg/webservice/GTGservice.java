@@ -13,12 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice;
 
-import it.vige.greenarea.gtg.ejb.MissionHandlerBean;
-import it.vige.greenarea.gtg.webservice.auth.LDAPauth;
-import it.vige.greenarea.gtg.webservice.exceptions.GTGexception;
-import it.vige.greenarea.gtg.webservice.wsdata.FreightItemAction;
-import it.vige.greenarea.gtg.webservice.wsdata.MissionItem;
-
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,6 +23,12 @@ import javax.jws.WebService;
 import javax.xml.ws.WebServiceContext;
 
 import com.unboundid.ldap.sdk.LDAPException;
+
+import it.vige.greenarea.gtg.ejb.MissionHandlerBean;
+import it.vige.greenarea.gtg.webservice.auth.LDAPauth;
+import it.vige.greenarea.gtg.webservice.exceptions.GTGexception;
+import it.vige.greenarea.gtg.webservice.wsdata.FreightItemAction;
+import it.vige.greenarea.gtg.webservice.wsdata.MissionItem;
 
 @WebService(serviceName = "GTGservice")
 public class GTGservice {
@@ -59,8 +59,7 @@ public class GTGservice {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "getMissions")
-	public List<MissionItem> getMissions(
-			@WebParam(name = "dateTime") String dateTime) throws LDAPException {
+	public List<MissionItem> getMissions(@WebParam(name = "dateTime") String dateTime) throws LDAPException {
 
 		String user = LDAPauth.doAuthentication(wsContext);
 
@@ -71,18 +70,13 @@ public class GTGservice {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "changeMissionState")
-	public void changeMissionState(
-			@WebParam(name = "missionId") Long missionId,
-			@WebParam(name = "state") int state,
-			@WebParam(name = "cause") int cause,
-			@WebParam(name = "note") String note,
-			@WebParam(name = "dateTime") String dateTime) throws LDAPException,
-			GTGexception {
+	public void changeMissionState(@WebParam(name = "missionId") Long missionId, @WebParam(name = "state") int state,
+			@WebParam(name = "cause") int cause, @WebParam(name = "note") String note,
+			@WebParam(name = "dateTime") String dateTime) throws LDAPException, GTGexception {
 
 		String user = LDAPauth.doAuthentication(wsContext);
 
-		missionHandlerBean.changeMissionState(user, missionId, state, cause,
-				note, dateTime);
+		missionHandlerBean.changeMissionState(user, missionId, state, cause, note, dateTime);
 	}
 
 	/**
@@ -91,12 +85,11 @@ public class GTGservice {
 	@WebMethod(operationName = "notifyFreightItemAction")
 	public void notifyFreightItemAction(
 			@WebParam(name = "freightItemsAction") List<FreightItemAction> freightItemsAction)
-			throws LDAPException, GTGexception {
+					throws LDAPException, GTGexception {
 
 		String user = LDAPauth.doAuthentication(wsContext);
 		try {
-			missionHandlerBean.notifyFreightItemActions(user,
-					freightItemsAction);
+			missionHandlerBean.notifyFreightItemActions(user, freightItemsAction);
 		} catch (Exception ex) {
 			ex.getMessage();
 		}

@@ -22,8 +22,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class PaginatedCollectionField<T> extends VerticalLayout implements
-		Field {
+public class PaginatedCollectionField<T> extends VerticalLayout implements Field {
 	private static final long serialVersionUID = 1L;
 	private TextField wrappedField;
 
@@ -57,8 +56,7 @@ public class PaginatedCollectionField<T> extends VerticalLayout implements
 		return wrappedField.isWriteThrough();
 	}
 
-	public void setWriteThrough(boolean writeThrough) throws SourceException,
-			InvalidValueException {
+	public void setWriteThrough(boolean writeThrough) throws SourceException, InvalidValueException {
 		wrappedField.setWriteThrough(true);
 	}
 
@@ -98,8 +96,7 @@ public class PaginatedCollectionField<T> extends VerticalLayout implements
 		return wrappedField.isInvalidAllowed();
 	}
 
-	public void setInvalidAllowed(boolean invalidValueAllowed)
-			throws UnsupportedOperationException {
+	public void setInvalidAllowed(boolean invalidValueAllowed) throws UnsupportedOperationException {
 		wrappedField.setInvalidAllowed(invalidValueAllowed);
 	}
 
@@ -107,8 +104,7 @@ public class PaginatedCollectionField<T> extends VerticalLayout implements
 		return wrappedField.getValue();
 	}
 
-	public void setValue(Object newValue) throws ReadOnlyException,
-			ConversionException {
+	public void setValue(Object newValue) throws ReadOnlyException, ConversionException {
 		wrappedField.setValue(newValue);
 	}
 

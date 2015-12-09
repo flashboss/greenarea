@@ -26,27 +26,23 @@ import com.mxgraph.swing.util.mxGraphActions;
  * @author Administrator
  * 
  */
-public class EditorKeyboardHandler extends mxKeyboardHandler
-{
+public class EditorKeyboardHandler extends mxKeyboardHandler {
 
 	/**
 	 * 
 	 * @param graphComponent
 	 */
-	public EditorKeyboardHandler(mxGraphComponent graphComponent)
-	{
+	public EditorKeyboardHandler(mxGraphComponent graphComponent) {
 		super(graphComponent);
 	}
 
 	/**
 	 * Return JTree's input map.
 	 */
-	protected InputMap getInputMap(int condition)
-	{
+	protected InputMap getInputMap(int condition) {
 		InputMap map = super.getInputMap(condition);
 
-		if (condition == JComponent.WHEN_FOCUSED && map != null)
-		{
+		if (condition == JComponent.WHEN_FOCUSED && map != null) {
 			map.put(KeyStroke.getKeyStroke("control S"), "save");
 			map.put(KeyStroke.getKeyStroke("control shift S"), "saveAs");
 			map.put(KeyStroke.getKeyStroke("control N"), "new");
@@ -54,9 +50,7 @@ public class EditorKeyboardHandler extends mxKeyboardHandler
 
 			map.put(KeyStroke.getKeyStroke("control Z"), "undo");
 			map.put(KeyStroke.getKeyStroke("control Y"), "redo");
-			map
-					.put(KeyStroke.getKeyStroke("control shift V"),
-							"selectVertices");
+			map.put(KeyStroke.getKeyStroke("control shift V"), "selectVertices");
 			map.put(KeyStroke.getKeyStroke("control shift E"), "selectEdges");
 		}
 
@@ -66,8 +60,7 @@ public class EditorKeyboardHandler extends mxKeyboardHandler
 	/**
 	 * Return the mapping between JTree's input map and JGraph's actions.
 	 */
-	protected ActionMap createActionMap()
-	{
+	protected ActionMap createActionMap() {
 		ActionMap map = super.createActionMap();
 
 		map.put("save", new EditorActions.SaveAction(false));

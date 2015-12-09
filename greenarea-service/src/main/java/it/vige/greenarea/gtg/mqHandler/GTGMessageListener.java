@@ -17,9 +17,6 @@ import static it.vige.greenarea.itseasy.lib.configurationData.MqConstants.MQ_KEY
 import static it.vige.greenarea.itseasy.lib.configurationData.MqConstants.MQ_KEY_TRANSPORT_ID;
 import static it.vige.greenarea.itseasy.lib.configurationData.MqConstants.MQ_KEY_VECTOR_NAME;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.MqUtility;
-import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -30,6 +27,10 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.MqUtility;
+import it.vige.greenarea.itseasy.lib.mqData.MqShippingData;
 
 @MessageDriven(mappedName = "java:/jms/topic/VectorTopic", activationConfig = {
 		@ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
@@ -67,8 +68,7 @@ public class GTGMessageListener implements MessageListener {
 		}
 		if (!(message instanceof ObjectMessage)) {
 			// segnalo problema perche' il messaggio non contiene un oggetto
-			logger.debug("Messaggio di tipo errato: "
-					+ MqUtility.messageType(message));
+			logger.debug("Messaggio di tipo errato: " + MqUtility.messageType(message));
 			return;
 		}
 		ObjectMessage objmsg = (ObjectMessage) message;

@@ -14,7 +14,6 @@
 package it.vige.greenarea.itseasy.lib.mqClientUtil;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -24,12 +23,13 @@ import javax.jms.JMSProducer;
 
 import org.slf4j.Logger;
 
+import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
+
 public class ItseasyProducer implements MqConstants {
 
 	private Logger logger = getLogger(getClass());
 
-	public boolean publishTextMessage(Destination destination,
-			JMSProducer jmsProducer, String message,
+	public boolean publishTextMessage(Destination destination, JMSProducer jmsProducer, String message,
 			Map<String, String> properties) {
 		if (properties != null) {
 			for (Map.Entry<String, String> e : properties.entrySet()) {
@@ -46,8 +46,7 @@ public class ItseasyProducer implements MqConstants {
 		return true;
 	}
 
-	public boolean publishObjectMessage(Destination destination,
-			JMSProducer jmsProducer, Serializable srlzObj,
+	public boolean publishObjectMessage(Destination destination, JMSProducer jmsProducer, Serializable srlzObj,
 			Map<String, String> properties) {
 
 		logger.debug("");
@@ -58,8 +57,7 @@ public class ItseasyProducer implements MqConstants {
 			}
 		}
 		// Publish the message
-		logger.debug("Publishing a object message to Destination: "
-				+ destination);
+		logger.debug("Publishing a object message to Destination: " + destination);
 		jmsProducer.send(destination, srlzObj);
 		return true;
 	}

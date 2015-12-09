@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.model;
 
+import org.w3c.dom.Element;
+
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.dto.GeoLocationInterface;
 import it.vige.greenarea.geo.GisService;
-
-import org.w3c.dom.Element;
 
 public class LNSite extends LNNode implements GeoLocationInterface {
 
@@ -45,8 +45,7 @@ public class LNSite extends LNNode implements GeoLocationInterface {
 
 	@Override
 	public boolean includes(GeoLocationInterface location) {
-		double result = GisService.getDistance(l.getLatitude(),
-				l.getLongitude(), location.getLatitude(),
+		double result = GisService.getDistance(l.getLatitude(), l.getLongitude(), location.getLatitude(),
 				location.getLongitude());
 		return result < l.getRadius();
 	}

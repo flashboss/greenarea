@@ -15,8 +15,6 @@ package it.vige.greenarea.cl.control;
 
 import static it.vige.greenarea.dto.Color.values;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.bean.RequestParameter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,6 +26,9 @@ import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.bean.RequestParameter;
 
 /**
  *
@@ -41,8 +42,7 @@ public class EnforcementControl {
 	@Resource(lookup = "java:/jdbc/gtgdb")
 	private DataSource ds;
 
-	private void connectionClose(ResultSet rs, PreparedStatement ps,
-			Connection conn) {
+	private void connectionClose(ResultSet rs, PreparedStatement ps, Connection conn) {
 
 		try {
 			if (rs != null) {
@@ -69,14 +69,14 @@ public class EnforcementControl {
 		ResultSet rs = null;
 
 		try {
-			logger.info("Sono un vigile" + idTimeSlot + "   " + idVehicle
-					+ "   " + dtoday);
+			logger.info("Sono un vigile" + idTimeSlot + "   " + idVehicle + "   " + dtoday);
 
 			con = ds.getConnection();
-			ps = con.prepareStatement("SELECT a.startTime,a.truck_PLATENUMBER,a.timeSlot_idTS,a.id,a.company,a.name,a.resvikor,c.color,c.price,b.*,d.* "
-					+ "FROM Mission as a JOIN ValueMission as b JOIN VikorResult as c JOIN ParameterGen as d WHERE a.id = b.mission_id "
-					+ "AND a.id = c.idMission AND b.idParameter = d.idpg AND a.timeSlot_idTS = ? AND a.truck_PLATENUMBER = ? AND a.startTime = ? "
-					+ "ORDER by a.id, b.idParameter ");
+			ps = con.prepareStatement(
+					"SELECT a.startTime,a.truck_PLATENUMBER,a.timeSlot_idTS,a.id,a.company,a.name,a.resvikor,c.color,c.price,b.*,d.* "
+							+ "FROM Mission as a JOIN ValueMission as b JOIN VikorResult as c JOIN ParameterGen as d WHERE a.id = b.mission_id "
+							+ "AND a.id = c.idMission AND b.idParameter = d.idpg AND a.timeSlot_idTS = ? AND a.truck_PLATENUMBER = ? AND a.startTime = ? "
+							+ "ORDER by a.id, b.idParameter ");
 			ps.setDate(3, dtoday);
 			ps.setInt(1, idTimeSlot);
 			ps.setString(2, idVehicle);

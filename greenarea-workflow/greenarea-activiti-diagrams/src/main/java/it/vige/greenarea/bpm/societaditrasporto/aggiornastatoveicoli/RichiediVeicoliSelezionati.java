@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.societaditrasporto.aggiornastatoveicoli;
 
-import it.vige.greenarea.dto.Veicolo;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Veicolo;
 
 public class RichiediVeicoliSelezionati implements TaskListener {
 
@@ -27,8 +27,7 @@ public class RichiediVeicoliSelezionati implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<Veicolo> veicoli = (Collection<Veicolo>) delegateTask
-				.getVariable("veicoli");
+		Collection<Veicolo> veicoli = (Collection<Veicolo>) delegateTask.getVariable("veicoli");
 		delegateTask.setVariable("veicoliselezionati", veicoli);
 	}
 

@@ -16,34 +16,32 @@ package it.vige.greenarea.itseasy.lib.mqData;
 import java.io.Serializable;
 
 public class MY_Attachment implements Serializable {
-   
-    /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1691415131806681500L;
 
-
 	private String name;
-    
-  
-    Serializable contents;
 
-    public MY_Attachment(){}
+	Serializable contents;
 
-    public Serializable getContents() {
-        return contents;
-    }
+	public MY_Attachment() {
+	}
 
-    public void setContents(Serializable contents) {
-        this.contents = contents;
-    }
+	public Serializable getContents() {
+		return contents;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setContents(Serializable contents) {
+		this.contents = contents;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
-

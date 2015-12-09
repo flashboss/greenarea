@@ -21,8 +21,7 @@ import java.util.Map;
 
 import org.activiti.engine.form.AbstractFormType;
 
-public class FasceOrarieCollectionFormType<T> extends AbstractFormType
-		implements Serializable {
+public class FasceOrarieCollectionFormType<T> extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = 132973472818842203L;
 	private Map<String, T> values = new HashMap<String, T>();

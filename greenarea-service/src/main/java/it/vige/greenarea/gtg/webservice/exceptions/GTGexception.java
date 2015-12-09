@@ -40,33 +40,21 @@ public class GTGexception extends Exception {
 			GTGerrorCodes.class);
 
 	static {
-		GTGerrorDesc.put(GTGerrorCodes.UNSOPPORTED_OPERATION,
-				new GTGerrorMessage("Not supported yet.", 0));
-		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_MISSION_ID, new GTGerrorMessage(
-				"MissionID {0} is unknown", 1));
+		GTGerrorDesc.put(GTGerrorCodes.UNSOPPORTED_OPERATION, new GTGerrorMessage("Not supported yet.", 0));
+		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_MISSION_ID, new GTGerrorMessage("MissionID {0} is unknown", 1));
 		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_MISSION_STATE,
 				new GTGerrorMessage("New Mission State {0} is unknown", 1));
 		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_FREIGHT_STATE,
 				new GTGerrorMessage("New Freight State {0} is unknown", 1));
-		GTGerrorDesc
-				.put(GTGerrorCodes.ALLOCATE_MISSION_NOT_ALLOWED,
-						new GTGerrorMessage(
-								"Allocate Mission not allowed: user {0} has already a mission allocated",
-								1));
-		GTGerrorDesc
-				.put(GTGerrorCodes.CLOSE_MISSION_NOT_ALLOWED,
-						new GTGerrorMessage(
-								"Complete Mission not allowed: mission {0} is not assigned to user {1}",
-								2));
+		GTGerrorDesc.put(GTGerrorCodes.ALLOCATE_MISSION_NOT_ALLOWED,
+				new GTGerrorMessage("Allocate Mission not allowed: user {0} has already a mission allocated", 1));
+		GTGerrorDesc.put(GTGerrorCodes.CLOSE_MISSION_NOT_ALLOWED,
+				new GTGerrorMessage("Complete Mission not allowed: mission {0} is not assigned to user {1}", 2));
 		GTGerrorDesc.put(GTGerrorCodes.NO_MISSION_ALLOCATED,
 				new GTGerrorMessage("User {0} has no mission allocated", 1));
-		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_FREIGHT_ID, new GTGerrorMessage(
-				"FreightID {0} is unknown", 1));
-		GTGerrorDesc
-				.put(GTGerrorCodes.NOTIFY_FREIGHT_STATUS_NOT_ALLOWED,
-						new GTGerrorMessage(
-								"Cannot change freight status: mission {0} Not allocated to user {1}",
-								2));
+		GTGerrorDesc.put(GTGerrorCodes.UNKNOWN_FREIGHT_ID, new GTGerrorMessage("FreightID {0} is unknown", 1));
+		GTGerrorDesc.put(GTGerrorCodes.NOTIFY_FREIGHT_STATUS_NOT_ALLOWED,
+				new GTGerrorMessage("Cannot change freight status: mission {0} Not allocated to user {1}", 2));
 	};
 
 	private GTGerrorCodes errorCode;
@@ -76,11 +64,9 @@ public class GTGexception extends Exception {
 		super();
 		String desc = "Unknown error message...";
 		GTGerrorMessage sgoMessage = GTGerrorDesc.get(errorCode);
-		logger.debug("&&&&& sgo message: " + sgoMessage.getErrorDescription()
-				+ "args:" + sgoMessage.getArgsNum());
+		logger.debug("&&&&& sgo message: " + sgoMessage.getErrorDescription() + "args:" + sgoMessage.getArgsNum());
 		if (variables.size() == sgoMessage.getArgsNum()) {
-			desc = MessageFormat.format(sgoMessage.getErrorDescription(),
-					variables.toArray());
+			desc = MessageFormat.format(sgoMessage.getErrorDescription(), variables.toArray());
 		}
 		this.errorCode = errorCode;
 		this.message = desc;

@@ -20,10 +20,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
-import it.vige.greenarea.bpm.form.ElencoMissioniTrFormType;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
-import it.vige.greenarea.dto.GreenareaUser;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -40,8 +36,12 @@ import org.activiti.explorer.identity.LoggedInUser;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 
-public class ElencoMissioniTrFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.form.ElencoMissioniTrFormType;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
+
+public class ElencoMissioniTrFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -54,14 +54,12 @@ public class ElencoMissioniTrFormPropertyRenderer<T> extends
 	public Field getPropertyField(FormProperty formProperty) {
 		ComboBox comboBox = new ComboBox(getPropertyLabel(formProperty));
 		comboBox.setRequired(formProperty.isRequired());
-		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		comboBox.setEnabled(formProperty.isWritable());
 		comboBox.setNullSelectionAllowed(false);
 
 		Object itemToSelect = null;
-		Map<String, String> values = (Map<String, String>) formProperty
-				.getType().getInformation("values");
+		Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
 		String user = ((LoggedInUser) get().getUser()).getId();
 		if (values != null) {
 			if (!formProperty.isRequired()) {
@@ -73,9 +71,7 @@ public class ElencoMissioniTrFormPropertyRenderer<T> extends
 					comboBox.addItem(enumEntry.getKey());
 
 					String selectedValue = formProperty.getValue();
-					if ((selectedValue != null && selectedValue
-							.equals(enumEntry.getKey()))
-							|| itemToSelect == null) {
+					if ((selectedValue != null && selectedValue.equals(enumEntry.getKey())) || itemToSelect == null) {
 						if (!formProperty.isRequired())
 							itemToSelect = "";
 						else
@@ -108,15 +104,11 @@ public class ElencoMissioniTrFormPropertyRenderer<T> extends
 
 	private boolean isUser(String idMissione, String user) {
 		Client client = newClient();
-		Builder bldr = client
-				.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-						APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
 		richiesta.setId(new Integer(idMissione));
-		List<Missione> missioni = bldr.post(
-				entity(richiesta, APPLICATION_JSON),
-				new GenericType<List<Missione>>() {
-				});
+		List<Missione> missioni = bldr.post(entity(richiesta, APPLICATION_JSON), new GenericType<List<Missione>>() {
+		});
 		GreenareaUser greenareaUser = missioni.get(0).getVeicolo().getAutista();
 		if (greenareaUser != null && greenareaUser.getId().equals(user))
 			return true;

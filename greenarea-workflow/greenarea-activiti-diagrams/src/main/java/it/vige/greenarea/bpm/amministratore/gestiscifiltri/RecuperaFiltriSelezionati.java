@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.amministratore.gestiscifiltri;
 
-import it.vige.greenarea.dto.Filtro;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Filtro;
 
 public class RecuperaFiltriSelezionati implements TaskListener {
 
@@ -27,8 +27,7 @@ public class RecuperaFiltriSelezionati implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<Filtro> filtri = (Collection<Filtro>) delegateTask
-				.getVariable("filtri");
+		Collection<Filtro> filtri = (Collection<Filtro>) delegateTask.getVariable("filtri");
 		delegateTask.setVariable("filtriselezionati", filtri);
 	}
 

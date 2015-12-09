@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 
 public class ShippingOrderDetails implements Serializable {
 
@@ -139,7 +139,7 @@ public class ShippingOrderDetails implements Serializable {
 	public void setTransportID(String transportID) {
 		this.transportID = transportID;
 	}
-	
+
 	public String getOperatoreLogistico() {
 		return operatoreLogistico;
 	}

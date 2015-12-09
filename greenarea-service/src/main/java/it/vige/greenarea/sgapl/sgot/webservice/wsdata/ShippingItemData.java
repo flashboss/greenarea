@@ -18,45 +18,46 @@ import java.util.HashMap;
 
 public class ShippingItemData implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    private String itemID; //quello che mi passa l'ecomm e che si trova scritto sulla scatola
-    private String descrizione;
-    private HashMap<String, String> attributi; //include dimensioni, peso ecc....
+	private static final long serialVersionUID = 1L;
 
-    public ShippingItemData() {
-        this.attributi = new HashMap<String, String>();
-    }
+	private String itemID; // quello che mi passa l'ecomm e che si trova scritto
+							// sulla scatola
+	private String descrizione;
+	private HashMap<String, String> attributi; // include dimensioni, peso
+												// ecc....
 
-    public ShippingItemData(String itemID, String descrizione, HashMap<String, String> attributi) {
-        this.itemID = itemID;
-        this.descrizione = descrizione;
-        this.attributi = attributi;
-    }
+	public ShippingItemData() {
+		this.attributi = new HashMap<String, String>();
+	}
 
-    public HashMap<String, String> getAttributi() {
-        return attributi;
-    }
+	public ShippingItemData(String itemID, String descrizione, HashMap<String, String> attributi) {
+		this.itemID = itemID;
+		this.descrizione = descrizione;
+		this.attributi = attributi;
+	}
 
-    public void setAttributi(HashMap<String, String> attributi) {
-        this.attributi = attributi;
-    }
+	public HashMap<String, String> getAttributi() {
+		return attributi;
+	}
 
-    public String getDescrizione() {
-        return descrizione;
-    }
+	public void setAttributi(HashMap<String, String> attributi) {
+		this.attributi = attributi;
+	}
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
+	public String getDescrizione() {
+		return descrizione;
+	}
 
-    public String getItemID() {
-        return itemID;
-    }
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
 
-    public void setItemID(String itemID) {
-        this.itemID = itemID;
-    }
+	public String getItemID() {
+		return itemID;
+	}
 
-    
+	public void setItemID(String itemID) {
+		this.itemID = itemID;
+	}
+
 }

@@ -13,15 +13,15 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
-import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService;
-import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService_Service;
-import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
+
+import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService;
+import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService_Service;
+import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
 
 @ManagedBean
 @RequestScoped
@@ -48,18 +48,16 @@ public class TrackingOrderBean {
 			FacesMessage msg;
 			FacesContext context = FacesContext.getCurrentInstance();
 
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Locate Ordine: ", "Impossibile localizzare Ordine "
-							+ currentOrderId);
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Locate Ordine: ",
+					"Impossibile localizzare Ordine " + currentOrderId);
 			context.addMessage(null, msg);
 			return "/OrderTrackErr";
 		}
 		if (info == null) {
 			FacesMessage msg;
 			FacesContext context = FacesContext.getCurrentInstance();
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Locate Ordine: ", "Impossibile localizzare Ordine "
-							+ currentOrderId);
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Locate Ordine: ",
+					"Impossibile localizzare Ordine " + currentOrderId);
 			context.addMessage(null, msg);
 			return "OrderTrackErr";
 		}
@@ -67,8 +65,7 @@ public class TrackingOrderBean {
 		return "/OrderTracking";
 	}
 
-	private TransportInfo getTransportInfo(String trId)
-			throws Exception {
+	private TransportInfo getTransportInfo(String trId) throws Exception {
 		SGOTadminService sGOTadminService = service.getSGOTadminServicePort();
 		return sGOTadminService.getTransportInfo(trId);
 	}

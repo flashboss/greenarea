@@ -14,7 +14,6 @@
 package it.vige.greenarea.cl.library.entities;
 
 import static it.vige.greenarea.cl.library.entities.OrderStatus.StateValue.unknown;
-import it.vige.greenarea.cl.library.entities.OrderStatus.StateValue;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -33,6 +32,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import it.vige.greenarea.cl.library.entities.OrderStatus.StateValue;
 
 @Entity
 public class ShippingOrder implements Serializable {
@@ -67,12 +68,12 @@ public class ShippingOrder implements Serializable {
 	 * di questo valore ?? da intendersi strutturata e complessa; punto di
 	 * raccolta Indica il luogo in cui l'oggetto del trasporto sar?? preso in
 	 * carico dal primo Vettore per iniziare il trasporto; si tenga presente che
-	 * potrebbe essere necessario includere qui anche l'autorit?? che ?? deputata
-	 * a consegnare l'oggetto al Vettore stesso; punto di consegna Indica il
-	 * luogo in cui l'oggetto del trasporto sar?? consegnato dall'ultimo Vettore
-	 * deputato al trasporto al destinatario finale; termini di consegna
-	 * Contiene eventuali indicatori tecnici rilevanti ai fini del rispetto
-	 * dello SLA concordato; note Campo a disposizione per eventuali
+	 * potrebbe essere necessario includere qui anche l'autorit?? che ??
+	 * deputata a consegnare l'oggetto al Vettore stesso; punto di consegna
+	 * Indica il luogo in cui l'oggetto del trasporto sar?? consegnato
+	 * dall'ultimo Vettore deputato al trasporto al destinatario finale; termini
+	 * di consegna Contiene eventuali indicatori tecnici rilevanti ai fini del
+	 * rispetto dello SLA concordato; note Campo a disposizione per eventuali
 	 * osservazioni testuali; stato Campo che identifica la situazione
 	 * dell'Ordine di Spedizione secondo il diagramma di stato riportato in
 	 * Figura 3
@@ -82,40 +83,38 @@ public class ShippingOrder implements Serializable {
 	@OneToMany(mappedBy = "shippingOrder", orphanRemoval = true)
 	private List<ShippingItem> shippingItems;
 	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "name", column = @Column(name = "src_name")),
-			@AttributeOverride(name = "surname", column = @Column(name = "src_surname")),
-			@AttributeOverride(name = "mobile", column = @Column(name = "src_mobile")),
-			@AttributeOverride(name = "phone", column = @Column(name = "src_phone")),
-			@AttributeOverride(name = "email", column = @Column(name = "src_email")),
-			@AttributeOverride(name = "country", column = @Column(name = "src_country")),
-			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "src_adminAreaLevel1")),
-			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "src_adminAreaLevel2")),
-			@AttributeOverride(name = "city", column = @Column(name = "src_city")),
-			@AttributeOverride(name = "street", column = @Column(name = "src_street")),
-			@AttributeOverride(name = "number", column = @Column(name = "src_number")),
-			@AttributeOverride(name = "zipCode", column = @Column(name = "src_zipCode")),
-			@AttributeOverride(name = "latitude", column = @Column(name = "src_latitude")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "src_longitude")),
-			@AttributeOverride(name = "radius", column = @Column(name = "src_radius")) })
+	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "src_name") ),
+			@AttributeOverride(name = "surname", column = @Column(name = "src_surname") ),
+			@AttributeOverride(name = "mobile", column = @Column(name = "src_mobile") ),
+			@AttributeOverride(name = "phone", column = @Column(name = "src_phone") ),
+			@AttributeOverride(name = "email", column = @Column(name = "src_email") ),
+			@AttributeOverride(name = "country", column = @Column(name = "src_country") ),
+			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "src_adminAreaLevel1") ),
+			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "src_adminAreaLevel2") ),
+			@AttributeOverride(name = "city", column = @Column(name = "src_city") ),
+			@AttributeOverride(name = "street", column = @Column(name = "src_street") ),
+			@AttributeOverride(name = "number", column = @Column(name = "src_number") ),
+			@AttributeOverride(name = "zipCode", column = @Column(name = "src_zipCode") ),
+			@AttributeOverride(name = "latitude", column = @Column(name = "src_latitude") ),
+			@AttributeOverride(name = "longitude", column = @Column(name = "src_longitude") ),
+			@AttributeOverride(name = "radius", column = @Column(name = "src_radius") ) })
 	private DBGeoLocation mittente;
 	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name = "name", column = @Column(name = "dst_name")),
-			@AttributeOverride(name = "surname", column = @Column(name = "dst_surname")),
-			@AttributeOverride(name = "mobile", column = @Column(name = "dst_mobile")),
-			@AttributeOverride(name = "phone", column = @Column(name = "dst_phone")),
-			@AttributeOverride(name = "email", column = @Column(name = "dst_email")),
-			@AttributeOverride(name = "country", column = @Column(name = "dst_country")),
-			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "dst_adminAreaLevel1")),
-			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "dst_adminAreaLevel2")),
-			@AttributeOverride(name = "city", column = @Column(name = "dst_city")),
-			@AttributeOverride(name = "street", column = @Column(name = "dst_street")),
-			@AttributeOverride(name = "number", column = @Column(name = "dst_number")),
-			@AttributeOverride(name = "zipCode", column = @Column(name = "dst_zipCode")),
-			@AttributeOverride(name = "latitude", column = @Column(name = "dst_latitude")),
-			@AttributeOverride(name = "longitude", column = @Column(name = "dst_longitude")),
-			@AttributeOverride(name = "radius", column = @Column(name = "dst_radius")) })
+	@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "dst_name") ),
+			@AttributeOverride(name = "surname", column = @Column(name = "dst_surname") ),
+			@AttributeOverride(name = "mobile", column = @Column(name = "dst_mobile") ),
+			@AttributeOverride(name = "phone", column = @Column(name = "dst_phone") ),
+			@AttributeOverride(name = "email", column = @Column(name = "dst_email") ),
+			@AttributeOverride(name = "country", column = @Column(name = "dst_country") ),
+			@AttributeOverride(name = "adminAreaLevel1", column = @Column(name = "dst_adminAreaLevel1") ),
+			@AttributeOverride(name = "adminAreaLevel2", column = @Column(name = "dst_adminAreaLevel2") ),
+			@AttributeOverride(name = "city", column = @Column(name = "dst_city") ),
+			@AttributeOverride(name = "street", column = @Column(name = "dst_street") ),
+			@AttributeOverride(name = "number", column = @Column(name = "dst_number") ),
+			@AttributeOverride(name = "zipCode", column = @Column(name = "dst_zipCode") ),
+			@AttributeOverride(name = "latitude", column = @Column(name = "dst_latitude") ),
+			@AttributeOverride(name = "longitude", column = @Column(name = "dst_longitude") ),
+			@AttributeOverride(name = "radius", column = @Column(name = "dst_radius") ) })
 	private DBGeoLocation destinatario;
 	@Lob
 	private HashMap<String, String> deliveryTerms; // es catena del
@@ -136,8 +135,7 @@ public class ShippingOrder implements Serializable {
 		this.mittente = new DBGeoLocation();
 		this.destinatario = new DBGeoLocation();
 		this.deliveryTerms = new HashMap<String, String>();
-		this.creationTimestamp = new Timestamp(
-				new GregorianCalendar().getTimeInMillis());
+		this.creationTimestamp = new Timestamp(new GregorianCalendar().getTimeInMillis());
 		this.cost = null;
 		this.customer = null;
 		this.note = null;
@@ -150,8 +148,7 @@ public class ShippingOrder implements Serializable {
 		this.id = id;
 	}
 
-	public ShippingOrder(String id, Customer ordinante, DBGeoLocation mittente,
-			DBGeoLocation destinatario,
+	public ShippingOrder(String id, Customer ordinante, DBGeoLocation mittente, DBGeoLocation destinatario,
 			HashMap<String, String> terminiDiConsegna, String operatoreLogistico) {
 		this(id);
 		this.customer = ordinante;
@@ -272,7 +269,7 @@ public class ShippingOrder implements Serializable {
 	public void setCodiceFiliale(String codiceFiliale) {
 		this.codiceFiliale = codiceFiliale;
 	}
-	
+
 	public String getRoundCode() {
 		return roundCode;
 	}
@@ -296,8 +293,7 @@ public class ShippingOrder implements Serializable {
 			return false;
 		}
 		ShippingOrder other = (ShippingOrder) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;

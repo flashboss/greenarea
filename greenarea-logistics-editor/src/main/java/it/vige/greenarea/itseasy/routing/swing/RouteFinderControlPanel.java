@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.routing.swing;
 
-import it.vige.greenarea.sgrl.webservices.GeoLocation;
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.dto.GeoLocationInterface;
-
 import java.util.List;
 
 import com.mxgraph.swing.mxGraphComponent;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.sgrl.webservices.GeoLocation;
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
 
 public class RouteFinderControlPanel extends javax.swing.JPanel {
 	/**
@@ -31,8 +31,7 @@ public class RouteFinderControlPanel extends javax.swing.JPanel {
 	private RouteFinderDialog parent;
 
 	/** Creates new form RouteFinderControlPanel */
-	public RouteFinderControlPanel(mxGraphComponent graphComponent,
-			RouteFinderDialog parent) {
+	public RouteFinderControlPanel(mxGraphComponent graphComponent, RouteFinderDialog parent) {
 		initComponents();
 		this.parent = parent;
 	}
@@ -57,12 +56,11 @@ public class RouteFinderControlPanel extends javax.swing.JPanel {
 		});
 
 		doFindRouteButton.setText(I18N.getString("RouteFinder"));
-		doFindRouteButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						doFindRouteButtonActionPerformed(evt);
-					}
-				});
+		doFindRouteButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				doFindRouteButtonActionPerformed(evt);
+			}
+		});
 
 		routeTextArea.setColumns(20);
 		routeTextArea.setRows(5);
@@ -70,31 +68,20 @@ public class RouteFinderControlPanel extends javax.swing.JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(
-														routeTextPanel,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														376, Short.MAX_VALUE)
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								layout.createSequentialGroup().addContainerGap()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(routeTextPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 376,
+														Short.MAX_VALUE)
 												.addComponent(doFindRouteButton))
-								.addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(doFindRouteButton)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-								.addComponent(routeTextPanel,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										236, Short.MAX_VALUE).addContainerGap()));
+										.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(doFindRouteButton)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(routeTextPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+						.addContainerGap()));
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void doFindRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_doFindRouteButtonActionPerformed
@@ -113,8 +100,7 @@ public class RouteFinderControlPanel extends javax.swing.JPanel {
 				sb.append(I18N.getString(NO_PATHS_FOUND));
 			else
 				for (int i = 0; i < paths.size(); i++) {
-					sb.append("route ").append(Integer.toString(i))
-							.append(": ").append(paths.get(i).toString())
+					sb.append("route ").append(Integer.toString(i)).append(": ").append(paths.get(i).toString())
 							.append("\n");
 				}
 		} catch (Exception ex) {
@@ -135,8 +121,7 @@ public class RouteFinderControlPanel extends javax.swing.JPanel {
 
 	// End of variables declaration//GEN-END:variables
 
-	private static java.util.List<java.lang.String> getRoutes(
-			GeoLocation source, GeoLocation destination,
+	private static java.util.List<java.lang.String> getRoutes(GeoLocation source, GeoLocation destination,
 			java.lang.String options) throws Exception {
 		it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkRoutingService service = new it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkRoutingService();
 		LogisticNetworkRouting port = service.getLogisticNetworkRoutingPort();

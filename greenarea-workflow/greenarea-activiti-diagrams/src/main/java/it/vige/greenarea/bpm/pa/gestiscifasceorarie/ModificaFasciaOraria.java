@@ -26,14 +26,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.Price;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.dto.AccessoVeicoli;
-import it.vige.greenarea.dto.FasciaOraria;
-import it.vige.greenarea.dto.Parametro;
-import it.vige.greenarea.dto.Prezzo;
 
 import java.util.List;
 
@@ -43,6 +35,15 @@ import javax.ws.rs.client.Invocation.Builder;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.Price;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.dto.AccessoVeicoli;
+import it.vige.greenarea.dto.FasciaOraria;
+import it.vige.greenarea.dto.Parametro;
+import it.vige.greenarea.dto.Prezzo;
 
 public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 
@@ -54,34 +55,25 @@ public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 		try {
 			super.execute(execution);
 			logger.info("CDI Modifica Fascia Oraria");
-			FasciaOraria fasciaOraria = (FasciaOraria) execution
-					.getVariable("fasciaoraria");
+			FasciaOraria fasciaOraria = (FasciaOraria) execution.getVariable("fasciaoraria");
 			Prezzo giallo = (Prezzo) execution.getVariable("giallo");
 			Prezzo rosso = (Prezzo) execution.getVariable("rosso");
 			Prezzo verde = (Prezzo) execution.getVariable("verde");
 			@SuppressWarnings("unchecked")
-			List<Parametro> parametri = (List<Parametro>) execution
-					.getVariable("parametriaggiunti");
+			List<Parametro> parametri = (List<Parametro>) execution.getVariable("parametriaggiunti");
 			Client client = newClient();
-			Builder bldr = client.target(BASE_URI_TS + "/updateTimeSlot")
-					.request(APPLICATION_JSON);
-			TimeSlot rsTimeSlot = bldr.post(
-					entity(convertiFasciaOrariaToTimeSlot(fasciaOraria),
-							APPLICATION_JSON), TimeSlot.class);
+			Builder bldr = client.target(BASE_URI_TS + "/updateTimeSlot").request(APPLICATION_JSON);
+			TimeSlot rsTimeSlot = bldr.post(entity(convertiFasciaOrariaToTimeSlot(fasciaOraria), APPLICATION_JSON),
+					TimeSlot.class);
 			if (rsTimeSlot == null)
 				error = true;
-			List<ParameterTS> parameterTss = convertiParametriToParameterTSs(
-					parametri, null);
-			bldr = client.target(BASE_URI_TS + "/removeParametersTS").request(
-					APPLICATION_JSON);
+			List<ParameterTS> parameterTss = convertiParametriToParameterTSs(parametri, null);
+			bldr = client.target(BASE_URI_TS + "/removeParametersTS").request(APPLICATION_JSON);
 			bldr.post(entity(rsTimeSlot, APPLICATION_JSON), TimeSlot.class);
-			bldr = client.target(BASE_URI_TS + "/configParameterTS").request(
-					APPLICATION_JSON);
+			bldr = client.target(BASE_URI_TS + "/configParameterTS").request(APPLICATION_JSON);
 			for (ParameterTS parameterTS : parameterTss) {
 				parameterTS.setTs(rsTimeSlot);
-				ParameterTS result = bldr.post(
-						entity(parameterTS, APPLICATION_JSON),
-						ParameterTS.class);
+				ParameterTS result = bldr.post(entity(parameterTS, APPLICATION_JSON), ParameterTS.class);
 				if (result == null)
 					error = true;
 			}
@@ -89,8 +81,7 @@ public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 			priceGreen.setColor(VERDE);
 			Object accessoVeicoliVerdi = verde.getTypeEntry();
 			if (accessoVeicoliVerdi != null)
-				priceGreen.setTypeEntry(AccessoVeicoli
-						.valueOf(accessoVeicoliVerdi + ""));
+				priceGreen.setTypeEntry(AccessoVeicoli.valueOf(accessoVeicoliVerdi + ""));
 			Object prezzoFissoVerdi = verde.getFixPrice();
 			if (prezzoFissoVerdi != null)
 				priceGreen.setFixPrice((double) prezzoFissoVerdi);
@@ -99,8 +90,7 @@ public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 			priceRed.setColor(ROSSO);
 			Object accessoVeicoliRossi = rosso.getTypeEntry();
 			if (accessoVeicoliRossi != null)
-				priceRed.setTypeEntry(AccessoVeicoli
-						.valueOf(accessoVeicoliRossi + ""));
+				priceRed.setTypeEntry(AccessoVeicoli.valueOf(accessoVeicoliRossi + ""));
 			Object prezzoFissoRossi = rosso.getFixPrice();
 			if (prezzoFissoRossi != null)
 				priceRed.setFixPrice((double) prezzoFissoRossi);
@@ -115,8 +105,7 @@ public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 			priceYellow.setColor(GIALLO);
 			Object accessoVeicoliGialli = giallo.getTypeEntry();
 			if (accessoVeicoliGialli != null)
-				priceYellow.setTypeEntry(AccessoVeicoli
-						.valueOf(accessoVeicoliGialli + ""));
+				priceYellow.setTypeEntry(AccessoVeicoli.valueOf(accessoVeicoliGialli + ""));
 			Object prezzoMassimoGialli = giallo.getMaxPrice();
 			if (prezzoMassimoGialli != null)
 				priceYellow.setMaxPrice((double) prezzoMassimoGialli);
@@ -124,31 +113,25 @@ public class ModificaFasciaOraria extends EmptyModificaFasciaOraria {
 			if (prezzoMinimoGialli != null)
 				priceYellow.setMinPrice((double) prezzoMinimoGialli);
 			priceYellow.setTs(rsTimeSlot);
-			bldr = client.target(BASE_URI_TS + "/updatePrice").request(
-					APPLICATION_JSON);
-			Price rsPriceYellow = bldr.post(
-					entity(priceYellow, APPLICATION_JSON), Price.class);
+			bldr = client.target(BASE_URI_TS + "/updatePrice").request(APPLICATION_JSON);
+			Price rsPriceYellow = bldr.post(entity(priceYellow, APPLICATION_JSON), Price.class);
 			if (rsPriceYellow == null)
 				error = true;
-			Price rsPriceRed = bldr.post(entity(priceRed, APPLICATION_JSON),
-					Price.class);
+			Price rsPriceRed = bldr.post(entity(priceRed, APPLICATION_JSON), Price.class);
 			if (rsPriceRed == null)
 				error = true;
-			Price rsPriceGreen = bldr.post(
-					entity(priceGreen, APPLICATION_JSON), Price.class);
+			Price rsPriceGreen = bldr.post(entity(priceGreen, APPLICATION_JSON), Price.class);
 			if (rsPriceGreen == null)
 				error = true;
 
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("erroremodificafasciaoraria");
 		}
 		if (error) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERRORELIEVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("erroremodificafasciaoraria");

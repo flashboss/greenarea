@@ -31,6 +31,25 @@ import static java.lang.String.format;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.GenericType;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.library.entities.ExchangeStop;
 import it.vige.greenarea.cl.library.entities.Freight;
 import it.vige.greenarea.cl.library.entities.Mission;
@@ -50,24 +69,6 @@ import it.vige.greenarea.gtg.db.facades.MissionFacade;
 import it.vige.greenarea.gtg.db.facades.TransportFacade;
 import it.vige.greenarea.gtg.db.facades.TruckFacade;
 import it.vige.greenarea.gtg.db.facades.TruckServiceClassFacade;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.core.GenericType;
-
-import org.slf4j.Logger;
 
 @Singleton
 public class MissionBuilderBean {
@@ -112,26 +113,21 @@ public class MissionBuilderBean {
 		return today;
 	}
 
-	public void buildCityLogisticsMission(Missione missione, Mission m,
-			Timestamp today) {
-		Timestamp tomorrow = new Timestamp(today.getTime() + 24 * 60 * 60
-				* 1000);
+	public void buildCityLogisticsMission(Missione missione, Mission m, Timestamp today) {
+		Timestamp tomorrow = new Timestamp(today.getTime() + 24 * 60 * 60 * 1000);
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(APPLICATION_JSON);
 		List<Vehicle> liVe = bldr.get(new GenericType<List<Vehicle>>() {
 		});
 
 		if (missione.getFasciaOraria() == null) {
-			logger.error("La missione non ha fascia oraria!!!!! "
-					+ missione.getNome());
+			logger.error("La missione non ha fascia oraria!!!!! " + missione.getNome());
 		}
 		m.setTimeSlot(new TimeSlot(missione.getFasciaOraria().getId()));
 		logger.info(missione.getDataInizio() + "");
 		m.setStartTime(missione.getDataInizio());
 		for (int i = 0; i < liVe.size(); i++)
-			if (liVe.get(i).getPlateNumber()
-					.equals(missione.getVeicolo().getTarga()))
+			if (liVe.get(i).getPlateNumber().equals(missione.getVeicolo().getTarga()))
 				m.setTruck(liVe.get(i));
 		m.setName(missione.getNome());
 		List<Parametro> arLiPa = missione.getFasciaOraria().getParametri();
@@ -207,26 +203,20 @@ public class MissionBuilderBean {
 		m.setExpireTime(tomorrow);
 	}
 
-	public void buildSgaplMission(Missione missione, Mission mission,
-			Timestamp today) {
+	public void buildSgaplMission(Missione missione, Mission mission, Timestamp today) {
 		ExchangeStop baseForUpdate = newExchangeStop(base);
 		ExchangeStop base_endForUpdate = newExchangeStop(base);
-		Timestamp tomorrow = new Timestamp(today.getTime() + 24 * 60 * 60
-				* 1000);
-		mission = updateTransports(missione, baseForUpdate, base_endForUpdate,
-				mission);
+		Timestamp tomorrow = new Timestamp(today.getTime() + 24 * 60 * 60 * 1000);
+		mission = updateTransports(missione, baseForUpdate, base_endForUpdate, mission);
 		mission.setStartTime(today);
 		mission.setExpireTime(tomorrow);
-		mission.setCompany(missione.getVeicolo().getOperatoreLogistico()
-				.getId());
-		mission.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione
-				.getFasciaOraria()));
+		mission.setCompany(missione.getVeicolo().getOperatoreLogistico().getId());
+		mission.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione.getFasciaOraria()));
 	}
 
-	public List<Transport> getTrasportiDaEseguire(
-			TransportServiceClass transportSvcClass, Date date, String roundCode) {
-		List<Transport> transports = transportFacade.findSySelection(waiting,
-				transportSvcClass.getDescription());
+	public List<Transport> getTrasportiDaEseguire(TransportServiceClass transportSvcClass, Date date,
+			String roundCode) {
+		List<Transport> transports = transportFacade.findSySelection(waiting, transportSvcClass.getDescription());
 		List<Transport> filteredTransports = new ArrayList<Transport>();
 		/*
 		 * secondo me qui manca un test per vedere se la lista e' vuota in tal
@@ -238,8 +228,7 @@ public class MissionBuilderBean {
 			try {
 				for (Transport transport : transports) {
 					String dateStr = dateFormat.format(transport.getDateMiss());
-					if (dateFormat.parse(dateStr).compareTo(date) == 0
-							&& transport.getRoundCode().equals(roundCode)) {
+					if (dateFormat.parse(dateStr).compareTo(date) == 0 && transport.getRoundCode().equals(roundCode)) {
 						filteredTransports.add(transport);
 					}
 				}
@@ -247,16 +236,14 @@ public class MissionBuilderBean {
 				logger.error("formattazione della data", e);
 			}
 		}
-		logger.debug(format("->Found %d transports for \"%s\" service class\n",
-				transports.size(), transportSvcClass.getDescription()));
+		logger.debug(format("->Found %d transports for \"%s\" service class\n", transports.size(),
+				transportSvcClass.getDescription()));
 		return filteredTransports;
 	}
 
-	public List<Transport> getTrasportiDaEseguire(
-			TransportServiceClass transportSvcClass, List<Richiesta> richieste,
+	public List<Transport> getTrasportiDaEseguire(TransportServiceClass transportSvcClass, List<Richiesta> richieste,
 			Date date, String roundCode) {
-		List<Transport> transports = transportFacade.findSySelection(null,
-				transportSvcClass.getDescription());
+		List<Transport> transports = transportFacade.findSySelection(null, transportSvcClass.getDescription());
 		List<Transport> filteredTransports = new ArrayList<Transport>();
 		/*
 		 * secondo me qui manca un test per vedere se la lista e' vuota in tal
@@ -267,8 +254,7 @@ public class MissionBuilderBean {
 		} else {
 			for (Transport transport : transports) {
 				for (Richiesta richiesta : richieste) {
-					if (transport.getAlfacode().equals(
-							richiesta.getShipmentId())
+					if (transport.getAlfacode().equals(richiesta.getShipmentId())
 							&& transport.getDateMiss().compareTo(date) == 0
 							&& transport.getRoundCode().equals(roundCode)) {
 						filteredTransports.add(transport);
@@ -276,37 +262,31 @@ public class MissionBuilderBean {
 				}
 			}
 		}
-		logger.debug(format("->Found %d transports for \"%s\" service class\n",
-				transports.size(), transportSvcClass.getDescription()));
+		logger.debug(format("->Found %d transports for \"%s\" service class\n", transports.size(),
+				transportSvcClass.getDescription()));
 		return filteredTransports;
 	}
 
-	public Set<Vehicle> getVeicoliDisponibili(
-			TransportServiceClass transportSvcClass, String roundCode,
+	public Set<Vehicle> getVeicoliDisponibili(TransportServiceClass transportSvcClass, String roundCode,
 			String operatoreLogistico) {
 		// todo da fare dopo....
-		List<TruckServiceClass> truckSvcClassList = truckServiceClassFacade
-				.findAll();
+		List<TruckServiceClass> truckSvcClassList = truckServiceClassFacade.findAll();
 		// cerco nella lista delle truck sevice class quella con lo stesso
 		// nome:
 		TruckServiceClass truckClass = null;
 		for (int i = 0; i < truckSvcClassList.size(); i++) {
-			if (truckSvcClassList.get(i).getDescription()
-					.equals(transportSvcClass.getDescription())) {
+			if (truckSvcClassList.get(i).getDescription().equals(transportSvcClass.getDescription())) {
 				truckClass = truckSvcClassList.get(i);
 				break;
 			}
 		}
 		List<Vehicle> trucks = null;
 		if (truckClass != null) {
-			trucks = truckFacade.findBySelection(IDLE,
-					truckClass.getDescription(), roundCode, operatoreLogistico);
+			trucks = truckFacade.findBySelection(IDLE, truckClass.getDescription(), roundCode, operatoreLogistico);
 		}
 
-		logger.debug(format(
-				"->Found %d trucks available for \"%s\" service class\n",
-				trucks == null ? 0 : trucks.size(),
-				transportSvcClass.getDescription()));
+		logger.debug(format("->Found %d trucks available for \"%s\" service class\n",
+				trucks == null ? 0 : trucks.size(), transportSvcClass.getDescription()));
 
 		Set<Vehicle> idleTrucks = new HashSet<Vehicle>();
 		if (trucks != null)
@@ -314,20 +294,17 @@ public class MissionBuilderBean {
 		return idleTrucks;
 	}
 
-	private Mission updateTransports(Missione missione,
-			ExchangeStop baseForUpdate, ExchangeStop base_endForUpdate,
+	private Mission updateTransports(Missione missione, ExchangeStop baseForUpdate, ExchangeStop base_endForUpdate,
 			Mission mission) {
 
 		Vehicle truck = convertiVeicoloToVehicle(missione.getVeicolo());
 		List<Richiesta> transportsToBeDone = missione.getRichieste();
-		TruckModelInterface tli = directory.get(truck.getServiceClass()
-				.getModelV());
+		TruckModelInterface tli = directory.get(truck.getServiceClass().getModelV());
 		tli = (tli != null ? tli : directory.get(FURGONATO));
 		mission = newMission(baseForUpdate, base_endForUpdate, truck, mission);
 		for (Richiesta richiesta : transportsToBeDone) {
 			Transport t = convertiRichiestaToTransport(richiesta);
-			Transport oldTransport = transportFacade.find(richiesta
-					.getShipmentId());
+			Transport oldTransport = transportFacade.find(richiesta.getShipmentId());
 			t.setServiceClass(oldTransport.getServiceClass());
 			t.setTimeSlot(oldTransport.getTimeSlot());
 			/*
@@ -350,9 +327,9 @@ public class MissionBuilderBean {
 			ExchangeStop to = newExchangeStop(t.getDropdown());
 			int e = addStop(mission, i, to);
 			to = mission.getExchangeStops().get(e);
-			/* ***************
-			 * adesso effettuo la verifica che il trasporto possa essere
-			 * effettuato
+			/*
+			 * *************** adesso effettuo la verifica che il trasporto
+			 * possa essere effettuato
 			 */
 			boolean canBeLoaded = true;
 			int k = i; // ricordo in k il numero ordinale del XS di sorgente
@@ -388,18 +365,15 @@ public class MissionBuilderBean {
 				collectInExchangeStop(freights, from);
 				deliverInExchangeStop(freights, to);
 				t.setTransportState(assigned);
-				t.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione
-						.getFasciaOraria()));
+				t.setTimeSlot(convertiFasciaOrariaToTimeSlot(missione.getFasciaOraria()));
 				sc.editSchedule(t);
 				richiesta.setStato(assigned.name());
 				mission.getTransports().add(t);
 			} else {
 				List<ExchangeStop> xss = mission.getExchangeStops();
-				if (i != 0 && from.getCollectingList().isEmpty()
-						&& from.getDeliveryList().isEmpty())
+				if (i != 0 && from.getCollectingList().isEmpty() && from.getDeliveryList().isEmpty())
 					xss.remove(from);
-				if (e != xss.size() - 1 && to.getCollectingList().isEmpty()
-						&& to.getDeliveryList().isEmpty())
+				if (e != xss.size() - 1 && to.getCollectingList().isEmpty() && to.getDeliveryList().isEmpty())
 					xss.remove(to);
 			}
 
@@ -419,25 +393,19 @@ public class MissionBuilderBean {
 												// distanza
 		int i;
 		for (i = start; i < mxs.size() - 1; i++) {
-			if (getDistance(mxs.get(i).getLocation().getLatitude(), mxs.get(i)
-					.getLocation().getLongitude(), xs.getLocation()
-					.getLatitude(), xs.getLocation().getLongitude()) < Mission.COLOCATED) {
+			if (getDistance(mxs.get(i).getLocation().getLatitude(), mxs.get(i).getLocation().getLongitude(),
+					xs.getLocation().getLatitude(), xs.getLocation().getLongitude()) < Mission.COLOCATED) {
 				// ho trovato un ExchangeStop colocato con xs
 				isColocated = true;
 				break;
 			}
 			// Calcolo l'incremento del percorso tra i e i+1 se si inserisce XS
-			int d = getDistance(xs.getLocation().getLatitude(), xs
-					.getLocation().getLongitude(), mxs.get(i).getLocation()
-					.getLatitude(), mxs.get(i).getLocation().getLongitude())
-					+ getDistance(xs.getLocation().getLatitude(), xs
-							.getLocation().getLongitude(), mxs.get(i + 1)
-							.getLocation().getLatitude(), mxs.get(i + 1)
-							.getLocation().getLongitude())
-					- getDistance(mxs.get(i).getLocation().getLatitude(), mxs
-							.get(i).getLocation().getLongitude(), mxs
-							.get(i + 1).getLocation().getLatitude(),
-							mxs.get(i + 1).getLocation().getLongitude());
+			int d = getDistance(xs.getLocation().getLatitude(), xs.getLocation().getLongitude(),
+					mxs.get(i).getLocation().getLatitude(), mxs.get(i).getLocation().getLongitude())
+					+ getDistance(xs.getLocation().getLatitude(), xs.getLocation().getLongitude(),
+							mxs.get(i + 1).getLocation().getLatitude(), mxs.get(i + 1).getLocation().getLongitude())
+					- getDistance(mxs.get(i).getLocation().getLatitude(), mxs.get(i).getLocation().getLongitude(),
+							mxs.get(i + 1).getLocation().getLatitude(), mxs.get(i + 1).getLocation().getLongitude());
 			if (d < minDistance) {
 				// ha distanza minore rispetto a tutte le precedenti valutazioni
 				minDistance = d;

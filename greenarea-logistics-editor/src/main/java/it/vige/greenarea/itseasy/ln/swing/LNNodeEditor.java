@@ -13,14 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeditorEvent;
-import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeventType;
-import it.vige.greenarea.ln.model.LNNode;
-import it.vige.greenarea.ln.model.LNNode.Cathegory;
-import it.vige.greenarea.ln.model.LNNode.Domain;
-import it.vige.greenarea.ln.model.LNNode.Status;
-
 import java.awt.Color;
 import java.util.EventObject;
 import java.util.regex.Matcher;
@@ -37,8 +29,15 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.view.mxICellEditor;
 
-public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
-		LNeditorComponentInterface {
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeditorEvent;
+import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeventType;
+import it.vige.greenarea.ln.model.LNNode;
+import it.vige.greenarea.ln.model.LNNode.Cathegory;
+import it.vige.greenarea.ln.model.LNNode.Domain;
+import it.vige.greenarea.ln.model.LNNode.Status;
+
+public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor, LNeditorComponentInterface {
 	/**
 	 * 
 	 */
@@ -131,8 +130,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		resetGenericsValuesButton = new javax.swing.JButton();
 		nameErrorField = new javax.swing.JTextField();
 
-		saveConfirmDialog
-				.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		saveConfirmDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 		saveConfirmDialog.setAlwaysOnTop(true);
 		saveConfirmDialog.setResizable(false);
 
@@ -155,54 +153,24 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		javax.swing.GroupLayout saveConfirmDialogLayout = new javax.swing.GroupLayout(
 				saveConfirmDialog.getContentPane());
 		saveConfirmDialog.getContentPane().setLayout(saveConfirmDialogLayout);
-		saveConfirmDialogLayout
-				.setHorizontalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		saveConfirmDialogLayout.setHorizontalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap()
+						.addGroup(saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(dialogMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										saveConfirmDialogLayout.createSequentialGroup().addComponent(cancelButton)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+												.addComponent(okButton)))
+						.addContainerGap()));
+		saveConfirmDialogLayout.setVerticalGroup(saveConfirmDialogLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(saveConfirmDialogLayout.createSequentialGroup().addContainerGap().addComponent(dialogMessage)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
 						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																dialogMessage,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																376,
-																Short.MAX_VALUE)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																saveConfirmDialogLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				cancelButton)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addComponent(
-																				okButton)))
-										.addContainerGap()));
-		saveConfirmDialogLayout
-				.setVerticalGroup(saveConfirmDialogLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								saveConfirmDialogLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(dialogMessage)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												233, Short.MAX_VALUE)
-										.addGroup(
-												saveConfirmDialogLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(okButton)
-														.addComponent(
-																cancelButton))
-										.addContainerGap()));
+								saveConfirmDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(okButton).addComponent(cancelButton))
+						.addContainerGap()));
 
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -222,8 +190,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 			}
 		});
 
-		statusCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N
-				.getStrings(LNNode.Status.values())));
+		statusCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N.getStrings(LNNode.Status.values())));
 		statusCombo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				statusComboActionPerformed(evt);
@@ -235,8 +202,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 
 		jLabel4.setText(I18N.getString("Domain"));
 
-		domainCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N
-				.getStrings(LNNode.Domain.values())));
+		domainCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N.getStrings(LNNode.Domain.values())));
 		domainCombo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				domainComboActionPerformed(evt);
@@ -245,8 +211,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 
 		jLabel5.setText(I18N.getString("Cathegory"));
 
-		cathegoryCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N
-				.getStrings(LNNode.Cathegory.values())));
+		cathegoryCombo.setModel(new javax.swing.DefaultComboBoxModel(I18N.getStrings(LNNode.Cathegory.values())));
 		cathegoryCombo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				cathegoryComboActionPerformed(evt);
@@ -265,20 +230,18 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		jScrollPane1.setViewportView(descriptionTextArea);
 
 		saveGenericsChangeButton.setText(I18N.getString("Save"));
-		saveGenericsChangeButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						saveGenericsChangeButtonActionPerformed(evt);
-					}
-				});
+		saveGenericsChangeButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				saveGenericsChangeButtonActionPerformed(evt);
+			}
+		});
 
 		resetGenericsValuesButton.setText(I18N.getString("RESET"));
-		resetGenericsValuesButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						resetGenericsValuesButtonActionPerformed(evt);
-					}
-				});
+		resetGenericsValuesButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				resetGenericsValuesButtonActionPerformed(evt);
+			}
+		});
 
 		nameErrorField.setEditable(false);
 		nameErrorField.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -288,190 +251,73 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		nameErrorField.setBorder(null);
 		nameErrorField.setFocusable(false);
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
-				jPanel1);
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout
-				.setHorizontalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addGroup(
-																				jPanel1Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING)
-																						.addComponent(
-																								jLabel6)
-																						.addComponent(
-																								jLabel5)
-																						.addComponent(
-																								jLabel4)
-																						.addGroup(
-																								jPanel1Layout
-																										.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.TRAILING,
-																												false)
-																										.addComponent(
-																												jLabel3,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												Short.MAX_VALUE)
-																										.addComponent(
-																												jLabel1)))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																		.addGroup(
-																				jPanel1Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addGroup(
-																								jPanel1Layout
-																										.createSequentialGroup()
-																										.addGroup(
-																												jPanel1Layout
-																														.createParallelGroup(
-																																javax.swing.GroupLayout.Alignment.LEADING,
-																																false)
-																														.addComponent(
-																																cathegoryCombo,
-																																0,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																Short.MAX_VALUE)
-																														.addComponent(
-																																domainCombo,
-																																0,
-																																javax.swing.GroupLayout.DEFAULT_SIZE,
-																																Short.MAX_VALUE)
-																														.addComponent(
-																																nameField)
-																														.addComponent(
-																																statusCombo,
-																																javax.swing.GroupLayout.PREFERRED_SIZE,
-																																114,
-																																javax.swing.GroupLayout.PREFERRED_SIZE))
-																										.addPreferredGap(
-																												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																										.addComponent(
-																												nameErrorField,
-																												javax.swing.GroupLayout.DEFAULT_SIZE,
-																												228,
-																												Short.MAX_VALUE))
-																						.addComponent(
-																								jScrollPane1,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								349,
-																								Short.MAX_VALUE)))
-														.addGroup(
-																jPanel1Layout
-																		.createSequentialGroup()
-																		.addGap(26,
-																				26,
-																				26)
-																		.addGroup(
-																				jPanel1Layout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								false)
-																						.addComponent(
-																								resetGenericsValuesButton,
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								saveGenericsChangeButton,
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE))))
-										.addContainerGap()));
-		jPanel1Layout
-				.setVerticalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addGap(31, 31, 31)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(
-																nameField,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLabel3)
-														.addComponent(
-																nameErrorField,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(14, 14, 14)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel1)
-														.addComponent(
-																statusCombo,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel4)
-														.addComponent(
-																domainCombo,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(18, 18, 18)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel5)
-														.addComponent(
-																cathegoryCombo,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(jLabel6)
-														.addComponent(
-																jScrollPane1,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-												19, Short.MAX_VALUE)
-										.addComponent(resetGenericsValuesButton)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(saveGenericsChangeButton)
-										.addContainerGap()));
+		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
+								.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+										.addComponent(jLabel6).addComponent(jLabel5).addComponent(jLabel4)
+										.addGroup(jPanel1Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+												.addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(jLabel1)))
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+												.addComponent(cathegoryCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.addComponent(domainCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.addComponent(nameField).addComponent(statusCombo,
+														javax.swing.GroupLayout.PREFERRED_SIZE, 114,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(nameErrorField, javax.swing.GroupLayout.DEFAULT_SIZE, 228,
+														Short.MAX_VALUE))
+										.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349,
+												Short.MAX_VALUE)))
+						.addGroup(jPanel1Layout.createSequentialGroup().addGap(26, 26, 26).addGroup(jPanel1Layout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+								.addComponent(resetGenericsValuesButton, javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(saveGenericsChangeButton, javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE))))
+						.addContainerGap()));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addGap(31, 31, 31)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel3).addComponent(nameErrorField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(14, 14, 14)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel1).addComponent(statusCombo, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel4).addComponent(domainCombo, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(18, 18, 18)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel5).addComponent(cathegoryCombo,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(jLabel6).addComponent(jScrollPane1,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+						.addComponent(resetGenericsValuesButton)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(saveGenericsChangeButton).addContainerGap()));
 
 		editorTabPane.addTab(I18N.getString("GeneralMenu"), jPanel1);
 
@@ -483,10 +329,8 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 	/** Closes the dialog */
 	private void closeDialog(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_closeDialog
 		if (eventHandler != null)
-			eventHandler
-					.handleEvent(new LNeditorEvent(this,
-							(userObjectChanged ? LNeventType.save
-									: LNeventType.cancel), node, null));
+			eventHandler.handleEvent(
+					new LNeditorEvent(this, (userObjectChanged ? LNeventType.save : LNeventType.cancel), node, null));
 		setVisible(false);
 		graphComponent.setEnabled(true);
 		dispose();
@@ -517,8 +361,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		enableButton(resetGenericsValuesButton);
 	}// GEN-LAST:event_descriptionTextAreaKeyTyped
 
-	private void saveGenericsChangeButtonActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveGenericsChangeButtonActionPerformed
+	private void saveGenericsChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_saveGenericsChangeButtonActionPerformed
 		doConfirmDialog();
 	}// GEN-LAST:event_saveGenericsChangeButtonActionPerformed
 
@@ -546,8 +389,7 @@ public class LNNodeEditor extends java.awt.Dialog implements mxICellEditor,
 		this.setEnabled(true);
 	}// GEN-LAST:event_cancelButtonActionPerformed
 
-	private void resetGenericsValuesButtonActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_resetGenericsValuesButtonActionPerformed
+	private void resetGenericsValuesButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_resetGenericsValuesButtonActionPerformed
 		displayGenerics(node);
 		disableButton(saveGenericsChangeButton);
 		disableButton(resetGenericsValuesButton);

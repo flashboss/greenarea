@@ -33,6 +33,37 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.jboss.resteasy.util.FindAnnotation.findAnnotation;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.GenericType;
+
+import org.jboss.resteasy.annotations.StringParameterUnmarshallerBinder;
+import org.jboss.resteasy.spi.StringParameterUnmarshaller;
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.bean.TimeSlotInfo;
 import it.vige.greenarea.cl.control.TimeSlotControl;
@@ -66,36 +97,6 @@ import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
 import it.vige.greenarea.gtg.ejb.MissionBuilderBean;
 import it.vige.greenarea.sgapl.sgot.business.SGOTbean;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.core.GenericType;
-
-import org.jboss.resteasy.annotations.StringParameterUnmarshallerBinder;
-import org.jboss.resteasy.spi.StringParameterUnmarshaller;
-import org.slf4j.Logger;
-
 /**
  * <p>
  * Class: TimeSlotRESTService
@@ -117,8 +118,7 @@ public class TimeSlotRESTService {
 		String value();
 	}
 
-	public static class DateFormatter implements
-			StringParameterUnmarshaller<Date> {
+	public static class DateFormatter implements StringParameterUnmarshaller<Date> {
 		private SimpleDateFormat formatter;
 
 		public void setAnnotations(Annotation[] annotations) {
@@ -342,7 +342,8 @@ public class TimeSlotRESTService {
 	 * positivo restituisce un TimeSlot
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return TimeSlot
 	 */
 	@GET
@@ -439,8 +440,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/findParameterOfTimeSlot/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<ParameterTS> findParameterOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<ParameterTS> findParameterOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getParameterForRank(idTimeSlot);
 	}
 
@@ -505,10 +505,8 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/requests/{dateMiss}/{idTimeSlot}/{typePG}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> selectRequests(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
-			@PathParam("idTimeSlot") int idTimeSlot,
-			@PathParam("typePG") int typePg) {
+	public List<Request> selectRequests(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+			@PathParam("idTimeSlot") int idTimeSlot, @PathParam("typePG") int typePg) {
 		logger.info("Dentro select");
 		return tsc.selectMission(dateMiss, idTimeSlot, typePg);
 
@@ -530,8 +528,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/simulRank/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> simulRank(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+	public List<Request> simulRank(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
 			@PathParam("idTimeSlot") int idTimeSlot) {
 		List<Request> c = tsc.simulRank(dateMiss, idTimeSlot);
 		return c;
@@ -552,8 +549,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getParameterForRank/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<ParameterTS> getParameterOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<ParameterTS> getParameterOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getParameterForRank(idTimeSlot);
 	}
 
@@ -566,7 +562,8 @@ public class TimeSlotRESTService {
 	 * Oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return TimeSlotInfo
 	 */
 	@GET
@@ -585,8 +582,10 @@ public class TimeSlotRESTService {
 	 * prossimi days giorni
 	 * </p>
 	 * 
-	 * @param int days
-	 * @param int idTimeSlot
+	 * @param int
+	 *            days
+	 * @param int
+	 *            idTimeSlot
 	 * @return
 	 */
 	@POST
@@ -621,8 +620,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getSchedules/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<Sched> getAllSchedules(
-			@PathParam("idTimeSlot") Integer idTimeslot) {
+	public List<Sched> getAllSchedules(@PathParam("idTimeSlot") Integer idTimeslot) {
 		List<Transport> transports = sc.getSchedules(idTimeslot);
 		return convertiTransportsToScheds(transports);
 	}
@@ -636,15 +634,16 @@ public class TimeSlotRESTService {
 	 * a una data stabilita
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
-	 * @param int dateMiss es gmaaaa
+	 * @param int
+	 *            idTimeSlot
+	 * @param int
+	 *            dateMiss es gmaaaa
 	 * @return List<Request>
 	 */
 	@GET
 	@Path("/getRank/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> getrRank(
-			@PathParam("idTimeSlot") int idTimeSlot,
+	public List<Request> getrRank(@PathParam("idTimeSlot") int idTimeSlot,
 			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
 		return tsc.getRank(dateMiss, idTimeSlot);
 	}
@@ -658,16 +657,18 @@ public class TimeSlotRESTService {
 	 * a una data stabilita
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
-	 * @param int dateMiss es gmaaaa
-	 * @param int List<Request>
+	 * @param int
+	 *            idTimeSlot
+	 * @param int
+	 *            dateMiss es gmaaaa
+	 * @param int
+	 *            List<Request>
 	 * @return List<Request>
 	 */
 	@GET
 	@Path("/updateVikor/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> updateVikor(
-			@PathParam("idTimeSlot") int idTimeSlot,
+	public List<Request> updateVikor(@PathParam("idTimeSlot") int idTimeSlot,
 			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
 		return tsc.updateVikor(null, dateMiss, idTimeSlot);
 	}
@@ -681,14 +682,14 @@ public class TimeSlotRESTService {
 	 * oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<Price>
 	 */
 	@GET
 	@Path("/getPriceOfTimeSlot/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<Price> getPriceOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<Price> getPriceOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getPriceOfTimeSlot(idTimeSlot);
 	}
 
@@ -726,8 +727,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getStoryBoard/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> getStoryBoard(
-			@PathParam("idTimeSlot") int idTimeSlot,
+	public List<Request> getStoryBoard(@PathParam("idTimeSlot") int idTimeSlot,
 			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
 		return tsc.getStoryBoard(idTimeSlot, dateMiss);
 	}
@@ -747,8 +747,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/simul/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> simul(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+	public List<Request> simul(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
 			@PathParam("idTimeSlot") int idTimeSlot) {
 
 		List<Request> c = tsc.simulRank(dateMiss, idTimeSlot);
@@ -796,22 +795,17 @@ public class TimeSlotRESTService {
 		List<String> allRoundCodes = prelevaRoundCodesMissioni(richiesteDaMissione);
 		for (Date date : allDates) {
 			for (String roundCode : allRoundCodes) {
-				List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade
-						.findAll();
+				List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade.findAll();
 				List<Mission> result = new ArrayList<Mission>();
 				Client client = newClient();
-				Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot")
-						.request(APPLICATION_JSON);
-				List<TimeSlot> timeSlots = bldr
-						.get(new GenericType<List<TimeSlot>>() {
-						});
+				Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot").request(APPLICATION_JSON);
+				List<TimeSlot> timeSlots = bldr.get(new GenericType<List<TimeSlot>>() {
+				});
 				List<FasciaOraria> fasceOrarie = new ArrayList<FasciaOraria>();
 				try {
 					for (TimeSlot timeSlot : timeSlots) {
-						FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(
-								timeSlot, asList(new ParameterTS[] {}),
-								asList(new ParameterGen[] {}),
-								asList(new Price[] {}));
+						FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot,
+								asList(new ParameterTS[] {}), asList(new ParameterGen[] {}), asList(new Price[] {}));
 						setDettaglio(timeSlot, client, fasciaOraria);
 						fasceOrarie.add(fasciaOraria);
 					}
@@ -819,16 +813,13 @@ public class TimeSlotRESTService {
 					logger.error("errore nel recupero del dettaglio");
 				}
 				for (TransportServiceClass trServiceClass : transportSvcClassList) {
-					List<Transport> transportsToBeDone = missionBuilderBean
-							.getTrasportiDaEseguire(trServiceClass,
-									richiesteDaMissione, date, roundCode);
+					List<Transport> transportsToBeDone = missionBuilderBean.getTrasportiDaEseguire(trServiceClass,
+							richiesteDaMissione, date, roundCode);
 					String operatoreLogistico = "";
 					if (!transportsToBeDone.isEmpty())
-						operatoreLogistico = transportsToBeDone.get(0)
-								.getOperatoreLogistico();
-					Set<Vehicle> idleTrucks = missionBuilderBean
-							.getVeicoliDisponibili(trServiceClass, roundCode,
-									operatoreLogistico);
+						operatoreLogistico = transportsToBeDone.get(0).getOperatoreLogistico();
+					Set<Vehicle> idleTrucks = missionBuilderBean.getVeicoliDisponibili(trServiceClass, roundCode,
+							operatoreLogistico);
 					for (Transport t : transportsToBeDone) {
 						t.setFreightItems(freightFacade.findAll(t));
 					}
@@ -840,34 +831,26 @@ public class TimeSlotRESTService {
 						Veicolo veicolo = convertiVehicleToVeicolo(truck);
 						missioneEntry.setVeicolo(veicolo);
 						missioneEntry.setRichieste(richieste);
-						Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(
-								richieste, fasceOrarie, veicolo);
+						Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(richieste,
+								fasceOrarie, veicolo);
 						Mission missione = new Mission();
-						aggiungiValoriAMissione(missioneEntry,
-								richiestePerFasciaOraria);
+						aggiungiValoriAMissione(missioneEntry, richiestePerFasciaOraria);
 						Timestamp timestamp = new Timestamp(date.getTime());
-						missionBuilderBean.buildSgaplMission(missioneEntry,
-								missione, timestamp);
-						missionBuilderBean.buildCityLogisticsMission(
-								missioneEntry, missione, timestamp);
+						missionBuilderBean.buildSgaplMission(missioneEntry, missione, timestamp);
+						missionBuilderBean.buildCityLogisticsMission(missioneEntry, missione, timestamp);
 
-						logger.debug(format(
-								"->Assigned %s for \"%s\" service class\n",
-								missione, trServiceClass.getDescription()));
-						List<ValueMission> valuesMission = missione
-								.getValuesMission();
+						logger.debug(format("->Assigned %s for \"%s\" service class\n", missione,
+								trServiceClass.getDescription()));
+						List<ValueMission> valuesMission = missione.getValuesMission();
 						missione.setValuesMission(null);
 						if (valuesMission != null)
 							for (ValueMission vm : valuesMission) {
 								vm.setMission(missione);
 							}
-						missione.setTimeSlot(tsc.findTimeSlot(missione
-								.getTimeSlot().getIdTS()));
+						missione.setTimeSlot(tsc.findTimeSlot(missione.getTimeSlot().getIdTS()));
 						missione.setName(new Random().nextInt(1000) + "");
-						for (ExchangeStop exchangeStop : missione
-								.getExchangeStops())
-							exchangeStop.setId(new Long(new Random()
-									.nextInt(1000)));
+						for (ExchangeStop exchangeStop : missione.getExchangeStops())
+							exchangeStop.setId(new Long(new Random().nextInt(1000)));
 						missioniCostruite.add(missione);
 						result.add(missione);
 						idleTrucks.remove(truck);
@@ -884,8 +867,7 @@ public class TimeSlotRESTService {
 		}
 		List<Missione> missioni = convertiMissionsToMissioni(missioniCostruite);
 		for (Missione missione : missioni) {
-			List<Request> c = tsc.simulRank(missione.getDataInizio(), missione
-					.getFasciaOraria().getId());
+			List<Request> c = tsc.simulRank(missione.getDataInizio(), missione.getFasciaOraria().getId());
 			if (c != null && c.size() > 0) {
 				missione.setRanking(c.get(0).getColor());
 				missione.setCreditoMobilita(c.get(0).getPrice());
@@ -977,8 +959,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/findTransportServiceClass/{description}")
 	@Produces(APPLICATION_JSON)
-	public List<TransportServiceClass> findTransportServiceClass(
-			@PathParam("description") String description) {
+	public List<TransportServiceClass> findTransportServiceClass(@PathParam("description") String description) {
 		return tscf.findBySelection(description);
 	}
 }

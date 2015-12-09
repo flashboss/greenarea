@@ -45,8 +45,7 @@ public class Tracer {
 		StringBuilder sb = new StringBuilder(256);
 		if (tracerDir == null) {
 			try {
-				InputStream propsStream = Tracer.class.getClassLoader()
-						.getResourceAsStream(TNTPROPSFILE);
+				InputStream propsStream = Tracer.class.getClassLoader().getResourceAsStream(TNTPROPSFILE);
 				Properties tntProps = new Properties();
 				tntProps.load(propsStream);
 				tracerDir = tntProps.getProperty(TNTDIR);

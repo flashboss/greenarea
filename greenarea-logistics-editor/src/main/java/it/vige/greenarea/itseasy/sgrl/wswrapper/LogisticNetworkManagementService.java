@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.sgrl.wswrapper;
 
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkManagement;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -25,13 +23,14 @@ import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
 
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkManagement;
+
 @WebServiceClient(name = "LogisticNetworkManagement", targetNamespace = "http://webservices.sgrl.greenarea.vige.it/", wsdlLocation = "http://NBW72018044431.vige.local:8080/SGRL/LogNetUpload?wsdl")
 public class LogisticNetworkManagementService extends Service {
 
 	private static URL LOGISTICNETWORKMANAGEMENT_WSDL_LOCATION;
 	private static WebServiceException LOGISTICNETWORKMANAGEMENT_EXCEPTION;
-	private final static QName LOGISTICNETWORKMANAGEMENT_QNAME = new QName(
-			"http://webservices.sgrl.greenarea.vige.it/",
+	private final static QName LOGISTICNETWORKMANAGEMENT_QNAME = new QName("http://webservices.sgrl.greenarea.vige.it/",
 			"LogisticNetworkManagement");
 
 	public static void setRootUrl(String root) {
@@ -58,8 +57,7 @@ public class LogisticNetworkManagementService extends Service {
 		super(wsdlLocation, LOGISTICNETWORKMANAGEMENT_QNAME);
 	}
 
-	public LogisticNetworkManagementService(URL wsdlLocation,
-			WebServiceFeature... features) {
+	public LogisticNetworkManagementService(URL wsdlLocation, WebServiceFeature... features) {
 		super(wsdlLocation, LOGISTICNETWORKMANAGEMENT_QNAME, features);
 	}
 
@@ -67,8 +65,7 @@ public class LogisticNetworkManagementService extends Service {
 		super(wsdlLocation, serviceName);
 	}
 
-	public LogisticNetworkManagementService(URL wsdlLocation,
-			QName serviceName, WebServiceFeature... features) {
+	public LogisticNetworkManagementService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
 		super(wsdlLocation, serviceName, features);
 	}
 
@@ -78,9 +75,7 @@ public class LogisticNetworkManagementService extends Service {
 	 */
 	@WebEndpoint(name = "LogisticNetworkManagementPort")
 	public LogisticNetworkManagement getLogisticNetworkManagementPort() {
-		return super.getPort(new QName(
-				"http://webservices.sgrl.greenarea.vige.it/",
-				"LogisticNetworkManagementPort"),
+		return super.getPort(new QName("http://webservices.sgrl.greenarea.vige.it/", "LogisticNetworkManagementPort"),
 				LogisticNetworkManagement.class);
 	}
 
@@ -94,11 +89,8 @@ public class LogisticNetworkManagementService extends Service {
 	 * @return returns LogisticNetworkManagement
 	 */
 	@WebEndpoint(name = "LogisticNetworkManagementPort")
-	public LogisticNetworkManagement getLogisticNetworkManagementPort(
-			WebServiceFeature... features) {
-		return super.getPort(new QName(
-				"http://webservices.sgrl.greenarea.vige.it/",
-				"LogisticNetworkManagementPort"),
+	public LogisticNetworkManagement getLogisticNetworkManagementPort(WebServiceFeature... features) {
+		return super.getPort(new QName("http://webservices.sgrl.greenarea.vige.it/", "LogisticNetworkManagementPort"),
 				LogisticNetworkManagement.class, features);
 	}
 

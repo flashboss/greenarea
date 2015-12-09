@@ -52,8 +52,7 @@ public class MQconnectorManager {
 	}
 
 	public Session getSession(ItseasyStoreInfo store, Session s, String cfName) {
-		String connectionKey = store.getObjStoreType() + "|" + store.getUrl()
-				+ "|" + cfName;
+		String connectionKey = store.getObjStoreType() + "|" + store.getUrl() + "|" + cfName;
 		// verifico se esiste gia' una connessione attiva per questa
 		// destinazione:
 		if (sessionTable.containsKey(connectionKey)) {
@@ -67,8 +66,7 @@ public class MQconnectorManager {
 			// Lookup my connection factory from the admin object store.
 			// The name used here here must match the lookup name
 			// used when the admin object was stored.
-			logger.debug("Looking up Connection Factory object with lookup name: "
-					+ cfName);
+			logger.debug("Looking up Connection Factory object with lookup name: " + cfName);
 			logger.debug("Connection Factory object found.");
 		} catch (Exception e) {
 			logger.error("Failed to lookup Connection Factory object.");
@@ -94,8 +92,7 @@ public class MQconnectorManager {
 	}
 
 	public void release(ItseasyStoreInfo store, String cfName) {
-		String connectionKey = store.getObjStoreType() + "|" + store.getUrl()
-				+ "|" + cfName;
+		String connectionKey = store.getObjStoreType() + "|" + store.getUrl() + "|" + cfName;
 		// verifico se esiste gia' una connessione attiva per questa
 		// destinazione:
 		if (!sessionTable.containsKey(connectionKey)) {

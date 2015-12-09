@@ -13,10 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.messages;
 
-import it.vige.greenarea.itseasy.lib.mqClientUtil.MqUtility;
-import it.vige.greenarea.sgaplconsole.controllers.MonitorController;
-import it.vige.greenarea.sgaplconsole.data.MonitorMsg;
-
 import java.util.Map;
 
 import javax.ejb.ActivationConfigProperty;
@@ -27,6 +23,10 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
+
+import it.vige.greenarea.itseasy.lib.mqClientUtil.MqUtility;
+import it.vige.greenarea.sgaplconsole.controllers.MonitorController;
+import it.vige.greenarea.sgaplconsole.data.MonitorMsg;
 
 // Add business logic below. (Right-click in editor and choose
 // "Insert Code > Add Business Method")
@@ -54,8 +54,7 @@ public class LogListener implements MessageListener {
 
 				for (String k : prop.keySet()) {
 
-					sb.append(k).append(" -> ").append(prop.get(k))
-							.append(",  ");
+					sb.append(k).append(" -> ").append(prop.get(k)).append(",  ");
 				}
 				p = sb.toString();
 			} catch (JMSException ex) {

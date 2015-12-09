@@ -13,7 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui;
 
-
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Widget;
@@ -79,8 +78,7 @@ public class VRefresher extends Widget implements Paintable {
 		@Override
 		public void run() {
 			// Just send something, to trigger the server side event.
-			client.updateVariable(client.getPid(getElement()),
-					VARIABLE_REFRESH_EVENT, 0, false);
+			client.updateVariable(client.getPid(getElement()), VARIABLE_REFRESH_EVENT, 0, false);
 			client.sendPendingVariableChanges();
 		}
 	}

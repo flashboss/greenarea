@@ -24,13 +24,14 @@ import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_LOGIN_PAGE;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.THEME;
-import it.vige.greenarea.bpm.UserConverter;
-import it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaMainLayout;
 
 import java.util.List;
 
 import org.activiti.engine.identity.Group;
 import org.activiti.explorer.ui.MainWindow;
+
+import it.vige.greenarea.bpm.UserConverter;
+import it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaMainLayout;
 
 public class GreenareaMainWindow extends MainWindow {
 
@@ -80,24 +81,16 @@ public class GreenareaMainWindow extends MainWindow {
 		String changeImage = "console.log(i);"
 				+ "if (header != null) { header.style.backgroundImage = 'url(/greenarea-activiti-console/VAADIN/themes/activiti/img/'+images[i]+')';"
 				+ "if(i < images.length-1) {i++;} else {i = 0;}}";
-		String script = variables + "window.setInterval(\"console.log(i);"
-				+ changeImage + "\", 10000);";
+		String script = variables + "window.setInterval(\"console.log(i);" + changeImage + "\", 10000);";
 		executeJavaScript(script);
 	}
 
 	public void callCounter() {
-		String variables = "var url = '"
-				+ BASE_URI_TAP
-				+ "/veicoliInGA';"
-				+ "var client = new XMLHttpRequest();"
-				+ "var counter = 0;"
-				+ "var footer = document.getElementsByClassName('v-table-footer-container')[0];";
-		String callCounter = "if (footer != null) { client.open('GET', url, false);"
-				+ "client.send();"
-				+ "counter = client.responseText;"
-				+ "footer.textContent = counter;}";
-		String script = variables + "window.setInterval(\"console.log(i);"
-				+ callCounter + "\", 10000);";
+		String variables = "var url = '" + BASE_URI_TAP + "/veicoliInGA';" + "var client = new XMLHttpRequest();"
+				+ "var counter = 0;" + "var footer = document.getElementsByClassName('v-table-footer-container')[0];";
+		String callCounter = "if (footer != null) { client.open('GET', url, false);" + "client.send();"
+				+ "counter = client.responseText;" + "footer.textContent = counter;}";
+		String script = variables + "window.setInterval(\"console.log(i);" + callCounter + "\", 10000);";
 		executeJavaScript(script);
 	}
 

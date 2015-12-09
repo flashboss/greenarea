@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.dto;
 
+import java.io.Serializable;
+
 import it.vige.greenarea.cl.library.entities.ParameterGen;
 import it.vige.greenarea.cl.library.entities.ParameterTS;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
-
-import java.io.Serializable;
 
 public class Parametro implements Serializable {
 
@@ -42,9 +42,8 @@ public class Parametro implements Serializable {
 		this.nome = nome;
 	}
 
-	public Parametro(String nome, String descrizione, String unitaMisura,
-			String tipo, boolean attivo, double valoreMinimo,
-			double valoreMassimo, String peso) {
+	public Parametro(String nome, String descrizione, String unitaMisura, String tipo, boolean attivo,
+			double valoreMinimo, double valoreMassimo, String peso) {
 		super();
 		this.nome = nome;
 		this.descrizione = descrizione;
@@ -56,11 +55,9 @@ public class Parametro implements Serializable {
 		this.peso = peso;
 	}
 
-	public Parametro(ParameterGen parametroGen, ParameterTS parametroTS,
-			TimeSlot timeSlot) {
-		this(parametroGen.getNamePG(), parametroGen.getDescription(),
-				parametroGen.getMeasureUnit(), parametroGen.getTypePG().name(),
-				parametroGen.isUseType(), parametroTS.getMinValue(),
+	public Parametro(ParameterGen parametroGen, ParameterTS parametroTS, TimeSlot timeSlot) {
+		this(parametroGen.getNamePG(), parametroGen.getDescription(), parametroGen.getMeasureUnit(),
+				parametroGen.getTypePG().name(), parametroGen.isUseType(), parametroTS.getMinValue(),
 				parametroTS.getMaxValue(), parametroTS.getWeight().name());
 		this.id = parametroTS.getId();
 		this.idGen = parametroGen.getId();
@@ -156,15 +153,13 @@ public class Parametro implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (attivo ? 1231 : 1237);
-		result = prime * result
-				+ ((descrizione == null) ? 0 : descrizione.hashCode());
+		result = prime * result + ((descrizione == null) ? 0 : descrizione.hashCode());
 		result = prime * result + id;
 		result = prime * result + idGen;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((peso == null) ? 0 : peso.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		result = prime * result
-				+ ((unitaMisura == null) ? 0 : unitaMisura.hashCode());
+		result = prime * result + ((unitaMisura == null) ? 0 : unitaMisura.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(valoreMassimo);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -213,11 +208,9 @@ public class Parametro implements Serializable {
 				return false;
 		} else if (!unitaMisura.equals(other.unitaMisura))
 			return false;
-		if (Double.doubleToLongBits(valoreMassimo) != Double
-				.doubleToLongBits(other.valoreMassimo))
+		if (Double.doubleToLongBits(valoreMassimo) != Double.doubleToLongBits(other.valoreMassimo))
 			return false;
-		if (Double.doubleToLongBits(valoreMinimo) != Double
-				.doubleToLongBits(other.valoreMinimo))
+		if (Double.doubleToLongBits(valoreMinimo) != Double.doubleToLongBits(other.valoreMinimo))
 			return false;
 		return true;
 	}

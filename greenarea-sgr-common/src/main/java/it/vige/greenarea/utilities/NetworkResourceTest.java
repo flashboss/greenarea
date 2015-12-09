@@ -46,8 +46,7 @@ public class NetworkResourceTest {
 	// ==========================================================================
 	//
 	//
-	public static boolean test(NetworkTestType testType, String testName,
-			String resource) {
+	public static boolean test(NetworkTestType testType, String testName, String resource) {
 		return test(testType, testName, resource, null);
 	}
 
@@ -55,8 +54,7 @@ public class NetworkResourceTest {
 		return test(testType, resource, resource, null);
 	}
 
-	public static boolean test(NetworkTestType testType, String testName,
-			String resource, Integer tcpPort) {
+	public static boolean test(NetworkTestType testType, String testName, String resource, Integer tcpPort) {
 		boolean passed = true;
 		InetAddress address = null;
 
@@ -110,10 +108,8 @@ public class NetworkResourceTest {
 		if (proxySet != null && proxySet.equals("true")) {
 			String proxyHost = System.getProperty("http.proxyHost");
 			String proxyPort = System.getProperty("http.proxyPort");
-			proxySocket = new InetSocketAddress(proxyHost,
-					Integer.parseInt(proxyPort));
-			defaultProxy = new java.net.Proxy(java.net.Proxy.Type.HTTP,
-					proxySocket);
+			proxySocket = new InetSocketAddress(proxyHost, Integer.parseInt(proxyPort));
+			defaultProxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, proxySocket);
 		} else {
 			defaultProxy = null;
 		}

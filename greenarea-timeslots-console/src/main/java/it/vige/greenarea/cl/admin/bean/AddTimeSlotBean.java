@@ -34,6 +34,23 @@ import static java.util.Arrays.asList;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 import static javax.persistence.EnumType.STRING;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.Serializable;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.persistence.Enumerated;
+
+import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.admin.entity.ParameterGenView;
+import it.vige.greenarea.cl.admin.entity.ParameterTSView;
+import it.vige.greenarea.cl.admin.rest.SgotRestClient;
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
 import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 import it.vige.greenarea.cl.library.entities.Freight;
 import it.vige.greenarea.cl.library.entities.ParameterGen;
@@ -53,22 +70,6 @@ import it.vige.greenarea.dto.TipoParametro;
 import it.vige.greenarea.dto.TipologiaClassifica;
 import it.vige.greenarea.dto.TipologiaParametro;
 import it.vige.greenarea.dto.Tolleranza;
-import it.vige.greenarea.cl.admin.entity.ParameterGenView;
-import it.vige.greenarea.cl.admin.entity.ParameterTSView;
-import it.vige.greenarea.cl.admin.rest.SgotRestClient;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
-
-import java.io.Serializable;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.persistence.Enumerated;
-
-import org.slf4j.Logger;
 
 /**
  * <p>
@@ -99,7 +100,9 @@ public class AddTimeSlotBean implements Serializable {
 	private String idtsString;
 	private TimeSlot createTS;
 
-	// Inizializzo la lista che conterr?????????????????????????????????????????????????????? i parametriTs aggiornati
+	// Inizializzo la lista che
+	// conterr?????????????????????????????????????????????????????? i
+	// parametriTs aggiornati
 	private ArrayList<ParameterTS> listaParameterTSAggiornati = new ArrayList<ParameterTS>();
 	private Price priceRed;
 	private Price priceYellow;
@@ -692,15 +695,12 @@ public class AddTimeSlotBean implements Serializable {
 		listaAllParameterGenView = new ArrayList<ParameterGenView>();
 		for (int i = 0; i < allParameterGen; i++) {
 			ParameterGenView parameterGenView = new ParameterGenView();
-			parameterGenView.setDescription(listaAllParameterGen.get(i)
-					.getDescription());
+			parameterGenView.setDescription(listaAllParameterGen.get(i).getDescription());
 			parameterGenView.setIdPG(listaAllParameterGen.get(i).getId());
 			parameterGenView.setTypePG(listaAllParameterGen.get(i).getTypePG());
-			parameterGenView.setMeasureUnit(listaAllParameterGen.get(i)
-					.getMeasureUnit());
+			parameterGenView.setMeasureUnit(listaAllParameterGen.get(i).getMeasureUnit());
 			parameterGenView.setNamePG(listaAllParameterGen.get(i).getNamePG());
-			parameterGenView
-					.setUseType(listaAllParameterGen.get(i).isUseType());
+			parameterGenView.setUseType(listaAllParameterGen.get(i).isUseType());
 			listaAllParameterGenView.add(parameterGenView);
 		}
 		return listaAllParameterGenView;
@@ -776,8 +776,7 @@ public class AddTimeSlotBean implements Serializable {
 		parameterTS = new ParameterTS();
 		TimeSlotRestClient rc = new TimeSlotRestClient();
 		try {
-			List<ParameterGen> parameterGens = rc
-					.findAllParameterGenAvailable();
+			List<ParameterGen> parameterGens = rc.findAllParameterGenAvailable();
 			for (ParameterGen parameterGen : parameterGens)
 				if (parameterGen.getId() == idParTS)
 					parameterTS.setParGen(parameterGen);
@@ -802,8 +801,7 @@ public class AddTimeSlotBean implements Serializable {
 	public ParameterTS createParameterTS() {
 
 		for (int i = 0; i < listaParameterTSAggiornati.size(); i++) {
-			if (listaParameterTSAggiornati.get(i).getParGen().getId() == parameterTS
-					.getParGen().getId()) {
+			if (listaParameterTSAggiornati.get(i).getParGen().getId() == parameterTS.getParGen().getId()) {
 				listaParameterTSAggiornati.remove(i);
 			}
 		}
@@ -838,17 +836,12 @@ public class AddTimeSlotBean implements Serializable {
 			TimeSlot ts = listaParameterTSAggiornati.get(i).getTs();
 			if (ts != null)
 				parameterTSView.setIdPTS(ts.getIdTS());
-			parameterTSView.setParGen(listaParameterTSAggiornati.get(i)
-					.getParGen());
+			parameterTSView.setParGen(listaParameterTSAggiornati.get(i).getParGen());
 			parameterTSView.setTs(ts);
-			parameterTSView.setTypePar(listaParameterTSAggiornati.get(i)
-					.getTypePar());
-			parameterTSView.setWeight(listaParameterTSAggiornati.get(i)
-					.getWeight());
-			parameterTSView.setMaxVal(listaParameterTSAggiornati.get(i)
-					.getMaxValue());
-			parameterTSView.setMinVal(listaParameterTSAggiornati.get(i)
-					.getMinValue());
+			parameterTSView.setTypePar(listaParameterTSAggiornati.get(i).getTypePar());
+			parameterTSView.setWeight(listaParameterTSAggiornati.get(i).getWeight());
+			parameterTSView.setMaxVal(listaParameterTSAggiornati.get(i).getMaxValue());
+			parameterTSView.setMinVal(listaParameterTSAggiornati.get(i).getMinValue());
 
 			listaParTSView.add(parameterTSView);
 		}
@@ -889,8 +882,7 @@ public class AddTimeSlotBean implements Serializable {
 	public void addTimeSlot() throws Exception {
 
 		// Inserisco TimeSlot nel db
-		Principal principal = getCurrentInstance().getExternalContext()
-				.getUserPrincipal();
+		Principal principal = getCurrentInstance().getExternalContext().getUserPrincipal();
 		if (principal != null)
 			createTS.setPa(principal.getName());
 		TimeSlotRestClient rcAddTimeSlot = new TimeSlotRestClient();
@@ -919,8 +911,7 @@ public class AddTimeSlotBean implements Serializable {
 			transport.setPickup(lellaGeoLocation);
 			transport.setDestination(new GeoLocation(enzo));
 			transport.setDropdown(enzoGeoLocation);
-			transport.setServiceClass(rcSgot.findTransportServiceClass(
-					"FURGONATO").get(0));
+			transport.setServiceClass(rcSgot.findTransportServiceClass("FURGONATO").get(0));
 			transport.setTransportState(waiting);
 			Freight freight = new Freight(shippingOrderId + 1);
 			freight.setDescription(shippingOrderId);
@@ -946,9 +937,7 @@ public class AddTimeSlotBean implements Serializable {
 		// Inserisco i ParameterTS nel db
 		for (int i = 0; i < listaParameterTSAggiornati.size(); i++) {
 			listaParameterTSAggiornati.get(i).setTs(createTS);
-			rcAddTimeSlot
-					.configParameterTsToTimeSlot(listaParameterTSAggiornati
-							.get(i));
+			rcAddTimeSlot.configParameterTsToTimeSlot(listaParameterTSAggiornati.get(i));
 		}
 
 		// Inserisco i Price nel db
@@ -1053,8 +1042,7 @@ public class AddTimeSlotBean implements Serializable {
 	}
 
 	public AccessoVeicoli[] getAccessoVeicoliGialli() {
-		return asList(GRATUITO, PREZZO_VARIABILE)
-				.toArray(new AccessoVeicoli[0]);
+		return asList(GRATUITO, PREZZO_VARIABILE).toArray(new AccessoVeicoli[0]);
 	}
 
 	public AccessoVeicoli[] getAccessoVeicoliRossi() {

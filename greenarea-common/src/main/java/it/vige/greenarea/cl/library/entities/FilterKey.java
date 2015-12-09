@@ -56,12 +56,8 @@ public class FilterKey implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((operatoreLogistico == null) ? 0 : operatoreLogistico
-						.hashCode());
-		result = prime * result
-				+ ((roundCode == null) ? 0 : roundCode.hashCode());
+		result = prime * result + ((operatoreLogistico == null) ? 0 : operatoreLogistico.hashCode());
+		result = prime * result + ((roundCode == null) ? 0 : roundCode.hashCode());
 		return result;
 	}
 

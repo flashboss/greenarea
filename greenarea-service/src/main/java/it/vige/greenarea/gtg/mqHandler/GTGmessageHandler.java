@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.mqHandler;
 
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyConsumer;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyConsumer;
 
 public class GTGmessageHandler {
 

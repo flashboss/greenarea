@@ -21,8 +21,7 @@ import java.util.Map;
 
 import org.activiti.engine.form.AbstractFormType;
 
-public class MissioniOPSintesiFormType<T> extends AbstractFormType implements
-		Serializable {
+public class MissioniOPSintesiFormType<T> extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = -8166011601106448025L;
 	private Map<String, T> values = new HashMap<String, T>();

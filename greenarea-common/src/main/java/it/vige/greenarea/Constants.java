@@ -22,7 +22,7 @@ public interface Constants {
 	String BASE_URI_USER = "http://localhost:8080/greenarea-service/resources/User";
 
 	String BASE_URI_TAP = "http://localhost:8080/greenarea-service/resources/Tap";
-	
+
 	String BASE_URI_ADMINISTRATOR = "http://localhost:8080/greenarea-service/resources/Administrator";
 
 	String ANONYMOUS = "anonymous";

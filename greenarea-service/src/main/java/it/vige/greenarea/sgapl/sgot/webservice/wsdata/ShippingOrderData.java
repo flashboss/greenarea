@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.webservice.wsdata;
 
-import it.vige.greenarea.dto.Address;
-
 import java.io.Serializable;
 import java.util.HashMap;
+
+import it.vige.greenarea.dto.Address;
 
 public class ShippingOrderData implements Serializable {
 
@@ -41,8 +41,7 @@ public class ShippingOrderData implements Serializable {
 		this.shipmentId = shipmentId;
 	}
 
-	public ShippingOrderData(String shipmentId,
-			ShippingItemData[] shippingItems,
+	public ShippingOrderData(String shipmentId, ShippingItemData[] shippingItems,
 			HashMap<String, String> terminiDiConsegna, String note) {
 		this(shipmentId);
 		this.shippingItems = shippingItems;

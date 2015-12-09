@@ -31,32 +31,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.Price;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.cl.library.entities.TransportServiceClass;
-import it.vige.greenarea.cl.library.entities.ValueMission;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.cl.sessions.ValueMissionFacade;
-import it.vige.greenarea.dto.FasciaOraria;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.GreenareaUser;
-import it.vige.greenarea.dto.ValoriVeicolo;
-import it.vige.greenarea.dto.Veicolo;
-import it.vige.greenarea.gtg.db.demoData.InitDemoData;
-import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
-import it.vige.greenarea.gtg.db.facades.FreightFacade;
-import it.vige.greenarea.gtg.db.facades.MissionFacade;
-import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingItemFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -76,6 +50,33 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.Price;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.TransportServiceClass;
+import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.cl.sessions.ValueMissionFacade;
+import it.vige.greenarea.dto.FasciaOraria;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.dto.ValoriVeicolo;
+import it.vige.greenarea.dto.Veicolo;
+import it.vige.greenarea.gtg.db.demoData.InitDemoData;
+import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
+import it.vige.greenarea.gtg.db.facades.FreightFacade;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
+import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingItemFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 @Named(value = "gTGmanagerBean")
 @Dependent
@@ -111,8 +112,7 @@ public class GTGmanagerBean {
 	public String caricaPolicy() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.caricaPolicy();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -120,8 +120,7 @@ public class GTGmanagerBean {
 	public String eseguiRanking() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.eseguiRanking();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -129,8 +128,7 @@ public class GTGmanagerBean {
 	public String caricaTrasporti() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.caricaTrasporti();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -138,8 +136,7 @@ public class GTGmanagerBean {
 	public String caricaTrasportiMassivo() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.caricaTrasportiMassivo();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -147,8 +144,7 @@ public class GTGmanagerBean {
 	public String cancellaTutto() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.cancellaTutto();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -156,8 +152,7 @@ public class GTGmanagerBean {
 	public String cancellaDatiTap() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		initDemoData.cancellaDatiTap();
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -169,24 +164,20 @@ public class GTGmanagerBean {
 		} catch (Exception e) {
 			logger.error("error init data", e);
 		}
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
 
 	public String buildLightMission() {
 		Client clientTS = newClient();
-		Builder bldrTs = clientTS.target(BASE_URI_TS + "/findAllTimeSlot")
-				.request(APPLICATION_JSON);
-		List<TimeSlot> timeSlots = bldrTs
-				.get(new GenericType<List<TimeSlot>>() {
-				});
+		Builder bldrTs = clientTS.target(BASE_URI_TS + "/findAllTimeSlot").request(APPLICATION_JSON);
+		List<TimeSlot> timeSlots = bldrTs.get(new GenericType<List<TimeSlot>>() {
+		});
 		List<FasciaOraria> fasceOrarie = new ArrayList<FasciaOraria>();
 		try {
 			for (TimeSlot timeSlot : timeSlots) {
-				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(
-						timeSlot, asList(new ParameterTS[] {}),
+				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot, asList(new ParameterTS[] {}),
 						asList(new ParameterGen[] {}), asList(new Price[] {}));
 				setDettaglio(timeSlot, clientTS, fasciaOraria);
 				fasceOrarie.add(fasciaOraria);
@@ -196,56 +187,41 @@ public class GTGmanagerBean {
 		}
 
 		Client clientUser = newClient();
-		Builder bldrUser = clientUser.target(
-				BASE_URI_USER + "/getVehiclesForOP/tnt").request(
-				APPLICATION_JSON);
+		Builder bldrUser = clientUser.target(BASE_URI_USER + "/getVehiclesForOP/tnt").request(APPLICATION_JSON);
 		List<Vehicle> response = bldrUser.get(new GenericType<List<Vehicle>>() {
 		});
 		List<Veicolo> veicoli = new ArrayList<Veicolo>();
 		if (response != null && response.size() > 0) {
 			for (Vehicle vehicle : response) {
-				ValoriVeicolo parametri = new ValoriVeicolo(
-						vehicle.getServiceClass());
-				veicoli.add(new Veicolo(vehicle.getState().name(), vehicle
-						.getPlateNumber(),
-						new GreenareaUser(vehicle.getAutista()), new GreenareaUser(
-								vehicle.getSocietaDiTrasporto()),
-						new OperatoreLogistico(new GreenareaUser("tnt")),
-						parametri));
+				ValoriVeicolo parametri = new ValoriVeicolo(vehicle.getServiceClass());
+				veicoli.add(new Veicolo(vehicle.getState().name(), vehicle.getPlateNumber(),
+						new GreenareaUser(vehicle.getAutista()), new GreenareaUser(vehicle.getSocietaDiTrasporto()),
+						new OperatoreLogistico(new GreenareaUser("tnt")), parametri));
 			}
 		}
 		List<ShippingOrder> shippingOrders = shippingOrderFacade.findAll("tnt");
 		for (ShippingOrder shippingOrder : shippingOrders)
-			shippingOrder.setShippingItems(shippingItemFacade
-					.findAll(shippingOrder));
+			shippingOrder.setShippingItems(shippingItemFacade.findAll(shippingOrder));
 		List<Richiesta> richieste = convertiShippingOrdersToRichieste(shippingOrders);
 
 		for (Veicolo veicolo : veicoli) {
 			Missione missione = null;
 			ValoriVeicolo valoriVeicolo = veicolo.getValori();
-			Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(
-					richieste, convertiTimeSlotsToFasceOrarie(timeSlots),
-					veicolo);
+			Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(richieste,
+					convertiTimeSlotsToFasceOrarie(timeSlots), veicolo);
 			if (richiestePerFasciaOraria.size() > 0) {
-				Richiesta primaRichiesta = richiestePerFasciaOraria.keySet()
-						.iterator().next();
-				missione = new Missione(primaRichiesta.getFromName(),
-						primaRichiesta.getFromName(), valoriVeicolo.getLenght()
-								+ "", valoriVeicolo.getCarico() + "",
-						valoriVeicolo.getTappe() + "", valoriVeicolo.getEuro()
-								+ "", valoriVeicolo.getWeight() + "", WAITING,
-						new ArrayList<Richiesta>(richiestePerFasciaOraria
-								.keySet()), veicolo,
-						new Timestamp(primaRichiesta.getOrarioInizio()
-								.getTime()),
+				Richiesta primaRichiesta = richiestePerFasciaOraria.keySet().iterator().next();
+				missione = new Missione(primaRichiesta.getFromName(), primaRichiesta.getFromName(),
+						valoriVeicolo.getLenght() + "", valoriVeicolo.getCarico() + "", valoriVeicolo.getTappe() + "",
+						valoriVeicolo.getEuro() + "", valoriVeicolo.getWeight() + "", WAITING,
+						new ArrayList<Richiesta>(richiestePerFasciaOraria.keySet()), veicolo,
+						new Timestamp(primaRichiesta.getOrarioInizio().getTime()),
 						richiestePerFasciaOraria.get(primaRichiesta));
 
 				Client clientMission = newClient();
-				Builder bldrMission = clientMission.target(
-						BASE_URI_TS + "/TimeSlot/buildMission").request(
-						APPLICATION_JSON);
-				bldrMission.post(entity(missione, APPLICATION_JSON),
-						Mission.class);
+				Builder bldrMission = clientMission.target(BASE_URI_TS + "/TimeSlot/buildMission")
+						.request(APPLICATION_JSON);
+				bldrMission.post(entity(missione, APPLICATION_JSON), Mission.class);
 			}
 		}
 		return "";
@@ -258,8 +234,7 @@ public class GTGmanagerBean {
 		} catch (Exception e) {
 			logger.error("error init data", e);
 		}
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -271,8 +246,7 @@ public class GTGmanagerBean {
 		} catch (Exception e) {
 			logger.error("error init data", e);
 		}
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -284,8 +258,7 @@ public class GTGmanagerBean {
 		} catch (Exception e) {
 			logger.error("error init data", e);
 		}
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
@@ -296,19 +269,16 @@ public class GTGmanagerBean {
 
 	public String buildMission(Date date, String roundCode) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade
-				.findAll();
+		List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade.findAll();
 		List<Mission> result = new ArrayList<Mission>();
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot").request(APPLICATION_JSON);
 		List<TimeSlot> timeSlots = bldr.get(new GenericType<List<TimeSlot>>() {
 		});
 		List<FasciaOraria> fasceOrarie = new ArrayList<FasciaOraria>();
 		try {
 			for (TimeSlot timeSlot : timeSlots) {
-				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(
-						timeSlot, asList(new ParameterTS[] {}),
+				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot, asList(new ParameterTS[] {}),
 						asList(new ParameterGen[] {}), asList(new Price[] {}));
 				setDettaglio(timeSlot, client, fasciaOraria);
 				fasceOrarie.add(fasciaOraria);
@@ -317,16 +287,14 @@ public class GTGmanagerBean {
 			logger.error("errore nel recupero del dettaglio");
 		}
 		for (TransportServiceClass trServiceClass : transportSvcClassList) {
-			List<Transport> transportsToBeDone = missionBuilderBean
-					.getTrasportiDaEseguire(trServiceClass, date, roundCode);
+			List<Transport> transportsToBeDone = missionBuilderBean.getTrasportiDaEseguire(trServiceClass, date,
+					roundCode);
 			String operatoreLogistico = "";
 			if (!transportsToBeDone.isEmpty())
-				operatoreLogistico = transportsToBeDone.get(0)
-						.getOperatoreLogistico();
-			Set<Vehicle> idleTrucks = missionBuilderBean.getVeicoliDisponibili(
-					trServiceClass, roundCode, operatoreLogistico);
-			Map<Transport, List<Freight>> allTransports = freightFacade
-					.findAll(transportsToBeDone);
+				operatoreLogistico = transportsToBeDone.get(0).getOperatoreLogistico();
+			Set<Vehicle> idleTrucks = missionBuilderBean.getVeicoliDisponibili(trServiceClass, roundCode,
+					operatoreLogistico);
+			Map<Transport, List<Freight>> allTransports = freightFacade.findAll(transportsToBeDone);
 			for (Transport t : transportsToBeDone) {
 				t.setFreightItems(allTransports.get(t));
 			}
@@ -338,18 +306,16 @@ public class GTGmanagerBean {
 				Veicolo veicolo = convertiVehicleToVeicolo(truck);
 				missioneEntry.setVeicolo(veicolo);
 				missioneEntry.setRichieste(richieste);
-				Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(
-						richieste, fasceOrarie, veicolo);
+				Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(richieste,
+						fasceOrarie, veicolo);
 				Mission missione = new Mission();
 				aggiungiValoriAMissione(missioneEntry, richiestePerFasciaOraria);
 				Timestamp timestamp = new Timestamp(date.getTime());
-				missionBuilderBean.buildSgaplMission(missioneEntry, missione,
-						timestamp);
-				missionBuilderBean.buildCityLogisticsMission(missioneEntry,
-						missione, timestamp);
+				missionBuilderBean.buildSgaplMission(missioneEntry, missione, timestamp);
+				missionBuilderBean.buildCityLogisticsMission(missioneEntry, missione, timestamp);
 
-				logger.debug(format("->Assigned %s for \"%s\" service class\n",
-						missione, trServiceClass.getDescription()));
+				logger.debug(
+						format("->Assigned %s for \"%s\" service class\n", missione, trServiceClass.getDescription()));
 				List<ValueMission> valuesMission = missione.getValuesMission();
 				missione.setValuesMission(null);
 				if (valuesMission != null)
@@ -369,8 +335,7 @@ public class GTGmanagerBean {
 				richieste.removeAll(trSet);
 			}
 		}
-		FacesMessage msg = new FacesMessage("Ho creato " + result.size()
-				+ " missioni");
+		FacesMessage msg = new FacesMessage("Ho creato " + result.size() + " missioni");
 		context.addMessage(null, msg);
 		return "";
 	}

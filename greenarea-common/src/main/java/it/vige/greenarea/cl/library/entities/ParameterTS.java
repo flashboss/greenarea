@@ -15,8 +15,6 @@ package it.vige.greenarea.cl.library.entities;
 
 import static javax.persistence.GenerationType.AUTO;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.Peso;
-import it.vige.greenarea.dto.TipoParametro;
 
 import java.io.Serializable;
 
@@ -27,6 +25,9 @@ import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.Peso;
+import it.vige.greenarea.dto.TipoParametro;
 
 @Entity
 @XmlRootElement

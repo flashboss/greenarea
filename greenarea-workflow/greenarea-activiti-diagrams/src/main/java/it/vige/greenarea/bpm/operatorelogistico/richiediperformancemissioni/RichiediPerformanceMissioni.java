@@ -20,9 +20,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,8 +39,11 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
-public class RichiediPerformanceMissioni extends
-		EmptyRichiediPerformanceMissioni {
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
+
+public class RichiediPerformanceMissioni extends EmptyRichiediPerformanceMissioni {
 	private Logger logger = getLogger(getClass());
 
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-d");
@@ -57,22 +57,17 @@ public class RichiediPerformanceMissioni extends
 			Date al = (Date) execution.getVariable("al");
 
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-					APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 			RichiestaMissioni richiesta = new RichiestaMissioni();
 			richiesta.setDataFine(al);
-			List<Missione> missioni = bldr.post(
-					entity(richiesta, APPLICATION_JSON),
-					new GenericType<List<Missione>>() {
-					});
+			List<Missione> missioni = bldr.post(entity(richiesta, APPLICATION_JSON), new GenericType<List<Missione>>() {
+			});
 			Map<String, List<Missione>> elencoMissioni = new HashMap<String, List<Missione>>();
 			Map<String, Double> mappaCrediti = new HashMap<String, Double>();
 			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			if (missioni != null)
 				for (Missione missione : missioni) {
-					String dataInizio = dateFormat.format(missione
-							.getDataInizio());
+					String dataInizio = dateFormat.format(missione.getDataInizio());
 					String di = df.format(missione.getDataInizio());
 					if (elencoMissioni.get(di) == null)
 						elencoMissioni.put(di, new ArrayList<Missione>());
@@ -112,8 +107,7 @@ public class RichiediPerformanceMissioni extends
 			execution.setVariable("elencoMissioni", elencoMissioni);
 
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerichiestaperformancemissioni");

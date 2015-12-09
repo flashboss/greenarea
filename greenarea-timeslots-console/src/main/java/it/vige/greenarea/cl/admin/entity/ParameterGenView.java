@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.entity;
 
-import it.vige.greenarea.dto.TipologiaParametro;
-
 import java.io.Serializable;
+
+import it.vige.greenarea.dto.TipologiaParametro;
 
 public class ParameterGenView implements Serializable {
 

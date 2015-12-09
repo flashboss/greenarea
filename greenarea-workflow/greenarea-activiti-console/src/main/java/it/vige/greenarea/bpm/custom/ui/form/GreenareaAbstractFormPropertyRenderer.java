@@ -47,16 +47,14 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
-		AbstractFormPropertyRenderer {
+public abstract class GreenareaAbstractFormPropertyRenderer<T> extends AbstractFormPropertyRenderer {
 
 	private static final long serialVersionUID = -4969880376947019989L;
 	private GreenareaFormPropertiesForm greenareaFormPropertiesForm;
 	private FormProperty operations;
 	private FormProperty mainProperty;
 
-	public GreenareaAbstractFormPropertyRenderer(
-			Class<? extends FormType> formType) {
+	public GreenareaAbstractFormPropertyRenderer(Class<? extends FormType> formType) {
 		super(formType);
 	}
 
@@ -64,15 +62,13 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 		return greenareaFormPropertiesForm;
 	}
 
-	public void setGreenareaFormPropertiesForm(
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
+	public void setGreenareaFormPropertiesForm(GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
 		this.greenareaFormPropertiesForm = greenareaFormPropertiesForm;
 
-		List<FormProperty> formProperties = greenareaFormPropertiesForm
-				.getGreenareaFormPropertiesComponent().getFormProperties();
+		List<FormProperty> formProperties = greenareaFormPropertiesForm.getGreenareaFormPropertiesComponent()
+				.getFormProperties();
 		for (FormProperty formProperty : formProperties) {
-			if (formProperty.getType() instanceof EnumFormType
-					&& formProperty.getId().contains(OPERAZIONE)) {
+			if (formProperty.getType() instanceof EnumFormType && formProperty.getId().contains(OPERAZIONE)) {
 				operations = formProperty;
 			} else
 				mainProperty = formProperty;
@@ -87,8 +83,7 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 		return mainProperty;
 	}
 
-	protected void setOperation(Map<String, String> formProperties,
-			String operation) {
+	protected void setOperation(Map<String, String> formProperties, String operation) {
 		for (String formProperty : formProperties.keySet()) {
 			if (formProperty.contains(OPERAZIONE)) {
 				formProperties.put(formProperty, operation);
@@ -96,8 +91,7 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 		}
 	}
 
-	protected void addButton(String operation, HorizontalLayout buttons,
-			final String item, final Table table) {
+	protected void addButton(String operation, HorizontalLayout buttons, final String item, final Table table) {
 		final String finalOperation = operation;
 		final Button button = new Button();
 		if (operation.equals(MODIFICA.name()))
@@ -122,19 +116,14 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 				try {
 					table.select(item);
 					Map<String, String> formProperties = greenareaFormPropertiesForm
-							.getGreenareaFormPropertiesComponent()
-							.getFormPropertyValues();
+							.getGreenareaFormPropertiesComponent().getFormPropertyValues();
 					setOperation(formProperties, finalOperation);
 					greenareaFormPropertiesForm.getMainTitle()
-							.setPropertyDataSource(
-									new ObjectProperty<String>(
-											greenareaFormPropertiesForm
-													.getMainTitle().getValue()
-													+ " > " + finalOperation,
-											String.class));
+							.setPropertyDataSource(new ObjectProperty<String>(
+									greenareaFormPropertiesForm.getMainTitle().getValue() + " > " + finalOperation,
+									String.class));
 					FormPropertiesEvent formPropertiesEvent = greenareaFormPropertiesForm.new FormPropertiesEvent(
-							greenareaFormPropertiesForm, TYPE_SUBMIT,
-							formProperties);
+							greenareaFormPropertiesForm, TYPE_SUBMIT, formProperties);
 					greenareaFormPropertiesForm.fireEvent(formPropertiesEvent);
 					button.setComponentError(null);
 				} catch (InvalidValueException ive) {
@@ -148,18 +137,15 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);
 		buttons.setWidth(80, UNITS_PIXELS);
 		buttons.addStyleName(STYLE_DETAIL_BLOCK);
 		for (String operation : mapOperations.keySet()) {
-			if (operation.equals(MODIFICA.name())
-					|| operation.equals(CANCELLAZIONE.name())
-					|| operation.equals(DETTAGLIO.name())
-					|| operation.equals(INSERIMENTO.name())) {
+			if (operation.equals(MODIFICA.name()) || operation.equals(CANCELLAZIONE.name())
+					|| operation.equals(DETTAGLIO.name()) || operation.equals(INSERIMENTO.name())) {
 				addButton(operation, buttons, item, table);
 			}
 		}
@@ -170,8 +156,7 @@ public abstract class GreenareaAbstractFormPropertyRenderer<T> extends
 		return buttons;
 	}
 
-	protected abstract boolean visible(Method method,
-			java.lang.reflect.Field field);
+	protected abstract boolean visible(Method method, java.lang.reflect.Field field);
 
 	public boolean visible(Method[] methods, java.lang.reflect.Field field) {
 		for (Method method : methods)

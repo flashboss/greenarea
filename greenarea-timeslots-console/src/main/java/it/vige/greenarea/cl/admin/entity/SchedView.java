@@ -15,131 +15,128 @@ package it.vige.greenarea.cl.admin.entity;
 
 import java.io.Serializable;
 
+public class SchedView implements Serializable {
 
-public class SchedView implements Serializable{    
-
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6401148935016758137L;
 	private Integer idSc;
-    private int idTimeSlot;
-    
-    private String timeSlot;
+	private int idTimeSlot;
 
-    private String timeSlotData;
-    private String timeSlotOra;
+	private String timeSlot;
 
-    private String timeAcceptData;
-    private String timeAcceptOra;
+	private String timeSlotData;
+	private String timeSlotOra;
 
-    private String timeClosingData;
-    private String timeClosingOra;
+	private String timeAcceptData;
+	private String timeAcceptOra;
 
-    private String timeRankData;
-    private String timeRankOra;
+	private String timeClosingData;
+	private String timeClosingOra;
 
-    private int request;
+	private String timeRankData;
+	private String timeRankOra;
 
-    public SchedView() {
-    }
-    
-    public Integer getIdSc() {
-        return idSc;
-    }
+	private int request;
 
-    public void setIdSc(Integer idSc) {
-        this.idSc = idSc;
-    }
+	public SchedView() {
+	}
 
-    public int getIdTimeSlot() {
-        return idTimeSlot;
-    }
+	public Integer getIdSc() {
+		return idSc;
+	}
 
-    public void setIdTimeSlot(int idTimeSlot) {
-        this.idTimeSlot = idTimeSlot;
-    }
+	public void setIdSc(Integer idSc) {
+		this.idSc = idSc;
+	}
 
-    public int getRequest() {
-        return request;
-    }
+	public int getIdTimeSlot() {
+		return idTimeSlot;
+	}
 
-    public void setRequest(int request) {
-        this.request = request;
-    }
+	public void setIdTimeSlot(int idTimeSlot) {
+		this.idTimeSlot = idTimeSlot;
+	}
 
-    public String getTimeAcceptData() {
-        return timeAcceptData;
-    }
+	public int getRequest() {
+		return request;
+	}
 
-    public void setTimeAcceptData(String timeAcceptData) {
-        this.timeAcceptData = timeAcceptData;
-    }
+	public void setRequest(int request) {
+		this.request = request;
+	}
 
-    public String getTimeAcceptOra() {
-        return timeAcceptOra;
-    }
+	public String getTimeAcceptData() {
+		return timeAcceptData;
+	}
 
-    public void setTimeAcceptOra(String timeAcceptOra) {
-        this.timeAcceptOra = timeAcceptOra;
-    }
+	public void setTimeAcceptData(String timeAcceptData) {
+		this.timeAcceptData = timeAcceptData;
+	}
 
-    public String getTimeClosingData() {
-        return timeClosingData;
-    }
+	public String getTimeAcceptOra() {
+		return timeAcceptOra;
+	}
 
-    public void setTimeClosingData(String timeClosingData) {
-        this.timeClosingData = timeClosingData;
-    }
+	public void setTimeAcceptOra(String timeAcceptOra) {
+		this.timeAcceptOra = timeAcceptOra;
+	}
 
-    public String getTimeClosingOra() {
-        return timeClosingOra;
-    }
+	public String getTimeClosingData() {
+		return timeClosingData;
+	}
 
-    public void setTimeClosingOra(String timeClosingOra) {
-        this.timeClosingOra = timeClosingOra;
-    }
+	public void setTimeClosingData(String timeClosingData) {
+		this.timeClosingData = timeClosingData;
+	}
 
-    public String getTimeRankData() {
-        return timeRankData;
-    }
+	public String getTimeClosingOra() {
+		return timeClosingOra;
+	}
 
-    public void setTimeRankData(String timeRankData) {
-        this.timeRankData = timeRankData;
-    }
+	public void setTimeClosingOra(String timeClosingOra) {
+		this.timeClosingOra = timeClosingOra;
+	}
 
-    public String getTimeRankOra() {
-        return timeRankOra;
-    }
+	public String getTimeRankData() {
+		return timeRankData;
+	}
 
-    public void setTimeRankOra(String timeRankOra) {
-        this.timeRankOra = timeRankOra;
-    }
+	public void setTimeRankData(String timeRankData) {
+		this.timeRankData = timeRankData;
+	}
 
-    public String getTimeSlotData() {
-        return timeSlotData;
-    }
+	public String getTimeRankOra() {
+		return timeRankOra;
+	}
 
-    public void setTimeSlotData(String timeSlotData) {
-        this.timeSlotData = timeSlotData;
-    }
+	public void setTimeRankOra(String timeRankOra) {
+		this.timeRankOra = timeRankOra;
+	}
 
-    public String getTimeSlotOra() {
-        return timeSlotOra;
-    }
+	public String getTimeSlotData() {
+		return timeSlotData;
+	}
 
-    public void setTimeSlotOra(String timeSlotOra) {
-        this.timeSlotOra = timeSlotOra;
-    }
+	public void setTimeSlotData(String timeSlotData) {
+		this.timeSlotData = timeSlotData;
+	}
 
-    public String getTimeSlot() {
-        return timeSlot;
-    }
+	public String getTimeSlotOra() {
+		return timeSlotOra;
+	}
 
-    public void setTimeSlot(String timeSlot) {
-        this.timeSlot = timeSlot;
-    }
+	public void setTimeSlotOra(String timeSlotOra) {
+		this.timeSlotOra = timeSlotOra;
+	}
 
-    
-    
+	public String getTimeSlot() {
+		return timeSlot;
+	}
+
+	public void setTimeSlot(String timeSlot) {
+		this.timeSlot = timeSlot;
+	}
+
 }

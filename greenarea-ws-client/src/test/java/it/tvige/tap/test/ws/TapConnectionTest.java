@@ -15,11 +15,6 @@ package it.tvige.tap.test.ws;
 
 import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.tap.spreceiver.ws.GroupData;
-import it.vige.tap.spreceiver.ws.OutData;
-import it.vige.tap.spreceiver.ws.ParamData;
-import it.vige.tap.spreceiver.ws.SpPushDataService;
-import it.vige.tap.spreceiver.ws.SpPushDataServiceService;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -33,6 +28,12 @@ import javax.xml.ws.BindingProvider;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import it.vige.tap.spreceiver.ws.GroupData;
+import it.vige.tap.spreceiver.ws.OutData;
+import it.vige.tap.spreceiver.ws.ParamData;
+import it.vige.tap.spreceiver.ws.SpPushDataService;
+import it.vige.tap.spreceiver.ws.SpPushDataServiceService;
+
 public class TapConnectionTest {
 
 	private static Logger logger = getLogger(TapConnectionTest.class);
@@ -40,16 +41,14 @@ public class TapConnectionTest {
 	@Test
 	public void testKeepAlive() {
 		SpPushDataServiceService service = new SpPushDataServiceService();
-		SpPushDataService spPushDataService = service
-				.getSpPushDataServicePort();
+		SpPushDataService spPushDataService = service.getSpPushDataServicePort();
 		spPushDataService.keepAlive();
 	}
 
 	@Test
 	public void testPushData() {
 		SpPushDataServiceService service = new SpPushDataServiceService();
-		SpPushDataService spPushDataService = service
-				.getSpPushDataServicePort();
+		SpPushDataService spPushDataService = service.getSpPushDataServicePort();
 
 		BindingProvider provider = (BindingProvider) spPushDataService;
 		Map<String, Object> req_ctx = provider.getRequestContext();
@@ -57,8 +56,7 @@ public class TapConnectionTest {
 		 * req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
 		 * "http://82.107.53.122/greenarea-service/SpPushDataService");
 		 */
-		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/greenarea-service/SpPushDataService");
+		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8080/greenarea-service/SpPushDataService");
 		OutData parameters = new OutData();
 		parameters.setCodeFunction("code_function");
 		try {
@@ -78,8 +76,7 @@ public class TapConnectionTest {
 		spPushDataService.pushData(parameters);
 	}
 
-	public XMLGregorianCalendar asXMLGregorianCalendar(Date date)
-			throws DatatypeConfigurationException {
+	public XMLGregorianCalendar asXMLGregorianCalendar(Date date) throws DatatypeConfigurationException {
 		if (date == null) {
 			return null;
 		} else {

@@ -82,9 +82,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mousePressed(MouseEvent e) {
 				clearSelection();
@@ -93,9 +92,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseClicked(MouseEvent e) {
 			}
@@ -103,9 +101,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseEntered(MouseEvent e) {
 			}
@@ -113,9 +110,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseExited(MouseEvent e) {
 			}
@@ -123,9 +119,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -169,8 +164,7 @@ public class EditorPalette extends JPanel {
 
 			Graphics2D g2 = (Graphics2D) g;
 
-			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(), 0,
-					gradientColor));
+			g2.setPaint(new GradientPaint(0, 0, getBackground(), getWidth(), 0, gradientColor));
 			g2.fill(rect);
 		}
 	}
@@ -199,8 +193,8 @@ public class EditorPalette extends JPanel {
 			selectedEntry.setOpaque(true);
 		}
 
-		eventSource.fireEvent(new mxEventObject(mxEvent.SELECT, "entry",
-				selectedEntry, "transferable", t, "previous", previous));
+		eventSource.fireEvent(
+				new mxEventObject(mxEvent.SELECT, "entry", selectedEntry, "transferable", t, "previous", previous));
 	}
 
 	/**
@@ -208,8 +202,7 @@ public class EditorPalette extends JPanel {
 	 */
 	public void setPreferredWidth(int width) {
 		int cols = Math.max(1, width / 55);
-		setPreferredSize(new Dimension(width,
-				(getComponentCount() * 55 / cols) + 30));
+		setPreferredSize(new Dimension(width, (getComponentCount() * 55 / cols) + 30));
 		revalidate();
 	}
 
@@ -222,8 +215,7 @@ public class EditorPalette extends JPanel {
 	 * @param height
 	 * @param value
 	 */
-	public void addEdgeTemplate(final String name, ImageIcon icon,
-			String style, int width, int height, Object value) {
+	public void addEdgeTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value) {
 		mxGeometry geometry = new mxGeometry(0, 0, width, height);
 		geometry.setTerminalPoint(new mxPoint(0, height), true);
 		geometry.setTerminalPoint(new mxPoint(width, 0), false);
@@ -244,10 +236,8 @@ public class EditorPalette extends JPanel {
 	 * @param height
 	 * @param value
 	 */
-	public void addTemplate(final String name, ImageIcon icon, String style,
-			int width, int height, Object value) {
-		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height),
-				style);
+	public void addTemplate(final String name, ImageIcon icon, String style, int width, int height, Object value) {
+		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height), style);
 		cell.setVertex(true);
 
 		addTemplate(name, icon, cell);
@@ -261,14 +251,12 @@ public class EditorPalette extends JPanel {
 	 */
 	public void addTemplate(final String name, ImageIcon icon, mxCell cell) {
 		mxRectangle bounds = (mxGeometry) cell.getGeometry().clone();
-		final mxGraphTransferable t = new mxGraphTransferable(
-				new Object[] { cell }, bounds);
+		final mxGraphTransferable t = new mxGraphTransferable(new Object[] { cell }, bounds);
 
 		// Scales the image if it's too large for the library
 		if (icon != null) {
 			if (icon.getIconWidth() > 32 || icon.getIconHeight() > 32) {
-				icon = new ImageIcon(icon.getImage().getScaledInstance(32, 32,
-						0));
+				icon = new ImageIcon(icon.getImage().getScaledInstance(32, 32, 0));
 			}
 		}
 
@@ -289,9 +277,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mousePressed(MouseEvent e) {
 				setSelectionEntry(entry, t);
@@ -300,9 +287,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseClicked(MouseEvent e) {
 			}
@@ -310,9 +296,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseEntered(MouseEvent e) {
 			}
@@ -320,9 +305,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseExited(MouseEvent e) {
 			}
@@ -330,9 +314,8 @@ public class EditorPalette extends JPanel {
 			/*
 			 * (non-Javadoc)
 			 * 
-			 * @see
-			 * java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent
-			 * )
+			 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.
+			 * MouseEvent )
 			 */
 			public void mouseReleased(MouseEvent e) {
 			}
@@ -351,8 +334,7 @@ public class EditorPalette extends JPanel {
 		};
 
 		DragSource dragSource = new DragSource();
-		dragSource.createDefaultDragGestureRecognizer(entry,
-				DnDConstants.ACTION_COPY, dragGestureListener);
+		dragSource.createDefaultDragGestureRecognizer(entry, DnDConstants.ACTION_COPY, dragGestureListener);
 
 		add(entry);
 	}

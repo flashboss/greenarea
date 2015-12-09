@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.data;
 
-import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
-
 import java.io.Serializable;
+
+import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
 
 public class MyTransport implements Serializable {
 

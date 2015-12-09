@@ -14,13 +14,14 @@
 package it.vige.greenarea.bpm.custom.ui.dettaglio.admin.letturafiltri;
 
 import static org.activiti.explorer.ExplorerApp.get;
-import it.vige.greenarea.bpm.custom.GreenareaViewManager;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
 
 import org.activiti.engine.task.Task;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+
+import it.vige.greenarea.bpm.custom.GreenareaViewManager;
+import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
 
 public class LetturaFiltriPage extends DettaglioPage {
 

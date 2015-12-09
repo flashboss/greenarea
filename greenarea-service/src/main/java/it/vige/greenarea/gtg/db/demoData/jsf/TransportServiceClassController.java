@@ -17,9 +17,6 @@ import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addErrorMessage
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addSuccessMessage;
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.getSelectItems;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.TransportServiceClass;
-import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
-import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -38,6 +35,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.TransportServiceClass;
+import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
+import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
 
 @Named("transportServiceClassController")
 @SessionScoped
@@ -76,9 +77,8 @@ public class TransportServiceClassController implements Serializable {
 
 				@Override
 				public DataModel createPageDataModel() {
-					return new ListDataModel(getFacade().findRange(
-							new int[] { getPageFirstItem(),
-									getPageFirstItem() + getPageSize() }));
+					return new ListDataModel(getFacade()
+							.findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() }));
 				}
 			};
 		}
@@ -92,8 +92,7 @@ public class TransportServiceClassController implements Serializable {
 
 	public String prepareView() {
 		current = (TransportServiceClass) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "View";
 	}
 
@@ -106,44 +105,34 @@ public class TransportServiceClassController implements Serializable {
 	public String create() {
 		try {
 			getFacade().create(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TransportServiceClassCreated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TransportServiceClassCreated"));
 			return prepareCreate();
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String prepareEdit() {
 		current = (TransportServiceClass) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "Edit";
 	}
 
 	public String update() {
 		try {
 			getFacade().edit(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TransportServiceClassUpdated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TransportServiceClassUpdated"));
 			return "View";
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String destroy() {
 		current = (TransportServiceClass) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		performDestroy();
 		recreatePagination();
 		recreateModel();
@@ -166,13 +155,9 @@ public class TransportServiceClassController implements Serializable {
 	private void performDestroy() {
 		try {
 			getFacade().remove(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TransportServiceClassDeleted"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TransportServiceClassDeleted"));
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 		}
 	}
 
@@ -187,9 +172,7 @@ public class TransportServiceClassController implements Serializable {
 			}
 		}
 		if (selectedItemIndex >= 0) {
-			current = getFacade().findRange(
-					new int[] { selectedItemIndex, selectedItemIndex + 1 })
-					.get(0);
+			current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
 		}
 	}
 
@@ -228,13 +211,11 @@ public class TransportServiceClassController implements Serializable {
 	}
 
 	@FacesConverter(forClass = TransportServiceClass.class)
-	public static class TransportServiceClassControllerConverter implements
-			Converter {
+	public static class TransportServiceClassControllerConverter implements Converter {
 
 		private static Logger logger = getLogger(TransportServiceClassControllerConverter.class);
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
@@ -260,8 +241,7 @@ public class TransportServiceClassController implements Serializable {
 			return sb.toString();
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -269,10 +249,8 @@ public class TransportServiceClassController implements Serializable {
 				TransportServiceClass o = (TransportServiceClass) object;
 				return getStringKey(o.getId());
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
-						+ "; expected type: "
-						+ TransportServiceClass.class.getName());
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
+						+ "; expected type: " + TransportServiceClass.class.getName());
 			}
 		}
 	}

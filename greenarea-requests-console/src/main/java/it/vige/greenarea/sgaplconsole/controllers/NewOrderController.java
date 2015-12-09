@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData.TerminiDiConsegna;
-import it.vige.greenarea.sgaplconsole.controllers.utils.Converters;
-import it.vige.greenarea.sgaplconsole.data.FreightItem;
-import it.vige.greenarea.sgaplconsole.data.MyOrder;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +22,11 @@ import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData.TerminiDiConsegna;
+import it.vige.greenarea.sgaplconsole.controllers.utils.Converters;
+import it.vige.greenarea.sgaplconsole.data.FreightItem;
+import it.vige.greenarea.sgaplconsole.data.MyOrder;
 
 @ManagedBean
 @SessionScoped
@@ -71,8 +71,7 @@ public class NewOrderController implements Serializable {
 	}
 
 	public String addOrder() {
-		newOrderForm.getOrderData().getShippingItems()
-				.addAll(Converters.convertFreightItemList(itemList));
+		newOrderForm.getOrderData().getShippingItems().addAll(Converters.convertFreightItemList(itemList));
 
 		sgapl_controller.getOrderList().add(newOrderForm);
 		resetForm();

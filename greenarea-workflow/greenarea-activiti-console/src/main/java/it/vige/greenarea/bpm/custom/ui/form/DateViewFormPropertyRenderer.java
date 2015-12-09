@@ -14,7 +14,6 @@
 package it.vige.greenarea.bpm.custom.ui.form;
 
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_DATE_VIEW;
-import it.vige.greenarea.bpm.form.DateViewFormType;
 
 import java.lang.reflect.Method;
 
@@ -23,8 +22,9 @@ import org.activiti.engine.form.FormProperty;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 
-public class DateViewFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.form.DateViewFormType;
+
+public class DateViewFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 8276247490292946211L;
 

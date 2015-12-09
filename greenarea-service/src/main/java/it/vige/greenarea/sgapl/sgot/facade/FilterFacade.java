@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.facade;
 
-import it.vige.greenarea.cl.library.entities.Filter;
-import it.vige.greenarea.cl.library.entities.FilterKey;
-import it.vige.greenarea.cl.library.entities.Filter_;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -25,6 +20,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Root;
+
+import it.vige.greenarea.cl.library.entities.Filter;
+import it.vige.greenarea.cl.library.entities.FilterKey;
+import it.vige.greenarea.cl.library.entities.Filter_;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 @Stateless
 public class FilterFacade extends AbstractFacade<Filter, FilterKey> {
@@ -55,8 +55,7 @@ public class FilterFacade extends AbstractFacade<Filter, FilterKey> {
 		javax.persistence.criteria.CriteriaQuery cq = builder.createQuery();
 		Root<Filter> filterRoot = cq.from(Filter.class);
 		cq.select(filterRoot);
-		cq.where((builder.equal(filterRoot.get(Filter_.operatoreLogistico),
-				operatoreLogistico)));
+		cq.where((builder.equal(filterRoot.get(Filter_.operatoreLogistico), operatoreLogistico)));
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 

@@ -14,17 +14,18 @@
 package it.vige.greenarea.cl.admin.bean;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.dto.TipologiaParametro;
-import it.vige.greenarea.cl.admin.entity.ParameterGenView;
-import it.vige.greenarea.cl.admin.entity.SchedView;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.admin.entity.ParameterGenView;
+import it.vige.greenarea.cl.admin.entity.SchedView;
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.dto.TipologiaParametro;
 
 /**
  * <p>
@@ -162,15 +163,12 @@ public class OpzioniBean implements Serializable {
 		for (int i = 0; i < allParameterGen; i++) {
 			ParameterGenView parameterGenView = new ParameterGenView();
 			parameterGenView.setIdPG(listaAllParameterGen.get(i).getId());
-			parameterGenView.setDescription(listaAllParameterGen.get(i)
-					.getDescription());
+			parameterGenView.setDescription(listaAllParameterGen.get(i).getDescription());
 			parameterGenView.setIdPG(listaAllParameterGen.get(i).getId());
 			parameterGenView.setTypePG(listaAllParameterGen.get(i).getTypePG());
-			parameterGenView.setMeasureUnit(listaAllParameterGen.get(i)
-					.getMeasureUnit());
+			parameterGenView.setMeasureUnit(listaAllParameterGen.get(i).getMeasureUnit());
 			parameterGenView.setNamePG(listaAllParameterGen.get(i).getNamePG());
-			parameterGenView
-					.setUseType(listaAllParameterGen.get(i).isUseType());
+			parameterGenView.setUseType(listaAllParameterGen.get(i).isUseType());
 			listaAllParameterGenView.add(parameterGenView);
 		}
 		return listaAllParameterGenView;
@@ -192,10 +190,8 @@ public class OpzioniBean implements Serializable {
 			ParameterGenView currentItem = listaAllParameterGenView.get(i);
 			if (item.getIdPG() == currentItem.getIdPG())
 				currentItem.useType = !currentItem.useType;
-			String status = String.format(
-					"State change of item (id=%d) '%s' => '%s'",
-					currentItem.getIdPG(), currentItem.getNamePG(),
-					(currentItem.useType ? "attivo" : "inattivo"));
+			String status = String.format("State change of item (id=%d) '%s' => '%s'", currentItem.getIdPG(),
+					currentItem.getNamePG(), (currentItem.useType ? "attivo" : "inattivo"));
 			logger.info(status);
 			newParGen.setId(item.getIdPG());
 			newParGen.setDescription(item.getDescription());

@@ -150,8 +150,8 @@ public class TapOutData implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link GroupData }
+	 * Objects of the following type(s) are allowed in the list {@link GroupData
+	 * }
 	 * 
 	 * 
 	 */

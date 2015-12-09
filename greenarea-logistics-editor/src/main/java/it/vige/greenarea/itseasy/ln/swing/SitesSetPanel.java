@@ -13,19 +13,18 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
+import java.awt.Dialog;
+
+import com.mxgraph.model.mxCell;
+import com.mxgraph.swing.mxGraphComponent;
+
 import it.vige.greenarea.I18N.I18N;
 import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeditorEvent;
 import it.vige.greenarea.itseasy.ln.swing.LNeditorEventHandlerInterface.LNeventType;
 import it.vige.greenarea.ln.model.LNSite;
 import it.vige.greenarea.ln.model.LNSitesSet;
 
-import java.awt.Dialog;
-
-import com.mxgraph.model.mxCell;
-import com.mxgraph.swing.mxGraphComponent;
-
-public class SitesSetPanel extends javax.swing.JPanel implements
-		LNeditorComponentInterface {
+public class SitesSetPanel extends javax.swing.JPanel implements LNeditorComponentInterface {
 	/**
 	 * 
 	 */
@@ -77,8 +76,7 @@ public class SitesSetPanel extends javax.swing.JPanel implements
 		operationButton = new javax.swing.JButton();
 
 		sitesListField.setModel(new javax.swing.AbstractListModel() {
-			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4",
-					"Item 5" };
+			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -93,13 +91,11 @@ public class SitesSetPanel extends javax.swing.JPanel implements
 				sitesListFieldMouseClicked(evt);
 			}
 		});
-		sitesListField
-				.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-					public void valueChanged(
-							javax.swing.event.ListSelectionEvent evt) {
-						sitesListFieldValueChanged(evt);
-					}
-				});
+		sitesListField.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+			public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+				sitesListFieldValueChanged(evt);
+			}
+		});
 		sitesListField.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				sitesListFieldKeyTyped(evt);
@@ -116,45 +112,24 @@ public class SitesSetPanel extends javax.swing.JPanel implements
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING,
-												false)
-												.addComponent(
-														operationButton,
-														javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addComponent(
-														jScrollPane1,
-														javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														262,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addContainerGap(126, Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(25, 25, 25)
-								.addComponent(jScrollPane1,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										211,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(operationButton)
-								.addContainerGap(32, Short.MAX_VALUE)));
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+								.addComponent(operationButton, javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+						.addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+				.addContainerGap(126, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(25, 25, 25)
+						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(operationButton)
+				.addContainerGap(32, Short.MAX_VALUE)));
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void sitesListFieldValueChanged(
-			javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_sitesListFieldValueChanged
+	private void sitesListFieldValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_sitesListFieldValueChanged
 		Object o = sitesListField.getSelectedValue();
 		if (o != null)
 			operationButton.setText(I18N.getString("DeleteCommand"));

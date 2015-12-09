@@ -14,8 +14,6 @@
 package it.vige.greenarea.geo;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,17 +24,18 @@ import java.net.URL;
 import java.text.StringCharacterIterator;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 
-import org.slf4j.Logger;
-
 /**
  * 
- * TODO questa versione sta per essere riadattata per
- *         usare google. Una volta completato il riadattamento verra' modificato
- *         ilnome.
+ * TODO questa versione sta per essere riadattata per usare google. Una volta
+ * completato il riadattamento verra' modificato ilnome.
  */
 public class GoogleGis extends GisService {
 
@@ -55,18 +54,14 @@ public class GoogleGis extends GisService {
 	 * @return address with gps valorized if found; null otherwise USA GOOGLE!
 	 */
 	@Override
-	public GeoLocationInterface geoCode(GeoLocationInterface location)
-			throws GeoCodingException {
-		return geoCode(location.getNumber(), location.getStreet(),
-				location.getCity(), location.getAdminAreaLevel1(),
-				location.getAdminAreaLevel2(), location.getZipCode(),
-				location.getCountry());
+	public GeoLocationInterface geoCode(GeoLocationInterface location) throws GeoCodingException {
+		return geoCode(location.getNumber(), location.getStreet(), location.getCity(), location.getAdminAreaLevel1(),
+				location.getAdminAreaLevel2(), location.getZipCode(), location.getCountry());
 	}
 
 	@Override
-	public GeoLocationInterface geoCode(String number, String street,
-			String city, String adminAreaLevel1, String adminAreaLevel2,
-			String zipCode, String country) throws GeoCodingException {
+	public GeoLocationInterface geoCode(String number, String street, String city, String adminAreaLevel1,
+			String adminAreaLevel2, String zipCode, String country) throws GeoCodingException {
 		StringBuilder googleRequest = new StringBuilder("address=");
 		if (number != null && !number.isEmpty())
 			googleRequest.append(encodeString(number)).append(",+");
@@ -96,22 +91,18 @@ public class GoogleGis extends GisService {
 	 * @return false se non e` riuscito a recuperarli
 	 */
 	@Override
-	public GeoLocationInterface reverseGeoCode(GeoLocationInterface location)
-			throws GeoCodingException {
+	public GeoLocationInterface reverseGeoCode(GeoLocationInterface location) throws GeoCodingException {
 		return reverseGeoCode(location.getLatitude(), location.getLongitude());
 	}
 
 	@Override
-	public GeoLocationInterface reverseGeoCode(double latitude, double longitude)
-			throws GeoCodingException {
-		String googleRequest = "latlng=" + Double.toString(latitude) + ","
-				+ Double.toString(longitude) + "&sensor=false&language="
-				+ locale;
+	public GeoLocationInterface reverseGeoCode(double latitude, double longitude) throws GeoCodingException {
+		String googleRequest = "latlng=" + Double.toString(latitude) + "," + Double.toString(longitude)
+				+ "&sensor=false&language=" + locale;
 		return googleGisOperation(googleRequest);
 	}
 
-	private GeoLocationInterface googleGisOperation(String jsonCommandString)
-			throws GeoCodingException {
+	private GeoLocationInterface googleGisOperation(String jsonCommandString) throws GeoCodingException {
 		GeoLocation gl = null;
 		String geocodeResponse = null;
 		JSONObject json = null;
@@ -147,46 +138,34 @@ public class GoogleGis extends GisService {
 		if (json.getString("status").equals("OK")) {
 			gl = new GeoLocation(0., 0.);
 			json = json.getJSONArray("results").getJSONObject(0);
-			JSONArray addressComponents = json
-					.getJSONArray("address_components");
+			JSONArray addressComponents = json.getJSONArray("address_components");
 			for (Object j : addressComponents) {
 				if (j instanceof JSONObject) {
 					JSONArray types = ((JSONObject) j).getJSONArray("types");
 					for (Object jj : types) {
 						if (jj instanceof String) {
 							if (((String) jj).equals("street_number"))
-								gl.setNumber(((JSONObject) j)
-										.getString("long_name"));
+								gl.setNumber(((JSONObject) j).getString("long_name"));
 							else if (((String) jj).equals("route"))
-								gl.setStreet(((JSONObject) j)
-										.getString("long_name"));
+								gl.setStreet(((JSONObject) j).getString("long_name"));
 							else if (((String) jj).equals("locality"))
-								gl.setCity(((JSONObject) j)
-										.getString("long_name"));
-							else if (((String) jj)
-									.equals("administrative_area_level_1"))
-								gl.setAdminAreaLevel1(((JSONObject) j)
-										.getString("long_name"));
-							else if (((String) jj)
-									.equals("administrative_area_level_2"))
-								gl.setAdminAreaLevel2(((JSONObject) j)
-										.getString("long_name"));
+								gl.setCity(((JSONObject) j).getString("long_name"));
+							else if (((String) jj).equals("administrative_area_level_1"))
+								gl.setAdminAreaLevel1(((JSONObject) j).getString("long_name"));
+							else if (((String) jj).equals("administrative_area_level_2"))
+								gl.setAdminAreaLevel2(((JSONObject) j).getString("long_name"));
 							else if (((String) jj).equals("country"))
-								gl.setCountry(((JSONObject) j)
-										.getString("long_name"));
+								gl.setCountry(((JSONObject) j).getString("long_name"));
 							else if (((String) jj).equals("postal_code"))
-								gl.setZipCode(((JSONObject) j)
-										.getString("long_name"));
+								gl.setZipCode(((JSONObject) j).getString("long_name"));
 							break;
 						}
 					}
 				}
 			}
 
-			gl.setLatitude(((JSONObject) json.getJSONObject("geometry").get(
-					"location")).getDouble("lat"));
-			gl.setLongitude(((JSONObject) json.getJSONObject("geometry").get(
-					"location")).getDouble("lng"));
+			gl.setLatitude(((JSONObject) json.getJSONObject("geometry").get("location")).getDouble("lat"));
+			gl.setLongitude(((JSONObject) json.getJSONObject("geometry").get("location")).getDouble("lng"));
 
 		} else
 			throw new GeoCodingException(GeoCodingError.NO_ADDRESS);
@@ -218,35 +197,18 @@ public class GoogleGis extends GisService {
 			return null;
 		}
 		StringBuilder sb = new StringBuilder(inputString);
-/*****************************************************************
-         ** Caratteri dannosi in Http :
-         ** Character Code      Points(Hex) Code
-         ** Dollar ("$")                24
-         ** Ampersand ("&")             26
-         ** Plus ("+")                  2B
-         ** Comma (",")                 2C
-         ** Forward slash/Virgule ("/") 2F
-         ** Colon (":")                 3A
-         ** Semi-colon (";")            3B
-         ** Equals ("=")                3D
-         ** Question mark ("?")         3F
-         ** 'At' symbol ("@")           40
-         ***------------ Altri caratteri potenzialmente dannosi----------
-         ** Space                       20
-         ** Quotation marks             22
-         ** 'Less Than' symbol ("<")    3C
-         ** 'Greater Than' symbol (">") 3E
-         ** 'Pound' character ("#")     23
-         ** Percent character ("%")     25
-         ** Left Curly Brace ("{")      7B
-         ** Right Curly Brace ("}")     7D
-         ** Vertical Bar/Pipe ("|")     7C
-         ** Backslash ("\")             5C
-         ** Caret ("^")                 5E
-         ** Left Square Bracket ("[")   5B
-         ** Right Square Bracket ("]")  5D
-         ** Grave Accent ("`")          60
-         *****************************************************************/
+		/*****************************************************************
+		 ** Caratteri dannosi in Http : Character Code Points(Hex) Code Dollar
+		 * ("$") 24 Ampersand ("&") 26 Plus ("+") 2B Comma (",") 2C Forward
+		 * slash/Virgule ("/") 2F Colon (":") 3A Semi-colon (";") 3B Equals
+		 * ("=") 3D Question mark ("?") 3F 'At' symbol ("@") 40 ------------
+		 * Altri caratteri potenzialmente dannosi---------- Space 20 Quotation
+		 * marks 22 'Less Than' symbol ("<") 3C 'Greater Than' symbol (">") 3E
+		 ** 'Pound' character ("#") 23 Percent character ("%") 25 Left Curly
+		 * Brace ("{") 7B Right Curly Brace ("}") 7D Vertical Bar/Pipe ("|") 7C
+		 ** Backslash ("\") 5C Caret ("^") 5E Left Square Bracket ("[") 5B Right
+		 * Square Bracket ("]") 5D Grave Accent ("`") 60
+		 *****************************************************************/
 		StringReader legge = new StringReader(sb.toString());
 		char ch;
 		String result = "";

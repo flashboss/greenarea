@@ -26,17 +26,6 @@ import static org.activiti.engine.ProcessEngines.getDefaultProcessEngine;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_SCROLLABLE;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_TASK_LIST;
-import it.vige.greenarea.bpm.UserConverter;
-import it.vige.greenarea.bpm.custom.ui.LoginPanel;
-import it.vige.greenarea.bpm.custom.ui.GreenareaCellStyleGenerator;
-import it.vige.greenarea.bpm.custom.ui.admin.AdminDetailPanel;
-import it.vige.greenarea.bpm.custom.ui.data.PageListItem;
-import it.vige.greenarea.bpm.custom.ui.operatorelogistico.OperatoreLogisticoDetailPanel;
-import it.vige.greenarea.bpm.custom.ui.operatorelogistico.data.OperatoreLogisticoTable;
-import it.vige.greenarea.bpm.custom.ui.pa.PADetailPanel;
-import it.vige.greenarea.bpm.custom.ui.pa.data.PATable;
-import it.vige.greenarea.bpm.custom.ui.societaditrasporto.SocietaDiTrasportoDetailPanel;
-import it.vige.greenarea.bpm.custom.ui.trasportatoreautonomo.TrasportatoreAutonomoDetailPanel;
 
 import java.util.List;
 
@@ -57,6 +46,18 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Table;
+
+import it.vige.greenarea.bpm.UserConverter;
+import it.vige.greenarea.bpm.custom.ui.GreenareaCellStyleGenerator;
+import it.vige.greenarea.bpm.custom.ui.LoginPanel;
+import it.vige.greenarea.bpm.custom.ui.admin.AdminDetailPanel;
+import it.vige.greenarea.bpm.custom.ui.data.PageListItem;
+import it.vige.greenarea.bpm.custom.ui.operatorelogistico.OperatoreLogisticoDetailPanel;
+import it.vige.greenarea.bpm.custom.ui.operatorelogistico.data.OperatoreLogisticoTable;
+import it.vige.greenarea.bpm.custom.ui.pa.PADetailPanel;
+import it.vige.greenarea.bpm.custom.ui.pa.data.PATable;
+import it.vige.greenarea.bpm.custom.ui.societaditrasporto.SocietaDiTrasportoDetailPanel;
+import it.vige.greenarea.bpm.custom.ui.trasportatoreautonomo.TrasportatoreAutonomoDetailPanel;
 
 /**
  * Abstract super class for all task pages (inbox, queued, archived, etc.),
@@ -182,8 +183,7 @@ public abstract class HomePage extends AbstractTablePage {
 		menuTable.addListener(getItemClickListener());
 
 		lazyLoadingQuery = createLazyLoadingQuery();
-		menuTable.setCellStyleGenerator(new GreenareaCellStyleGenerator(
-				lazyLoadingQuery));
+		menuTable.setCellStyleGenerator(new GreenareaCellStyleGenerator(lazyLoadingQuery));
 		itemListContainer = new LazyLoadingContainer(lazyLoadingQuery, 30);
 		menuTable.setContainerDataSource(itemListContainer);
 
@@ -220,8 +220,7 @@ public abstract class HomePage extends AbstractTablePage {
 			private static final long serialVersionUID = 1L;
 
 			public void itemClick(ItemClickEvent event) {
-				PageListItem item = (PageListItem) menuTable.getItem(event
-						.getItemId());
+				PageListItem item = (PageListItem) menuTable.getItem(event.getItemId());
 				if (item.isFather() && getLevel(item) != 0)
 					select(item);
 				updateCounter();
@@ -234,8 +233,7 @@ public abstract class HomePage extends AbstractTablePage {
 			private static final long serialVersionUID = 1L;
 
 			public void valueChange(ValueChangeEvent event) {
-				PageListItem item = (PageListItem) menuTable.getItem(event
-						.getProperty().getValue());
+				PageListItem item = (PageListItem) menuTable.getItem(event.getProperty().getValue());
 				if (!item.isFather() || getLevel(item) == 0)
 					select(item);
 				updateCounter();
@@ -294,8 +292,7 @@ public abstract class HomePage extends AbstractTablePage {
 			paTable.setColumnFooter("name", paTable.counter());
 		} else if (menuTable instanceof OperatoreLogisticoTable) {
 			OperatoreLogisticoTable operatoreLogisticoTable = (OperatoreLogisticoTable) menuTable;
-			operatoreLogisticoTable.setColumnFooter("name",
-					operatoreLogisticoTable.counter());
+			operatoreLogisticoTable.setColumnFooter("name", operatoreLogisticoTable.counter());
 		}
 	}
 

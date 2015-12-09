@@ -13,9 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
-import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
-import it.vige.greenarea.sgaplconsole.data.MyTransport;
-
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
@@ -23,6 +20,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
+import it.vige.greenarea.sgaplconsole.data.MyTransport;
 
 @ManagedBean
 @SessionScoped
@@ -46,11 +46,9 @@ public class GATconsoleController implements Serializable, SGAPLconstants {
 
 	public String startTransport() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
-		FacesMessage msg = sgapl_controller.startTransport(
-				currentTrasport.getId(), currentTrasport.getVettore());
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
+		FacesMessage msg = sgapl_controller.startTransport(currentTrasport.getId(), currentTrasport.getVettore());
 		context.addMessage(null, msg);
 		// tabPanelController.setTabViewCurrentIndex(tabPanelController.GAT_CONSOLE_TAB);
 		return "home";
@@ -58,11 +56,9 @@ public class GATconsoleController implements Serializable, SGAPLconstants {
 
 	public String doneTransport() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
-		FacesMessage msg = sgapl_controller.doneTransport(
-				currentTrasport.getId(), currentTrasport.getVettore());
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
+		FacesMessage msg = sgapl_controller.doneTransport(currentTrasport.getId(), currentTrasport.getVettore());
 		context.addMessage(null, msg);
 		// tabPanelController.setTabViewCurrentIndex(tabPanelController.GAT_CONSOLE_TAB);
 		return "home";
@@ -70,11 +66,9 @@ public class GATconsoleController implements Serializable, SGAPLconstants {
 
 	public String rejectTransport() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
-		FacesMessage msg = sgapl_controller.rejectTransport(
-				currentTrasport.getId(), currentTrasport.getVettore());
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
+		FacesMessage msg = sgapl_controller.rejectTransport(currentTrasport.getId(), currentTrasport.getVettore());
 		context.addMessage(null, msg);
 		// tabPanelController.setTabViewCurrentIndex(tabPanelController.GAT_CONSOLE_TAB);
 		return "home";
@@ -82,33 +76,29 @@ public class GATconsoleController implements Serializable, SGAPLconstants {
 
 	public boolean isTransportReady() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
 		return currentTrasport.getStatus().equals(READY_STATUS);
 	}
 
 	public boolean isTransportOnDelivery() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
 		return currentTrasport.getStatus().equals(ON_DELIVERY_STATUS);
 	}
 
 	public boolean isTransportDone() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
 		return currentTrasport.getStatus().equals(DONE_STATUS);
 	}
 
 	public boolean isTransportRejected() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyTransport currentTrasport = context.getApplication()
-				.evaluateExpressionGet(context, "#{transport}",
-						MyTransport.class);
+		MyTransport currentTrasport = context.getApplication().evaluateExpressionGet(context, "#{transport}",
+				MyTransport.class);
 		return currentTrasport.getStatus().equals(REJECT_STATUS);
 	}
 

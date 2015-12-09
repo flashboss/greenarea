@@ -14,7 +14,6 @@
 package it.vige.greenarea.itseasy.lib.mqClientUtil;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
 
 import java.io.Serializable;
 
@@ -26,46 +25,38 @@ import javax.jms.ObjectMessage;
 
 import org.slf4j.Logger;
 
+import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
+
 public class ItseasyConsumer implements MqConstants {
 
 	private Logger logger = getLogger(getClass());
 
-	public Serializable readMessage(Destination destination,
-			JMSConsumer jmsConsumer) {
-		return readMessage(destination, jmsConsumer, null,
-				MAX_READ_WAIT_TIMEOUT);
+	public Serializable readMessage(Destination destination, JMSConsumer jmsConsumer) {
+		return readMessage(destination, jmsConsumer, null, MAX_READ_WAIT_TIMEOUT);
 	}
 
-	public Serializable readMessage(Destination destination,
-			JMSConsumer jmsConsumer, long timeout) {
+	public Serializable readMessage(Destination destination, JMSConsumer jmsConsumer, long timeout) {
 		return readMessage(destination, jmsConsumer, null, timeout);
 	}
 
-	public Serializable readMessage(Destination destination,
-			JMSConsumer jmsConsumer, String selector) {
-		return readMessage(destination, jmsConsumer, selector,
-				MAX_READ_WAIT_TIMEOUT);
+	public Serializable readMessage(Destination destination, JMSConsumer jmsConsumer, String selector) {
+		return readMessage(destination, jmsConsumer, selector, MAX_READ_WAIT_TIMEOUT);
 	}
 
-	public String readTextMessage(String cfName, Destination destination,
-			JMSConsumer jmsConsumer) {
-		return readTextMessage(cfName, destination, jmsConsumer, null,
-				MAX_READ_WAIT_TIMEOUT);
+	public String readTextMessage(String cfName, Destination destination, JMSConsumer jmsConsumer) {
+		return readTextMessage(cfName, destination, jmsConsumer, null, MAX_READ_WAIT_TIMEOUT);
 	}
 
-	public String readTextMessage(String cfName, Destination destination,
-			JMSConsumer jmsConsumer, long timeout) {
+	public String readTextMessage(String cfName, Destination destination, JMSConsumer jmsConsumer, long timeout) {
 		return readTextMessage(cfName, destination, jmsConsumer, null, timeout);
 	}
 
-	public String readTextMessage(String cfName, Destination destination,
-			JMSConsumer jmsConsumer, String selector) {
-		return readTextMessage(cfName, destination, jmsConsumer, selector,
-				MAX_READ_WAIT_TIMEOUT);
+	public String readTextMessage(String cfName, Destination destination, JMSConsumer jmsConsumer, String selector) {
+		return readTextMessage(cfName, destination, jmsConsumer, selector, MAX_READ_WAIT_TIMEOUT);
 	}
 
-	public Serializable readMessage(Destination destination,
-			JMSConsumer jmsConsumer, String selector, long waitTimeout) {
+	public Serializable readMessage(Destination destination, JMSConsumer jmsConsumer, String selector,
+			long waitTimeout) {
 
 		Message msg = null;
 
@@ -82,8 +73,8 @@ public class ItseasyConsumer implements MqConstants {
 		}
 	}
 
-	public String readTextMessage(String cfName, Destination destination,
-			JMSConsumer jmsConsumer, String selector, long waitTimeout) {
+	public String readTextMessage(String cfName, Destination destination, JMSConsumer jmsConsumer, String selector,
+			long waitTimeout) {
 
 		Message msg = null;
 		msg = jmsConsumer.receive(waitTimeout);

@@ -14,17 +14,6 @@
 package it.vige.greenarea.cl.restservices;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import it.vige.greenarea.cl.control.TAPControl;
-import it.vige.greenarea.cl.library.entities.TapGroupData;
-import it.vige.greenarea.cl.library.entities.TapOutData;
-import it.vige.greenarea.cl.library.entities.TapParamData;
-import it.vige.greenarea.dto.AccessiInGA;
-import it.vige.greenarea.dto.RichiestaAccesso;
-import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
-import it.vige.greenarea.gtg.db.demoData.InitDemoData;
-import it.vige.greenarea.tap.facades.TapGroupDataFacade;
-import it.vige.greenarea.tap.facades.TapOutDataFacade;
-import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
 import java.util.Date;
 import java.util.List;
@@ -40,6 +29,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import it.vige.greenarea.cl.control.TAPControl;
+import it.vige.greenarea.cl.library.entities.TapGroupData;
+import it.vige.greenarea.cl.library.entities.TapOutData;
+import it.vige.greenarea.cl.library.entities.TapParamData;
+import it.vige.greenarea.dto.AccessiInGA;
+import it.vige.greenarea.dto.RichiestaAccesso;
+import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
+import it.vige.greenarea.gtg.db.demoData.InitDemoData;
+import it.vige.greenarea.tap.facades.TapGroupDataFacade;
+import it.vige.greenarea.tap.facades.TapOutDataFacade;
+import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
 /**
  * <p>
@@ -184,8 +185,7 @@ public class TAPRESTService {
 	@Path("/getLastPosition")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String richiediPosizioneVeicolo(
-			RichiestaPosizioneVeicolo richiestaPosizioneVeicolo) {
+	public String richiediPosizioneVeicolo(RichiestaPosizioneVeicolo richiestaPosizioneVeicolo) {
 		return tapControl.richiediPosizioneVeicolo(richiestaPosizioneVeicolo);
 	}
 
@@ -203,8 +203,7 @@ public class TAPRESTService {
 	@Path("/storicoAccessiInGA")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<Date, AccessiInGA> getStoricoAccessiInGA(
-			RichiestaAccesso richiestaAccesso) {
+	public Map<Date, AccessiInGA> getStoricoAccessiInGA(RichiestaAccesso richiestaAccesso) {
 		return tapControl.getStoricoAccessiInGA(richiestaAccesso);
 	}
 

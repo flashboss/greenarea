@@ -14,7 +14,6 @@
 package it.vige.greenarea.sgaplconsole.controllers;
 
 import static it.vige.greenarea.Utilities.createMockShippingId;
-import it.vige.greenarea.sgaplconsole.data.MyOrder;
 
 import java.io.Serializable;
 
@@ -23,6 +22,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import it.vige.greenarea.sgaplconsole.data.MyOrder;
 
 @ManagedBean(name = "sgoConsoleController")
 @SessionScoped
@@ -52,8 +53,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String removeOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		int currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{orderIndex}", int.class);
+		int currentOrder = context.getApplication().evaluateExpressionGet(context, "#{orderIndex}", int.class);
 		sgapl_controller.getOrderList().remove(currentOrder);
 
 		return "home";
@@ -61,8 +61,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String estimateOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
 		FacesMessage msg = sgapl_controller.estimateOrder(currentOrder);
 		context.addMessage(null, msg);
 
@@ -71,8 +70,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String requestOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
 		currentOrder.setId(createMockShippingId());
 		FacesMessage msg = sgapl_controller.requestOrder(currentOrder);
 		context.addMessage(null, msg);
@@ -82,8 +80,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String confirmOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
 
 		FacesMessage msg = sgapl_controller.confirmOrder(currentOrder);
 		context.addMessage(null, msg);
@@ -92,8 +89,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String dropOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
 
 		FacesMessage msg = sgapl_controller.dropOrder(currentOrder);
 		context.addMessage(null, msg);
@@ -102,8 +98,7 @@ public class SGOconsoleController implements Serializable {
 
 	public String locateOrder() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
 
 		FacesMessage msg = sgapl_controller.locateOrder(currentOrder);
 		context.addMessage(null, msg);
@@ -112,10 +107,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isSuspended() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return false;
 		}
 		String status = currentOrder.getStato();// orderStatus();
@@ -127,10 +120,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isReady() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return false;
 		}
 		String status = currentOrder.getStato();// orderStatus();
@@ -142,10 +133,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isUnknown() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return true;
 		}
 		String status = currentOrder.getStato();// orderStatus();
@@ -157,10 +146,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isOnDelivery() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return false;
 		}
 		String status = currentOrder.getStato();// orderStatus();
@@ -172,10 +159,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isCompleted() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return false;
 		}
 		String status = currentOrder.getStato();// orderStatus();
@@ -187,10 +172,8 @@ public class SGOconsoleController implements Serializable {
 
 	public boolean isReturning() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(
-				context, "#{order}", MyOrder.class);
-		if (currentOrder.getId() == null
-				|| currentOrder.getId().trim().equals("")) {
+		MyOrder currentOrder = context.getApplication().evaluateExpressionGet(context, "#{order}", MyOrder.class);
+		if (currentOrder.getId() == null || currentOrder.getId().trim().equals("")) {
 			return false;
 		}
 		String status = currentOrder.getStato();// orderStatus();

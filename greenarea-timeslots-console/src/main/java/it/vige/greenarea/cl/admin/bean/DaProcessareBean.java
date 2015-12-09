@@ -13,18 +13,18 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.bean;
 
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.bean.RequestParameter;
-import it.vige.greenarea.dto.Sched;
-import it.vige.greenarea.cl.admin.entity.RequestView;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import it.vige.greenarea.cl.admin.entity.RequestView;
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.bean.RequestParameter;
+import it.vige.greenarea.dto.Sched;
 
 /**
  * <p>
@@ -84,34 +84,25 @@ public class DaProcessareBean implements Serializable {
 	 * @param
 	 * @return
 	 */
-	public ArrayList<RequestView> daProcessare_BottoneRichieste(String data,
-			String IdTs) throws Exception {
+	public ArrayList<RequestView> daProcessare_BottoneRichieste(String data, String IdTs) throws Exception {
 
 		String[] soloData = data.split(" ");
 		Date dataNuova = dateFormat.parse(soloData[0]);
 		TimeSlotRestClient rcDaProcessare_Richieste = new TimeSlotRestClient();
-		listaDaProcessare_Richieste = rcDaProcessare_Richieste.selectRequests(
-				dataNuova, IdTs, "5");
+		listaDaProcessare_Richieste = rcDaProcessare_Richieste.selectRequests(dataNuova, IdTs, "5");
 		listaDaProcessare_RichiesteView = new ArrayList<RequestView>();
 		for (int i = 0; i < listaDaProcessare_Richieste.size(); i++) {
 			RequestView requestView = new RequestView();
-			requestView.setCarPlate(listaDaProcessare_Richieste.get(i)
-					.getCarPlate());
+			requestView.setCarPlate(listaDaProcessare_Richieste.get(i).getCarPlate());
 			requestView.setColor(listaDaProcessare_Richieste.get(i).getColor());
-			requestView.setCompany(listaDaProcessare_Richieste.get(i)
-					.getCompany());
-			requestView.setDateMiss(listaDaProcessare_Richieste.get(i)
-					.getDateMiss());
-			requestView.setIdMission(listaDaProcessare_Richieste.get(i)
-					.getIdMission());
-			requestView.setIdTimeSlot(listaDaProcessare_Richieste.get(i)
-					.getIdTimeSlot());
+			requestView.setCompany(listaDaProcessare_Richieste.get(i).getCompany());
+			requestView.setDateMiss(listaDaProcessare_Richieste.get(i).getDateMiss());
+			requestView.setIdMission(listaDaProcessare_Richieste.get(i).getIdMission());
+			requestView.setIdTimeSlot(listaDaProcessare_Richieste.get(i).getIdTimeSlot());
 			requestView.setPrice(listaDaProcessare_Richieste.get(i).getPrice());
 			requestView.setQu(listaDaProcessare_Richieste.get(i).getQu());
-			requestView.setReqParList(listaDaProcessare_Richieste.get(i)
-					.getReqParList());
-			requestView.setUserName(listaDaProcessare_Richieste.get(i)
-					.getUserName());
+			requestView.setReqParList(listaDaProcessare_Richieste.get(i).getReqParList());
+			requestView.setUserName(listaDaProcessare_Richieste.get(i).getUserName());
 			listaDaProcessare_RichiesteView.add(requestView);
 		}
 		return listaDaProcessare_RichiesteView;
@@ -145,14 +136,12 @@ public class DaProcessareBean implements Serializable {
 	 * @param
 	 * @return
 	 */
-	public List<Request> daProcessare_BottoneSimulazione(String data,
-			String IdTs) throws Exception {
+	public List<Request> daProcessare_BottoneSimulazione(String data, String IdTs) throws Exception {
 
 		String[] soloData = data.split(" ");
 		Date dataNuova = dateFormat.parse(soloData[0]);
 		TimeSlotRestClient rcDaProcessare_Richieste = new TimeSlotRestClient();
-		listaDaProcessare_Simulazione = rcDaProcessare_Richieste.simulRank(
-				IdTs, dataNuova);
+		listaDaProcessare_Simulazione = rcDaProcessare_Richieste.simulRank(IdTs, dataNuova);
 		return listaDaProcessare_Simulazione;
 	}
 
@@ -184,8 +173,7 @@ public class DaProcessareBean implements Serializable {
 	 * @return
 	 */
 
-	public List<RequestParameter> daProcessare_Richieste_BottoneDettaglio(
-			int idMission) {
+	public List<RequestParameter> daProcessare_Richieste_BottoneDettaglio(int idMission) {
 		listaDaProcessare_Richieste_Dettaglio = new ArrayList<RequestParameter>();
 		richiestaTrovata = new Request();
 		for (int i = 0; i < listaDaProcessare_Richieste.size(); i++) {
@@ -194,8 +182,7 @@ public class DaProcessareBean implements Serializable {
 			}
 		}
 		for (int i = 0; i < richiestaTrovata.getReqParList().size(); i++) {
-			listaDaProcessare_Richieste_Dettaglio.add(richiestaTrovata
-					.getReqParList().get(i));
+			listaDaProcessare_Richieste_Dettaglio.add(richiestaTrovata.getReqParList().get(i));
 		}
 		return listaDaProcessare_Richieste_Dettaglio;
 	}

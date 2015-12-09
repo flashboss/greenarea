@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.servlet;
 
-import it.vige.greenarea.sgapl.sgot.webservice.LocateShippingResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.ResultStatus;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager_Service;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -26,6 +21,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
+
+import it.vige.greenarea.sgapl.sgot.webservice.LocateShippingResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.ResultStatus;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager_Service;
 
 public class Tracking extends HttpServlet {
 
@@ -51,8 +51,8 @@ public class Tracking extends HttpServlet {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try {
@@ -91,8 +91,7 @@ public class Tracking extends HttpServlet {
 				out.println("</tr>");
 				out.println("<tr>");
 				out.println("<td>ErrorDescription</td>");
-				out.println("<td>" + res.getResult().getErrorDescription()
-						+ "</td>");
+				out.println("<td>" + res.getResult().getErrorDescription() + "</td>");
 				out.println("</tr>");
 
 			} else {
@@ -125,7 +124,8 @@ public class Tracking extends HttpServlet {
 	}
 
 	// <editor-fold defaultstate="collapsed"
-	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+	// desc="HttpServlet methods. Click on the + sign on the left to edit the
+	// code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 * 
@@ -139,8 +139,8 @@ public class Tracking extends HttpServlet {
 	 *             if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -157,8 +157,8 @@ public class Tracking extends HttpServlet {
 	 *             if an I/O error occurs
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -173,8 +173,7 @@ public class Tracking extends HttpServlet {
 	}// </editor-fold>
 
 	private LocateShippingResponseData locateShipping(String shippingOrderID) {
-		ShippingOrderManager shippingOrderManager = service
-				.getShippingOrderManagerPort();
+		ShippingOrderManager shippingOrderManager = service.getShippingOrderManagerPort();
 		return shippingOrderManager.locateShipping(shippingOrderID);
 	}
 }

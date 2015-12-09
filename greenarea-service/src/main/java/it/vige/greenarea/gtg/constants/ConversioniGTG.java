@@ -15,8 +15,14 @@ package it.vige.greenarea.gtg.constants;
 
 import static javax.xml.datatype.DatatypeFactory.newInstance;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgrl.webservices.ObjectFactory;
-import it.vige.greenarea.sgrl.webservices.SgrlNode;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.library.entities.Attachment;
 import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 import it.vige.greenarea.cl.library.entities.ShippingItem;
@@ -37,16 +43,11 @@ import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingItemData;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderData;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderDetails;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.TransportInfo;
+import it.vige.greenarea.sgrl.webservices.ObjectFactory;
+import it.vige.greenarea.sgrl.webservices.SgrlNode;
 import it.vige.greenarea.tap.spreceiver.ws.GroupData;
 import it.vige.greenarea.tap.spreceiver.ws.OutData;
 import it.vige.greenarea.tap.spreceiver.ws.ParamData;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-
-import org.slf4j.Logger;
 
 public class ConversioniGTG {
 
@@ -54,16 +55,14 @@ public class ConversioniGTG {
 
 	private static ObjectFactory obj = new it.vige.greenarea.sgrl.webservices.ObjectFactory();
 
-	public static ParamData convertiTapParamDataToParamData(
-			TapParamData tapParamData) {
+	public static ParamData convertiTapParamDataToParamData(TapParamData tapParamData) {
 		ParamData paramData = new ParamData();
 		paramData.setName(tapParamData.getName());
 		paramData.setValue(tapParamData.getValue());
 		return paramData;
 	}
 
-	public static TapParamData convertiParamDataToTapParamData(
-			ParamData paramData) {
+	public static TapParamData convertiParamDataToTapParamData(ParamData paramData) {
 		logParamData(paramData);
 		TapParamData tapParamData = new TapParamData();
 		try {
@@ -75,23 +74,19 @@ public class ConversioniGTG {
 		return tapParamData;
 	}
 
-	public static GroupData convertiTapGroupDataToGroupData(
-			TapGroupData tapGroupData) {
+	public static GroupData convertiTapGroupDataToGroupData(TapGroupData tapGroupData) {
 		GroupData groupData = new GroupData();
 		groupData.setName(tapGroupData.getName());
-		groupData.getParams().addAll(
-				convertiTapParamDatasToParamDatas(tapGroupData.getParams()));
+		groupData.getParams().addAll(convertiTapParamDatasToParamDatas(tapGroupData.getParams()));
 		return groupData;
 	}
 
-	public static TapGroupData convertiGroupDataToTapGroupData(
-			GroupData groupData) {
+	public static TapGroupData convertiGroupDataToTapGroupData(GroupData groupData) {
 		logGroupData(groupData);
 		TapGroupData tapGroupData = new TapGroupData();
 		try {
 			tapGroupData.setName(groupData.getName());
-			tapGroupData.getParams().addAll(
-					convertiParamDatasToTapParamDatas(groupData.getParams()));
+			tapGroupData.getParams().addAll(convertiParamDatasToTapParamDatas(groupData.getParams()));
 		} catch (Exception ex) {
 			logger.error("errore", ex);
 		}
@@ -102,15 +97,13 @@ public class ConversioniGTG {
 		OutData outData = new OutData();
 		outData.setCodeFunction(tapOutData.getCodeFunction());
 		try {
-			outData.setDate(newInstance().newXMLGregorianCalendar(
-					tapOutData.getDate()));
+			outData.setDate(newInstance().newXMLGregorianCalendar(tapOutData.getDate()));
 		} catch (DatatypeConfigurationException e) {
 			logger.error("Errore di conversione del XMLGregorianCalendar");
 		}
 		outData.setServiceProvider(tapOutData.getServiceProvider());
 		outData.setVin(tapOutData.getVin());
-		outData.getGroups().addAll(
-				convertiTapGroupDatasToGroupDatas(tapOutData.getGroups()));
+		outData.getGroups().addAll(convertiTapGroupDatasToGroupDatas(tapOutData.getGroups()));
 		return outData;
 	}
 
@@ -122,16 +115,14 @@ public class ConversioniGTG {
 			tapOutData.setDate(outData.getDate().toGregorianCalendar());
 			tapOutData.setServiceProvider(outData.getServiceProvider());
 			tapOutData.setVin(outData.getVin());
-			tapOutData.getGroups().addAll(
-					convertiGroupDatasToTapGroupDatas(outData.getGroups()));
+			tapOutData.getGroups().addAll(convertiGroupDatasToTapGroupDatas(outData.getGroups()));
 		} catch (Exception ex) {
 			logger.error("errore", ex);
 		}
 		return tapOutData;
 	}
 
-	public static List<OutData> convertiTapOutDatasToOutDatas(
-			List<TapOutData> tapOutDatas) {
+	public static List<OutData> convertiTapOutDatasToOutDatas(List<TapOutData> tapOutDatas) {
 		List<OutData> outDatas = new ArrayList<OutData>();
 		for (TapOutData tapOutData : tapOutDatas) {
 			outDatas.add(convertiTapOutDataToOutData(tapOutData));
@@ -139,8 +130,7 @@ public class ConversioniGTG {
 		return outDatas;
 	}
 
-	public static List<TapOutData> convertiOutDatasToTapOutDatas(
-			List<OutData> outDatas) {
+	public static List<TapOutData> convertiOutDatasToTapOutDatas(List<OutData> outDatas) {
 		List<TapOutData> tapOutDatas = new ArrayList<TapOutData>();
 		for (OutData outData : outDatas) {
 			tapOutDatas.add(convertiOutDataToTapOutData(outData));
@@ -148,8 +138,7 @@ public class ConversioniGTG {
 		return tapOutDatas;
 	}
 
-	public static List<GroupData> convertiTapGroupDatasToGroupDatas(
-			List<TapGroupData> tapGroupDatas) {
+	public static List<GroupData> convertiTapGroupDatasToGroupDatas(List<TapGroupData> tapGroupDatas) {
 		List<GroupData> groupDatas = new ArrayList<GroupData>();
 		for (TapGroupData tapGroupData : tapGroupDatas) {
 			groupDatas.add(convertiTapGroupDataToGroupData(tapGroupData));
@@ -157,8 +146,7 @@ public class ConversioniGTG {
 		return groupDatas;
 	}
 
-	public static List<TapGroupData> convertiGroupDatasToTapGroupDatas(
-			List<GroupData> groupDatas) {
+	public static List<TapGroupData> convertiGroupDatasToTapGroupDatas(List<GroupData> groupDatas) {
 		List<TapGroupData> tapGroupDatas = new ArrayList<TapGroupData>();
 		for (GroupData groupData : groupDatas) {
 			tapGroupDatas.add(convertiGroupDataToTapGroupData(groupData));
@@ -166,8 +154,7 @@ public class ConversioniGTG {
 		return tapGroupDatas;
 	}
 
-	public static List<ParamData> convertiTapParamDatasToParamDatas(
-			List<TapParamData> tapParamDatas) {
+	public static List<ParamData> convertiTapParamDatasToParamDatas(List<TapParamData> tapParamDatas) {
 		List<ParamData> paramDatas = new ArrayList<ParamData>();
 		for (TapParamData tapParamData : tapParamDatas) {
 			paramDatas.add(convertiTapParamDataToParamData(tapParamData));
@@ -175,8 +162,7 @@ public class ConversioniGTG {
 		return paramDatas;
 	}
 
-	public static List<TapParamData> convertiParamDatasToTapParamDatas(
-			List<ParamData> paramDatas) {
+	public static List<TapParamData> convertiParamDatasToTapParamDatas(List<ParamData> paramDatas) {
 		List<TapParamData> tapParamDatas = new ArrayList<TapParamData>();
 		for (ParamData paramData : paramDatas) {
 			tapParamDatas.add(convertiParamDataToTapParamData(paramData));
@@ -209,56 +195,43 @@ public class ConversioniGTG {
 	}
 
 	public static ShippingOrderData convertiRichiesta(ShippingOrder richiesta) {
-		ShippingOrderData shippingOrderData = new ShippingOrderData(
-				richiesta.getId());
+		ShippingOrderData shippingOrderData = new ShippingOrderData(richiesta.getId());
 		shippingOrderData.setNote(richiesta.getNote());
 		shippingOrderData.setTerminiDiConsegna(richiesta.getDeliveryTerms());
-		shippingOrderData.setShippingItems(convertiPacchi(richiesta
-				.getShippingItems()));
+		shippingOrderData.setShippingItems(convertiPacchi(richiesta.getShippingItems()));
 		shippingOrderData.setToName(richiesta.getDestinatario().getName());
 		shippingOrderData.setFromName(richiesta.getMittente().getName());
-		shippingOrderData.setToAddress(convertiIndirizzo(richiesta
-				.getDestinatario()));
-		shippingOrderData.setFromAddress(convertiIndirizzo(richiesta
-				.getMittente()));
-		shippingOrderData.setOperatoreLogistico(richiesta
-				.getOperatoreLogistico());
+		shippingOrderData.setToAddress(convertiIndirizzo(richiesta.getDestinatario()));
+		shippingOrderData.setFromAddress(convertiIndirizzo(richiesta.getMittente()));
+		shippingOrderData.setOperatoreLogistico(richiesta.getOperatoreLogistico());
 		return shippingOrderData;
 	}
 
-	public static List<ShippingOrder> convertiShippingOrderDataToShippingOrders(
-			List<ShippingOrderData> richieste) {
+	public static List<ShippingOrder> convertiShippingOrderDataToShippingOrders(List<ShippingOrderData> richieste) {
 		List<ShippingOrder> shippingOrders = null;
 		if (richieste != null) {
 			shippingOrders = new ArrayList<ShippingOrder>();
 			for (ShippingOrderData richiesta : richieste)
-				shippingOrders
-						.add(convertiShippingOrderDataToShippingOrder(richiesta));
+				shippingOrders.add(convertiShippingOrderDataToShippingOrder(richiesta));
 		}
 		return shippingOrders;
 	}
 
-	public static ShippingOrder convertiShippingOrderDataToShippingOrder(
-			ShippingOrderData richiesta) {
+	public static ShippingOrder convertiShippingOrderDataToShippingOrder(ShippingOrderData richiesta) {
 		ShippingOrder shippingOrder = new ShippingOrder();
 		shippingOrder.setId(richiesta.getShipmentId());
 		shippingOrder.setNote(richiesta.getNote());
 		shippingOrder.setDeliveryTerms(richiesta.getTerminiDiConsegna());
-		shippingOrder
-				.setShippingItems(convertiShippingItemDataToShippingItems(richiesta
-						.getShippingItems()));
-		shippingOrder.setMittente(convertiAddressToDBGeoLocation(richiesta
-				.getFromAddress()));
-		shippingOrder.setDestinatario(convertiAddressToDBGeoLocation(richiesta
-				.getToAddress()));
+		shippingOrder.setShippingItems(convertiShippingItemDataToShippingItems(richiesta.getShippingItems()));
+		shippingOrder.setMittente(convertiAddressToDBGeoLocation(richiesta.getFromAddress()));
+		shippingOrder.setDestinatario(convertiAddressToDBGeoLocation(richiesta.getToAddress()));
 		shippingOrder.getDestinatario().setName(richiesta.getToName());
 		shippingOrder.getMittente().setName(richiesta.getFromName());
 		shippingOrder.setOperatoreLogistico(richiesta.getOperatoreLogistico());
 		return shippingOrder;
 	}
 
-	public static ShippingItem convertiShippingItemDataToShippingItem(
-			ShippingItemData richiesta) {
+	public static ShippingItem convertiShippingItemDataToShippingItem(ShippingItemData richiesta) {
 		ShippingItem shippingItem = new ShippingItem();
 		shippingItem.setAttributes(richiesta.getAttributi());
 		shippingItem.setDescription(richiesta.getDescrizione());
@@ -266,8 +239,7 @@ public class ConversioniGTG {
 		return shippingItem;
 	}
 
-	public static List<ShippingItem> convertiShippingItemDataToShippingItems(
-			ShippingItemData[] items) {
+	public static List<ShippingItem> convertiShippingItemDataToShippingItems(ShippingItemData[] items) {
 		List<ShippingItem> shippingItems = new ArrayList<ShippingItem>();
 		for (ShippingItemData si : items) {
 			shippingItems.add(convertiShippingItemDataToShippingItem(si));
@@ -275,10 +247,8 @@ public class ConversioniGTG {
 		return shippingItems;
 	}
 
-	public static ShippingItemData[] convertiPacchi(
-			List<ShippingItem> shippingItems) {
-		ShippingItemData[] shippingItemsData = new ShippingItemData[shippingItems
-				.size()];
+	public static ShippingItemData[] convertiPacchi(List<ShippingItem> shippingItems) {
+		ShippingItemData[] shippingItemsData = new ShippingItemData[shippingItems.size()];
 		if (shippingItems != null)
 			for (int i = 0; i < shippingItems.size(); i++) {
 				ShippingItem shippingItem = shippingItems.get(i);
@@ -310,8 +280,7 @@ public class ConversioniGTG {
 		return result;
 	}
 
-	public static ShippingOrderDetails convertShippingOrderToShippingOrderDetails(
-			ShippingOrder so) {
+	public static ShippingOrderDetails convertShippingOrderToShippingOrderDetails(ShippingOrder so) {
 		if (so == null) {
 			return null;
 		}
@@ -323,9 +292,7 @@ public class ConversioniGTG {
 		soe.setMittente(so.getMittente());
 		soe.setNote(so.getNote());
 		for (ShippingItem si : so.getShippingItems()) {
-			soe.getItemsList().add(
-					new ShippingItemData(si.getId(), si.getDescription(), si
-							.getAttributes()));
+			soe.getItemsList().add(new ShippingItemData(si.getId(), si.getDescription(), si.getAttributes()));
 		}
 		soe.setOrdinante(so.getCustomer().toString());
 		soe.setStato(so.getOrderStatus().name());
@@ -347,10 +314,8 @@ public class ConversioniGTG {
 		return sgotObj;
 	}
 
-	public static it.vige.greenarea.sgrl.webservices.GeoLocation fromSgotToSgrl(
-			GeoLocationInterface add) {
-		it.vige.greenarea.sgrl.webservices.GeoLocation geoLoc = obj
-				.createGeoLocation();
+	public static it.vige.greenarea.sgrl.webservices.GeoLocation fromSgotToSgrl(GeoLocationInterface add) {
+		it.vige.greenarea.sgrl.webservices.GeoLocation geoLoc = obj.createGeoLocation();
 		geoLoc.setCity(add.getCity());
 		geoLoc.setCountry(add.getCountry());
 		geoLoc.setNumber(add.getNumber());
@@ -364,8 +329,7 @@ public class ConversioniGTG {
 		return geoLoc;
 	}
 
-	public static GeoLocationInterface fromSgrlToSgot(
-			it.vige.greenarea.sgrl.webservices.GeoLocation add) {
+	public static GeoLocationInterface fromSgrlToSgot(it.vige.greenarea.sgrl.webservices.GeoLocation add) {
 		GeoLocationInterface geoLoc = new DBGeoLocation();
 		geoLoc.setCity(add.getCity());
 		geoLoc.setCountry(add.getCountry());
@@ -381,8 +345,7 @@ public class ConversioniGTG {
 	}
 
 	public static MqFreightData fromSgotToMQ(ShippingItem si) {
-		MqFreightData sid = new MqFreightData(si.getId(), si.getDescription(),
-				si.getAttributes());
+		MqFreightData sid = new MqFreightData(si.getId(), si.getDescription(), si.getAttributes());
 		return sid;
 	}
 
@@ -397,19 +360,13 @@ public class ConversioniGTG {
 	public static MqShippingData fromSgotToMQ(ShippingOrder so) {
 		Transport t = so.getTransport();
 
-		DBGeoLocation pickup = new DBGeoLocation(t.getRoute()
-				.get(t.getActiveLegIndex()).getSource().getName(), "", "", "",
-				"", t.getRoute().get(t.getActiveLegIndex()).getSource()
-						.getLocation());
-		DBGeoLocation dropdown = new DBGeoLocation(t.getRoute()
-				.get(t.getActiveLegIndex()).getDestination().getName(), "", "",
-				"", "", t.getRoute().get(t.getActiveLegIndex())
-						.getDestination().getLocation());
+		DBGeoLocation pickup = new DBGeoLocation(t.getRoute().get(t.getActiveLegIndex()).getSource().getName(), "", "",
+				"", "", t.getRoute().get(t.getActiveLegIndex()).getSource().getLocation());
+		DBGeoLocation dropdown = new DBGeoLocation(t.getRoute().get(t.getActiveLegIndex()).getDestination().getName(),
+				"", "", "", "", t.getRoute().get(t.getActiveLegIndex()).getDestination().getLocation());
 
-		MqShippingData sod = new MqShippingData(so.getId(), t.getAlfacode(),
-				so.getMittente(), so.getDestinatario(), pickup, dropdown,
-				"FURGONATO", fromSgotToMQ(so.getShippingItems()), so
-						.getTransport().getAttributes(),
+		MqShippingData sod = new MqShippingData(so.getId(), t.getAlfacode(), so.getMittente(), so.getDestinatario(),
+				pickup, dropdown, "FURGONATO", fromSgotToMQ(so.getShippingItems()), so.getTransport().getAttributes(),
 				new ArrayList<MY_Attachment>());
 		return sod;
 	}
@@ -424,20 +381,16 @@ public class ConversioniGTG {
 		ti.setStatus(t.getTransportState().name());
 
 		ti.setVettore(t.getRoute().get(t.getActiveLegIndex()).getVector());
-		ti.setSourceSite(t.getRoute().get(t.getActiveLegIndex()).getSource()
-				.getName());
-		ti.setDestinationSite(t.getRoute().get(t.getActiveLegIndex())
-				.getDestination().getName());
+		ti.setSourceSite(t.getRoute().get(t.getActiveLegIndex()).getSource().getName());
+		ti.setDestinationSite(t.getRoute().get(t.getActiveLegIndex()).getDestination().getName());
 
 		return ti;
 	}
 
 	public static void logOutData(OutData outData) {
 		if (outData != null) {
-			logger.debug("outData.getCodeFunction() = "
-					+ outData.getCodeFunction());
-			logger.debug("outData.getServiceProvider() = "
-					+ outData.getServiceProvider());
+			logger.debug("outData.getCodeFunction() = " + outData.getCodeFunction());
+			logger.debug("outData.getServiceProvider() = " + outData.getServiceProvider());
 			logger.debug("outData.getVin() = " + outData.getVin());
 			logger.debug("outData.getDate() = " + outData.getDate());
 			List<GroupData> groups = outData.getGroups();
@@ -463,10 +416,8 @@ public class ConversioniGTG {
 
 	public static void logParamData(ParamData paramData) {
 		if (paramData != null) {
-			logger.debug("                   paramData.getName() = "
-					+ paramData.getName());
-			logger.debug("                   paramData.getValue() = "
-					+ paramData.getValue());
+			logger.debug("                   paramData.getName() = " + paramData.getName());
+			logger.debug("                   paramData.getValue() = " + paramData.getValue());
 		}
 	}
 

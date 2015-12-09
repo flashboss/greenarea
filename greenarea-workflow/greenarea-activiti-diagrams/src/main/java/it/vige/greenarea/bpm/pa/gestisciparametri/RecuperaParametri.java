@@ -22,9 +22,6 @@ import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.dto.Parametro;
 
 import java.util.List;
 
@@ -36,6 +33,10 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.dto.Parametro;
+
 public class RecuperaParametri extends EmptyRecuperaParametri {
 
 	private Logger logger = getLogger(getClass());
@@ -46,26 +47,21 @@ public class RecuperaParametri extends EmptyRecuperaParametri {
 			super.execute(execution);
 			logger.info("CDI Recupera Parametri");
 			Client client = newClient();
-			Builder bldr = client.target(BASE_URI_TS + "/findAllParameterGen")
-					.request(APPLICATION_JSON);
-			List<ParameterGen> parameterGens = bldr
-					.get(new GenericType<List<ParameterGen>>() {
-					});
+			Builder bldr = client.target(BASE_URI_TS + "/findAllParameterGen").request(APPLICATION_JSON);
+			List<ParameterGen> parameterGens = bldr.get(new GenericType<List<ParameterGen>>() {
+			});
 			if (parameterGens == null || parameterGens.size() == 0) {
-				Messaggio messaggio = (Messaggio) execution
-						.getVariable("messaggio");
+				Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 				messaggio.setCategoria(ERRORELIEVE);
 				messaggio.setTipo(ERROREDATIMANCANTI);
 				throw new BpmnError("errorerecuperoparametri");
 			}
 			@SuppressWarnings("unchecked")
-			List<Parametro> parametri = (List<Parametro>) execution
-					.getVariable("parametri");
+			List<Parametro> parametri = (List<Parametro>) execution.getVariable("parametri");
 			parametri.addAll(convertiParameterGensToParametri(parameterGens));
 		} catch (BpmnError ex) {
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerecuperoparametri");

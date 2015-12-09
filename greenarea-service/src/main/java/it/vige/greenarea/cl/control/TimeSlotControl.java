@@ -18,6 +18,24 @@ import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_VARIABILE;
 import static it.vige.greenarea.dto.Color.GIALLO;
 import static it.vige.greenarea.dto.Color.VERDE;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.bean.ParameterInfo;
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.bean.RequestParameter;
@@ -42,23 +60,6 @@ import it.vige.greenarea.dto.TipoParametro;
 import it.vige.greenarea.dto.TipologiaClassifica;
 import it.vige.greenarea.dto.TipologiaParametro;
 import it.vige.greenarea.dto.Tolleranza;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.sql.DataSource;
-
-import org.slf4j.Logger;
 
 /**
  * <p>
@@ -105,16 +106,15 @@ public class TimeSlotControl {
 	 * parametri
 	 * </p>
 	 * 
-	 * @param int timeToAcceptRequest,int timeToStopRequest,int timeToRun,int
-	 *        tollerance,String wmy,String startTS,String finishTS,String
-	 *        dayStart,String dayFinish,int vikInd
+	 * @param int
+	 *            timeToAcceptRequest,int timeToStopRequest,int timeToRun,int
+	 *            tollerance,String wmy,String startTS,String finishTS,String
+	 *            dayStart,String dayFinish,int vikInd
 	 * @return TimeSlot
 	 */
-	public TimeSlot addSlotTime(AperturaRichieste timeToAcceptRequest,
-			ChiusuraRichieste timeToStopRequest, ChiusuraRichieste timeToRun,
-			Tolleranza tollerance, Ripetizione wmy, String startTS,
-			String finishTS, String dayStart, String dayFinish,
-			TipologiaClassifica vikInd) {
+	public TimeSlot addSlotTime(AperturaRichieste timeToAcceptRequest, ChiusuraRichieste timeToStopRequest,
+			ChiusuraRichieste timeToRun, Tolleranza tollerance, Ripetizione wmy, String startTS, String finishTS,
+			String dayStart, String dayFinish, TipologiaClassifica vikInd) {
 		if (wmy == null) {
 			return null;
 		}
@@ -225,8 +225,8 @@ public class TimeSlotControl {
 	 * Method: findAllTimeSlots(String userId)
 	 * </p>
 	 * <p>
-	 * Description: Cerca le fasce orarie disponibili alla configurazione, cio??????
-	 * con nome utente scelto
+	 * Description: Cerca le fasce orarie disponibili alla configurazione,
+	 * cio?????? con nome utente scelto
 	 * </p>
 	 * 
 	 * @param
@@ -234,8 +234,7 @@ public class TimeSlotControl {
 	 */
 	public List<TimeSlot> findAllTimeSlots(String userId) {
 
-		List<TimeSlot> result = em
-				.createQuery("SELECT c FROM TimeSlot c WHERE  c.pa = :user")
+		List<TimeSlot> result = em.createQuery("SELECT c FROM TimeSlot c WHERE  c.pa = :user")
 				.setParameter("user", userId).getResultList();
 
 		if (result.isEmpty()) {
@@ -302,8 +301,8 @@ public class TimeSlotControl {
 	 * Method: findParameterGenAvailable
 	 * </p>
 	 * <p>
-	 * Description: Cerca i parametri disponibili alla configurazione, cio??????????????????
-	 * con useType=1
+	 * Description: Cerca i parametri disponibili alla configurazione,
+	 * cio?????????????????? con useType=1
 	 * </p>
 	 * 
 	 * @param
@@ -311,8 +310,7 @@ public class TimeSlotControl {
 	 */
 	public List<ParameterGen> findParameterGenAvailable() {
 
-		List<ParameterGen> result = em.createQuery(
-				"SELECT c FROM ParameterGen c WHERE c.useType is true")
+		List<ParameterGen> result = em.createQuery("SELECT c FROM ParameterGen c WHERE c.useType is true")
 				.getResultList();
 
 		if (result.isEmpty()) {
@@ -351,8 +349,7 @@ public class TimeSlotControl {
 	 *            description
 	 * @return ParameterGen
 	 */
-	public ParameterGen addParameterGen(String nameP,
-			TipologiaParametro typePG, String measureUnit, boolean useType,
+	public ParameterGen addParameterGen(String nameP, TipologiaParametro typePG, String measureUnit, boolean useType,
 			String description) {
 		// check control input
 		if (nameP == null) {
@@ -436,11 +433,11 @@ public class TimeSlotControl {
 	 * una certa data in base ad alcuni parametri typePg
 	 * </p>
 	 * 
-	 * @param int dateMission,int idTimeSlot,int typePg
+	 * @param int
+	 *            dateMission,int idTimeSlot,int typePg
 	 * @return List<Request>
 	 */
-	public List<Request> selectMission(Date dateMission, int idTimeSlot,
-			int typePg) {
+	public List<Request> selectMission(Date dateMission, int idTimeSlot, int typePg) {
 
 		List<Request> rList = new ArrayList<Request>();
 
@@ -451,9 +448,10 @@ public class TimeSlotControl {
 		try {
 
 			con = ds.getConnection();
-			ps = con.prepareStatement("SELECT b.id,a.idParameter,b.company,b.name,b.truck_PLATENUMBER,c.namePG,b.timeSlot_idTS,b.startTime, a.valuePar  "
-					+ "FROM Mission as b JOIN ValueMission as a JOIN ParameterGen as c WHERE b.ID = a.mission_id AND a.idparameter = c.idpg "
-					+ "AND DATE(b.startTime) = ? AND b.timeSlot_idTS = ? AND c.typePg <? ORDER by a.mission_id, a.idParameter  ");
+			ps = con.prepareStatement(
+					"SELECT b.id,a.idParameter,b.company,b.name,b.truck_PLATENUMBER,c.namePG,b.timeSlot_idTS,b.startTime, a.valuePar  "
+							+ "FROM Mission as b JOIN ValueMission as a JOIN ParameterGen as c WHERE b.ID = a.mission_id AND a.idparameter = c.idpg "
+							+ "AND DATE(b.startTime) = ? AND b.timeSlot_idTS = ? AND c.typePg <? ORDER by a.mission_id, a.idParameter  ");
 			logger.debug("query per missioni: " + ps);
 			java.sql.Date time = new java.sql.Date(dateMission.getTime());
 			ps.setDate(1, time);
@@ -524,7 +522,8 @@ public class TimeSlotControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
 	public List<ParameterTS> getParameterForRank(int idTimeSlot) {
@@ -545,7 +544,8 @@ public class TimeSlotControl {
 	 * Description: Restituisce una lista di ParameterTS dato un idTimeSlot
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return Lisst<ParameterTS>
 	 */
 	public List<ParameterTS> getParameterTSofTimeSlot(int idTimeSlot) {
@@ -590,8 +590,7 @@ public class TimeSlotControl {
 				if (i == 0) {
 					logger.info("Dentro if");
 					tsi.setIdTS(rs.getInt("idTS"));
-					logger.info("IdTS=" + rs.getInt("idTS")
-							+ rs.getInt("tollerance"));
+					logger.info("IdTS=" + rs.getInt("idTS") + rs.getInt("tollerance"));
 
 					tsi.setStartTS(rs.getString("startTS"));
 					tsi.setFinishTS(rs.getString("finishTS"));
@@ -604,8 +603,7 @@ public class TimeSlotControl {
 					tsi.setWmy(rs.getString("wmy"));
 
 					ParameterInfo pi = new ParameterInfo();
-					pi.setTypePG(TipologiaParametro.values()[rs
-							.getInt("typePG")]);
+					pi.setTypePG(TipologiaParametro.values()[rs.getInt("typePG")]);
 					pi.setTypePar(TipoParametro.values()[rs.getInt("typePar")]);
 					pi.setNamePG(rs.getString("namePG"));
 					pi.setDescription(rs.getString("description"));
@@ -619,8 +617,7 @@ public class TimeSlotControl {
 				}
 				if (i > 0) {
 					ParameterInfo pi = new ParameterInfo();
-					pi.setTypePG(TipologiaParametro.values()[rs
-							.getInt("typePG")]);
+					pi.setTypePG(TipologiaParametro.values()[rs.getInt("typePG")]);
 					pi.setTypePar(TipoParametro.values()[rs.getInt("typePar")]);
 					pi.setNamePG(rs.getString("namePG"));
 					pi.setDescription(rs.getString("description"));
@@ -643,8 +640,7 @@ public class TimeSlotControl {
 		return tsi;
 	}
 
-	private void connectionClose(ResultSet rs, PreparedStatement ps,
-			Connection conn) {
+	private void connectionClose(ResultSet rs, PreparedStatement ps, Connection conn) {
 
 		try {
 			if (rs != null)
@@ -667,7 +663,8 @@ public class TimeSlotControl {
 	 * valore di peso, calcola il loro peso reale
 	 * </p>
 	 * 
-	 * @param int[] weight
+	 * @param int[]
+	 *            weight
 	 * @return double[]
 	 */
 	public double[] makeWeight(int[] weight) {
@@ -748,7 +745,8 @@ public class TimeSlotControl {
 	 * missioni e restituisce una lista processata
 	 * </p>
 	 * 
-	 * @param int dateMission es: gmaaaa, int idTimeSlot
+	 * @param int
+	 *            dateMission es: gmaaaa, int idTimeSlot
 	 * @return
 	 */
 	public List<Request> getRank(Date dateMission, int idTimeSlot) {
@@ -766,11 +764,11 @@ public class TimeSlotControl {
 	 * missioni e restituisce una lista processata
 	 * </p>
 	 * 
-	 * @param int dateMission es: gmaaaa, int idTimeSlot
+	 * @param int
+	 *            dateMission es: gmaaaa, int idTimeSlot
 	 * @return
 	 */
-	public List<Request> updateVikor(List<Request> reqList, Date dateMission,
-			int idTimeSlot) {
+	public List<Request> updateVikor(List<Request> reqList, Date dateMission, int idTimeSlot) {
 		if (reqList.isEmpty())
 			return null;
 		TimeSlot ts = this.findTimeSlot(idTimeSlot);
@@ -806,7 +804,8 @@ public class TimeSlotControl {
 	 * Description: stampa un vettore di numeri reali
 	 * </p>
 	 * 
-	 * @param double[][] vector
+	 * @param double[][]
+	 *            vector
 	 * @return void
 	 */
 	public void printVector(double[][] vect) {
@@ -839,8 +838,7 @@ public class TimeSlotControl {
 		List<Price> priceList = new ArrayList<Price>();
 
 		try {
-			Query query = em
-					.createQuery("SELECT a FROM Price a where a.ts.idTS=:timeslot ORDER BY a.idPrice");
+			Query query = em.createQuery("SELECT a FROM Price a where a.ts.idTS=:timeslot ORDER BY a.idPrice");
 			query.setParameter("timeslot", idTimeSlot);
 			priceList = (List<Price>) query.getResultList();
 		} catch (Exception e) {
@@ -874,7 +872,8 @@ public class TimeSlotControl {
 	 * giornata in cui ?????? stata processata
 	 * </p>
 	 * 
-	 * @param int idMission, int dateMiss
+	 * @param int
+	 *            idMission, int dateMiss
 	 * @return List<Request>
 	 */
 	public List<Request> getStoryBoard(int idTimeSlot, Date dateMiss) {
@@ -888,15 +887,13 @@ public class TimeSlotControl {
 
 			Query query = em
 					.createQuery("SELECT a FROM VIKORRESULT a WHERE a.datemission = :dateMission ORDER BY a.idMission");
-			query.setParameter("dateMission",
-					new java.sql.Date(dateMiss.getTime()));
+			query.setParameter("dateMission", new java.sql.Date(dateMiss.getTime()));
 			@SuppressWarnings("unchecked")
 			List<VikorResult> rs = (List<VikorResult>) query.getResultList();
 
 			int i = 0;
 			for (VikorResult vikorResult : rs) {
-				logger.info("ID : " + reqList.get(i).getIdMission()
-						+ " --> ID " + vikorResult.getIdMission());
+				logger.info("ID : " + reqList.get(i).getIdMission() + " --> ID " + vikorResult.getIdMission());
 				if (reqList.get(i).getIdMission() == vikorResult.getIdMission()) {
 					reqList.get(i).setPrice(vikorResult.getPrice());
 					reqList.get(i).setColor(vikorResult.getColor());
@@ -919,7 +916,8 @@ public class TimeSlotControl {
 	 * giorno
 	 * </p>
 	 * 
-	 * @param int dateMission, int idTimeSlot
+	 * @param int
+	 *            dateMission, int idTimeSlot
 	 * @return Array con 3 risultati Q0.25 Q0.5 e Q.0.75
 	 */
 
@@ -944,8 +942,7 @@ public class TimeSlotControl {
 
 			List<RequestParameter> reqParList = new ArrayList<RequestParameter>();
 
-			logger.info("ReqList size: " + sizeReqList + " PTSList size: "
-					+ size);
+			logger.info("ReqList size: " + sizeReqList + " PTSList size: " + size);
 			double[][] valuesMission = new double[sizeReqList][size];
 
 			for (int i = 0; i < sizeReqList; i++) {
@@ -954,13 +951,11 @@ public class TimeSlotControl {
 				reqParList = reqList.get(i).getReqParList();
 				if (!reqParList.isEmpty()) {
 					for (int c = 0; c < size; c++) {
-						logger.info("Valore Parametro List"
-								+ reqParList.get(c).getValuePar());
+						logger.info("Valore Parametro List" + reqParList.get(c).getValuePar());
 					}
 					for (int j = 0; j < size; j++) {
 						valuesMission[i][j] = reqParList.get(j).getValuePar();
-						logger.info("Valore : " + valuesMission[i][j]
-								+ " Riga: " + i + " Colonna: " + j);
+						logger.info("Valore : " + valuesMission[i][j] + " Riga: " + i + " Colonna: " + j);
 					}
 				}
 			}
@@ -982,15 +977,13 @@ public class TimeSlotControl {
 				vpesi[i] = ptsList.get(i).getWeight().ordinal();
 
 				if (coBe[i] == 0)
-					arTollerance[i] = antiIdeale[i]
-							+ ((antiIdeale[i] * tollerance.getValue()) / 100);
+					arTollerance[i] = antiIdeale[i] + ((antiIdeale[i] * tollerance.getValue()) / 100);
 
 				if (coBe[i] == 1) { // selected TypePar = cost
 					double a = ideale[i];
 					ideale[i] = antiIdeale[i];
 					antiIdeale[i] = a;
-					arTollerance[i] = antiIdeale[i]
-							- ((antiIdeale[i] * tollerance.getValue()) / 100);
+					arTollerance[i] = antiIdeale[i] - ((antiIdeale[i] * tollerance.getValue()) / 100);
 				}
 			}
 
@@ -1001,8 +994,7 @@ public class TimeSlotControl {
 			int numAntiIdea = antiIdeale.length;
 			int numPesi = pesi.length;
 
-			if (columns != numIdea || columns != numAntiIdea
-					|| numIdea != numAntiIdea || columns != numPesi) {
+			if (columns != numIdea || columns != numAntiIdea || numIdea != numAntiIdea || columns != numPesi) {
 				logger.error("Errore nell'inserimento dati");
 				return null;
 			}
@@ -1011,23 +1003,19 @@ public class TimeSlotControl {
 			double[] erre = new double[rows];
 			double[] esse = new double[rows];
 			double[][] qu = new double[rows][3];
-			logger.info("Righe :" + qu.length + ";" + "Colonne : "
-					+ qu[0].length + ";");
+			logger.info("Righe :" + qu.length + ";" + "Colonne : " + qu[0].length + ";");
 
 			for (int i = 0; i < rows; i++) {
 				for (int j = 0; j < columns; j++) {
 					if (j == 0)
 						esse[j] = 0;
-					normali[i][j] = pesi[j] * (ideale[j] - valuesMission[i][j])
-							/ (ideale[j] - antiIdeale[j]);
-					normalinonpesati[i][j] = (ideale[j] - valuesMission[i][j])
-							/ (ideale[j] - antiIdeale[j]);
+					normali[i][j] = pesi[j] * (ideale[j] - valuesMission[i][j]) / (ideale[j] - antiIdeale[j]);
+					normalinonpesati[i][j] = (ideale[j] - valuesMission[i][j]) / (ideale[j] - antiIdeale[j]);
 					esse[i] += normali[i][j];
 					if (j == 0)
 						erre[i] = normali[i][j];
 					if (j > 0)
-						erre[i] = normali[i][j] > normali[i][j - 1] ? normali[i][j]
-								: normali[i][j - 1];
+						erre[i] = normali[i][j] > normali[i][j - 1] ? normali[i][j] : normali[i][j - 1];
 
 				}
 
@@ -1053,15 +1041,13 @@ public class TimeSlotControl {
 				vpesi[i] = ptsList.get(i).getWeight().ordinal();
 
 				if (coBe[i] == 0)
-					arTollerance[i] = antiIdeale[i]
-							+ ((antiIdeale[i] * tollerance.getValue()) / 100);
+					arTollerance[i] = antiIdeale[i] + ((antiIdeale[i] * tollerance.getValue()) / 100);
 
 				if (coBe[i] == 1) { // selected TypePar = cost
 					double a = ideale[i];
 					ideale[i] = antiIdeale[i];
 					antiIdeale[i] = a;
-					arTollerance[i] = antiIdeale[i]
-							- ((antiIdeale[i] * tollerance.getValue()) / 100);
+					arTollerance[i] = antiIdeale[i] - ((antiIdeale[i] * tollerance.getValue()) / 100);
 				}
 			}
 
@@ -1081,15 +1067,13 @@ public class TimeSlotControl {
 				if (j == 0)
 					esseTol = 0;
 
-				normaliQu[j] = pesi[j] * (ideale[j] - arTollerance[j])
-						/ (ideale[j] - antiIdeale[j]);
+				normaliQu[j] = pesi[j] * (ideale[j] - arTollerance[j]) / (ideale[j] - antiIdeale[j]);
 				esseTol += normaliQu[j];
 
 				if (j == 0)
 					erreTol = normaliQu[j];
 				if (j > 0)
-					erreTol = normaliQu[j] > normaliQu[j - 1] ? normaliQu[j]
-							: normaliQu[j - 1];
+					erreTol = normaliQu[j] > normaliQu[j - 1] ? normaliQu[j] : normaliQu[j - 1];
 
 				quTol[0] = 0.5 * esseTol + (1 - 0.5) * erreTol;
 				quTol[1] = 0.75 * esseTol + (1 - 0.75) * erreTol;
@@ -1120,28 +1104,24 @@ public class TimeSlotControl {
 			for (int i = 0; i < reqSize; i++) {
 				double[] ques = reqList.get(i).getQu();
 				reqList.get(i).setDateMiss(dateMission);
-				if (ques[vikorIdx.getValue()] >= quTol[vikorIdx.getValue()]
-						&& yellow != null) {// Davide
+				if (ques[vikorIdx.getValue()] >= quTol[vikorIdx.getValue()] && yellow != null) {// Davide
 					// situazione gialla
 					reqList.get(i).setColor(GIALLO);
 					if (yellow.getTypeEntry() == PREZZO_VARIABILE) {
 						double price = yellow.getMaxPrice()
-								- ques[vikorIdx.getValue()]
-								/ (yellow.getMaxPrice() - yellow.getMinPrice());
+								- ques[vikorIdx.getValue()] / (yellow.getMaxPrice() - yellow.getMinPrice());
 						reqList.get(i).setPrice(price);
 					}
 					if (yellow.getTypeEntry() == PREZZO_FISSO) {
 						reqList.get(i).setPrice(yellow.getFixPrice());
 					}
 				}
-				if (ques[vikorIdx.getValue()] <= quTol[vikorIdx.getValue()]
-						&& green != null) {// Davide
+				if (ques[vikorIdx.getValue()] <= quTol[vikorIdx.getValue()] && green != null) {// Davide
 					// situzione verde
 					reqList.get(i).setColor(VERDE);
 					if (green.getTypeEntry() == PREZZO_VARIABILE) {
 						double price = green.getMaxPrice()
-								- ques[vikorIdx.getValue()]
-								/ (green.getMaxPrice() - green.getMinPrice());
+								- ques[vikorIdx.getValue()] / (green.getMaxPrice() - green.getMinPrice());
 						reqList.get(i).setPrice(price);
 					}
 					if (green.getTypeEntry() == PREZZO_FISSO) {

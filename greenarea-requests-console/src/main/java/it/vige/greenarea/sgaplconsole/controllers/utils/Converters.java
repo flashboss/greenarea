@@ -13,20 +13,20 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers.utils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.itseasy.lib.configurationData.FreightAttribs;
 import it.vige.greenarea.sgapl.sgot.webservice.Address;
 import it.vige.greenarea.sgapl.sgot.webservice.DbGeoLocation;
 import it.vige.greenarea.sgapl.sgot.webservice.ShippingItemData;
 import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData;
 import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails;
 import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails.TerminiDiConsegna.Entry;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.itseasy.lib.configurationData.FreightAttribs;
 import it.vige.greenarea.sgaplconsole.data.Attributi;
 import it.vige.greenarea.sgaplconsole.data.FreightItem;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Converters {
 
@@ -69,8 +69,7 @@ public class Converters {
 		return sl;
 	}
 
-	public static ShippingOrderData convertOrderData(
-			it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails s) {
+	public static ShippingOrderData convertOrderData(it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails s) {
 		if (s == null) {
 			return null;
 		}
@@ -81,8 +80,7 @@ public class Converters {
 		Iterator<Entry> is = s.getTerminiDiConsegna().getEntry().iterator();
 		ShippingOrderData.TerminiDiConsegna.Entry sode = new ShippingOrderData.TerminiDiConsegna.Entry();
 		while (is.hasNext()) {
-			ShippingOrderDetails.TerminiDiConsegna.Entry se = (ShippingOrderDetails.TerminiDiConsegna.Entry) is
-					.next();
+			ShippingOrderDetails.TerminiDiConsegna.Entry se = (ShippingOrderDetails.TerminiDiConsegna.Entry) is.next();
 			sode.setKey(se.getKey());
 			sode.setValue(se.getValue());
 			tsdo.getEntry().add(sode);
@@ -92,8 +90,7 @@ public class Converters {
 		return sod;
 	}
 
-	public static List<FreightItem> convertShippingItemList(
-			List<ShippingItemData> sidL) {
+	public static List<FreightItem> convertShippingItemList(List<ShippingItemData> sidL) {
 		if (sidL == null) {
 			return null;
 		}
@@ -104,8 +101,7 @@ public class Converters {
 		return fiL;
 	}
 
-	public static List<ShippingItemData> convertFreightItemList(
-			List<FreightItem> fiL) {
+	public static List<ShippingItemData> convertFreightItemList(List<FreightItem> fiL) {
 		if (fiL == null) {
 			return null;
 		}
@@ -132,44 +128,37 @@ public class Converters {
 				switch (fa) {
 				case Height:
 					if (e.getKey().equals(fa.name())) {
-						fi.setHeight(new Integer(e.getValue() == null ? "0" : e
-								.getValue()));
+						fi.setHeight(new Integer(e.getValue() == null ? "0" : e.getValue()));
 					}
 					break;
 				case Length:
 					if (e.getKey().equals(fa.name())) {
-						fi.setLenght(new Integer(e.getValue() == null ? "0" : e
-								.getValue()));
+						fi.setLenght(new Integer(e.getValue() == null ? "0" : e.getValue()));
 					}
 					break;
 				case Volume:
 					if (e.getKey().equals(fa.name())) {
-						fi.setVolume(new Integer(e.getValue() == null ? "10"
-								: e.getValue()));
+						fi.setVolume(new Integer(e.getValue() == null ? "10" : e.getValue()));
 					}
 					break;
 				case Weight:
 					if (e.getKey().equals(fa.name())) {
-						fi.setWeight(new Integer(e.getValue() == null ? "0" : e
-								.getValue()));
+						fi.setWeight(new Integer(e.getValue() == null ? "0" : e.getValue()));
 					}
 					break;
 				case Width:
 					if (e.getKey().equals(fa.name())) {
-						fi.setWidth(new Integer(e.getValue() == null ? "0" : e
-								.getValue()));
+						fi.setWidth(new Integer(e.getValue() == null ? "0" : e.getValue()));
 					}
 					break;
 				case KeepUpStanding:
 					if (e.getKey().equals(fa.name())) {
-						fi.setKeepUpStanding(new Boolean(
-								e.getValue() == null ? "false" : e.getValue()));
+						fi.setKeepUpStanding(new Boolean(e.getValue() == null ? "false" : e.getValue()));
 					}
 					break;
 				case Stackable:
 					if (e.getKey().equals(fa.name())) {
-						fi.setStackable(new Boolean(
-								e.getValue() == null ? "false" : e.getValue()));
+						fi.setStackable(new Boolean(e.getValue() == null ? "false" : e.getValue()));
 					}
 					break;
 				}

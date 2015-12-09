@@ -13,16 +13,17 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.view.mxICellEditor;
 import java.util.EventObject;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 
-public abstract class LNCellEditorDialog extends java.awt.Dialog implements
-		mxICellEditor, SaveConfirmHandlerInterface {
+import com.mxgraph.model.mxCell;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.view.mxICellEditor;
+
+public abstract class LNCellEditorDialog extends java.awt.Dialog implements mxICellEditor, SaveConfirmHandlerInterface {
 	/**
 	 * 
 	 */
@@ -59,8 +60,7 @@ public abstract class LNCellEditorDialog extends java.awt.Dialog implements
 	public LNCellEditorDialog(mxGraphComponent gc) {
 		this((JFrame) SwingUtilities.windowForComponent(gc), false);
 		this.graphComponent = gc;
-		scd = new SaveConfirmDialog(
-				(JFrame) SwingUtilities.windowForComponent(gc), true);
+		scd = new SaveConfirmDialog((JFrame) SwingUtilities.windowForComponent(gc), true);
 		scd.setEventHandler(this);
 	}
 
@@ -138,8 +138,7 @@ public abstract class LNCellEditorDialog extends java.awt.Dialog implements
 	public void stopEditing(boolean cancel) {
 		if (editingCell != null) {
 			if (!cancel)
-				graphComponent.labelChanged(editingCell,
-						editingCell.getValue(), null);
+				graphComponent.labelChanged(editingCell, editingCell.getValue(), null);
 			editingCell = null;
 			graphComponent.setEnabled(true);
 			this.setVisible(false);

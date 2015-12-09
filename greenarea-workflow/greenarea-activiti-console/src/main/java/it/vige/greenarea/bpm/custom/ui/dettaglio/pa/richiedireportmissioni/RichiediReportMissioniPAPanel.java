@@ -22,9 +22,6 @@ import static org.activiti.explorer.Messages.TASK_COMPLETE;
 import static org.activiti.explorer.Messages.TASK_COMPLETED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_PANEL;
-import it.vige.greenarea.bpm.custom.ui.GreenareaFormLayout;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 import java.util.Map;
 
@@ -53,6 +50,10 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+
+import it.vige.greenarea.bpm.custom.ui.GreenareaFormLayout;
+import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 public class RichiediReportMissioniPAPanel extends VerticalLayout {
 
@@ -83,8 +84,7 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 
 		this.taskService = getDefaultProcessEngine().getTaskService();
 		this.formService = getDefaultProcessEngine().getFormService();
-		this.repositoryService = getDefaultProcessEngine()
-				.getRepositoryService();
+		this.repositoryService = getDefaultProcessEngine().getRepositoryService();
 		this.viewManager = get().getViewManager();
 		this.i18nManager = get().getI18nManager();
 		this.notificationManager = get().getNotificationManager();
@@ -138,8 +138,7 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 	 */
 	public void addDetailComponent(Component c, int index) {
 		if (mainPanel.getContent() instanceof AbstractOrderedLayout) {
-			((AbstractOrderedLayout) mainPanel.getContent()).addComponent(c,
-					index);
+			((AbstractOrderedLayout) mainPanel.getContent()).addComponent(c, index);
 		} else {
 			throw new UnsupportedOperationException(
 					"Cannot add components indexed component, detail content is not AbstractOrderedLayout");
@@ -151,8 +150,7 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 	 */
 	public void setDetailExpandRatio(Component component, float ratio) {
 		if (mainPanel.getContent() instanceof AbstractOrderedLayout) {
-			((AbstractOrderedLayout) mainPanel.getContent()).setExpandRatio(
-					component, ratio);
+			((AbstractOrderedLayout) mainPanel.getContent()).setExpandRatio(component, ratio);
 		} else {
 			throw new UnsupportedOperationException(
 					"Cannot set ExpandRatio, detail content is not AbstractOrderedLayout");
@@ -197,15 +195,13 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 	protected void initTaskForm() {
 		// Check if task requires a form
 		TaskFormData formData = formService.getTaskFormData(task.getId());
-		if (formData != null && formData.getFormProperties() != null
-				&& formData.getFormProperties().size() > 0) {
+		if (formData != null && formData.getFormProperties() != null && formData.getFormProperties().size() > 0) {
 			taskForm = new GreenareaFormPropertiesForm();
 			taskForm.setMainTitle(taskPage.getMainTitle());
 			if (task.getTaskDefinitionKey().equals("visualizzaReportDettaglio")
-					|| task.getTaskDefinitionKey().equals(
-							"visualizzaReportSintesi"))
-				((Form) ((FormPropertiesComponent) taskForm.getComponent(1))
-						.getComponent(0)).setLayout(new GreenareaFormLayout());
+					|| task.getTaskDefinitionKey().equals("visualizzaReportSintesi"))
+				((Form) ((FormPropertiesComponent) taskForm.getComponent(1)).getComponent(0))
+						.setLayout(new GreenareaFormLayout());
 			taskForm.setFormProperties(formData.getFormProperties());
 
 			taskForm.addListener(new FormPropertiesEventListener() {
@@ -216,8 +212,7 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 				protected void handleFormSubmit(FormPropertiesEvent event) {
 					Map<String, String> properties = event.getFormProperties();
 					formService.submitTaskFormData(task.getId(), properties);
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
 					taskPage.refreshSelectNext();
 				}
 
@@ -256,14 +251,12 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 					}
 
 					taskService.complete(task.getId());
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
 					taskPage.refreshSelectNext();
 				}
 			});
 
-			completeButton.setEnabled(isCurrentUserAssignee()
-					|| isCurrentUserOwner());
+			completeButton.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
 			buttonLayout.addComponent(completeButton);
 		}
 	}
@@ -279,9 +272,8 @@ public class RichiediReportMissioniPAPanel extends VerticalLayout {
 	}
 
 	protected boolean canUserClaimTask() {
-		return taskService.createTaskQuery()
-				.taskCandidateUser(get().getLoggedInUser().getId())
-				.taskId(task.getId()).count() == 1;
+		return taskService.createTaskQuery().taskCandidateUser(get().getLoggedInUser().getId()).taskId(task.getId())
+				.count() == 1;
 	}
 
 	protected void addEmptySpace(ComponentContainer container) {

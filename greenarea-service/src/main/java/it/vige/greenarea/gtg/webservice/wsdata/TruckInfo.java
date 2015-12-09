@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.Vehicle;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import it.vige.greenarea.cl.library.entities.Vehicle;
 
 @XmlType(name = "Truck")
 @XmlAccessorType(XmlAccessType.FIELD)

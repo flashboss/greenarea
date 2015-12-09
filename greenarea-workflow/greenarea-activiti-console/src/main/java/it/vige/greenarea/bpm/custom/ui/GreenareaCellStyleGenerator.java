@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui;
 
-import it.vige.greenarea.bpm.custom.ui.data.PageListItem;
-
 import org.activiti.explorer.data.LazyLoadingQuery;
 
 import com.vaadin.ui.Table.CellStyleGenerator;
+
+import it.vige.greenarea.bpm.custom.ui.data.PageListItem;
 
 public class GreenareaCellStyleGenerator implements CellStyleGenerator {
 
@@ -31,8 +31,7 @@ public class GreenareaCellStyleGenerator implements CellStyleGenerator {
 
 	@Override
 	public String getStyle(Object itemId, Object propertyId) {
-		PageListItem pageItem = (PageListItem) lazyLoadingQuery
-				.loadSingleResult(itemId + "");
+		PageListItem pageItem = (PageListItem) lazyLoadingQuery.loadSingleResult(itemId + "");
 		Boolean hidden = pageItem.isHidden();
 		String result = "";
 		if (hidden)

@@ -17,9 +17,6 @@ import static com.vaadin.ui.themes.Reindeer.LAYOUT_WHITE;
 import static org.activiti.engine.ProcessEngines.getDefaultProcessEngine;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.navigation.ProcessNavigator.process_URI_PART;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.societaditrasporto.performanceveicoli.PerformanceVeicoliStPage;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.societaditrasporto.performanceveicoli.PerformanceVeicoliStPanel;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -38,25 +35,24 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import it.vige.greenarea.bpm.custom.ui.dettaglio.societaditrasporto.performanceveicoli.PerformanceVeicoliStPage;
+import it.vige.greenarea.bpm.custom.ui.dettaglio.societaditrasporto.performanceveicoli.PerformanceVeicoliStPanel;
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
+
 public class PerformanceVeicoli extends AbstractProcessDefinitionDetailPanel {
 
 	private static final long serialVersionUID = -5903548585312958722L;
 
-	protected transient RuntimeService runtimeService = getDefaultProcessEngine()
-			.getRuntimeService();
-	protected transient TaskService taskService = getDefaultProcessEngine()
-			.getTaskService();
-	protected NotificationManager notificationManager = get()
-			.getNotificationManager();
+	protected transient RuntimeService runtimeService = getDefaultProcessEngine().getRuntimeService();
+	protected transient TaskService taskService = getDefaultProcessEngine().getTaskService();
+	protected NotificationManager notificationManager = get().getNotificationManager();
 	protected GreenareaFormPropertiesForm processDefinitionStartForm;
 
 	private Label mainTitle;
 
-	public PerformanceVeicoli(String processDefinitionId,
-			SocietaDiTrasportoDetailPanel detailPanel) {
+	public PerformanceVeicoli(String processDefinitionId, SocietaDiTrasportoDetailPanel detailPanel) {
 		super(processDefinitionId, detailPanel.getParentPage());
-		this.mainTitle = (Label) detailPanel.getMainPanel()
-				.getComponentIterator().next();
+		this.mainTitle = (Label) detailPanel.getMainPanel().getComponentIterator().next();
 		executeProcess();
 	}
 
@@ -80,26 +76,20 @@ public class PerformanceVeicoli extends AbstractProcessDefinitionDetailPanel {
 			processDefinitionStartForm.setMainTitle(mainTitle);
 
 			// When form is submitted/cancelled, show the info again
-			processDefinitionStartForm
-					.addListener(new FormPropertiesEventListener() {
-						private static final long serialVersionUID = 1L;
+			processDefinitionStartForm.addListener(new FormPropertiesEventListener() {
+				private static final long serialVersionUID = 1L;
 
-						protected void handleFormSubmit(
-								FormPropertiesEvent event) {
-							formService.submitStartFormData(
-									processDefinition.getId(),
-									event.getFormProperties());
-							goToDettaglio();
-						}
+				protected void handleFormSubmit(FormPropertiesEvent event) {
+					formService.submitStartFormData(processDefinition.getId(), event.getFormProperties());
+					goToDettaglio();
+				}
 
-						protected void handleFormCancel(
-								FormPropertiesEvent event) {
-							processDefinitionStartForm.clear();
-						}
-					});
+				protected void handleFormCancel(FormPropertiesEvent event) {
+					processDefinitionStartForm.clear();
+				}
+			});
 		}
-		processDefinitionStartForm.setFormProperties(startFormData
-				.getFormProperties());
+		processDefinitionStartForm.setFormProperties(startFormData.getFormProperties());
 		addComponent(processDefinitionStartForm);
 	}
 
@@ -107,14 +97,11 @@ public class PerformanceVeicoli extends AbstractProcessDefinitionDetailPanel {
 		// Just start the process-instance since it has no form.
 		// TODO: Error handling
 		String userId = get().getLoggedInUser().getId();
-		ProcessInstance processInstance = runtimeService
-				.createProcessInstanceQuery().active().involvedUser(userId)
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().active().involvedUser(userId)
 				.processDefinitionId(processDefinition.getId()).singleResult();
 
-		Task task = taskService.createTaskQuery()
-				.processInstanceId(processInstance.getId()).singleResult();
-		Component detailComponent = new PerformanceVeicoliStPanel(
-				task,
+		Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+		Component detailComponent = new PerformanceVeicoliStPanel(task,
 				new PerformanceVeicoliStPage(processInstance.getId(), mainTitle));
 		mainPanel.getContent().removeAllComponents();
 		addComponent(processDefinitionStartForm);
@@ -124,12 +111,10 @@ public class PerformanceVeicoli extends AbstractProcessDefinitionDetailPanel {
 	public void executeProcess() {
 		// Check if process-definition defines a start-form
 
-		StartFormData startFormData = formService
-				.getStartFormData(processDefinition.getId());
+		StartFormData startFormData = formService.getStartFormData(processDefinition.getId());
 		if (startFormData != null
-				&& ((startFormData.getFormProperties() != null && startFormData
-						.getFormProperties().size() > 0) || startFormData
-						.getFormKey() != null)) {
+				&& ((startFormData.getFormProperties() != null && startFormData.getFormProperties().size() > 0)
+						|| startFormData.getFormKey() != null)) {
 			showStartForm(processDefinition, startFormData);
 		}
 	}
@@ -139,13 +124,11 @@ public class PerformanceVeicoli extends AbstractProcessDefinitionDetailPanel {
 	}
 
 	protected void changeUrl(String processDefinitionId) {
-		UriFragment processDefinitionFragment = new UriFragment(
-				process_URI_PART, processDefinitionId);
+		UriFragment processDefinitionFragment = new UriFragment(process_URI_PART, processDefinitionId);
 		get().setCurrentUriFragment(processDefinitionFragment);
 	}
 
-	public void showStartForm(ProcessDefinition processDefinition,
-			StartFormData startFormData) {
+	public void showStartForm(ProcessDefinition processDefinition, StartFormData startFormData) {
 		showProcessDefinitionDetail(processDefinition.getId());
 		showProcessStartForm(startFormData);
 	}

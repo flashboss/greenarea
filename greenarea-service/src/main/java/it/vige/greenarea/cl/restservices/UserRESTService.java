@@ -14,17 +14,6 @@
 package it.vige.greenarea.cl.restservices;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.control.TimeSlotControl;
-import it.vige.greenarea.cl.control.UserControl;
-import it.vige.greenarea.cl.control.VehicleControl;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.library.entities.TruckServiceClass;
-import it.vige.greenarea.cl.library.entities.ValueMission;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.dto.RichiestaVeicolo;
-import it.vige.greenarea.dto.Veicolo;
 
 import java.util.List;
 
@@ -37,6 +26,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.control.TimeSlotControl;
+import it.vige.greenarea.cl.control.UserControl;
+import it.vige.greenarea.cl.control.VehicleControl;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
+import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.dto.RichiestaVeicolo;
+import it.vige.greenarea.dto.Veicolo;
 
 /**
  * <p>
@@ -67,7 +68,8 @@ public class UserRESTService {
 	 * richiesta processata
 	 * </p>
 	 * 
-	 * @param int idMission
+	 * @param int
+	 *            idMission
 	 * @return Request
 	 */
 	@GET
@@ -83,7 +85,8 @@ public class UserRESTService {
 	 * Method: addValueMission
 	 * </p>
 	 * <p>
-	 * Description: Questo metodo aggiunge un valore missione al sistema lato utente
+	 * Description: Questo metodo aggiunge un valore missione al sistema lato
+	 * utente
 	 * </p>
 	 * 
 	 * @param ValueMission
@@ -205,8 +208,7 @@ public class UserRESTService {
 	@GET
 	@Path("/getVehiclesForOP/{operatoreLogistico}")
 	@Produces(APPLICATION_JSON)
-	public List<Vehicle> getVehicles(
-			@PathParam("operatoreLogistico") String operatoreLogistico) {
+	public List<Vehicle> getVehicles(@PathParam("operatoreLogistico") String operatoreLogistico) {
 		return vc.getVehicles(operatoreLogistico);
 	}
 

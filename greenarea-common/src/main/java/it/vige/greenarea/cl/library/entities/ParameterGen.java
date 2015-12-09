@@ -15,7 +15,6 @@ package it.vige.greenarea.cl.library.entities;
 
 import static javax.persistence.GenerationType.AUTO;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.TipologiaParametro;
 
 import java.io.Serializable;
 
@@ -25,6 +24,8 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.TipologiaParametro;
 
 @Entity
 @XmlRootElement
@@ -81,8 +82,7 @@ public class ParameterGen implements Serializable {
 			return false;
 		}
 		ParameterGen other = (ParameterGen) object;
-		if ((this.idPG == null && other.idPG != null)
-				|| (this.idPG != null && !this.idPG.equals(other.idPG))) {
+		if ((this.idPG == null && other.idPG != null) || (this.idPG != null && !this.idPG.equals(other.idPG))) {
 			return false;
 		}
 		return true;

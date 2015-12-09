@@ -19,15 +19,6 @@ import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
 import static java.util.Calendar.getInstance;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.control.TimeSlotControl;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.cl.sessions.TimeSlotFacade;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.gtg.db.facades.FreightFacade;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -51,6 +42,16 @@ import javax.persistence.Query;
 import javax.sound.sampled.LineUnavailableException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.control.TimeSlotControl;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.sessions.TimeSlotFacade;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.gtg.db.facades.FreightFacade;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 /**
  *
@@ -83,8 +84,8 @@ public class Scheduler {
 	ArrayList<Transport> listSchedule;
 
 	/**
-     * 
-     */
+	 * 
+	 */
 	public Scheduler() {
 
 		this.listSchedule = new ArrayList<Transport>();
@@ -123,10 +124,8 @@ public class Scheduler {
 			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
 			String dateTs = fmt.format(sc.getDateMiss()) + " " + timeTS;
 			sc.setTimeSlot(tiSlo);
-			sc.setTimeAccept(makeDate(dateTs, tiSlo.getTimeToAcceptRequest()
-					.getValue()));
-			sc.setTimeClosing(makeDate(dateTs, tiSlo.getTimeToStopRequest()
-					.getValue()));
+			sc.setTimeAccept(makeDate(dateTs, tiSlo.getTimeToAcceptRequest().getValue()));
+			sc.setTimeClosing(makeDate(dateTs, tiSlo.getTimeToStopRequest().getValue()));
 			sc.setTimeRank(makeDate(dateTs, tiSlo.getTimeToRun().getValue()));
 
 		} catch (Exception e) {
@@ -183,15 +182,14 @@ public class Scheduler {
 	}
 
 	/**
-     * 
-     */
+	 * 
+	 */
 	public void setScheduleToday() {
 
 		java.sql.Date td = new java.sql.Date(new Date().getTime());
 		logger.info(td + "");
 		try {
-			Query query = em
-					.createQuery("Select a FROM Transport a where a.timeRank like :timeRank");
+			Query query = em.createQuery("Select a FROM Transport a where a.timeRank like :timeRank");
 			query.setParameter("timeRank", "%" + td + "%");
 			@SuppressWarnings("unchecked")
 			List<Transport> rs = query.getResultList();
@@ -200,8 +198,7 @@ public class Scheduler {
 				timeToRank = transport.getTimeRank();
 				Calendar calendar = getInstance();
 				calendar.setTime(timeToRank);
-				schedula(calendar.get(HOUR_OF_DAY) + "", calendar.get(MINUTE)
-						+ "");
+				schedula(calendar.get(HOUR_OF_DAY) + "", calendar.get(MINUTE) + "");
 			}
 		} catch (Exception e) {
 			logger.error("accessi fasceorarie", e);
@@ -209,8 +206,8 @@ public class Scheduler {
 	}
 
 	/**
-     * 
-     */
+	 * 
+	 */
 	@Schedule(second = "00", minute = "20", hour = "12")
 	public void sendSalesScheduler() {
 		this.setScheduleToday();
@@ -253,14 +250,12 @@ public class Scheduler {
 		int idTimeSlot = 0;
 
 		try {
-			Query query = em
-					.createQuery("SELECT a FROM Transport a ORDER BY a.alfacode");
+			Query query = em.createQuery("SELECT a FROM Transport a ORDER BY a.alfacode");
 			Transport transport = (Transport) query.getSingleResult();
 			TimeSlot tSlot = transport.getTimeSlot();
 			dateMission = addDays(transport.getDateMiss(), -1);
 			idTimeSlot = tSlot.getIdTS();
-			logger.info("Risultato del task: Data:" + dateMission
-					+ "ID Time Slot: " + idTimeSlot);
+			logger.info("Risultato del task: Data:" + dateMission + "ID Time Slot: " + idTimeSlot);
 			tsc.getRank(dateMission, idTimeSlot);
 
 		} catch (Exception e) {

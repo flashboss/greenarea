@@ -20,9 +20,9 @@ public class AccessiInGA implements Serializable {
 	private static final long serialVersionUID = 1058008473856500178L;
 
 	private int accessi;
-	
+
 	private double km;
-	
+
 	private long tempoTrascorso;
 
 	public long getTempoTrascorso() {

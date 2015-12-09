@@ -13,15 +13,15 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.db.facades;
 
-import it.vige.greenarea.cl.library.entities.ExchangeStop;
-import it.vige.greenarea.cl.library.entities.Mission;
-
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import it.vige.greenarea.cl.library.entities.ExchangeStop;
+import it.vige.greenarea.cl.library.entities.Mission;
 
 @Stateless
 public class ExchangeStopFacade extends AbstractFacade<ExchangeStop, Long> {
@@ -48,8 +48,7 @@ public class ExchangeStopFacade extends AbstractFacade<ExchangeStop, Long> {
 	}
 
 	public List<ExchangeStop> findAll(Mission mission) {
-		Query query = em
-				.createQuery("select f.exchangeStops from Mission f where f = :mission");
+		Query query = em.createQuery("select f.exchangeStops from Mission f where f = :mission");
 		query.setParameter("mission", mission);
 		return query.getResultList();
 	}

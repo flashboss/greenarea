@@ -19,9 +19,6 @@ import static it.vige.greenarea.dto.TipoRichiesta.CONSEGNA;
 import static java.util.Arrays.asList;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
-import it.vige.greenarea.bpm.form.RichiesteCollectionFormType;
-import it.vige.greenarea.dto.Pacco;
-import it.vige.greenarea.dto.Richiesta;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -37,8 +34,11 @@ import org.activiti.explorer.I18nManager;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
-public class RichiesteCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Richiesta> {
+import it.vige.greenarea.bpm.form.RichiesteCollectionFormType;
+import it.vige.greenarea.dto.Pacco;
+import it.vige.greenarea.dto.Richiesta;
+
+public class RichiesteCollectionFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Richiesta> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<Richiesta> table;
@@ -52,10 +52,8 @@ public class RichiesteCollectionFormPropertyRenderer extends
 	@Override
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
-		values = (Map<String, Richiesta>) formProperty.getType()
-				.getInformation("values");
-		List<Richiesta> valuesRichieste = new ArrayList<Richiesta>(
-				values.values());
+		values = (Map<String, Richiesta>) formProperty.getType().getInformation("values");
+		List<Richiesta> valuesRichieste = new ArrayList<Richiesta>(values.values());
 		Collections.sort(valuesRichieste, new Comparator<Richiesta>() {
 
 			@Override
@@ -65,20 +63,17 @@ public class RichiesteCollectionFormPropertyRenderer extends
 			}
 
 		});
-		table = new GreenareaPagedTable<Richiesta>(valuesRichieste,
-				getGreenareaFormPropertiesForm());
+		table = new GreenareaPagedTable<Richiesta>(valuesRichieste, getGreenareaFormPropertiesForm());
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(false);
 		table.setStyleName(STYLE_COLLECTION);
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS
-					+ "shipmentId");
+			String id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS + "shipmentId");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS + "tipo");
 			table.addContainerProperty(id, String.class, null);
@@ -92,8 +87,7 @@ public class RichiesteCollectionFormPropertyRenderer extends
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS + "nomecliente");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS
-					+ "indirizzocliente");
+			id = i18nManager.getMessage(RICHIESTE_TABLE_FIELDS + "indirizzocliente");
 			table.addContainerProperty(id, String.class, null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);

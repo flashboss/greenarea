@@ -13,15 +13,15 @@
  ******************************************************************************/
 package it.vige.greenarea.geo;
 
-    public class CapRecord {
-        String Istat;
-        String Comune;
-        String Provincia;
-        String Regione;
-        String Prefisso;
-        String CAP;
-        String CodFisco;
-        String Sigla;
-        int Abitanti;
-        String Link;      
-    } 
+public class CapRecord {
+	String Istat;
+	String Comune;
+	String Provincia;
+	String Regione;
+	String Prefisso;
+	String CAP;
+	String CodFisco;
+	String Sigla;
+	int Abitanti;
+	String Link;
+}

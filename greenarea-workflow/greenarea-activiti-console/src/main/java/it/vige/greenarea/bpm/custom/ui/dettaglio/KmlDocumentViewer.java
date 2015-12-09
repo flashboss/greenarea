@@ -15,7 +15,6 @@ package it.vige.greenarea.bpm.custom.ui.dettaglio;
 
 import static de.micromata.opengis.kml.v_2_2_0.Kml.unmarshal;
 import static org.vaadin.vol.VectorLayer.SelectionMode.SIMPLE;
-import it.vige.greenarea.bpm.custom.ui.pa.DefinizioneAreaGeografica;
 
 import java.util.List;
 
@@ -51,6 +50,7 @@ import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.PolyStyle;
 import de.micromata.opengis.kml.v_2_2_0.Polygon;
 import de.micromata.opengis.kml.v_2_2_0.StyleSelector;
+import it.vige.greenarea.bpm.custom.ui.pa.DefinizioneAreaGeografica;
 
 public class KmlDocumentViewer extends OpenLayersMap {
 
@@ -110,8 +110,7 @@ public class KmlDocumentViewer extends OpenLayersMap {
 
 			// Defining a new Marker
 
-			final Marker marker = new Marker(coordinate.getLongitude(),
-					coordinate.getLatitude());
+			final Marker marker = new Marker(coordinate.getLongitude(), coordinate.getLatitude());
 			// URL of marker Icon
 			marker.setIcon(new ThemeResource("img/marker.png"), 60, 60);
 			markerLayer.addComponent(marker);
@@ -123,8 +122,7 @@ public class KmlDocumentViewer extends OpenLayersMap {
 
 	private void displayFeatures(String focusedFeature) {
 		vectorLayer.removeAllComponents();
-		boolean focusFeature = focusedFeature != null
-				&& !focusedFeature.isEmpty();
+		boolean focusFeature = focusedFeature != null && !focusedFeature.isEmpty();
 		Folder folder = (Folder) doc.getFeature().get(0);
 		Bounds bounds = null;
 		for (Feature childFeature : folder.getFeature()) {
@@ -138,8 +136,7 @@ public class KmlDocumentViewer extends OpenLayersMap {
 				List<Coordinate> coords = null;
 				Geometry geometry = area.getGeometry();
 				if (geometry instanceof Polygon) {
-					coords = ((Polygon) geometry).getOuterBoundaryIs()
-							.getLinearRing().getCoordinates();
+					coords = ((Polygon) geometry).getOuterBoundaryIs().getLinearRing().getCoordinates();
 				} else if (geometry instanceof LineString) {
 					coords = ((LineString) geometry).getCoordinates();
 				}
@@ -149,8 +146,7 @@ public class KmlDocumentViewer extends OpenLayersMap {
 				Point[] points = new Point[coords.size()];
 				for (int i = 0; i < points.length; i++) {
 					Coordinate coordinate = coords.get(i);
-					points[i] = new Point(coordinate.getLongitude(),
-							coordinate.getLatitude());
+					points[i] = new Point(coordinate.getLongitude(), coordinate.getLatitude());
 				}
 				if (bounds == null) {
 					bounds = new Bounds();
@@ -195,13 +191,12 @@ public class KmlDocumentViewer extends OpenLayersMap {
 	}
 
 	private String kmlGRBtoRGB(String color) {
-		return "#" + color.substring(4, 6) + color.substring(2, 4)
-				+ color.substring(0, 2);
+		return "#" + color.substring(4, 6) + color.substring(2, 4) + color.substring(0, 2);
 	}
 
 	private void loadDocument() {
-		Kml unmarshal = unmarshal(DefinizioneAreaGeografica.class
-				.getClassLoader().getResourceAsStream("ztl-guidonia.kml"));
+		Kml unmarshal = unmarshal(
+				DefinizioneAreaGeografica.class.getClassLoader().getResourceAsStream("ztl-guidonia.kml"));
 		doc = (Document) unmarshal.getFeature();
 	}
 

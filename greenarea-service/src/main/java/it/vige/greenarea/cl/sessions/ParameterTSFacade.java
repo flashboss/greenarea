@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.sessions;
 
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.ParameterTS_;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -27,6 +22,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.ParameterTS_;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 /**
  *
@@ -58,8 +58,7 @@ public class ParameterTSFacade extends AbstractFacade<ParameterTS, Integer> {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery cq = cb.createQuery();
 		Root<ParameterTS> trRoot = cq.from(ParameterTS.class);
-		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(ParameterTS_.ts),
-				timeSlot));
+		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(ParameterTS_.ts), timeSlot));
 		cq = cq.select(trRoot).where(wherePredicate);
 		return getEntityManager().createQuery(cq).getResultList();
 	}

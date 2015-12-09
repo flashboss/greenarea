@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.pa.gestiscifasceorarie;
 
-import it.vige.greenarea.dto.FasciaOraria;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.FasciaOraria;
 
 public class RecuperaFasceOrarieSelezionate implements TaskListener {
 
@@ -27,8 +27,7 @@ public class RecuperaFasceOrarieSelezionate implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<FasciaOraria> fasceOrarie = (Collection<FasciaOraria>) delegateTask
-				.getVariable("fasceorarie");
+		Collection<FasciaOraria> fasceOrarie = (Collection<FasciaOraria>) delegateTask.getVariable("fasceorarie");
 		delegateTask.setVariable("fasceorarieselezionate", fasceOrarie);
 	}
 

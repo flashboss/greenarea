@@ -28,10 +28,8 @@ public class ModificaPrezzo implements TaskListener {
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		DelegateExecution execution = delegateTask.getExecution();
-		TaskService taskService = execution.getEngineServices()
-				.getTaskService();
-		List<Task> tasks = taskService.createTaskQuery()
-				.processInstanceId(execution.getProcessInstanceId())
+		TaskService taskService = execution.getEngineServices().getTaskService();
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(execution.getProcessInstanceId())
 				.taskDefinitionKey("inserimentoParametri").active().list();
 		for (Task task : tasks) {
 			taskService.complete(task.getId());

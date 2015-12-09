@@ -16,28 +16,28 @@ package it.vige.greenarea.net;
 import java.io.Serializable;
 import java.util.HashSet;
 
-public abstract class Node implements Serializable{
-    
-    /**
+public abstract class Node implements Serializable {
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2736860500882303908L;
 	protected HashSet<Edge> edges = new HashSet<Edge>();
-    
-    public abstract double getCost();
-    
-    protected Edge[] getEdges(){
-        Edge[] e = new Edge[ edges.size()];
-        e = edges.toArray(e);
-        return e;
-    }
-    
-    protected Node addEdge( Edge e ){
-      edges.add(e);
-      return this;
-    }    
-    
-    protected void removeEdge( Edge e ){
-     edges.remove(e);
-    }
+
+	public abstract double getCost();
+
+	protected Edge[] getEdges() {
+		Edge[] e = new Edge[edges.size()];
+		e = edges.toArray(e);
+		return e;
+	}
+
+	protected Node addEdge(Edge e) {
+		edges.add(e);
+		return this;
+	}
+
+	protected void removeEdge(Edge e) {
+		edges.remove(e);
+	}
 }

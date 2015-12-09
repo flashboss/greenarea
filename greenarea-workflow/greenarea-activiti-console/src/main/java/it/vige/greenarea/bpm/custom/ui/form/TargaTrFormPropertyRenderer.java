@@ -16,9 +16,6 @@ package it.vige.greenarea.bpm.custom.ui.form;
 import static it.vige.greenarea.Constants.OPERAZIONE;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
-import it.vige.greenarea.bpm.form.TargaTrFormType;
-import it.vige.greenarea.dto.GreenareaUser;
-import it.vige.greenarea.dto.Veicolo;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -30,8 +27,11 @@ import org.activiti.explorer.identity.LoggedInUser;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 
-public class TargaTrFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.form.TargaTrFormType;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.Veicolo;
+
+public class TargaTrFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,14 +44,12 @@ public class TargaTrFormPropertyRenderer<T> extends
 	public Field getPropertyField(FormProperty formProperty) {
 		ComboBox comboBox = new ComboBox(getPropertyLabel(formProperty));
 		comboBox.setRequired(formProperty.isRequired());
-		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		comboBox.setEnabled(formProperty.isWritable());
 		comboBox.setNullSelectionAllowed(false);
 
 		Object itemToSelect = null;
-		Map<Veicolo, String> values = (Map<Veicolo, String>) formProperty
-				.getType().getInformation("values");
+		Map<Veicolo, String> values = (Map<Veicolo, String>) formProperty.getType().getInformation("values");
 		String user = ((LoggedInUser) get().getUser()).getId();
 		if (values != null) {
 			if (!formProperty.isRequired())
@@ -64,8 +62,7 @@ public class TargaTrFormPropertyRenderer<T> extends
 					comboBox.addItem(enumEntry.getKey().getTarga());
 
 					String selectedValue = formProperty.getValue();
-					if ((selectedValue != null && selectedValue
-							.equals(enumEntry.getKey()))) {
+					if ((selectedValue != null && selectedValue.equals(enumEntry.getKey()))) {
 						itemToSelect = enumEntry.getKey().getTarga(); // select
 																		// first
 						// element
@@ -73,8 +70,7 @@ public class TargaTrFormPropertyRenderer<T> extends
 
 					if (enumEntry.getValue() != null) {
 						Veicolo key = enumEntry.getKey();
-						comboBox.setItemCaption(key.getTarga(),
-								enumEntry.getValue());
+						comboBox.setItemCaption(key.getTarga(), enumEntry.getValue());
 					}
 				}
 			}
@@ -97,8 +93,7 @@ public class TargaTrFormPropertyRenderer<T> extends
 
 	private boolean isUser(Veicolo veicolo, String user) {
 		GreenareaUser greenareaUser = veicolo.getAutista();
-		if (greenareaUser != null && greenareaUser.getId() != null
-				&& greenareaUser.getId().equals(user))
+		if (greenareaUser != null && greenareaUser.getId() != null && greenareaUser.getId().equals(user))
 			return true;
 		else
 			return false;

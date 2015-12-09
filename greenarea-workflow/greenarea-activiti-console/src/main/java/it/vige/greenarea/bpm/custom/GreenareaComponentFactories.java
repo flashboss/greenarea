@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom;
 
-import it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaMainMenuBarFactory;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +21,8 @@ import org.activiti.explorer.ui.ComponentFactory;
 import org.activiti.explorer.ui.custom.UploadComponentFactory;
 import org.activiti.explorer.ui.mainlayout.MainMenuBarFactory;
 import org.activiti.explorer.ui.management.ManagementMenuBarFactory;
+
+import it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaMainMenuBarFactory;
 
 /**
  * @author Joram Barrez
@@ -39,21 +39,16 @@ public class GreenareaComponentFactories extends ComponentFactories {
 
 	public GreenareaComponentFactories() {
 		// Add custom component factories to this list
-		factories
-				.put(MainMenuBarFactory.class, new GreenareaMainMenuBarFactory());
-		factories.put(ManagementMenuBarFactory.class,
-				new ManagementMenuBarFactory());
-		factories.put(UploadComponentFactory.class,
-				new UploadComponentFactory());
+		factories.put(MainMenuBarFactory.class, new GreenareaMainMenuBarFactory());
+		factories.put(ManagementMenuBarFactory.class, new ManagementMenuBarFactory());
+		factories.put(UploadComponentFactory.class, new UploadComponentFactory());
 	}
 
-	public <T> ComponentFactory<T> get(
-			Class<? extends ComponentFactory<T>> clazz) {
+	public <T> ComponentFactory<T> get(Class<? extends ComponentFactory<T>> clazz) {
 		return factories.get(clazz);
 	}
 
-	public <T> void add(Class<? extends ComponentFactory<T>> clazz,
-			ComponentFactory<T> factory) {
+	public <T> void add(Class<? extends ComponentFactory<T>> clazz, ComponentFactory<T> factory) {
 		factories.put(clazz, factory);
 		factory.initialise(environment);
 	}

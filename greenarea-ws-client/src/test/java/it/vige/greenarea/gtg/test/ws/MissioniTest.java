@@ -19,12 +19,6 @@ import static javax.xml.ws.handler.MessageContext.HTTP_REQUEST_HEADERS;
 import static org.junit.Assert.fail;
 import static org.primefaces.util.Base64.encodeToString;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.gtg.webservice.FreightAction;
-import it.vige.greenarea.gtg.webservice.GTGexception_Exception;
-import it.vige.greenarea.gtg.webservice.GTGservice;
-import it.vige.greenarea.gtg.webservice.GTGservice_Service;
-import it.vige.greenarea.gtg.webservice.LDAPException_Exception;
-import it.vige.greenarea.gtg.webservice.Mission;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,6 +33,13 @@ import javax.xml.ws.BindingProvider;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.gtg.webservice.FreightAction;
+import it.vige.greenarea.gtg.webservice.GTGexception_Exception;
+import it.vige.greenarea.gtg.webservice.GTGservice;
+import it.vige.greenarea.gtg.webservice.GTGservice_Service;
+import it.vige.greenarea.gtg.webservice.LDAPException_Exception;
+import it.vige.greenarea.gtg.webservice.Mission;
+
 public class MissioniTest {
 
 	private Logger logger = getLogger(getClass());
@@ -52,10 +53,8 @@ public class MissioniTest {
 		Map<String, Object> req_ctx = provider.getRequestContext();
 		Map<String, List<String>> headers = new HashMap<String, List<String>>();
 		String credenziale = "prova:prova";
-		String credenzialeCriptata = encodeToString(credenziale.getBytes(),
-				false);
-		headers.put("Authorization", singletonList("_____"
-				+ credenzialeCriptata));
+		String credenzialeCriptata = encodeToString(credenziale.getBytes(), false);
+		headers.put("Authorization", singletonList("_____" + credenzialeCriptata));
 		req_ctx.put(HTTP_REQUEST_HEADERS, headers);
 		/*
 		 * req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
@@ -65,14 +64,12 @@ public class MissioniTest {
 		 * switch a localhost
 		 */
 
-		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/greenarea-service/GTGservice");
+		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8080/greenarea-service/GTGservice");
 
 		try {
 			DateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmm");
 			gtgService.userLogin();
-			List<Mission> missioni = gtgService.getMissions(dataFormat
-					.format(new Date()));
+			List<Mission> missioni = gtgService.getMissions(dataFormat.format(new Date()));
 			logger.info("missioni = " + missioni);
 		} catch (LDAPException_Exception e) {
 			logger.error("missioni console", e);
@@ -89,10 +86,8 @@ public class MissioniTest {
 		Map<String, Object> req_ctx = provider.getRequestContext();
 		Map<String, List<String>> headers = new HashMap<String, List<String>>();
 		String credenziale = "prova:prova";
-		String credenzialeCriptata = encodeToString(credenziale.getBytes(),
-				false);
-		headers.put("Authorization", singletonList("_____"
-				+ credenzialeCriptata));
+		String credenzialeCriptata = encodeToString(credenziale.getBytes(), false);
+		headers.put("Authorization", singletonList("_____" + credenzialeCriptata));
 		req_ctx.put(HTTP_REQUEST_HEADERS, headers);
 		/*
 		 * req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
@@ -102,19 +97,16 @@ public class MissioniTest {
 		 * switch a localhost
 		 */
 
-		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/greenarea-service/GTGservice");
+		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8080/greenarea-service/GTGservice");
 
 		try {
 			DateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmm");
 			gtgService.userLogin();
-			List<Mission> missioni = gtgService.getMissions(dataFormat
-					.format(new Date()));
+			List<Mission> missioni = gtgService.getMissions(dataFormat.format(new Date()));
 			logger.info("missioni = " + missioni);
 			for (Mission mission : missioni)
 				try {
-					gtgService.changeMissionState(mission.getId(), 1, 2,
-							"cosà", dataFormat.format(new Date()));
+					gtgService.changeMissionState(mission.getId(), 1, 2, "cosà", dataFormat.format(new Date()));
 				} catch (GTGexception_Exception e) {
 					fail();
 				}
@@ -133,10 +125,8 @@ public class MissioniTest {
 		Map<String, Object> req_ctx = provider.getRequestContext();
 		Map<String, List<String>> headers = new HashMap<String, List<String>>();
 		String credenziale = "prova:prova";
-		String credenzialeCriptata = encodeToString(credenziale.getBytes(),
-				false);
-		headers.put("Authorization", singletonList("_____"
-				+ credenzialeCriptata));
+		String credenzialeCriptata = encodeToString(credenziale.getBytes(), false);
+		headers.put("Authorization", singletonList("_____" + credenzialeCriptata));
 		req_ctx.put(HTTP_REQUEST_HEADERS, headers);
 		/*
 		 * req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
@@ -146,14 +136,12 @@ public class MissioniTest {
 		 * switch a localhost
 		 */
 
-		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY,
-				"http://localhost:8080/greenarea-service/GTGservice");
+		req_ctx.put(ENDPOINT_ADDRESS_PROPERTY, "http://localhost:8080/greenarea-service/GTGservice");
 
 		try {
 			DateFormat dataFormat = new SimpleDateFormat("yyyyMMddHHmm");
 			gtgService.userLogin();
-			List<Mission> missioni = gtgService.getMissions(dataFormat
-					.format(new Date()));
+			List<Mission> missioni = gtgService.getMissions(dataFormat.format(new Date()));
 			logger.info("missioni = " + missioni);
 			List<FreightAction> freightItemsAction = new ArrayList<FreightAction>();
 			FreightAction freightAction = new FreightAction();
@@ -161,10 +149,8 @@ public class MissioniTest {
 			freightAction.setDateTime(dataFormat.format(new Date()));
 			freightAction.setState(1);
 			freightAction.setNote("prova");
-			freightAction.setExchangeStopId(missioni.get(0).getExchangeStops()
-					.get(0).getId());
-			freightAction.setCode(missioni.get(0).getFreights().get(0)
-					.getCode());
+			freightAction.setExchangeStopId(missioni.get(0).getExchangeStops().get(0).getId());
+			freightAction.setCode(missioni.get(0).getFreights().get(0).getCode());
 			freightItemsAction.add(freightAction);
 			try {
 				gtgService.notifyFreightItemAction(freightItemsAction);

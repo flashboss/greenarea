@@ -14,9 +14,6 @@
 package it.vige.greenarea.cl.smart.action;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.smart.actionform.ViewIdMissionForm;
-import it.vige.greenarea.cl.smart.restclient.RestClient;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +22,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.smart.actionform.ViewIdMissionForm;
+import it.vige.greenarea.cl.smart.restclient.RestClient;
 
 /**
  *
@@ -49,9 +50,8 @@ public class ViewMissionAction extends org.apache.struts.action.Action {
 	 * @return
 	 */
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		ViewIdMissionForm vimf = (ViewIdMissionForm) form;
 		int idMission = vimf.getIdMission();
 		RestClient rc = new RestClient();

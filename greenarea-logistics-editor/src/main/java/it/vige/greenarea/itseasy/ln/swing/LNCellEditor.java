@@ -14,7 +14,6 @@
 package it.vige.greenarea.itseasy.ln.swing;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.ln.model.LNCell;
 
 import java.util.EventObject;
 import java.util.HashMap;
@@ -25,6 +24,8 @@ import org.slf4j.Logger;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.view.mxICellEditor;
+
+import it.vige.greenarea.ln.model.LNCell;
 
 public class LNCellEditor implements mxICellEditor {
 
@@ -58,12 +59,10 @@ public class LNCellEditor implements mxICellEditor {
 
 						// Class c =
 						// LNCellEditor.class.getClassLoader().loadClass(LNcellType.concat("Editor"));
-						LNcellType = "it.vige.greenarea.itseasy.ln.swing."
-								.concat(LNcellType);
+						LNcellType = "it.vige.greenarea.itseasy.ln.swing.".concat(LNcellType);
 						Class c = Class.forName(LNcellType.concat("Editor"));
 
-						editor = (mxICellEditor) c.getConstructor(
-								new Class[] { mxGraphComponent.class })
+						editor = (mxICellEditor) c.getConstructor(new Class[] { mxGraphComponent.class })
 								.newInstance(graphComponent);
 						editorMap.put(LNcellType, editor);
 					} catch (Exception ex) {
@@ -81,8 +80,7 @@ public class LNCellEditor implements mxICellEditor {
 	public void stopEditing(boolean cancel) {
 		if (editor != null) {
 			// editor.stopEditing(cancel);
-			graphComponent.redraw(graphComponent.getGraph().getView()
-					.getState(editingCell));
+			graphComponent.redraw(graphComponent.getGraph().getView().getState(editingCell));
 			editingCell = null;
 		}
 	}

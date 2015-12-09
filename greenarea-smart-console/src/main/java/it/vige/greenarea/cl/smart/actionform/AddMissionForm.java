@@ -24,129 +24,127 @@ import org.apache.struts.action.ActionMessage;
  * 
  */
 public class AddMissionForm extends org.apache.struts.action.ActionForm {
-    
-    /**
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7994881088528553306L;
-	private String idVehicle; //Targa
-    private String name;
-    private String company;
-    private String idTimeSlot;
-    private String addressList ;
-    private String dateMiss;
-    
-    private String lunghezza;
-    private String carico;
-    private String tappe;
-    private String euro;
-    private String peso;
+	private String idVehicle; // Targa
+	private String name;
+	private String company;
+	private String idTimeSlot;
+	private String addressList;
+	private String dateMiss;
 
-    public String getCarico() {
-        return carico;
-    }
+	private String lunghezza;
+	private String carico;
+	private String tappe;
+	private String euro;
+	private String peso;
 
-    public void setCarico(String Carico) {
-        this.carico = Carico;
-    }
+	public String getCarico() {
+		return carico;
+	}
 
-    public String getEuro() {
-        return euro;
-    }
+	public void setCarico(String Carico) {
+		this.carico = Carico;
+	}
 
-    public void setEuro(String Euro) {
-        this.euro = Euro;
-    }
+	public String getEuro() {
+		return euro;
+	}
 
-    public String getLunghezza() {
-        return lunghezza;
-    }
+	public void setEuro(String Euro) {
+		this.euro = Euro;
+	}
 
-    public void setLunghezza(String Lunghezza) {
-        this.lunghezza = Lunghezza;
-    }
+	public String getLunghezza() {
+		return lunghezza;
+	}
 
-    public String getPeso() {
-        return peso;
-    }
+	public void setLunghezza(String Lunghezza) {
+		this.lunghezza = Lunghezza;
+	}
 
-    public void setPeso(String Peso) {
-        this.peso = Peso;
-    }
+	public String getPeso() {
+		return peso;
+	}
 
-    public String getTappe() {
-        return tappe;
-    }
+	public void setPeso(String Peso) {
+		this.peso = Peso;
+	}
 
-    public void setTappe(String Tappe) {
-        this.tappe = Tappe;
-    }
+	public String getTappe() {
+		return tappe;
+	}
 
-    public String getAddressList() {
-        return addressList;
-    }
+	public void setTappe(String Tappe) {
+		this.tappe = Tappe;
+	}
 
-    public void setAddressList(String addressList) {
-        this.addressList = addressList;
-    }
+	public String getAddressList() {
+		return addressList;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public void setAddressList(String addressList) {
+		this.addressList = addressList;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public String getCompany() {
+		return company;
+	}
 
-    public String getDateMiss() {
-        return dateMiss;
-    }
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
-    public void setDateMiss(String dateMiss) {
-        this.dateMiss = dateMiss;
-    }
+	public String getDateMiss() {
+		return dateMiss;
+	}
 
-    public String getIdTimeSlot() {
-        return idTimeSlot;
-    }
+	public void setDateMiss(String dateMiss) {
+		this.dateMiss = dateMiss;
+	}
 
-    public void setIdTimeSlot(String idTimeSlot) {
-        this.idTimeSlot = idTimeSlot;
-    }
+	public String getIdTimeSlot() {
+		return idTimeSlot;
+	}
 
-    public String getIdVehicle() {
-        return idVehicle;
-    }
+	public void setIdTimeSlot(String idTimeSlot) {
+		this.idTimeSlot = idTimeSlot;
+	}
 
-    public void setIdVehicle(String idVehicle) {
-        this.idVehicle = idVehicle;
-    }
+	public String getIdVehicle() {
+		return idVehicle;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setIdVehicle(String idVehicle) {
+		this.idVehicle = idVehicle;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    
+	public void setName(String name) {
+		this.name = name;
+	}
 
-
-    
-
-    /**
-     * This is the action called from the Struts framework.
-     * @param mapping The ActionMapping used to select this instance.
-     * @param request The HTTP Request we are processing.
-     * @return
-     */
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        if (getName() == null || getName().length() < 1) {
-            errors.add("name", new ActionMessage("error.name.required"));
-            // TODO: add 'error.name.required' key to your resources
-        }
-        return errors;
-    }
+	/**
+	 * This is the action called from the Struts framework.
+	 * 
+	 * @param mapping
+	 *            The ActionMapping used to select this instance.
+	 * @param request
+	 *            The HTTP Request we are processing.
+	 * @return
+	 */
+	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+		ActionErrors errors = new ActionErrors();
+		if (getName() == null || getName().length() < 1) {
+			errors.add("name", new ActionMessage("error.name.required"));
+			// TODO: add 'error.name.required' key to your resources
+		}
+		return errors;
+	}
 }

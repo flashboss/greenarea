@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.lib.mqData;
 
-import it.vige.greenarea.cl.library.entities.FreightType;
-import it.vige.greenarea.itseasy.lib.configurationData.FreightAttribs;
-
 import java.io.Serializable;
 import java.util.HashMap;
+
+import it.vige.greenarea.cl.library.entities.FreightType;
+import it.vige.greenarea.itseasy.lib.configurationData.FreightAttribs;
 
 public class MqFreightData implements Serializable {
 
@@ -39,8 +39,7 @@ public class MqFreightData implements Serializable {
 	private HashMap<String, String> attributi; // include dimensioni, peso
 												// ecc....
 
-	public MqFreightData(String itemID, String descrizione,
-			HashMap<String, String> attributi) {
+	public MqFreightData(String itemID, String descrizione, HashMap<String, String> attributi) {
 		this.itemID = itemID;
 		this.descrizione = descrizione;
 
@@ -50,8 +49,7 @@ public class MqFreightData implements Serializable {
 			// cerco il tipo se non lo trovo metto un default
 			String type = attributi.get("Type");
 			if (type != null) {
-				this.type = type.equals("B") ? FreightType.DOCUMENTI
-						: FreightType.ALTRO_TIPO;
+				this.type = type.equals("B") ? FreightType.DOCUMENTI : FreightType.ALTRO_TIPO;
 				attributi.remove("Type");
 			} else {
 				this.type = FreightType.DOCUMENTI;
@@ -60,50 +58,43 @@ public class MqFreightData implements Serializable {
 				switch (fa) {
 				case Height:
 					if (attributi.containsKey(fa.name())) {
-						this.height = Integer.getInteger(attributi.get(fa
-								.name()));
+						this.height = Integer.getInteger(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case Length:
 					if (attributi.containsKey(fa.name())) {
-						this.lenght = Integer.getInteger(attributi.get(fa
-								.name()));
+						this.lenght = Integer.getInteger(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case Volume:
 					if (attributi.containsKey(fa.name())) {
-						this.volume = Integer.getInteger(attributi.get(fa
-								.name()));
+						this.volume = Integer.getInteger(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case Weight:
 					if (attributi.containsKey(fa.name())) {
-						this.weight = Integer.getInteger(attributi.get(fa
-								.name()));
+						this.weight = Integer.getInteger(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case Width:
 					if (attributi.containsKey(fa.name())) {
-						this.width = Integer
-								.getInteger(attributi.get(fa.name()));
+						this.width = Integer.getInteger(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case KeepUpStanding:
 					if (attributi.containsKey(fa.name())) {
-						this.keepUpStanding = Boolean.getBoolean(attributi
-								.get(fa.name()));
+						this.keepUpStanding = Boolean.getBoolean(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;
 				case Stackable:
 					if (attributi.containsKey(fa.name())) {
-						this.stackable = Boolean.getBoolean(attributi.get(fa
-								.name()));
+						this.stackable = Boolean.getBoolean(attributi.get(fa.name()));
 						attributi.remove(fa.name());
 					}
 					break;

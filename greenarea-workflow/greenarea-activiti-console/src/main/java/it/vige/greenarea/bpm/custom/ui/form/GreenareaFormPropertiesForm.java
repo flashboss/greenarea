@@ -70,8 +70,7 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 	protected void initButtons() {
 	}
 
-	private List<String> getOperationsFromRenderers(
-			GreenareaFormPropertiesComponent greenareaFormPropertiesComponent) {
+	private List<String> getOperationsFromRenderers(GreenareaFormPropertiesComponent greenareaFormPropertiesComponent) {
 		List<String> operationsFromRenderers = new ArrayList<String>();
 		operationsFromRenderers.add(MODIFICA.name());
 		operationsFromRenderers.add(DETTAGLIO.name());
@@ -83,12 +82,10 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 	private void addButtons() {
 		GreenareaFormPropertiesComponent greenareaFormPropertiesComponent = (GreenareaFormPropertiesComponent) formPropertiesComponent;
 		List<String> operationsFromRenderers = getOperationsFromRenderers(greenareaFormPropertiesComponent);
-		FormProperty operations = greenareaFormPropertiesComponent
-				.getOperations();
+		FormProperty operations = greenareaFormPropertiesComponent.getOperations();
 		if (operations != null) {
 			@SuppressWarnings("unchecked")
-			Map<String, String> mapOperations = (Map<String, String>) operations
-					.getType().getInformation("values");
+			Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 			buttons = new HorizontalLayout();
 			buttons.setSpacing(true);
@@ -111,17 +108,12 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 							// exception
 							// when validation fails.
 							try {
-								Map<String, String> formProperties = formPropertiesComponent
-										.getFormPropertyValues();
+								Map<String, String> formProperties = formPropertiesComponent.getFormPropertyValues();
 								setOperation(formProperties, finalOperation);
-								mainTitle
-										.setPropertyDataSource(new ObjectProperty<String>(
-												mainTitle.getValue() + " > "
-														+ finalOperation,
-												String.class));
-								fireEvent(new FormPropertiesEvent(
-										GreenareaFormPropertiesForm.this,
-										TYPE_SUBMIT, formProperties));
+								mainTitle.setPropertyDataSource(new ObjectProperty<String>(
+										mainTitle.getValue() + " > " + finalOperation, String.class));
+								fireEvent(new FormPropertiesEvent(GreenareaFormPropertiesForm.this, TYPE_SUBMIT,
+										formProperties));
 								button.setComponentError(null);
 							} catch (InvalidValueException ive) {
 								// Error is presented to user by the form
@@ -164,8 +156,7 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 	}
 
 	private void addListeners() {
-		FormProperty operations = ((GreenareaFormPropertiesComponent) formPropertiesComponent)
-				.getOperations();
+		FormProperty operations = ((GreenareaFormPropertiesComponent) formPropertiesComponent).getOperations();
 		if (operations == null) {
 			submitFormButton.addListener(new ClickListener() {
 
@@ -176,11 +167,9 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 					// exception
 					// when validation fails.
 					try {
-						Map<String, String> formProperties = formPropertiesComponent
-								.getFormPropertyValues();
-						fireEvent(new FormPropertiesEvent(
-								GreenareaFormPropertiesForm.this, TYPE_SUBMIT,
-								formProperties));
+						Map<String, String> formProperties = formPropertiesComponent.getFormPropertyValues();
+						fireEvent(
+								new FormPropertiesEvent(GreenareaFormPropertiesForm.this, TYPE_SUBMIT, formProperties));
 						submitFormButton.setComponentError(null);
 					} catch (InvalidValueException ive) {
 						// Error is presented to user by the form component
@@ -202,8 +191,7 @@ public class GreenareaFormPropertiesForm extends FormPropertiesForm {
 		}
 	}
 
-	private void setOperation(Map<String, String> formProperties,
-			String operation) {
+	private void setOperation(Map<String, String> formProperties, String operation) {
 		for (String formProperty : formProperties.keySet()) {
 			if (formProperty.contains(OPERAZIONE)) {
 				formProperties.put(formProperty, operation);

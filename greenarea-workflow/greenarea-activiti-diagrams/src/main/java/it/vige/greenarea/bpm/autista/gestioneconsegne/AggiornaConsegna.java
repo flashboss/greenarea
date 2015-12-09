@@ -22,7 +22,7 @@ public class AggiornaConsegna extends EmptyAggiornaConsegna {
 
 	private static final long serialVersionUID = -3881841686637611879L;
 
-    private Logger logger = getLogger(getClass());
+	private Logger logger = getLogger(getClass());
 
 	@Override
 	public void notify(DelegateTask delegateTask) {

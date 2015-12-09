@@ -23,10 +23,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.FasciaOraria;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +37,11 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.FasciaOraria;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
+
 public class RecuperoDatiMissioni extends EmptyRecuperoDatiMissioni {
 
 	private Logger logger = getLogger(getClass());
@@ -54,9 +55,7 @@ public class RecuperoDatiMissioni extends EmptyRecuperoDatiMissioni {
 			logger.info("CDI Recupero Dati Missioni");
 			String autista = (String) execution.getVariable("currentUserId");
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-					APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 			RichiestaMissioni richiestaMissioni = new RichiestaMissioni();
 			String todayStr = dateFormat.format(new Date());
 			Date today = dateFormat.parse(todayStr);
@@ -66,25 +65,21 @@ public class RecuperoDatiMissioni extends EmptyRecuperoDatiMissioni {
 				String[] autisti = new String[] { autista };
 				richiestaMissioni.setAutisti(asList(autisti));
 			}
-			List<Missione> response = bldr.post(
-					entity(richiestaMissioni, APPLICATION_JSON),
+			List<Missione> response = bldr.post(entity(richiestaMissioni, APPLICATION_JSON),
 					new GenericType<List<Missione>>() {
 					});
 			@SuppressWarnings("unchecked")
-			List<Missione> missioni = (List<Missione>) execution
-					.getVariable("missioni");
+			List<Missione> missioni = (List<Missione>) execution.getVariable("missioni");
 			for (Missione missione : response)
 				if (missione.getRanking() != null)
 					missioni.add(missione);
 			if (missioni.size() > 0) {
 				FasciaOraria fasciaOraria = missioni.get(0).getFasciaOraria();
 				execution.setVariable("policydetail", fasciaOraria);
-				setDettaglio(convertiFasciaOrariaToTimeSlot(fasciaOraria),
-						client, fasciaOraria);
+				setDettaglio(convertiFasciaOrariaToTimeSlot(fasciaOraria), client, fasciaOraria);
 			}
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("notificaerrorereperimentodatimissione");

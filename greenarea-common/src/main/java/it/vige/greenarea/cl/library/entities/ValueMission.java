@@ -64,8 +64,7 @@ public class ValueMission implements Serializable {
 			return false;
 		}
 		ValueMission other = (ValueMission) object;
-		if ((this.idVM == null && other.idVM != null)
-				|| (this.idVM != null && !this.idVM.equals(other.idVM))) {
+		if ((this.idVM == null && other.idVM != null) || (this.idVM != null && !this.idVM.equals(other.idVM))) {
 			return false;
 		}
 		return true;

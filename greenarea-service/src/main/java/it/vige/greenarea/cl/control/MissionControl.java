@@ -30,6 +30,26 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 import static javax.persistence.TemporalType.DATE;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.NoDuplicatesList;
 import it.vige.greenarea.cl.library.entities.ExchangeStop;
 import it.vige.greenarea.cl.library.entities.Mission;
@@ -50,25 +70,6 @@ import it.vige.greenarea.dto.ValoriVeicolo;
 import it.vige.greenarea.dto.Veicolo;
 import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
 import it.vige.greenarea.gtg.db.facades.MissionFacade;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.slf4j.Logger;
 
 /**
  * <p>
@@ -107,7 +108,8 @@ public class MissionControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
 	public List<Missione> getMissioni(RichiestaMissioni richiesta) {
@@ -126,17 +128,14 @@ public class MissionControl {
 			RichiestaAccesso richiestaAccesso = new RichiestaAccesso();
 			richiestaAccesso.setDataInizio(richiesta.getDataInizio());
 			richiestaAccesso.setDataFine(richiesta.getDataFine());
-			richiestaAccesso
-					.setOperatoriLogistici(asList(new String[] { compagnia }));
+			richiestaAccesso.setOperatoriLogistici(asList(new String[] { compagnia }));
 			accessiInGA = tapControl.getStoricoAccessiInGA(richiestaAccesso);
-			totaleEmissioniPerPeso = calcoloTotaleEmissioniPerPeso(compagnia,
-					missioni, accessiInGA);
+			totaleEmissioniPerPeso = calcoloTotaleEmissioniPerPeso(compagnia, missioni, accessiInGA);
 			List<VikorResult> vikorResults = vrf.findAll();
 			if (vikorResults != null)
 				for (VikorResult vikorResult : vikorResults) {
 					for (Missione missione : missioni)
-						if (missione.getNome().equals(
-								vikorResult.getIdMission() + "")) {
+						if (missione.getNome().equals(vikorResult.getIdMission() + "")) {
 							missione.setRanking(vikorResult.getColor());
 							missione.setCreditoMobilita(vikorResult.getPrice());
 							double totaleKm = 0;
@@ -145,25 +144,16 @@ public class MissionControl {
 								calendar1.setTime(date);
 								Calendar calendar2 = new GregorianCalendar();
 								calendar2.setTime(missione.getDataInizio());
-								if (calendar1.get(DAY_OF_MONTH) == calendar2
-										.get(DAY_OF_MONTH)
-										&& calendar1.get(YEAR) == calendar2
-												.get(YEAR)
-										&& calendar1.get(MONTH) == calendar2
-												.get(MONTH)) {
-									AccessiInGA accessoInGA = accessiInGA
-											.get(date);
+								if (calendar1.get(DAY_OF_MONTH) == calendar2.get(DAY_OF_MONTH)
+										&& calendar1.get(YEAR) == calendar2.get(YEAR)
+										&& calendar1.get(MONTH) == calendar2.get(MONTH)) {
+									AccessiInGA accessoInGA = accessiInGA.get(date);
 									totaleKm += accessoInGA.getKm();
-									logger.debug("somma totaleKm dist = "
-											+ totaleKm);
+									logger.debug("somma totaleKm dist = " + totaleKm);
 								}
 							}
-							double emissioniPerMissione = totaleKm
-									* missione.getVeicolo().getValori()
-											.getEmission();
-							missione.setBonus(calcoloBonus(
-									totaleEmissioniPerPeso,
-									emissioniPerMissione,
+							double emissioniPerMissione = totaleKm * missione.getVeicolo().getValori().getEmission();
+							missione.setBonus(calcoloBonus(totaleEmissioniPerPeso, emissioniPerMissione,
 									missione.getCreditoMobilita()));
 						}
 				}
@@ -228,8 +218,7 @@ public class MissionControl {
 				where = true;
 				qu = qu + " c.truck.societaDiTrasporto in :societaDiTrasporto";
 			} else
-				qu = qu
-						+ " and c.truck.societaDiTrasporto in :societaDiTrasporto";
+				qu = qu + " and c.truck.societaDiTrasporto in :societaDiTrasporto";
 		}
 		if (richiesta.getAutisti() != null) {
 			if (!where) {
@@ -243,8 +232,7 @@ public class MissionControl {
 		if (richiesta.getId() != 0)
 			query.setParameter("id", richiesta.getId());
 		if (richiesta.getFasciaOraria() != null)
-			query.setParameter("fasciaOraria", richiesta.getFasciaOraria()
-					.getId());
+			query.setParameter("fasciaOraria", richiesta.getFasciaOraria().getId());
 		if (richiesta.getDataInizio() != null)
 			query.setParameter("dayStart", richiesta.getDataInizio(), DATE);
 		if (richiesta.getDataFine() != null)
@@ -252,11 +240,9 @@ public class MissionControl {
 		if (richiesta.getVeicoli() != null)
 			query.setParameter("plateNumbers", richiesta.getVeicoli());
 		if (richiesta.getOperatoriLogistici() != null)
-			query.setParameter("operatoriLogistici",
-					richiesta.getOperatoriLogistici());
+			query.setParameter("operatoriLogistici", richiesta.getOperatoriLogistici());
 		if (richiesta.getSocietaDiTrasporto() != null)
-			query.setParameter("societaDiTrasporto",
-					richiesta.getSocietaDiTrasporto());
+			query.setParameter("societaDiTrasporto", richiesta.getSocietaDiTrasporto());
 		if (richiesta.getAutisti() != null)
 			query.setParameter("autisti", richiesta.getAutisti());
 		@SuppressWarnings("unchecked")
@@ -273,11 +259,11 @@ public class MissionControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
-	public List<ImpattoAmbientale> getImpattoAmbientale(
-			RichiestaMissioni richiesta) {
+	public List<ImpattoAmbientale> getImpattoAmbientale(RichiestaMissioni richiesta) {
 		List<Missione> missioni = getMissioni(richiesta);
 		List<Missione> missioniAutorizzate = new ArrayList<Missione>();
 		for (Missione missione : missioni)
@@ -291,13 +277,10 @@ public class MissionControl {
 		richiestaAccesso.setDataInizio(richiesta.getDataInizio());
 		richiestaAccesso.setDataFine(richiesta.getDataFine());
 		if (richiesta.getOperatoriLogistici() == null)
-			richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI
-					.name() }));
+			richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI.name() }));
 		else
-			richiestaAccesso.setOperatoriLogistici(richiesta
-					.getOperatoriLogistici());
-		Map<String, Map<Date, AccessiInGA>> accessiInGA = tapControl
-				.getStoricoAccessiInGAPerVeicolo(richiestaAccesso);
+			richiestaAccesso.setOperatoriLogistici(richiesta.getOperatoriLogistici());
+		Map<String, Map<Date, AccessiInGA>> accessiInGA = tapControl.getStoricoAccessiInGAPerVeicolo(richiestaAccesso);
 		Map<String, Double> mappaPerGA = new LinkedHashMap<String, Double>();
 		for (String vin : accessiInGA.keySet()) {
 			Map<Date, AccessiInGA> accessoInGA = accessiInGA.get(vin);
@@ -314,37 +297,30 @@ public class MissionControl {
 			Veicolo veicolo = missione.getVeicolo();
 			ValoriVeicolo valoriVeicolo = veicolo.getValori();
 			String carburante = valoriVeicolo.getFuel();
-			ImpattoAmbientale dettaglioMissione = mappaDettaglio
-					.get(carburante);
+			ImpattoAmbientale dettaglioMissione = mappaDettaglio.get(carburante);
 			if (dettaglioMissione == null) {
-				totaleEmissioni = calcoloTotaleEmissioniPerCarburante(
-						carburante, missioniAutorizzate, mappaPerGA);
+				totaleEmissioni = calcoloTotaleEmissioniPerCarburante(carburante, missioniAutorizzate, mappaPerGA);
 				dettaglioMissione = new ImpattoAmbientale(carburante);
 				mappaDettaglio.put(carburante, dettaglioMissione);
 				impattiAmbientali.add(dettaglioMissione);
 			}
 			Double kmInGA = mappaPerGA.get(veicolo.getVin());
 			if (kmInGA != null && !elencoVin.contains(veicolo.getVin())) {
-				dettaglioMissione.setNumeroKmPercorsiInGA(dettaglioMissione
-						.getNumeroKmPercorsiInGA() + kmInGA);
+				dettaglioMissione.setNumeroKmPercorsiInGA(dettaglioMissione.getNumeroKmPercorsiInGA() + kmInGA);
 				double km = dettaglioMissione.getNumeroKmPercorsiInGA();
 				if (km == 0.0)
 					dettaglioMissione.setPercentualeKmPercorsiInGA(km);
 				else
-					dettaglioMissione
-							.setPercentualeKmPercorsiInGA(dettaglioMissione
-									.getNumeroKmPercorsiInGA()
-									/ totaleKmPercorsiInGa * 100);
+					dettaglioMissione.setPercentualeKmPercorsiInGA(
+							dettaglioMissione.getNumeroKmPercorsiInGA() / totaleKmPercorsiInGa * 100);
 				elencoVin.add(veicolo.getVin());
 			}
-			dettaglioMissione.setNumeroMissioni(dettaglioMissione
-					.getNumeroMissioni() + 1);
-			dettaglioMissione.setPercentualeMissioni(dettaglioMissione
-					.getNumeroMissioni() / missioniAutorizzate.size() * 100);
-			dettaglioMissione.setNumeroEmissioni(dettaglioMissione
-					.getNumeroKmPercorsiInGA() * valoriVeicolo.getEmission());
-			Double percentualeEmissioni = dettaglioMissione
-					.getNumeroEmissioni() / totaleEmissioni * 100;
+			dettaglioMissione.setNumeroMissioni(dettaglioMissione.getNumeroMissioni() + 1);
+			dettaglioMissione
+					.setPercentualeMissioni(dettaglioMissione.getNumeroMissioni() / missioniAutorizzate.size() * 100);
+			dettaglioMissione
+					.setNumeroEmissioni(dettaglioMissione.getNumeroKmPercorsiInGA() * valoriVeicolo.getEmission());
+			Double percentualeEmissioni = dettaglioMissione.getNumeroEmissioni() / totaleEmissioni * 100;
 			if (percentualeEmissioni.isNaN())
 				percentualeEmissioni = 0.0;
 			dettaglioMissione.setPercentualeEmissioni(percentualeEmissioni);
@@ -364,11 +340,11 @@ public class MissionControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
-	public List<PerformanceVeicoli> getPerformanceVeicoli(
-			RichiestaMissioni richiesta) {
+	public List<PerformanceVeicoli> getPerformanceVeicoli(RichiestaMissioni richiesta) {
 		List<Missione> missioni = getMissioni(richiesta);
 		List<Missione> missioniAutorizzate = new ArrayList<Missione>();
 		for (Missione missione : missioni)
@@ -381,13 +357,10 @@ public class MissionControl {
 		richiestaAccesso.setDataInizio(richiesta.getDataInizio());
 		richiestaAccesso.setDataFine(richiesta.getDataFine());
 		if (richiesta.getOperatoriLogistici() == null)
-			richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI
-					.name() }));
+			richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI.name() }));
 		else
-			richiestaAccesso.setOperatoriLogistici(richiesta
-					.getOperatoriLogistici());
-		Map<String, Map<Date, AccessiInGA>> accessiInGA = tapControl
-				.getStoricoAccessiInGAPerVeicolo(richiestaAccesso);
+			richiestaAccesso.setOperatoriLogistici(richiesta.getOperatoriLogistici());
+		Map<String, Map<Date, AccessiInGA>> accessiInGA = tapControl.getStoricoAccessiInGAPerVeicolo(richiestaAccesso);
 		Map<String, Double> mappaPerGA = new LinkedHashMap<String, Double>();
 		for (String vin : accessiInGA.keySet()) {
 			Map<Date, AccessiInGA> accessoInGA = accessiInGA.get(vin);
@@ -410,17 +383,13 @@ public class MissionControl {
 				if (km == null)
 					km = 0.0;
 				dettaglioMissione.setNumeroKmPercorsiInGA(km);
-				dettaglioMissione.setConsumoTotale(km
-						* valoriVeicolo.getEmission());
+				dettaglioMissione.setConsumoTotale(km * valoriVeicolo.getEmission());
 			}
-			dettaglioMissione.setTipoAlimentazione(Fuel.valueOf(valoriVeicolo
-					.getFuel()));
-			dettaglioMissione.setNumeroMissioni(dettaglioMissione
-					.getNumeroMissioni() + 1);
+			dettaglioMissione.setTipoAlimentazione(Fuel.valueOf(valoriVeicolo.getFuel()));
+			dettaglioMissione.setNumeroMissioni(dettaglioMissione.getNumeroMissioni() + 1);
 			String classeEcologica = valoriVeicolo.getEuro();
 			if (classeEcologica != null)
-				dettaglioMissione.setClasseEcologica(new Integer(
-						classeEcologica));
+				dettaglioMissione.setClasseEcologica(new Integer(classeEcologica));
 			List<Richiesta> richieste = missione.getRichieste();
 			dettaglioMissione.setDal(richiesta.getDataInizio());
 			dettaglioMissione.setAl(richiesta.getDataFine());
@@ -428,29 +397,22 @@ public class MissionControl {
 			for (Richiesta consegna : richieste)
 				if (consegna.getTipo().equals(CONSEGNA.name()))
 					numeroTotaleConsegne++;
-			dettaglioMissione
-					.setNumeroMedioConsegneAMissione((int) (dettaglioMissione
-							.getNumeroMedioConsegneAMissione() + numeroTotaleConsegne
-							/ dettaglioMissione.getNumeroMissioni()));
+			dettaglioMissione.setNumeroMedioConsegneAMissione((int) (dettaglioMissione.getNumeroMedioConsegneAMissione()
+					+ numeroTotaleConsegne / dettaglioMissione.getNumeroMissioni()));
 			double numeroTotaleRitiri = 0.0;
 			for (Richiesta ritiro : richieste)
 				if (ritiro.getTipo().equals(RITIRO.name()))
 					numeroTotaleRitiri++;
-			dettaglioMissione
-					.setNumeroMedioDiRitiriAMissione((int) (dettaglioMissione
-							.getNumeroMedioDiRitiriAMissione() + numeroTotaleRitiri
-							/ dettaglioMissione.getNumeroMissioni()));
+			dettaglioMissione.setNumeroMedioDiRitiriAMissione((int) (dettaglioMissione.getNumeroMedioDiRitiriAMissione()
+					+ numeroTotaleRitiri / dettaglioMissione.getNumeroMissioni()));
 			double numeroConsegneABuonFine = 0.0;
 			for (Richiesta consegna : richieste)
-				if (consegna.getTipo().equals(CONSEGNA.name())
-						&& consegna.getStato().equals(completed.name()))
+				if (consegna.getTipo().equals(CONSEGNA.name()) && consegna.getStato().equals(completed.name()))
 					numeroConsegneABuonFine++;
 			if (numeroTotaleConsegne > 0)
 				dettaglioMissione
-						.setPercentualeConsegneABuonFine((double) dettaglioMissione
-								.getPercentualeConsegneABuonFine()
-								+ numeroConsegneABuonFine
-								/ (double) numeroTotaleConsegne);
+						.setPercentualeConsegneABuonFine((double) dettaglioMissione.getPercentualeConsegneABuonFine()
+								+ numeroConsegneABuonFine / (double) numeroTotaleConsegne);
 		}
 		return performanceVeicoli;
 	}
@@ -464,19 +426,18 @@ public class MissionControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
-	public SortedSet<DettaglioMissione> getDettaglioMissioni(
-			RichiestaMissioni richiesta) {
+	public SortedSet<DettaglioMissione> getDettaglioMissioni(RichiestaMissioni richiesta) {
 		Map<String, List<ExchangeStop>> allExchangeStops = new LinkedHashMap<String, List<ExchangeStop>>();
 		List<Mission> missionList = getMissions(richiesta);
 		for (Mission mission : missionList) {
 			String compagnia = mission.getTruck().getOperatoreLogistico();
 			List<ExchangeStop> exchangeStops = allExchangeStops.get(compagnia);
 			if (exchangeStops == null) {
-				exchangeStops = new NoDuplicatesList<ExchangeStop>(
-						exsf.findAll(mission));
+				exchangeStops = new NoDuplicatesList<ExchangeStop>(exsf.findAll(mission));
 			} else
 				exchangeStops.addAll(exsf.findAll(mission));
 			allExchangeStops.put(compagnia, exchangeStops);
@@ -489,8 +450,7 @@ public class MissionControl {
 		if (vikorResults != null)
 			for (VikorResult vikorResult : vikorResults) {
 				for (Missione missione : missioni)
-					if (missione.getNome().equals(
-							vikorResult.getIdMission() + "")) {
+					if (missione.getNome().equals(vikorResult.getIdMission() + "")) {
 						missione.setRanking(vikorResult.getColor());
 						missione.setCreditoMobilita(vikorResult.getPrice());
 						missione.setBonus(0.0);
@@ -511,15 +471,11 @@ public class MissionControl {
 				RichiestaAccesso richiestaAccesso = new RichiestaAccesso();
 				richiestaAccesso.setDataInizio(richiesta.getDataInizio());
 				richiestaAccesso.setDataFine(richiesta.getDataFine());
-				richiestaAccesso
-						.setOperatoriLogistici(asList(new String[] { compagnia }));
-				accessiInGA = tapControl
-						.getStoricoAccessiInGA(richiestaAccesso);
+				richiestaAccesso.setOperatoriLogistici(asList(new String[] { compagnia }));
+				accessiInGA = tapControl.getStoricoAccessiInGA(richiestaAccesso);
 				int totaleAccessi = 0;
-				totaleEmissioniPerPeso = calcoloTotaleEmissioniPerPeso(
-						compagnia, missioni, accessiInGA);
-				totaleEmissioni = calcoloTotaleEmissioni(compagnia, missioni,
-						accessiInGA);
+				totaleEmissioniPerPeso = calcoloTotaleEmissioniPerPeso(compagnia, missioni, accessiInGA);
+				totaleEmissioni = calcoloTotaleEmissioni(compagnia, missioni, accessiInGA);
 				double totaleKm = 0;
 				long tempoTrascorso = 0;
 				for (AccessiInGA accessoInGA : accessiInGA.values()) {
@@ -529,54 +485,40 @@ public class MissionControl {
 					tempoTrascorso += accessoInGA.getTempoTrascorso();
 				}
 				dettaglioMissione.setAccessiInGATotale(totaleAccessi);
-				dettaglioMissione.setAccessiInGAMedia((double) totaleAccessi
-						/ (double) missioni.size());
+				dettaglioMissione.setAccessiInGAMedia((double) totaleAccessi / (double) missioni.size());
 				dettaglioMissione.setKmPercorsiInGA(totaleKm);
 				dettaglioMissione.setEmissioniTotali(totaleEmissioni);
-				dettaglioMissione
-						.setTempoTrascorsoInGA(tempoTrascorso / 1000 * 60);
+				dettaglioMissione.setTempoTrascorsoInGA(tempoTrascorso / 1000 * 60);
 				int allExchangeStopSize = 0;
-				List<ExchangeStop> exchangeStops = allExchangeStops
-						.get(compagnia);
+				List<ExchangeStop> exchangeStops = allExchangeStops.get(compagnia);
 				for (ExchangeStop exchangeStop : exchangeStops)
-					allExchangeStopSize += exchangeStop.getDeliveryList()
-							.size();
+					allExchangeStopSize += exchangeStop.getDeliveryList().size();
 				dettaglioMissione.setNumeroConsegneperStop(allExchangeStopSize);
 				dettaglioMissione.setNumeroStop(exchangeStops.size());
 			}
-			dettaglioMissione.setCreditidiMobilita(dettaglioMissione
-					.getCreditidiMobilita() + missione.getCreditoMobilita());
+			dettaglioMissione
+					.setCreditidiMobilita(dettaglioMissione.getCreditidiMobilita() + missione.getCreditoMobilita());
 			double bonus = calcoloBonus(totaleEmissioniPerPeso,
-					calcoloKmPerMissione(missione, accessiInGA)
-							* missione.getVeicolo().getValori().getEmission(),
+					calcoloKmPerMissione(missione, accessiInGA) * missione.getVeicolo().getValori().getEmission(),
 					missione.getCreditoMobilita());
 			dettaglioMissione.setBonus(dettaglioMissione.getBonus() + bonus);
 			dettaglioMissione.setMissioni(dettaglioMissione.getMissioni() + 1);
 			dettaglioMissione.setDal(richiesta.getDataInizio());
 			dettaglioMissione.setAl(richiesta.getDataFine());
 		}
-		DettaglioMissione totale = new DettaglioMissione(
-				"missioni_pa_sintesi_table_fields_totale");
+		DettaglioMissione totale = new DettaglioMissione("missioni_pa_sintesi_table_fields_totale");
 		for (DettaglioMissione dettaglioMissione : mappaDettaglio.values()) {
-			totale.setAccessiInGAMedia(totale.getAccessiInGAMedia()
-					+ dettaglioMissione.getAccessiInGAMedia());
-			totale.setAccessiInGATotale(totale.getAccessiInGATotale()
-					+ dettaglioMissione.getAccessiInGATotale());
+			totale.setAccessiInGAMedia(totale.getAccessiInGAMedia() + dettaglioMissione.getAccessiInGAMedia());
+			totale.setAccessiInGATotale(totale.getAccessiInGATotale() + dettaglioMissione.getAccessiInGATotale());
 			totale.setBonus(totale.getBonus() + dettaglioMissione.getBonus());
-			totale.setCreditidiMobilita(totale.getCreditidiMobilita()
-					+ dettaglioMissione.getCreditidiMobilita());
-			totale.setEmissioniTotali(totale.getEmissioniTotali()
-					+ dettaglioMissione.getEmissioniTotali());
-			totale.setKmPercorsiInGA(totale.getKmPercorsiInGA()
-					+ dettaglioMissione.getKmPercorsiInGA());
-			totale.setMissioni(totale.getMissioni()
-					+ dettaglioMissione.getMissioni());
-			totale.setNumeroConsegneperStop(totale.getNumeroConsegneperStop()
-					+ dettaglioMissione.getNumeroConsegneperStop());
-			totale.setNumeroStop(totale.getNumeroStop()
-					+ dettaglioMissione.getNumeroStop());
-			totale.setTempoTrascorsoInGA(totale.getTempoTrascorsoInGA()
-					+ dettaglioMissione.getTempoTrascorsoInGA());
+			totale.setCreditidiMobilita(totale.getCreditidiMobilita() + dettaglioMissione.getCreditidiMobilita());
+			totale.setEmissioniTotali(totale.getEmissioniTotali() + dettaglioMissione.getEmissioniTotali());
+			totale.setKmPercorsiInGA(totale.getKmPercorsiInGA() + dettaglioMissione.getKmPercorsiInGA());
+			totale.setMissioni(totale.getMissioni() + dettaglioMissione.getMissioni());
+			totale.setNumeroConsegneperStop(
+					totale.getNumeroConsegneperStop() + dettaglioMissione.getNumeroConsegneperStop());
+			totale.setNumeroStop(totale.getNumeroStop() + dettaglioMissione.getNumeroStop());
+			totale.setTempoTrascorsoInGA(totale.getTempoTrascorsoInGA() + dettaglioMissione.getTempoTrascorsoInGA());
 		}
 		dettaglioMissioni.add(totale);
 		return dettaglioMissioni;
@@ -591,7 +533,8 @@ public class MissionControl {
 	 * quella fascia oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<ParameterTS>
 	 */
 	public List<Richiesta> getConsegne(RichiestaMissioni richiesta) {
@@ -644,8 +587,7 @@ public class MissionControl {
 		return richieste;
 	}
 
-	private void aggiungiIDStop(List<Missione> missioni,
-			List<ExchangeStop> exchangeStops) {
+	private void aggiungiIDStop(List<Missione> missioni, List<ExchangeStop> exchangeStops) {
 		for (Missione missione : missioni) {
 			List<Richiesta> richieste = missione.getRichieste();
 			for (Richiesta richiesta : richieste) {
@@ -655,10 +597,8 @@ public class MissionControl {
 						indirizzoRichiesta = richiesta.getToAddress();
 					else
 						indirizzoRichiesta = richiesta.getFromAddress();
-					if (exchangeStop.getLocation().getLatitude() == indirizzoRichiesta
-							.getLatitude()
-							&& exchangeStop.getLocation().getLongitude() == indirizzoRichiesta
-									.getLongitude())
+					if (exchangeStop.getLocation().getLatitude() == indirizzoRichiesta.getLatitude()
+							&& exchangeStop.getLocation().getLongitude() == indirizzoRichiesta.getLongitude())
 						richiesta.setIdStop(exchangeStop.getId());
 				}
 			}

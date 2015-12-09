@@ -21,9 +21,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.AccessiInGA;
-import it.vige.greenarea.dto.RichiestaAccesso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,6 +37,10 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.AccessiInGA;
+import it.vige.greenarea.dto.RichiestaAccesso;
+
 public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 	private Logger logger = getLogger(getClass());
 
@@ -50,19 +51,15 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 		try {
 			Date dal = (Date) execution.getVariable("dal");
 			Date al = (Date) execution.getVariable("al");
-			String operatoreLogistico = (String) execution
-					.getVariable("operatorelogistico");
+			String operatoreLogistico = (String) execution.getVariable("operatorelogistico");
 
 			Client client = newClient();
-			Builder bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA")
-					.request(APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
 			RichiestaAccesso richiestaAccesso = new RichiestaAccesso();
 			richiestaAccesso.setDataInizio(dal);
 			richiestaAccesso.setDataFine(al);
-			richiestaAccesso
-					.setOperatoriLogistici(asList(new String[] { operatoreLogistico }));
-			Map<Date, AccessiInGA> response = bldr.post(
-					entity(richiestaAccesso, APPLICATION_JSON),
+			richiestaAccesso.setOperatoriLogistici(asList(new String[] { operatoreLogistico }));
+			Map<Date, AccessiInGA> response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON),
 					new GenericType<Map<Date, AccessiInGA>>() {
 					});
 			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -77,11 +74,9 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 					int conteggioAccessi = 0;
 					reportData.put("" + i, 0);
 					for (Date date : response.keySet()) {
-						int hour = new Integer(
-								new SimpleDateFormat("HH").format(date));
+						int hour = new Integer(new SimpleDateFormat("HH").format(date));
 						if (hour == i) {
-							int conteggio = response.get(date) == null ? 0
-									: response.get(date).getAccessi();
+							int conteggio = response.get(date) == null ? 0 : response.get(date).getAccessi();
 							conteggioAccessi += conteggio;
 							reportData.put("" + i, conteggioAccessi);
 						}
@@ -105,8 +100,7 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 					for (Date date : response.keySet()) {
 						String dayOut = new SimpleDateFormat("dd").format(date);
 						if (dayOut.equals(day)) {
-							int conteggio = response.get(date) == null ? 0
-									: response.get(date).getAccessi();
+							int conteggio = response.get(date) == null ? 0 : response.get(date).getAccessi();
 							conteggioAccessi += conteggio;
 							reportData.put(day, conteggioAccessi);
 						}
@@ -118,8 +112,7 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 			execution.setVariable("reportData", reportData);
 
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerichiestaaccessiga");

@@ -27,4 +27,3 @@ public abstract class LNimg_ {
 	public static volatile SingularAttribute<LNimg, String> o;
 
 }
-

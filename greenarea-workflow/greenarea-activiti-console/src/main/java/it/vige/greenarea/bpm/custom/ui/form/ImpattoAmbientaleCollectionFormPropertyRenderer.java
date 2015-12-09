@@ -18,8 +18,6 @@ import static it.vige.greenarea.bpm.custom.GreenareaMessages.IMPATTO_AMBIENTALE_
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_COLLECTION;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
-import it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType;
-import it.vige.greenarea.dto.ImpattoAmbientale;
 
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -35,8 +33,11 @@ import org.activiti.explorer.I18nManager;
 
 import com.vaadin.ui.Field;
 
-public class ImpattoAmbientaleCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<ImpattoAmbientale> {
+import it.vige.greenarea.bpm.form.ImpattoAmbientaleCollectionFormType;
+import it.vige.greenarea.dto.ImpattoAmbientale;
+
+public class ImpattoAmbientaleCollectionFormPropertyRenderer
+		extends GreenareaAbstractFormPropertyRenderer<ImpattoAmbientale> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<ImpattoAmbientale> table;
@@ -51,13 +52,10 @@ public class ImpattoAmbientaleCollectionFormPropertyRenderer extends
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
 
-		values = (Map<String, ImpattoAmbientale>) formProperty.getType()
-				.getInformation("values");
-		table = new GreenareaPagedTable<ImpattoAmbientale>(values.values(),
-				getGreenareaFormPropertiesForm(), 10);
+		values = (Map<String, ImpattoAmbientale>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<ImpattoAmbientale>(values.values(), getGreenareaFormPropertiesForm(), 10);
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(formProperty.isWritable());
 		table.setMultiSelect(true);
@@ -66,30 +64,22 @@ public class ImpattoAmbientaleCollectionFormPropertyRenderer extends
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "tipoalimentazione");
+			String id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "tipoalimentazione");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "numeromissioni");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "numeromissioni");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "percentualemissioni");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "percentualemissioni");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "numerokm");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "numerokm");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "percentualekm");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "percentualekm");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "numeroemissioni");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "numeroemissioni");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-					+ "percentualeemissioni");
+			id = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + "percentualeemissioni");
 			table.addContainerProperty(id, String.class, null);
 			boolean captionOK = false;
-			for (Map.Entry<String, ImpattoAmbientale> enumEntry : values
-					.entrySet()) {
+			for (Map.Entry<String, ImpattoAmbientale> enumEntry : values.entrySet()) {
 
 				id = enumEntry.getKey();
 				ImpattoAmbientale value = enumEntry.getValue();
@@ -131,8 +121,7 @@ public class ImpattoAmbientaleCollectionFormPropertyRenderer extends
 		List<Object> result = new ArrayList<Object>();
 		String chiave = type.getChiave();
 		I18nManager i18nManager = get().getI18nManager();
-		chiave = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS
-				+ chiave);
+		chiave = i18nManager.getMessage(IMPATTO_AMBIENTALE_TABLE_FIELDS + chiave);
 		result.add(chiave);
 		result.add(type.getNumeroMissioni());
 		result.add(df.format(type.getPercentualeMissioni()));
@@ -145,13 +134,11 @@ public class ImpattoAmbientaleCollectionFormPropertyRenderer extends
 		return result.toArray();
 	}
 
-	public String getPropertyLabel(FormProperty formProperty,
-			ImpattoAmbientale type) {
+	public String getPropertyLabel(FormProperty formProperty, ImpattoAmbientale type) {
 		DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 		String message = null;
 		try {
-			message = getMessage(formProperty.getId(),
-					dateFormat.format(type.getDal()),
+			message = getMessage(formProperty.getId(), dateFormat.format(type.getDal()),
 					dateFormat.format(type.getAl()));
 		} catch (Exception ex) {
 			if (formProperty.getName() != null) {

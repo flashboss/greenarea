@@ -26,8 +26,7 @@ public class DateTest {
 
 	@Test
 	public void simpleDateParsing() {
-		DateFormat formatter = new SimpleDateFormat(
-				"EEE MMM d HH:mm:ss z yyyy", Locale.US);
+		DateFormat formatter = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", Locale.US);
 		try {
 			formatter.parse("Fri May 16 00:00:00 CEST 2014");
 		} catch (ParseException e) {

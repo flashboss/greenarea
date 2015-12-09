@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import it.vige.greenarea.dto.GeoLocationInterface;
-
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+
+import it.vige.greenarea.dto.GeoLocationInterface;
 
 @Embeddable
 public class DBGeoLocation implements GeoLocationInterface, Serializable {
@@ -43,8 +43,8 @@ public class DBGeoLocation implements GeoLocationInterface, Serializable {
 	public DBGeoLocation() {
 	}
 
-	public DBGeoLocation(String name, String surname, String phone,
-			String mobile, String email, GeoLocationInterface add) {
+	public DBGeoLocation(String name, String surname, String phone, String mobile, String email,
+			GeoLocationInterface add) {
 		this(add);
 		this.name = name;
 		this.surname = surname;
@@ -198,10 +198,8 @@ public class DBGeoLocation implements GeoLocationInterface, Serializable {
 	public String toString() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("(lat: ").append(Double.toString(latitude)).append(", lon: ")
-				.append(Double.toString(longitude));
-		sb.append(") address: ").append(street).append(" ").append(number)
-				.append(", ").append(city).append(", ");
+		sb.append("(lat: ").append(Double.toString(latitude)).append(", lon: ").append(Double.toString(longitude));
+		sb.append(") address: ").append(street).append(" ").append(number).append(", ").append(city).append(", ");
 		sb.append(zipCode).append(" ( ").append(adminAreaLevel1).append(" )");
 		return sb.toString();
 	}

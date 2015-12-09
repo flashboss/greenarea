@@ -22,8 +22,7 @@ import org.activiti.explorer.Messages;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 
-public class StringFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+public class StringFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = -9058947943867252045L;
 
@@ -36,8 +35,7 @@ public class StringFormPropertyRenderer<T> extends
 		TextField textField = new TextField(getPropertyLabel(formProperty));
 		textField.setRequired(formProperty.isRequired());
 		textField.setEnabled(formProperty.isWritable());
-		textField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		textField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 
 		if (formProperty.getValue() != null) {
 			textField.setValue(formProperty.getValue());

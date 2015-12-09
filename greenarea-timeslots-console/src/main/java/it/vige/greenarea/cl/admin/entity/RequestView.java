@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.entity;
 
-import it.vige.greenarea.cl.bean.RequestParameter;
-import it.vige.greenarea.dto.Color;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+
+import it.vige.greenarea.cl.bean.RequestParameter;
+import it.vige.greenarea.dto.Color;
 
 public class RequestView implements Serializable {
 

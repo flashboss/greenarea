@@ -47,8 +47,9 @@ public class LNCellCodec extends mxCellCodec {
 	}
 
 	/**
-	 * Prendo il Value (che ?????????????????????????????????????????????????????? una LNCell) e gli sostituisco la
-	 * LNCell codificata in element
+	 * Prendo il Value (che
+	 * ?????????????????????????????????????????????????????? una LNCell) e gli
+	 * sostituisco la LNCell codificata in element
 	 * 
 	 */
 	@Override
@@ -76,8 +77,7 @@ public class LNCellCodec extends mxCellCodec {
 				Class<?> c = null;
 
 				try {
-					c = Class.forName("it.vige.greenarea.ln.model."
-							.concat(elt.getAttribute(LNCell.LNCELLTYPE)));
+					c = Class.forName("it.vige.greenarea.ln.model.".concat(elt.getAttribute(LNCell.LNCELLTYPE)));
 				} catch (ClassNotFoundException ex) {
 					logger.error("errore sgr common", ex);
 				}
@@ -106,8 +106,7 @@ public class LNCellCodec extends mxCellCodec {
 	}
 
 	@Override
-	public boolean isExcluded(Object obj, String attr, Object value,
-			boolean write) {
+	public boolean isExcluded(Object obj, String attr, Object value, boolean write) {
 		return super.isExcluded(obj, attr, value, write);
 	}
 }

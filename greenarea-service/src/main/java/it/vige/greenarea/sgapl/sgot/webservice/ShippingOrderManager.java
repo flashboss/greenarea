@@ -29,6 +29,17 @@ import static it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.REQUEST_
 import static it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.createErrorResponse;
 import static it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultStatus.NOK;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 import it.vige.greenarea.dto.Address;
 import it.vige.greenarea.sgapl.sgot.business.SGOTbean;
@@ -40,16 +51,6 @@ import it.vige.greenarea.sgapl.sgot.webservice.wsdata.RequestShippingsResponseDa
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ResultOperationResponse;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingItemData;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderData;
-
-import java.util.HashMap;
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
-
-import org.slf4j.Logger;
 
 @WebService(serviceName = "ShippingOrderManager")
 public class ShippingOrderManager {
@@ -66,17 +67,13 @@ public class ShippingOrderManager {
 	public String testNewOrder(@WebParam(name = "name") String txt) {
 
 		ShippingItemData[] siData = new ShippingItemData[3];
-		ShippingItemData si1 = new ShippingItemData("uno", "primo item",
-				new HashMap<String, String>());
-		ShippingItemData si2 = new ShippingItemData("due", "secondo item",
-				new HashMap<String, String>());
-		ShippingItemData si3 = new ShippingItemData("tre", "terzo item",
-				new HashMap<String, String>());
+		ShippingItemData si1 = new ShippingItemData("uno", "primo item", new HashMap<String, String>());
+		ShippingItemData si2 = new ShippingItemData("due", "secondo item", new HashMap<String, String>());
+		ShippingItemData si3 = new ShippingItemData("tre", "terzo item", new HashMap<String, String>());
 		siData[0] = si1;
 		siData[1] = si2;
 		siData[2] = si3;
-		ShippingOrderData soData = new ShippingOrderData("new_id", siData,
-				new HashMap<String, String>(), txt);
+		ShippingOrderData soData = new ShippingOrderData("new_id", siData, new HashMap<String, String>(), txt);
 		RequestShippingResponseData res;
 
 		StringBuilder sb = new StringBuilder("Result status: ");
@@ -114,26 +111,21 @@ public class ShippingOrderManager {
 		destest.setNumber("");
 		destest.setStreet("");
 		destest.setRadius(0);
-		soData.setFromAddress(new Address(mittest.getStreet(), mittest
-				.getNumber(), mittest.getZipCode(), mittest.getCity(), null,
-				null, mittest.getCountry()));
+		soData.setFromAddress(new Address(mittest.getStreet(), mittest.getNumber(), mittest.getZipCode(),
+				mittest.getCity(), null, null, mittest.getCountry()));
 
 		res = sgotBean.estimateShipping(soData);
 		if (res.getResult().getStatus().equals(NOK)) {
-			sb.append("Errore estimate: ").append(
-					res.getResult().getErrorDescription());
+			sb.append("Errore estimate: ").append(res.getResult().getErrorDescription());
 		} else {
 			sb.append("Estimate ok con costo:").append(res.getTotalCost());
 		}
-		res = sgotBean
-				.requestShipping(convertiShippingOrderDataToShippingOrder(soData));
+		res = sgotBean.requestShipping(convertiShippingOrderDataToShippingOrder(soData));
 		sb.append(res.getResult().getStatus().name()).append(" --> ");
 		if (res.getResult().getStatus().equals(NOK)) {
-			sb.append("\n Errore request: ").append(
-					res.getResult().getErrorDescription());
+			sb.append("\n Errore request: ").append(res.getResult().getErrorDescription());
 		} else {
-			sb.append("\n Salvato ordine con ID:").append(
-					res.getShippingOrderID());
+			sb.append("\n Salvato ordine con ID:").append(res.getShippingOrderID());
 		}
 		return "Result: " + sb.toString() + " !";
 	}
@@ -143,45 +135,36 @@ public class ShippingOrderManager {
 	 * AggiornamentoConsegneERitiri
 	 */
 	@WebMethod(operationName = "requestShippings")
-	public ResultOperationResponse requestShippings(
-			@WebParam(name = "shippings") List<ShippingOrderData> richieste) {
-		return sgotBean
-				.requestShippings(convertiShippingOrderDataToShippingOrders(richieste));
+	public ResultOperationResponse requestShippings(@WebParam(name = "shippings") List<ShippingOrderData> richieste) {
+		return sgotBean.requestShippings(convertiShippingOrderDataToShippingOrders(richieste));
 	}
 
 	/**
 	 * metodo di lettura delle richieste per il servizio RecuperaConsegneERitiri
 	 */
 	@WebMethod(operationName = "getShippings")
-	public RequestShippingsResponseData getShippings(
-			@WebParam(name = "operatoreLogistico") String operatoreLogistico) {
+	public RequestShippingsResponseData getShippings(@WebParam(name = "operatoreLogistico") String operatoreLogistico) {
 		return sgotBean.getShippings(operatoreLogistico);
 	}
 
-	private RequestShippingResponseData validateShipping(String fromName,
-			Address fromAddress, String toName, Address toAddress,
-			ShippingOrderData shippingOrder) {
+	private RequestShippingResponseData validateShipping(String fromName, Address fromAddress, String toName,
+			Address toAddress, ShippingOrderData shippingOrder) {
 		// prima serie di check per vedere se ci sono elementi null
 		if (shippingOrder == null) {
-			return new RequestShippingResponseData(createErrorResponse(
-					REQUEST_SHIPPING_NO_DATA,
-					"Request Shipping with null ShippingOrderData"));
+			return new RequestShippingResponseData(
+					createErrorResponse(REQUEST_SHIPPING_NO_DATA, "Request Shipping with null ShippingOrderData"));
 		}
 		if (toAddress == null) {
-			return new RequestShippingResponseData(createErrorResponse(
-					REQUEST_SHIPPING_NO_DEST,
-					"Request Shipping with null Destination Address"));
+			return new RequestShippingResponseData(
+					createErrorResponse(REQUEST_SHIPPING_NO_DEST, "Request Shipping with null Destination Address"));
 		}
 		if (fromAddress == null) {
-			return new RequestShippingResponseData(createErrorResponse(
-					REQUEST_SHIPPING_NO_SOURCE,
-					"Request Shipping with null Source Address"));
+			return new RequestShippingResponseData(
+					createErrorResponse(REQUEST_SHIPPING_NO_SOURCE, "Request Shipping with null Source Address"));
 		}
-		if ((shippingOrder.getShippingItems() == null)
-				|| (shippingOrder.getShippingItems().length == 0)) {
-			return new RequestShippingResponseData(createErrorResponse(
-					REQUEST_SHIPPING_NO_ITEMS,
-					"Request Shipping with no ShippingItemList"));
+		if ((shippingOrder.getShippingItems() == null) || (shippingOrder.getShippingItems().length == 0)) {
+			return new RequestShippingResponseData(
+					createErrorResponse(REQUEST_SHIPPING_NO_ITEMS, "Request Shipping with no ShippingItemList"));
 		}
 		logger.info("+++ richiesta  ordine: " + fromAddress.toString());
 		return null;
@@ -193,14 +176,11 @@ public class ShippingOrderManager {
 	 * ShippingOrderData) dall'indirizzo fromAddress all'indirizzo toAddress
 	 */
 	@WebMethod(operationName = "addShipping")
-	public RequestShippingResponseData addShipping(
-			@WebParam(name = "fromName") String fromName,
-			@WebParam(name = "fromAddress") Address fromAddress,
-			@WebParam(name = "toName") String toName,
+	public RequestShippingResponseData addShipping(@WebParam(name = "fromName") String fromName,
+			@WebParam(name = "fromAddress") Address fromAddress, @WebParam(name = "toName") String toName,
 			@WebParam(name = "toAddress") Address toAddress,
 			@WebParam(name = "shippingOrder") ShippingOrderData shippingOrder) {
-		validateShipping(fromName, fromAddress, toName, toAddress,
-				shippingOrder);
+		validateShipping(fromName, fromAddress, toName, toAddress, shippingOrder);
 		DBGeoLocation mitt = new DBGeoLocation();
 		mitt.setName(fromName);
 		mitt.setStreet(fromAddress.getStreet());
@@ -215,8 +195,7 @@ public class ShippingOrderManager {
 		dest.setZipCode(toAddress.getZipCode());
 		dest.setCity(toAddress.getCity());
 		dest.setCountry(toAddress.getCountry());
-		return sgotBean
-				.addShipping(convertiShippingOrderDataToShippingOrder(shippingOrder));
+		return sgotBean.addShipping(convertiShippingOrderDataToShippingOrder(shippingOrder));
 	}
 
 	/**
@@ -225,14 +204,11 @@ public class ShippingOrderManager {
 	 * ShippingOrderData) dall'indirizzo fromAddress all'indirizzo toAddress
 	 */
 	@WebMethod(operationName = "requestShipping")
-	public RequestShippingResponseData requestShipping(
-			@WebParam(name = "fromName") String fromName,
-			@WebParam(name = "fromAddress") Address fromAddress,
-			@WebParam(name = "toName") String toName,
+	public RequestShippingResponseData requestShipping(@WebParam(name = "fromName") String fromName,
+			@WebParam(name = "fromAddress") Address fromAddress, @WebParam(name = "toName") String toName,
 			@WebParam(name = "toAddress") Address toAddress,
 			@WebParam(name = "shippingOrder") ShippingOrderData shippingOrder) {
-		validateShipping(fromName, fromAddress, toName, toAddress,
-				shippingOrder);
+		validateShipping(fromName, fromAddress, toName, toAddress, shippingOrder);
 		DBGeoLocation mitt = new DBGeoLocation();
 		mitt.setName(fromName);
 		mitt.setStreet(fromAddress.getStreet());
@@ -247,8 +223,7 @@ public class ShippingOrderManager {
 		dest.setZipCode(toAddress.getZipCode());
 		dest.setCity(toAddress.getCity());
 		dest.setCountry(toAddress.getCountry());
-		return sgotBean
-				.requestShipping(convertiShippingOrderDataToShippingOrder(shippingOrder));
+		return sgotBean.requestShipping(convertiShippingOrderDataToShippingOrder(shippingOrder));
 	}
 
 	/**
@@ -261,14 +236,12 @@ public class ShippingOrderManager {
 			@WebParam(name = "shippingOrder") ShippingOrderData shippingOrder) {
 
 		if (shippingOrder.getToAddress() == null) {
-			return new RequestShippingResponseData(createErrorResponse(
-					ESTIMATE_SHIPPING_NO_DEST,
-					"Estimate Shipping with null Destination Address"));
+			return new RequestShippingResponseData(
+					createErrorResponse(ESTIMATE_SHIPPING_NO_DEST, "Estimate Shipping with null Destination Address"));
 		}
 		if (shippingOrder.getFromAddress() == null) {
-			return new RequestShippingResponseData(createErrorResponse(
-					ESTIMATE_SHIPPING_NO_SOURCE,
-					"Estimate Shipping with null Source Address"));
+			return new RequestShippingResponseData(
+					createErrorResponse(ESTIMATE_SHIPPING_NO_SOURCE, "Estimate Shipping with null Source Address"));
 		}
 
 		return sgotBean.estimateShipping(shippingOrder);
@@ -279,13 +252,11 @@ public class ShippingOrderManager {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "confirmShipping")
-	public ResultOperationResponse confirmShipping(
-			@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
-																			// SGOException
-																			// {
+	public ResultOperationResponse confirmShipping(@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
+																													// SGOException
+																													// {
 		if (shippingOrderID == null) {
-			return createErrorResponse(CONFIRM_NULL_SHIPPING_ID,
-					"Confirm Shipping: null ShippingOrderID");
+			return createErrorResponse(CONFIRM_NULL_SHIPPING_ID, "Confirm Shipping: null ShippingOrderID");
 		}
 
 		return sgotBean.confirmShipping(shippingOrderID);
@@ -296,13 +267,11 @@ public class ShippingOrderManager {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "dropShipping")
-	public ResultOperationResponse dropShipping(
-			@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
-																			// SGOException
-																			// {
+	public ResultOperationResponse dropShipping(@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
+																												// SGOException
+																												// {
 		if (shippingOrderID == null) {
-			return createErrorResponse(DROP_NULL_SHIPPING_ID,
-					"Drop Shipping: null ShippingOrderID");
+			return createErrorResponse(DROP_NULL_SHIPPING_ID, "Drop Shipping: null ShippingOrderID");
 		}
 		return sgotBean.dropShipping(shippingOrderID);
 	}
@@ -311,14 +280,12 @@ public class ShippingOrderManager {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "locateShipping")
-	public LocateShippingResponseData locateShipping(
-			@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
-																			// SGOException
-																			// {
+	public LocateShippingResponseData locateShipping(@WebParam(name = "shippingOrderID") String shippingOrderID) { // throws
+																													// SGOException
+																													// {
 		if (shippingOrderID == null) {
-			return new LocateShippingResponseData(createErrorResponse(
-					LOCATE_NULL_SHIPPING_ID,
-					"Locate Shipping: null ShippingOrderID"));
+			return new LocateShippingResponseData(
+					createErrorResponse(LOCATE_NULL_SHIPPING_ID, "Locate Shipping: null ShippingOrderID"));
 		}
 
 		return sgotBean.locateShipping(shippingOrderID);
@@ -329,14 +296,12 @@ public class ShippingOrderManager {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "getTrackingUrl")
-	public GetTrackingUrlResponseData getTrackingUrl(
-			@WebParam(name = "shippingID") String shippingID) { // throws
-																// SGOException
-																// {
+	public GetTrackingUrlResponseData getTrackingUrl(@WebParam(name = "shippingID") String shippingID) { // throws
+																											// SGOException
+																											// {
 		if (shippingID == null) {
-			return new GetTrackingUrlResponseData(createErrorResponse(
-					GET_TRACKING_NULL_SHIPPING_ID,
-					"Get Tracking URL: null ShippingOrderID"));
+			return new GetTrackingUrlResponseData(
+					createErrorResponse(GET_TRACKING_NULL_SHIPPING_ID, "Get Tracking URL: null ShippingOrderID"));
 		}
 
 		return sgotBean.getTrackingUrl(shippingID);
@@ -347,14 +312,12 @@ public class ShippingOrderManager {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "getShippingStatus")
-	public GetShippingStatusResponseData getShippingStatus(
-			@WebParam(name = "shippingID") String shippingID) { // throws
-																// SGOException
-																// {
+	public GetShippingStatusResponseData getShippingStatus(@WebParam(name = "shippingID") String shippingID) { // throws
+																												// SGOException
+																												// {
 		if (shippingID == null) {
-			return new GetShippingStatusResponseData(createErrorResponse(
-					GET_STATUS_NULL_SHIPPING_ID,
-					"Get Shipping Status: null ShippingOrderID"));
+			return new GetShippingStatusResponseData(
+					createErrorResponse(GET_STATUS_NULL_SHIPPING_ID, "Get Shipping Status: null ShippingOrderID"));
 		}
 
 		return sgotBean.getShippingStatus(shippingID);

@@ -14,12 +14,13 @@
 package it.vige.greenarea.cl.admin.bean;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.ParameterTS;
 
 /**
  * <p>

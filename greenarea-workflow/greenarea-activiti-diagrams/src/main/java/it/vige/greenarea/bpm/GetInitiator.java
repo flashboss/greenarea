@@ -24,11 +24,9 @@ public class GetInitiator implements ExecutionListener {
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		IdentityService identityService = execution.getEngineServices()
-				.getIdentityService();
+		IdentityService identityService = execution.getEngineServices().getIdentityService();
 		String currentUserId = (String) execution.getVariable("currentUserId");
-		User user = identityService.createUserQuery().userId(currentUserId)
-				.singleResult();
+		User user = identityService.createUserQuery().userId(currentUserId).singleResult();
 		execution.setVariableLocal("initiator", user);
 
 	}

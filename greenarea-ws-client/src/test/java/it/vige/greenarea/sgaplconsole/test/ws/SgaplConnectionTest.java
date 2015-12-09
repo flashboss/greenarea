@@ -15,6 +15,12 @@ package it.vige.greenarea.sgaplconsole.test.ws;
 
 import static org.junit.Assert.assertNull;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.slf4j.Logger;
+
 import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService;
 import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService_Service;
 import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager;
@@ -24,11 +30,6 @@ import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
 import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting_Service;
 import it.vige.greenarea.sgrl.webservices.SGRLServiceException_Exception;
 import it.vige.greenarea.sgrl.webservices.SgrlRoute;
-
-import java.util.List;
-
-import org.junit.Test;
-import org.slf4j.Logger;
 
 public class SgaplConnectionTest {
 
@@ -44,22 +45,19 @@ public class SgaplConnectionTest {
 	@Test
 	public void testShippingOrderManagerService() {
 		ShippingOrderManager_Service service = new ShippingOrderManager_Service();
-		ShippingOrderManager shippingOrderManager = service
-				.getShippingOrderManagerPort();
+		ShippingOrderManager shippingOrderManager = service.getShippingOrderManagerPort();
 		shippingOrderManager.getTrackingUrl("44L");
 	}
 
 	@Test
 	public void testLogisticNetworkRoutingService() {
 		LogisticNetworkRouting_Service service = new LogisticNetworkRouting_Service();
-		LogisticNetworkRouting logisticNetworkRouting = service
-				.getLogisticNetworkRoutingPort();
+		LogisticNetworkRouting logisticNetworkRouting = service.getLogisticNetworkRoutingPort();
 		GeoLocation source = new GeoLocation();
 		GeoLocation destination = new GeoLocation();
 		List<SgrlRoute> routes = null;
 		try {
-			routes = logisticNetworkRouting.getSGRLRoutes(source, destination,
-					null);
+			routes = logisticNetworkRouting.getSGRLRoutes(source, destination, null);
 		} catch (SGRLServiceException_Exception e) {
 			logger.error("missioni console", e);
 		}

@@ -15,7 +15,6 @@ package it.vige.greenarea.cl.library.entities;
 
 import static javax.persistence.GenerationType.AUTO;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.Fuel;
 
 import java.io.Serializable;
 
@@ -25,6 +24,8 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.Fuel;
 
 @Entity
 @XmlRootElement
@@ -137,8 +138,7 @@ public class TruckServiceClass implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((makeV == null) ? 0 : makeV.hashCode());
 		result = prime * result + ((modelV == null) ? 0 : modelV.hashCode());
 		return result;
@@ -173,10 +173,9 @@ public class TruckServiceClass implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TruckServiceClass [id=" + id + ", makeV=" + makeV + ", modelV="
-				+ modelV + ", lenghtV=" + lenghtV + ", weightV=" + weightV
-				+ ", emissionV=" + emissionV + ", fuelV=" + fuelV + ", EURO="
-				+ EURO + ", description=" + description + "]";
+		return "TruckServiceClass [id=" + id + ", makeV=" + makeV + ", modelV=" + modelV + ", lenghtV=" + lenghtV
+				+ ", weightV=" + weightV + ", emissionV=" + emissionV + ", fuelV=" + fuelV + ", EURO=" + EURO
+				+ ", description=" + description + "]";
 	}
 
 }

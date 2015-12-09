@@ -44,11 +44,9 @@ public class Application {
 														// package nullo
 				logger.info("Variabile di configurazione di sistema ITSEASYCONFIG non definita");
 				try {
-					url = Application.class.getClassLoader().getResource(
-							"Application.properties");
+					url = Application.class.getClassLoader().getResource("Application.properties");
 				} catch (Exception ex) {
-					logger.error("File Application.properties inesistente in "
-							+ url.getPath(), ex);
+					logger.error("File Application.properties inesistente in " + url.getPath(), ex);
 				}
 
 				if (url != null && !url.getPath().contains("!")) { // se l'ho
@@ -58,8 +56,7 @@ public class Application {
 					path = url.getPath();
 					logger.info("File Application.properties in " + path);
 				} else { // altrimenti provo a cercarlo nella user.dir
-					path = System.getProperty("user.dir")
-							+ "\\Application.properties";
+					path = System.getProperty("user.dir") + "\\Application.properties";
 				}
 			}
 			try {
@@ -72,9 +69,7 @@ public class Application {
 				applicationProperties.load(in);
 				in.close();
 			} catch (Exception ex) {
-				logger.error(
-						" IMPOSSIBILE IDENTIFICARE UN FILE DI CONFIGURAZIONE ITSEASY",
-						ex);
+				logger.error(" IMPOSSIBILE IDENTIFICARE UN FILE DI CONFIGURAZIONE ITSEASY", ex);
 			} finally {
 				try {
 					in.close();

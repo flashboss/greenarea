@@ -102,8 +102,7 @@ public class EditorActions {
 		if (e.getSource() instanceof Component) {
 			Component component = (Component) e.getSource();
 
-			while (component != null
-					&& !(component instanceof BasicGraphEditor)) {
+			while (component != null && !(component instanceof BasicGraphEditor)) {
 				component = component.getParent();
 			}
 
@@ -130,19 +129,16 @@ public class EditorActions {
 				 * 
 				 */
 				public void actionPerformed(ActionEvent e) {
-					mxGraphComponent graphComponent = editor
-							.getGraphComponent();
+					mxGraphComponent graphComponent = editor.getGraphComponent();
 
 					if (graphComponent.getColumnHeader() != null) {
 						graphComponent.setColumnHeader(null);
 						graphComponent.setRowHeader(null);
 					} else {
-						graphComponent.setColumnHeaderView(new EditorRuler(
-								graphComponent,
-								EditorRuler.ORIENTATION_HORIZONTAL));
-						graphComponent.setRowHeaderView(new EditorRuler(
-								graphComponent,
-								EditorRuler.ORIENTATION_VERTICAL));
+						graphComponent.setColumnHeaderView(
+								new EditorRuler(graphComponent, EditorRuler.ORIENTATION_HORIZONTAL));
+						graphComponent
+								.setRowHeaderView(new EditorRuler(graphComponent, EditorRuler.ORIENTATION_VERTICAL));
 					}
 				}
 			});
@@ -166,8 +162,7 @@ public class EditorActions {
 				 * 
 				 */
 				public void actionPerformed(ActionEvent e) {
-					mxGraphComponent graphComponent = editor
-							.getGraphComponent();
+					mxGraphComponent graphComponent = editor.getGraphComponent();
 					mxGraph graph = graphComponent.getGraph();
 					boolean enabled = !graph.isGridEnabled();
 
@@ -210,14 +205,10 @@ public class EditorActions {
 						public void run() {
 							if (outline.getParent() instanceof JSplitPane) {
 								if (outline.isVisible()) {
-									((JSplitPane) outline.getParent())
-											.setDividerLocation(editor
-													.getHeight() - 300);
-									((JSplitPane) outline.getParent())
-											.setDividerSize(6);
+									((JSplitPane) outline.getParent()).setDividerLocation(editor.getHeight() - 300);
+									((JSplitPane) outline.getParent()).setDividerSize(6);
 								} else {
-									((JSplitPane) outline.getParent())
-											.setDividerSize(0);
+									((JSplitPane) outline.getParent()).setDividerSize(0);
 								}
 							}
 						}
@@ -266,16 +257,13 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				mxGraph graph = graphComponent.getGraph();
 				mxCodec codec = new mxCodec();
-				Document doc = mxUtils.loadDocument(EditorActions.class
-						.getResource(stylesheet).toString());
+				Document doc = mxUtils.loadDocument(EditorActions.class.getResource(stylesheet).toString());
 
 				if (doc != null) {
-					codec.decode(doc.getDocumentElement(),
-							graph.getStylesheet());
+					codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 					graph.refresh();
 				}
 			}
@@ -304,8 +292,7 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				graphComponent.setPageVisible(true);
 				graphComponent.setZoomPolicy(zoomPolicy);
 			}
@@ -334,8 +321,7 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				graphComponent.setGridStyle(style);
 				graphComponent.repaint();
 			}
@@ -352,10 +338,8 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
-				Color newColor = JColorChooser.showDialog(graphComponent,
-						mxResources.get("gridColor"),
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+				Color newColor = JColorChooser.showDialog(graphComponent, mxResources.get("gridColor"),
 						graphComponent.getGridColor());
 
 				if (newColor != null) {
@@ -388,15 +372,12 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				double scale = this.scale;
 
 				if (scale == 0) {
-					String value = (String) JOptionPane.showInputDialog(
-							graphComponent, mxResources.get("value"),
-							mxResources.get("scale") + " (%)",
-							JOptionPane.PLAIN_MESSAGE, null, null, "");
+					String value = (String) JOptionPane.showInputDialog(graphComponent, mxResources.get("value"),
+							mxResources.get("scale") + " (%)", JOptionPane.PLAIN_MESSAGE, null, null, "");
 
 					if (value != null) {
 						scale = Double.parseDouble(value.replace("%", "")) / 100;
@@ -420,11 +401,9 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				PrinterJob pj = PrinterJob.getPrinterJob();
-				PageFormat format = pj.pageDialog(graphComponent
-						.getPageFormat());
+				PageFormat format = pj.pageDialog(graphComponent.getPageFormat());
 
 				if (format != null) {
 					graphComponent.setPageFormat(format);
@@ -447,16 +426,15 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				PrinterJob pj = PrinterJob.getPrinterJob();
 
 				if (pj.printDialog()) {
 					PageFormat pf = graphComponent.getPageFormat();
 					Paper paper = new Paper();
 					double margin = 36;
-					paper.setImageableArea(margin, margin, paper.getWidth()
-							- margin * 2, paper.getHeight() - margin * 2);
+					paper.setImageableArea(margin, margin, paper.getWidth() - margin * 2,
+							paper.getHeight() - margin * 2);
 					pf.setPaper(paper);
 					pj.setPrintable(graphComponent, pf);
 
@@ -495,30 +473,24 @@ public class EditorActions {
 		/**
 		 * Saves XML+PNG format.
 		 */
-		protected void saveXmlPng(BasicGraphEditor editor, String filename,
-				Color bg) throws IOException {
+		protected void saveXmlPng(BasicGraphEditor editor, String filename, Color bg) throws IOException {
 			mxGraphComponent graphComponent = editor.getGraphComponent();
 			mxGraph graph = graphComponent.getGraph();
 
 			// Creates the image for the PNG file
-			BufferedImage image = mxCellRenderer.createBufferedImage(graph,
-					null, 1, bg, graphComponent.isAntiAlias(), null,
-					graphComponent.getCanvas());
+			BufferedImage image = mxCellRenderer.createBufferedImage(graph, null, 1, bg, graphComponent.isAntiAlias(),
+					null, graphComponent.getCanvas());
 
 			// Creates the URL-encoded XML data
 			mxCodec codec = new mxCodec();
-			String xml = URLEncoder.encode(
-					mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
-			mxPngEncodeParam param = mxPngEncodeParam
-					.getDefaultEncodeParam(image);
+			String xml = URLEncoder.encode(mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
+			mxPngEncodeParam param = mxPngEncodeParam.getDefaultEncodeParam(image);
 			param.setCompressedText(new String[] { "mxGraphModel", xml });
 
 			// Saves as a PNG file
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					filename));
+			FileOutputStream outputStream = new FileOutputStream(new File(filename));
 			try {
-				mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream,
-						param);
+				mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream, param);
 
 				if (image != null) {
 					encoder.encode(image);
@@ -526,8 +498,7 @@ public class EditorActions {
 					editor.setModified(false);
 					editor.setCurrentFile(new File(filename));
 				} else {
-					JOptionPane.showMessageDialog(graphComponent,
-							mxResources.get("noImageData"));
+					JOptionPane.showMessageDialog(graphComponent, mxResources.get("noImageData"));
 				}
 			} finally {
 				outputStream.close();
@@ -569,17 +540,15 @@ public class EditorActions {
 					fc.addChoosableFileFilter(defaultFilter);
 
 					// Adds special vector graphics formats and HTML
-					fc.addChoosableFileFilter(new DefaultFileFilter(".mxe",
-							"mxGraph Editor " + mxResources.get("file")
-									+ " (.mxe)"));
-					fc.addChoosableFileFilter(new DefaultFileFilter(".txt",
-							"Graph Drawing " + mxResources.get("file")
-									+ " (.txt)"));
-					fc.addChoosableFileFilter(new DefaultFileFilter(".svg",
-							"SVG " + mxResources.get("file") + " (.svg)"));
+					fc.addChoosableFileFilter(
+							new DefaultFileFilter(".mxe", "mxGraph Editor " + mxResources.get("file") + " (.mxe)"));
+					fc.addChoosableFileFilter(
+							new DefaultFileFilter(".txt", "Graph Drawing " + mxResources.get("file") + " (.txt)"));
+					fc.addChoosableFileFilter(
+							new DefaultFileFilter(".svg", "SVG " + mxResources.get("file") + " (.svg)"));
 					fc.addChoosableFileFilter(vmlFileFilter);
-					fc.addChoosableFileFilter(new DefaultFileFilter(".html",
-							"HTML " + mxResources.get("file") + " (.html)"));
+					fc.addChoosableFileFilter(
+							new DefaultFileFilter(".html", "HTML " + mxResources.get("file") + " (.html)"));
 
 					// Adds a filter for each supported image format
 					Object[] imageFormats = ImageIO.getReaderFormatNames();
@@ -596,14 +565,12 @@ public class EditorActions {
 
 					for (int i = 0; i < imageFormats.length; i++) {
 						String ext = imageFormats[i].toString();
-						fc.addChoosableFileFilter(new DefaultFileFilter("."
-								+ ext, ext.toUpperCase() + " "
-								+ mxResources.get("file") + " (." + ext + ")"));
+						fc.addChoosableFileFilter(new DefaultFileFilter("." + ext,
+								ext.toUpperCase() + " " + mxResources.get("file") + " (." + ext + ")"));
 					}
 
 					// Adds filter that accepts all supported image formats
-					fc.addChoosableFileFilter(new DefaultFileFilter.ImageFileFilter(
-							mxResources.get("allImages")));
+					fc.addChoosableFileFilter(new DefaultFileFilter.ImageFileFilter(mxResources.get("allImages")));
 					fc.setFileFilter(defaultFilter);
 					int rc = fc.showDialog(null, mxResources.get("save"));
 					dialogShown = true;
@@ -618,17 +585,15 @@ public class EditorActions {
 					selectedFilter = fc.getFileFilter();
 
 					if (selectedFilter instanceof DefaultFileFilter) {
-						String ext = ((DefaultFileFilter) selectedFilter)
-								.getExtension();
+						String ext = ((DefaultFileFilter) selectedFilter).getExtension();
 
 						if (!filename.toLowerCase().endsWith(ext)) {
 							filename += ext;
 						}
 					}
 
-					if (new File(filename).exists()
-							&& JOptionPane.showConfirmDialog(graphComponent,
-									mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
+					if (new File(filename).exists() && JOptionPane.showConfirmDialog(graphComponent,
+							mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
 						return;
 					}
 				} else {
@@ -636,86 +601,68 @@ public class EditorActions {
 				}
 
 				try {
-					String ext = filename
-							.substring(filename.lastIndexOf('.') + 1);
+					String ext = filename.substring(filename.lastIndexOf('.') + 1);
 
 					if (ext.equalsIgnoreCase("svg")) {
-						mxSvgCanvas canvas = (mxSvgCanvas) mxCellRenderer
-								.drawCells(graph, null, 1, null,
-										new CanvasFactory() {
-											public mxICanvas createCanvas(
-													int width, int height) {
-												mxSvgCanvas canvas = new mxSvgCanvas(
-														mxDomUtils
-																.createSvgDocument(
-																		width,
-																		height));
-												canvas.setEmbedded(true);
+						mxSvgCanvas canvas = (mxSvgCanvas) mxCellRenderer.drawCells(graph, null, 1, null,
+								new CanvasFactory() {
+									public mxICanvas createCanvas(int width, int height) {
+										mxSvgCanvas canvas = new mxSvgCanvas(
+												mxDomUtils.createSvgDocument(width, height));
+										canvas.setEmbedded(true);
 
-												return canvas;
-											}
+										return canvas;
+									}
 
-										});
+								});
 
-						mxUtils.writeFile(
-								mxXmlUtils.getXml(canvas.getDocument()),
-								filename);
+						mxUtils.writeFile(mxXmlUtils.getXml(canvas.getDocument()), filename);
 					} else if (selectedFilter == vmlFileFilter) {
-						mxUtils.writeFile(mxXmlUtils.getXml(mxCellRenderer
-								.createVmlDocument(graph, null, 1, null, null)
-								.getDocumentElement()), filename);
+						mxUtils.writeFile(mxXmlUtils.getXml(
+								mxCellRenderer.createVmlDocument(graph, null, 1, null, null).getDocumentElement()),
+								filename);
 					} else if (ext.equalsIgnoreCase("html")) {
-						mxUtils.writeFile(mxXmlUtils.getXml(mxCellRenderer
-								.createHtmlDocument(graph, null, 1, null, null)
-								.getDocumentElement()), filename);
-					} else if (ext.equalsIgnoreCase("mxe")
-							|| ext.equalsIgnoreCase("xml")) {
+						mxUtils.writeFile(mxXmlUtils.getXml(
+								mxCellRenderer.createHtmlDocument(graph, null, 1, null, null).getDocumentElement()),
+								filename);
+					} else if (ext.equalsIgnoreCase("mxe") || ext.equalsIgnoreCase("xml")) {
 						mxCodec codec = new mxCodec();
-						String xml = mxXmlUtils.getXml(codec.encode(graph
-								.getModel()));
+						String xml = mxXmlUtils.getXml(codec.encode(graph.getModel()));
 
 						mxUtils.writeFile(xml, filename);
 
 						editor.setModified(false);
 						editor.setCurrentFile(new File(filename));
 					} else if (ext.equalsIgnoreCase("txt")) {
-						String content = mxGdCodec.encode(graph)
-								.getDocumentString();
+						String content = mxGdCodec.encode(graph).getDocumentString();
 
 						mxUtils.writeFile(content, filename);
 					} else {
 						Color bg = null;
 
-						if ((!ext.equalsIgnoreCase("gif") && !ext
-								.equalsIgnoreCase("png"))
-								|| JOptionPane.showConfirmDialog(
-										graphComponent, mxResources
-												.get("transparentBackground")) != JOptionPane.YES_OPTION) {
+						if ((!ext.equalsIgnoreCase("gif") && !ext.equalsIgnoreCase("png"))
+								|| JOptionPane.showConfirmDialog(graphComponent,
+										mxResources.get("transparentBackground")) != JOptionPane.YES_OPTION) {
 							bg = graphComponent.getBackground();
 						}
 
 						if (selectedFilter == xmlPngFilter
-								|| (editor.getCurrentFile() != null
-										&& ext.equalsIgnoreCase("png") && !dialogShown)) {
+								|| (editor.getCurrentFile() != null && ext.equalsIgnoreCase("png") && !dialogShown)) {
 							saveXmlPng(editor, filename, bg);
 						} else {
-							BufferedImage image = mxCellRenderer
-									.createBufferedImage(graph, null, 1, bg,
-											graphComponent.isAntiAlias(), null,
-											graphComponent.getCanvas());
+							BufferedImage image = mxCellRenderer.createBufferedImage(graph, null, 1, bg,
+									graphComponent.isAntiAlias(), null, graphComponent.getCanvas());
 
 							if (image != null) {
 								ImageIO.write(image, ext, new File(filename));
 							} else {
-								JOptionPane.showMessageDialog(graphComponent,
-										mxResources.get("noImageData"));
+								JOptionPane.showMessageDialog(graphComponent, mxResources.get("noImageData"));
 							}
 						}
 					}
 				} catch (Throwable ex) {
 					logger.error("logistic editor", ex);
-					JOptionPane.showMessageDialog(graphComponent,
-							ex.toString(), mxResources.get("error"),
+					JOptionPane.showMessageDialog(graphComponent, ex.toString(), mxResources.get("error"),
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
@@ -744,8 +691,7 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				mxGraph graph = graphComponent.getGraph();
 				mxIGraphModel model = graph.getModel();
 
@@ -770,14 +716,11 @@ public class EditorActions {
 
 				if (source != null && target != null) {
 					int steps = graph.getChildEdges(graph.getDefaultParent()).length;
-					Object[] path = mxGraphAnalysis.getInstance()
-							.getShortestPath(graph, source, target,
-									new mxDistanceCostFunction(), steps,
-									directed);
+					Object[] path = mxGraphAnalysis.getInstance().getShortestPath(graph, source, target,
+							new mxDistanceCostFunction(), steps, directed);
 					graph.setSelectionCells(path);
 				} else {
-					JOptionPane.showMessageDialog(graphComponent,
-							mxResources.get("noSourceAndTargetSelected"));
+					JOptionPane.showMessageDialog(graphComponent, mxResources.get("noSourceAndTargetSelected"));
 				}
 			}
 		}
@@ -805,8 +748,7 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				mxGraph graph = graphComponent.getGraph();
 				mxIGraphModel model = graph.getModel();
 
@@ -821,9 +763,8 @@ public class EditorActions {
 				}
 
 				Object[] v = graph.getChildVertices(parent);
-				Object[] mst = mxGraphAnalysis.getInstance()
-						.getMinimumSpanningTree(graph, v,
-								new mxDistanceCostFunction(), directed);
+				Object[] mst = mxGraphAnalysis.getInstance().getMinimumSpanningTree(graph, v,
+						new mxDistanceCostFunction(), directed);
 				graph.setSelectionCells(mst);
 			}
 		}
@@ -839,8 +780,7 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				graphComponent.showDirtyRectangle = !graphComponent.showDirtyRectangle;
 			}
 		}
@@ -857,10 +797,8 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
-				mxConnectionHandler handler = graphComponent
-						.getConnectionHandler();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+				mxConnectionHandler handler = graphComponent.getConnectionHandler();
 				handler.setHandleEnabled(!handler.isHandleEnabled());
 			}
 		}
@@ -883,12 +821,10 @@ public class EditorActions {
 				 * 
 				 */
 				public void actionPerformed(ActionEvent e) {
-					mxGraphComponent graphComponent = editor
-							.getGraphComponent();
+					mxGraphComponent graphComponent = editor.getGraphComponent();
 
 					if (graphComponent != null) {
-						mxConnectionHandler handler = graphComponent
-								.getConnectionHandler();
+						mxConnectionHandler handler = graphComponent.getConnectionHandler();
 						handler.setCreateTarget(!handler.isCreateTarget());
 						setSelected(handler.isCreateTarget());
 					}
@@ -922,8 +858,7 @@ public class EditorActions {
 		/**
 		 * 
 		 */
-		public PromptPropertyAction(Object target, String message,
-				String fieldname) {
+		public PromptPropertyAction(Object target, String message, String fieldname) {
 			this.target = target;
 			this.message = message;
 			this.fieldname = fieldname;
@@ -935,17 +870,14 @@ public class EditorActions {
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof Component) {
 				try {
-					Method getter = target.getClass().getMethod(
-							"get" + fieldname);
+					Method getter = target.getClass().getMethod("get" + fieldname);
 					Object current = getter.invoke(target);
 
 					// TODO: Support other atomic types
 					if (current instanceof Integer) {
-						Method setter = target.getClass().getMethod(
-								"set" + fieldname, new Class[] { int.class });
+						Method setter = target.getClass().getMethod("set" + fieldname, new Class[] { int.class });
 
-						String value = (String) JOptionPane.showInputDialog(
-								(Component) e.getSource(), "Value", message,
+						String value = (String) JOptionPane.showInputDialog((Component) e.getSource(), "Value", message,
 								JOptionPane.PLAIN_MESSAGE, null, null, current);
 
 						if (value != null) {
@@ -959,8 +891,7 @@ public class EditorActions {
 
 			// Repaints the graph component
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				graphComponent.repaint();
 			}
 		}
@@ -981,16 +912,14 @@ public class EditorActions {
 		/**
 		 * 
 		 */
-		public TogglePropertyItem(Object target, String name, String fieldname,
-				boolean refresh) {
+		public TogglePropertyItem(Object target, String name, String fieldname, boolean refresh) {
 			this(target, name, fieldname, refresh, null);
 		}
 
 		/**
 		 * 
 		 */
-		public TogglePropertyItem(final Object target, String name,
-				final String fieldname, final boolean refresh,
+		public TogglePropertyItem(final Object target, String name, final String fieldname, final boolean refresh,
 				ActionListener listener) {
 			super(name);
 
@@ -1028,11 +957,9 @@ public class EditorActions {
 			};
 
 			if (target instanceof mxGraphComponent) {
-				((mxGraphComponent) target)
-						.addPropertyChangeListener(propertyChangeListener);
+				((mxGraphComponent) target).addPropertyChangeListener(propertyChangeListener);
 			} else if (target instanceof mxGraph) {
-				((mxGraph) target)
-						.addPropertyChangeListener(propertyChangeListener);
+				((mxGraph) target).addPropertyChangeListener(propertyChangeListener);
 			}
 
 			update(target, fieldname);
@@ -1044,8 +971,7 @@ public class EditorActions {
 		public void update(Object target, String fieldname) {
 			if (target != null && fieldname != null) {
 				try {
-					Method getter = target.getClass().getMethod(
-							"is" + fieldname);
+					Method getter = target.getClass().getMethod("is" + fieldname);
 
 					if (getter != null) {
 						Object current = getter.invoke(target);
@@ -1066,10 +992,8 @@ public class EditorActions {
 		public void execute(Object target, String fieldname, boolean refresh) {
 			if (target != null && fieldname != null) {
 				try {
-					Method getter = target.getClass().getMethod(
-							"is" + fieldname);
-					Method setter = target.getClass().getMethod(
-							"set" + fieldname, new Class[] { boolean.class });
+					Method getter = target.getClass().getMethod("is" + fieldname);
+					Method setter = target.getClass().getMethod("set" + fieldname, new Class[] { boolean.class });
 
 					Object current = getter.invoke(target);
 
@@ -1152,13 +1076,11 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				Component editorComponent = null;
 
 				if (graphComponent.getCellEditor() instanceof mxCellEditor) {
-					editorComponent = ((mxCellEditor) graphComponent
-							.getCellEditor()).getEditor();
+					editorComponent = ((mxCellEditor) graphComponent.getCellEditor()).getEditor();
 				}
 
 				if (editorComponent instanceof JEditorPane) {
@@ -1173,12 +1095,11 @@ public class EditorActions {
 
 					try {
 						HTMLEditorKit editorKit = new HTMLEditorKit();
-						HTMLDocument document = (HTMLDocument) editorPane
-								.getDocument();
+						HTMLDocument document = (HTMLDocument) editorPane.getDocument();
 						document.remove(start, (ende - start));
-						editorKit.insertHTML(document, start, ((bold) ? "<b>"
-								: "<i>") + text + ((bold) ? "</b>" : "</i>"),
-								0, 0, (bold) ? HTML.Tag.B : HTML.Tag.I);
+						editorKit.insertHTML(document, start,
+								((bold) ? "<b>" : "<i>") + text + ((bold) ? "</b>" : "</i>"), 0, 0,
+								(bold) ? HTML.Tag.B : HTML.Tag.I);
 					} catch (Exception ex) {
 						logger.error("logistic editor", ex);
 					}
@@ -1190,10 +1111,8 @@ public class EditorActions {
 					model.beginUpdate();
 					try {
 						graphComponent.stopEditing(false);
-						graphComponent.getGraph().toggleCellStyleFlags(
-								mxConstants.STYLE_FONTSTYLE,
-								(bold) ? mxConstants.FONT_BOLD
-										: mxConstants.FONT_ITALIC);
+						graphComponent.getGraph().toggleCellStyleFlags(mxConstants.STYLE_FONTSTYLE,
+								(bold) ? mxConstants.FONT_BOLD : mxConstants.FONT_ITALIC);
 					} finally {
 						model.endUpdate();
 					}
@@ -1212,20 +1131,17 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				Object[] cells = graphComponent.getGraph().getSelectionCells();
 
 				if (cells != null && cells.length > 0) {
-					String warning = JOptionPane.showInputDialog(mxResources
-							.get("enterWarningMessage"));
+					String warning = JOptionPane.showInputDialog(mxResources.get("enterWarningMessage"));
 
 					for (int i = 0; i < cells.length; i++) {
 						graphComponent.setCellWarning(cells[i], warning);
 					}
 				} else {
-					JOptionPane.showMessageDialog(graphComponent,
-							mxResources.get("noCellSelected"));
+					JOptionPane.showMessageDialog(graphComponent, mxResources.get("noCellSelected"));
 				}
 			}
 		}
@@ -1243,9 +1159,8 @@ public class EditorActions {
 			BasicGraphEditor editor = getEditor(e);
 
 			if (editor != null) {
-				if (!editor.isModified()
-						|| JOptionPane.showConfirmDialog(editor,
-								mxResources.get("loseChanges")) == JOptionPane.YES_OPTION) {
+				if (!editor.isModified() || JOptionPane.showConfirmDialog(editor,
+						mxResources.get("loseChanges")) == JOptionPane.YES_OPTION) {
 					mxGraph graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
@@ -1283,8 +1198,7 @@ public class EditorActions {
 		 *            The path to the directory the shape exists in
 		 * @return the string name of the shape
 		 */
-		public static String addStencilShape(EditorPalette palette,
-				String nodeXml, String path) {
+		public static String addStencilShape(EditorPalette palette, String nodeXml, String path) {
 
 			// Some editors place a 3 byte BOM at the start of files
 			// Ensure the first char is a "<"
@@ -1316,16 +1230,15 @@ public class EditorActions {
 			BasicGraphEditor editor = getEditor(e);
 
 			if (editor != null) {
-				String wd = (lastDir != null) ? lastDir : System
-						.getProperty("user.dir");
+				String wd = (lastDir != null) ? lastDir : System.getProperty("user.dir");
 
 				JFileChooser fc = new JFileChooser(wd);
 
 				fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
 				// Adds file filter for Dia shape import
-				fc.addChoosableFileFilter(new DefaultFileFilter(".shape",
-						"Dia Shape " + mxResources.get("file") + " (.shape)"));
+				fc.addChoosableFileFilter(
+						new DefaultFileFilter(".shape", "Dia Shape " + mxResources.get("file") + " (.shape)"));
 
 				int rc = fc.showDialog(null, mxResources.get("importStencil"));
 
@@ -1334,27 +1247,19 @@ public class EditorActions {
 
 					try {
 						if (fc.getSelectedFile().isDirectory()) {
-							EditorPalette palette = editor.insertPalette(fc
-									.getSelectedFile().getName());
+							EditorPalette palette = editor.insertPalette(fc.getSelectedFile().getName());
 
-							for (File f : fc.getSelectedFile().listFiles(
-									new FilenameFilter() {
-										public boolean accept(File dir,
-												String name) {
-											return name.toLowerCase().endsWith(
-													".shape");
-										}
-									})) {
-								String nodeXml = mxUtils.readFile(f
-										.getAbsolutePath());
-								addStencilShape(palette, nodeXml, f.getParent()
-										+ File.separator);
+							for (File f : fc.getSelectedFile().listFiles(new FilenameFilter() {
+								public boolean accept(File dir, String name) {
+									return name.toLowerCase().endsWith(".shape");
+								}
+							})) {
+								String nodeXml = mxUtils.readFile(f.getAbsolutePath());
+								addStencilShape(palette, nodeXml, f.getParent() + File.separator);
 							}
 
-							JComponent scrollPane = (JComponent) palette
-									.getParent().getParent();
-							editor.getLibraryPane().setSelectedComponent(
-									scrollPane);
+							JComponent scrollPane = (JComponent) palette.getParent().getParent();
+							editor.getLibraryPane().setSelectedComponent(scrollPane);
 
 							// FIXME: Need to update the size of the palette to
 							// force a layout
@@ -1362,13 +1267,11 @@ public class EditorActions {
 							// not work.
 							// editor.getLibraryPane().revalidate();
 						} else {
-							String nodeXml = mxUtils.readFile(fc
-									.getSelectedFile().getAbsolutePath());
+							String nodeXml = mxUtils.readFile(fc.getSelectedFile().getAbsolutePath());
 							String name = addStencilShape(null, nodeXml, null);
 
-							JOptionPane.showMessageDialog(editor, mxResources
-									.get("stencilImported",
-											new String[] { name }));
+							JOptionPane.showMessageDialog(editor,
+									mxResources.get("stencilImported", new String[] { name }));
 						}
 					} catch (IOException e1) {
 						logger.error("logistic editor", e1);
@@ -1400,20 +1303,16 @@ public class EditorActions {
 		/**
 		 * Reads XML+PNG format.
 		 */
-		protected void openXmlPng(BasicGraphEditor editor, File file)
-				throws IOException {
-			Map<String, String> text = mxPngTextDecoder
-					.decodeCompressedText(new FileInputStream(file));
+		protected void openXmlPng(BasicGraphEditor editor, File file) throws IOException {
+			Map<String, String> text = mxPngTextDecoder.decodeCompressedText(new FileInputStream(file));
 
 			if (text != null) {
 				String value = text.get("mxGraphModel");
 
 				if (value != null) {
-					Document document = mxXmlUtils.parseXml(URLDecoder.decode(
-							value, "UTF-8"));
+					Document document = mxXmlUtils.parseXml(URLDecoder.decode(value, "UTF-8"));
 					mxCodec codec = new mxCodec(document);
-					codec.decode(document.getDocumentElement(), editor
-							.getGraphComponent().getGraph().getModel());
+					codec.decode(document.getDocumentElement(), editor.getGraphComponent().getGraph().getModel());
 					editor.setCurrentFile(file);
 					resetEditor(editor);
 
@@ -1421,25 +1320,22 @@ public class EditorActions {
 				}
 			}
 
-			JOptionPane.showMessageDialog(editor,
-					mxResources.get("imageContainsNoDiagramData"));
+			JOptionPane.showMessageDialog(editor, mxResources.get("imageContainsNoDiagramData"));
 		}
 
 		/**
 		 * @throws IOException
 		 * 
 		 */
-		protected void openVdx(BasicGraphEditor editor, File file,
-				Document document) {
+		protected void openVdx(BasicGraphEditor editor, File file, Document document) {
 			mxGraph graph = editor.getGraphComponent().getGraph();
 
 			// Replaces file extension with .mxe
 			String filename = file.getName();
 			filename = filename.substring(0, filename.length() - 4) + ".mxe";
 
-			if (new File(filename).exists()
-					&& JOptionPane.showConfirmDialog(editor,
-							mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
+			if (new File(filename).exists() && JOptionPane.showConfirmDialog(editor,
+					mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
 				return;
 			}
 
@@ -1454,17 +1350,15 @@ public class EditorActions {
 		 * @throws IOException
 		 * 
 		 */
-		protected void openGD(BasicGraphEditor editor, File file,
-				mxGdDocument document) {
+		protected void openGD(BasicGraphEditor editor, File file, mxGdDocument document) {
 			mxGraph graph = editor.getGraphComponent().getGraph();
 
 			// Replaces file extension with .mxe
 			String filename = file.getName();
 			filename = filename.substring(0, filename.length() - 4) + ".mxe";
 
-			if (new File(filename).exists()
-					&& JOptionPane.showConfirmDialog(editor,
-							mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
+			if (new File(filename).exists() && JOptionPane.showConfirmDialog(editor,
+					mxResources.get("overwriteExistingFile")) != JOptionPane.YES_OPTION) {
 				return;
 			}
 
@@ -1481,98 +1375,72 @@ public class EditorActions {
 			BasicGraphEditor editor = getEditor(e);
 
 			if (editor != null) {
-				if (!editor.isModified()
-						|| JOptionPane.showConfirmDialog(editor,
-								mxResources.get("loseChanges")) == JOptionPane.YES_OPTION) {
+				if (!editor.isModified() || JOptionPane.showConfirmDialog(editor,
+						mxResources.get("loseChanges")) == JOptionPane.YES_OPTION) {
 					mxGraph graph = editor.getGraphComponent().getGraph();
 
 					if (graph != null) {
-						String wd = (lastDir != null) ? lastDir : System
-								.getProperty("user.dir");
+						String wd = (lastDir != null) ? lastDir : System.getProperty("user.dir");
 
 						JFileChooser fc = new JFileChooser(wd);
 
 						// Adds file filter for supported file format
-						DefaultFileFilter defaultFilter = new DefaultFileFilter(
-								".mxe", mxResources.get("allSupportedFormats")
-										+ " (.mxe, .png, .vdx)") {
+						DefaultFileFilter defaultFilter = new DefaultFileFilter(".mxe",
+								mxResources.get("allSupportedFormats") + " (.mxe, .png, .vdx)") {
 
 							public boolean accept(File file) {
 								String lcase = file.getName().toLowerCase();
 
-								return super.accept(file)
-										|| lcase.endsWith(".png")
-										|| lcase.endsWith(".vdx");
+								return super.accept(file) || lcase.endsWith(".png") || lcase.endsWith(".vdx");
 							}
 						};
 						fc.addChoosableFileFilter(defaultFilter);
 
-						fc.addChoosableFileFilter(new DefaultFileFilter(".mxe",
-								"mxGraph Editor " + mxResources.get("file")
-										+ " (.mxe)"));
-						fc.addChoosableFileFilter(new DefaultFileFilter(".png",
-								"PNG+XML  " + mxResources.get("file")
-										+ " (.png)"));
+						fc.addChoosableFileFilter(
+								new DefaultFileFilter(".mxe", "mxGraph Editor " + mxResources.get("file") + " (.mxe)"));
+						fc.addChoosableFileFilter(
+								new DefaultFileFilter(".png", "PNG+XML  " + mxResources.get("file") + " (.png)"));
 
 						// Adds file filter for VDX import
-						fc.addChoosableFileFilter(new DefaultFileFilter(".vdx",
-								"XML Drawing  " + mxResources.get("file")
-										+ " (.vdx)"));
+						fc.addChoosableFileFilter(
+								new DefaultFileFilter(".vdx", "XML Drawing  " + mxResources.get("file") + " (.vdx)"));
 
 						// Adds file filter for GD import
-						fc.addChoosableFileFilter(new DefaultFileFilter(".txt",
-								"Graph Drawing  " + mxResources.get("file")
-										+ " (.txt)"));
+						fc.addChoosableFileFilter(
+								new DefaultFileFilter(".txt", "Graph Drawing  " + mxResources.get("file") + " (.txt)"));
 
 						fc.setFileFilter(defaultFilter);
 
-						int rc = fc.showDialog(null,
-								mxResources.get("openFile"));
+						int rc = fc.showDialog(null, mxResources.get("openFile"));
 
 						if (rc == JFileChooser.APPROVE_OPTION) {
 							lastDir = fc.getSelectedFile().getParent();
 
 							try {
-								if (fc.getSelectedFile().getAbsolutePath()
-										.toLowerCase().endsWith(".png")) {
+								if (fc.getSelectedFile().getAbsolutePath().toLowerCase().endsWith(".png")) {
 									openXmlPng(editor, fc.getSelectedFile());
-								} else if (fc.getSelectedFile()
-										.getAbsolutePath().toLowerCase()
-										.endsWith(".txt")) {
+								} else if (fc.getSelectedFile().getAbsolutePath().toLowerCase().endsWith(".txt")) {
 									mxGdDocument document = new mxGdDocument();
-									document.parse(mxUtils.readFile(fc
-											.getSelectedFile()
-											.getAbsolutePath()));
-									openGD(editor, fc.getSelectedFile(),
-											document);
+									document.parse(mxUtils.readFile(fc.getSelectedFile().getAbsolutePath()));
+									openGD(editor, fc.getSelectedFile(), document);
 								} else {
 									Document document = mxXmlUtils
-											.parseXml(mxUtils.readFile(fc
-													.getSelectedFile()
-													.getAbsolutePath()));
+											.parseXml(mxUtils.readFile(fc.getSelectedFile().getAbsolutePath()));
 
-									if (fc.getSelectedFile().getAbsolutePath()
-											.toLowerCase().endsWith(".vdx")) {
-										openVdx(editor, fc.getSelectedFile(),
-												document);
+									if (fc.getSelectedFile().getAbsolutePath().toLowerCase().endsWith(".vdx")) {
+										openVdx(editor, fc.getSelectedFile(), document);
 									} else {
 										mxCodec codec = new mxCodec(document);
-										codec.decode(
-												document.getDocumentElement(),
-												graph.getModel());
-										editor.setCurrentFile(fc
-												.getSelectedFile());
+										codec.decode(document.getDocumentElement(), graph.getModel());
+										editor.setCurrentFile(fc.getSelectedFile());
 									}
 
 									resetEditor(editor);
 								}
 							} catch (IOException ex) {
 								logger.error("logistic editor", ex);
-								JOptionPane.showMessageDialog(
-										editor.getGraphComponent(),
-										ex.toString(),
-										mxResources.get("error"),
-										JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(editor.getGraphComponent(), ex.toString(),
+										mxResources.get("error"), JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}
@@ -1655,18 +1523,13 @@ public class EditorActions {
 				try {
 					// Checks the orientation of the alignment to use the
 					// correct constants
-					if (labelPosition.equals(mxConstants.ALIGN_LEFT)
-							|| labelPosition.equals(mxConstants.ALIGN_CENTER)
+					if (labelPosition.equals(mxConstants.ALIGN_LEFT) || labelPosition.equals(mxConstants.ALIGN_CENTER)
 							|| labelPosition.equals(mxConstants.ALIGN_RIGHT)) {
-						graph.setCellStyles(mxConstants.STYLE_LABEL_POSITION,
-								labelPosition);
+						graph.setCellStyles(mxConstants.STYLE_LABEL_POSITION, labelPosition);
 						graph.setCellStyles(mxConstants.STYLE_ALIGN, alignment);
 					} else {
-						graph.setCellStyles(
-								mxConstants.STYLE_VERTICAL_LABEL_POSITION,
-								labelPosition);
-						graph.setCellStyles(mxConstants.STYLE_VERTICAL_ALIGN,
-								alignment);
+						graph.setCellStyles(mxConstants.STYLE_VERTICAL_LABEL_POSITION, labelPosition);
+						graph.setCellStyles(mxConstants.STYLE_VERTICAL_ALIGN, alignment);
 					}
 				} finally {
 					graph.getModel().endUpdate();
@@ -1771,10 +1634,8 @@ public class EditorActions {
 				mxGraph graph = mxGraphActions.getGraph(e);
 
 				if (graph != null && !graph.isSelectionEmpty()) {
-					String value = (String) JOptionPane.showInputDialog(
-							(Component) e.getSource(),
-							mxResources.get("value"), message,
-							JOptionPane.PLAIN_MESSAGE, null, null, "");
+					String value = (String) JOptionPane.showInputDialog((Component) e.getSource(),
+							mxResources.get("value"), message, JOptionPane.PLAIN_MESSAGE, null, null, "");
 
 					if (value != null) {
 						if (value.equals(mxConstants.NONE)) {
@@ -1869,13 +1730,11 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				mxGraph graph = graphComponent.getGraph();
 
 				if (!graph.isSelectionEmpty()) {
-					Color newColor = JColorChooser.showDialog(graphComponent,
-							name, null);
+					Color newColor = JColorChooser.showDialog(graphComponent, name, null);
 
 					if (newColor != null) {
 						graph.setCellStyles(key, mxUtils.hexString(newColor));
@@ -1895,10 +1754,8 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
-				String value = (String) JOptionPane.showInputDialog(
-						graphComponent, mxResources.get("backgroundImage"),
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+				String value = (String) JOptionPane.showInputDialog(graphComponent, mxResources.get("backgroundImage"),
 						"URL", JOptionPane.PLAIN_MESSAGE, null, null,
 						"http://www.callatecs.com/images/background2.JPG");
 
@@ -1910,8 +1767,7 @@ public class EditorActions {
 						// Incorrect URLs will result in no image.
 						// TODO provide feedback that the URL is not correct
 						if (background != null) {
-							graphComponent.setBackgroundImage(new ImageIcon(
-									background));
+							graphComponent.setBackgroundImage(new ImageIcon(background));
 						}
 					}
 
@@ -1932,10 +1788,8 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
-				Color newColor = JColorChooser.showDialog(graphComponent,
-						mxResources.get("background"), null);
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+				Color newColor = JColorChooser.showDialog(graphComponent, mxResources.get("background"), null);
 
 				if (newColor != null) {
 					graphComponent.getViewport().setOpaque(true);
@@ -1958,10 +1812,8 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
-				Color newColor = JColorChooser.showDialog(graphComponent,
-						mxResources.get("pageBackground"), null);
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
+				Color newColor = JColorChooser.showDialog(graphComponent, mxResources.get("pageBackground"), null);
 
 				if (newColor != null) {
 					graphComponent.setPageBackgroundColor(newColor);
@@ -1983,15 +1835,11 @@ public class EditorActions {
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() instanceof mxGraphComponent) {
-				mxGraphComponent graphComponent = (mxGraphComponent) e
-						.getSource();
+				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
 				mxGraph graph = graphComponent.getGraph();
-				String initial = graph.getModel().getStyle(
-						graph.getSelectionCell());
-				String value = (String) JOptionPane.showInputDialog(
-						graphComponent, mxResources.get("style"),
-						mxResources.get("style"), JOptionPane.PLAIN_MESSAGE,
-						null, null, initial);
+				String initial = graph.getModel().getStyle(graph.getSelectionCell());
+				String value = (String) JOptionPane.showInputDialog(graphComponent, mxResources.get("style"),
+						mxResources.get("style"), JOptionPane.PLAIN_MESSAGE, null, null, initial);
 
 				if (value != null) {
 					graph.setCellStyle(value);

@@ -39,8 +39,7 @@ public class XML2POJO {
 	 * 
 	 * Metodo che controlla le credenziali dell'utente e ritorna il suo ruolo
 	 */
-	public static void store(Collection<Object> pojos, String filename)
-			throws FileNotFoundException, IOException {
+	public static void store(Collection<Object> pojos, String filename) throws FileNotFoundException, IOException {
 		// Create file output stream.
 		XMLEncoder ostream = null;
 		File file = new File(filename);
@@ -55,7 +54,9 @@ public class XML2POJO {
 		fstream.close();
 	}
 
-	/* ****************************************************************************
+	/*
+	 * *************************************************************************
+	 * ***
 	 * 
 	 * ATTENZIONE: Nel caso si verifichi in fase di "load" l'exception:
 	 * org.xml.sax.SAXParseException: Content is not allowed in prolog. Si
@@ -68,8 +69,7 @@ public class XML2POJO {
 	 * ******************
 	 */
 
-	public static Collection<Object> load(String filename)
-			throws FileNotFoundException, IOException {
+	public static Collection<Object> load(String filename) throws FileNotFoundException, IOException {
 		List<Object> pojos = null;
 		File file = new File(filename);
 		FileInputStream fstream = new FileInputStream(file);

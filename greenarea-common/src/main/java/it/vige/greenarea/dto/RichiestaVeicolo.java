@@ -36,22 +36,19 @@ public class RichiestaVeicolo implements Serializable {
 		this.targa = targa;
 	}
 
-	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista,
-			GreenareaUser societaDiTrasporto) {
+	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista, GreenareaUser societaDiTrasporto) {
 		this(stato, targa);
 		this.autista = autista;
 		this.societaDiTrasporto = societaDiTrasporto;
 	}
 
-	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista,
-			GreenareaUser societaDiTrasporto,
+	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista, GreenareaUser societaDiTrasporto,
 			OperatoreLogistico operatoreLogistico) {
 		this(stato, targa, autista, societaDiTrasporto);
 		this.operatoreLogistico = operatoreLogistico;
 	}
 
-	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista,
-			GreenareaUser societaDiTrasporto,
+	public RichiestaVeicolo(String stato, String targa, GreenareaUser autista, GreenareaUser societaDiTrasporto,
 			OperatoreLogistico operatoreLogistico, ValoriVeicolo valori) {
 		this(stato, targa, autista, societaDiTrasporto, operatoreLogistico);
 		this.valori = valori;

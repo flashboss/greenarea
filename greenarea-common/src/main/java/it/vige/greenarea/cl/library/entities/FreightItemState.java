@@ -14,10 +14,10 @@
 package it.vige.greenarea.cl.library.entities;
 
 public enum FreightItemState {
-        NOTAVAILABLE,   //0
-        AVAILABLE,      //1
-        LOADED,         //2
-        NOTLOADED,      //3
-        DELIVERED,      //4
-        NOTDELIVERED    //5
-    }
+	NOTAVAILABLE, // 0
+	AVAILABLE, // 1
+	LOADED, // 2
+	NOTLOADED, // 3
+	DELIVERED, // 4
+	NOTDELIVERED // 5
+}

@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.OrderStatus.StateValue;
-
 import java.io.Serializable;
+
+import it.vige.greenarea.cl.library.entities.OrderStatus.StateValue;
 
 public class GetShippingStatusResponseData implements Serializable {
 

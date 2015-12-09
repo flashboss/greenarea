@@ -13,18 +13,18 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.routing.swing;
 
-import it.vige.greenarea.itseasy.swing.editor.BasicGraphEditor;
-import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.ln.model.LNCell;
-import it.vige.greenarea.ln.routing.LNGraphAnalysis;
-
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.itseasy.swing.editor.BasicGraphEditor;
+import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
+import it.vige.greenarea.ln.model.LNCell;
+import it.vige.greenarea.ln.routing.LNGraphAnalysis;
 
 public class PathFinderDialog extends java.awt.Dialog {
 
@@ -65,11 +65,11 @@ public class PathFinderDialog extends java.awt.Dialog {
 			}
 		});
 
-		sourceNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(
-				new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+		sourceNodeCombo.setModel(
+				new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-		targetNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(
-				new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+		targetNodeCombo.setModel(
+				new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
 		calculateButton.setText(I18N.getString("Calculate"));
 		calculateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -90,89 +90,38 @@ public class PathFinderDialog extends java.awt.Dialog {
 
 		jLabel3.setText(I18N.getString("LogisticPath"));
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
-				jPanel1);
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout
-				.setHorizontalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap(69, Short.MAX_VALUE)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+								.addComponent(jLabel1).addComponent(jLabel2).addComponent(jLabel3))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addContainerGap(69, Short.MAX_VALUE)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
-														.addComponent(jLabel1)
-														.addComponent(jLabel2)
-														.addComponent(jLabel3))
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
-														.addComponent(
-																jScrollPane1)
-														.addComponent(
-																targetNodeCombo,
-																0,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addComponent(
-																sourceNodeCombo,
-																0, 230,
-																Short.MAX_VALUE)
-														.addComponent(
-																calculateButton,
-																javax.swing.GroupLayout.Alignment.LEADING))
-										.addContainerGap()));
-		jPanel1Layout
-				.setVerticalGroup(jPanel1Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel1Layout
-										.createSequentialGroup()
-										.addGap(22, 22, 22)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(
-																sourceNodeCombo,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLabel1))
-										.addGap(18, 18, 18)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jLabel2)
-														.addComponent(
-																targetNodeCombo,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.PREFERRED_SIZE))
-										.addGap(18, 18, 18)
-										.addComponent(calculateButton)
-										.addGap(18, 18, 18)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																jScrollPane1,
-																javax.swing.GroupLayout.PREFERRED_SIZE,
-																100,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLabel3))
-										.addContainerGap(55, Short.MAX_VALUE)));
+								jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+										.addComponent(jScrollPane1)
+										.addComponent(targetNodeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(sourceNodeCombo, 0, 230, Short.MAX_VALUE)
+										.addComponent(calculateButton, javax.swing.GroupLayout.Alignment.LEADING))
+						.addContainerGap()));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addGap(22, 22, 22)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(sourceNodeCombo, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel1))
+						.addGap(18, 18, 18)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel2).addComponent(targetNodeCombo,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(18, 18, 18).addComponent(calculateButton).addGap(18, 18, 18)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel3))
+						.addContainerGap(55, Short.MAX_VALUE)));
 
 		add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -188,16 +137,13 @@ public class PathFinderDialog extends java.awt.Dialog {
 	private static final LNGraphAnalysis a = new LNGraphAnalysis();
 
 	private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_calculateButtonActionPerformed
-		mxCell source = nodesMap.get((String) (sourceNodeCombo
-				.getSelectedItem()));
-		mxCell target = nodesMap.get((String) (targetNodeCombo
-				.getSelectedItem()));
+		mxCell source = nodesMap.get((String) (sourceNodeCombo.getSelectedItem()));
+		mxCell target = nodesMap.get((String) (targetNodeCombo.getSelectedItem()));
 		BasicGraphEditor editor = LogisticsNetEditor.getEditor();
 		if (editor == null)
 			editor = new LogisticsNetEditor();
 		mxGraph logisticNetwork = editor.getGraphComponent().getGraph();
-		Object[] path = a.getShortestPath(logisticNetwork, source, target,
-				null, 100, false);
+		Object[] path = a.getShortestPath(logisticNetwork, source, target, null, 100, false);
 		this.pathTextArea.setText(toString(path));
 
 	}// GEN-LAST:event_calculateButtonActionPerformed
@@ -215,15 +161,12 @@ public class PathFinderDialog extends java.awt.Dialog {
 			if (o instanceof mxCell) {
 				mxCell cell = (mxCell) o;
 				if (!cell.isEdge()) {
-					nodesMap.put(editor.getGraphComponent().getGraph()
-							.convertValueToString(cell), cell);
+					nodesMap.put(editor.getGraphComponent().getGraph().convertValueToString(cell), cell);
 				}
 			}
 		}
-		sourceNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(nodesMap
-				.keySet().toArray()));
-		targetNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(nodesMap
-				.keySet().toArray()));
+		sourceNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(nodesMap.keySet().toArray()));
+		targetNodeCombo.setModel(new javax.swing.DefaultComboBoxModel(nodesMap.keySet().toArray()));
 		this.pathTextArea.setText("");
 		this.setVisible(true);
 
@@ -233,8 +176,7 @@ public class PathFinderDialog extends java.awt.Dialog {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
-				PathFinderDialog dialog = new PathFinderDialog(
-						new java.awt.Frame(), true);
+				PathFinderDialog dialog = new PathFinderDialog(new java.awt.Frame(), true);
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
 					public void windowClosing(java.awt.event.WindowEvent e) {
@@ -279,10 +221,8 @@ public class PathFinderDialog extends java.awt.Dialog {
 			if (source instanceof mxCell) {
 				value = ((mxCell) source).getValue();
 				if (value instanceof LNCell) {
-					overallCost += ((LNCell) value).getCostFunction().getCost(
-							view.getState(source));
-					sb.append(I18N.getString("from")).append(": \"")
-							.append(((LNCell) value).getName()).append("\" ");
+					overallCost += ((LNCell) value).getCostFunction().getCost(view.getState(source));
+					sb.append(I18N.getString("from")).append(": \"").append(((LNCell) value).getName()).append("\" ");
 				} else {
 					sb.append(" ---ERROR--- ");
 					break;
@@ -292,10 +232,8 @@ public class PathFinderDialog extends java.awt.Dialog {
 			if (target instanceof mxCell) {
 				value = ((mxCell) target).getValue();
 				if (value instanceof LNCell) {
-					overallCost += ((LNCell) value).getCostFunction().getCost(
-							view.getState(target));
-					sb.append(I18N.getString("to")).append(": \"")
-							.append(((LNCell) value).getName()).append("\" ");
+					overallCost += ((LNCell) value).getCostFunction().getCost(view.getState(target));
+					sb.append(I18N.getString("to")).append(": \"").append(((LNCell) value).getName()).append("\" ");
 				} else {
 					sb.append(" ---ERROR--- ");
 					break;
@@ -305,10 +243,9 @@ public class PathFinderDialog extends java.awt.Dialog {
 			if (carrier instanceof mxCell) {
 				value = ((mxCell) carrier).getValue();
 				if (value instanceof LNCell) {
-					overallCost += ((LNCell) value).getCostFunction().getCost(
-							view.getState(carrier));
-					sb.append(I18N.getString("carrier")).append(": \"")
-							.append(((LNCell) value).getName()).append("\"\n");
+					overallCost += ((LNCell) value).getCostFunction().getCost(view.getState(carrier));
+					sb.append(I18N.getString("carrier")).append(": \"").append(((LNCell) value).getName())
+							.append("\"\n");
 				} else {
 					sb.append(" ---ERROR--- ");
 					break;

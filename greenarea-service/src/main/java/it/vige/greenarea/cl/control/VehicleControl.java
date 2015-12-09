@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.control;
 
-import it.vige.greenarea.cl.library.entities.TruckServiceClass;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.gtg.db.facades.TruckFacade;
-import it.vige.greenarea.gtg.db.facades.TruckServiceClassFacade;
-
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -25,6 +20,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.gtg.db.facades.TruckFacade;
+import it.vige.greenarea.gtg.db.facades.TruckServiceClassFacade;
 
 /**
  * <p>
@@ -91,8 +91,7 @@ public class VehicleControl {
 	 * @return List<Vehicle>
 	 */
 	public List<Vehicle> getVehicles(String operatoreLogistico) {
-		Query opQuery = em
-				.createQuery("select v from Vehicle v where v.operatoreLogistico = :operatoreLogistico");
+		Query opQuery = em.createQuery("select v from Vehicle v where v.operatoreLogistico = :operatoreLogistico");
 		opQuery.setParameter("operatoreLogistico", operatoreLogistico);
 		@SuppressWarnings("unchecked")
 		List<Vehicle> vehicles = (List<Vehicle>) opQuery.getResultList();
@@ -111,8 +110,7 @@ public class VehicleControl {
 	 * @return List<Vehicle>
 	 */
 	public Vehicle getVehicleWithPlateNumber(String targa) {
-		Query opQuery = em
-				.createQuery("select v from Vehicle v where v.plateNumber = :targa");
+		Query opQuery = em.createQuery("select v from Vehicle v where v.plateNumber = :targa");
 		opQuery.setParameter("targa", targa);
 		Vehicle vehicle = (Vehicle) opQuery.getSingleResult();
 		return vehicle;

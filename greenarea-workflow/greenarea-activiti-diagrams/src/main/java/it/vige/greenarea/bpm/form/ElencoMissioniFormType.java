@@ -18,8 +18,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -38,8 +36,10 @@ import org.activiti.engine.ActivitiIllegalArgumentException;
 import org.activiti.engine.form.AbstractFormType;
 import org.slf4j.Logger;
 
-public class ElencoMissioniFormType extends AbstractFormType implements
-		Serializable {
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
+
+public class ElencoMissioniFormType extends AbstractFormType implements Serializable {
 
 	private Logger logger = getLogger(getClass());
 	private static final long serialVersionUID = 1L;
@@ -75,17 +75,14 @@ public class ElencoMissioniFormType extends AbstractFormType implements
 	protected void validateValue(String value) {
 		if (value != null) {
 			if (values != null && !values.containsKey(value)) {
-				throw new ActivitiIllegalArgumentException(
-						"Invalid value for enum form property: " + value);
+				throw new ActivitiIllegalArgumentException("Invalid value for enum form property: " + value);
 			}
 		}
 	}
 
 	private void getMissioni() {
 		Client client = newClient();
-		Builder bldr = client
-				.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-						APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
 		String todayStr = dateFormat.format(new Date());
 		Date today;
@@ -96,10 +93,8 @@ public class ElencoMissioniFormType extends AbstractFormType implements
 		} catch (ParseException e) {
 			logger.error("parsinge della data", e);
 		}
-		List<Missione> missioni = bldr.post(
-				entity(richiesta, APPLICATION_JSON),
-				new GenericType<List<Missione>>() {
-				});
+		List<Missione> missioni = bldr.post(entity(richiesta, APPLICATION_JSON), new GenericType<List<Missione>>() {
+		});
 		values.clear();
 		if (missioni != null)
 			for (Missione missione : missioni) {
