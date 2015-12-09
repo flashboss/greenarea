@@ -191,7 +191,7 @@ public class TAPRESTService {
 
 	/**
 	 * <p>
-	 * Method: getAllTapOuts
+	 * Method: storicoAccessiInGA
 	 * </p>
 	 * <p>
 	 * Description: Questo metodo restituisce tutti i out TAP

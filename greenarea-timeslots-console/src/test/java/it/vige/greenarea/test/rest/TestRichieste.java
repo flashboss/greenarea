@@ -87,6 +87,7 @@ public class TestRichieste {
 		Richiesta richiesta = new Richiesta();
 		richiesta.setTipo(CONSEGNE.name());
 		richiesta.setOrarioInizio(new Date());
+		richiesta.setOrarioFine(new Date());
 		richiesta.setRoundCode("01");
 		List<Richiesta> response = bldr.post(
 				entity(richiesta, APPLICATION_JSON),
@@ -171,10 +172,10 @@ public class TestRichieste {
 	}
 
 	@Test
-	public void testMissioniConVeicoli() {
+	public void testSintesiMissioniConVeicoli() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getMissioni")
+		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni")
 				.request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
 		richiesta
@@ -190,10 +191,10 @@ public class TestRichieste {
 	}
 
 	@Test
-	public void testConsegne() {
+	public void testDettaglioConsegne() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getConsegne")
+		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getDettaglioConsegne")
 				.request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
 		List<Richiesta> response = bldr.post(
@@ -207,10 +208,10 @@ public class TestRichieste {
 	}
 
 	@Test
-	public void testConsegneConVeicoli() {
+	public void testDettaglioConsegneConVeicoli() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getConsegne")
+		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getDettaglioConsegne")
 				.request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
 		richiesta

@@ -263,7 +263,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("Mario Consegne");
+		m.setCompany("dhl");
 		m.setName("Mario");
 		ValueMission valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -287,7 +287,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("555MK"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Carlo");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -311,7 +311,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Giorgio");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(4);
@@ -335,7 +335,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Gianfranco");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -359,7 +359,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("Vachecisiamo");
+		m.setCompany("dhl");
 		m.setName("Silvio");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -382,7 +382,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Domenico");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -406,7 +406,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Fabrizio");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -430,7 +430,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Francesco");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -454,7 +454,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Yuri");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
@@ -478,7 +478,7 @@ public class DataBaseRESTPopulate {
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
-		m.setCompany("ElisFast");
+		m.setCompany("dhl");
 		m.setName("Chiara");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
