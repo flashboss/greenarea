@@ -21,6 +21,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 
@@ -30,12 +32,33 @@ public class TestDataBase {
 
 	private Logger logger = getLogger(getClass());
 
-	@Test
-	public void testPopulateDB() {
+	@Before
+	public void init() {
+		populateDB();
+		addMission();
+	}
+
+	@After
+	public void close() {
+		removeMission();
+		removeDB();
+	}
+
+	private void populateDB() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI + "/populateDB").request(
-				TEXT_PLAIN);
+		Builder bldr = client.target(BASE_URI + "/populateDB").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
+		assertNotNull(response);
+
+		logger.info(response);
+
+	}
+
+	private void removeDB() {
+
+		Client client = newClient();
+		Builder bldr = client.target(BASE_URI + "/removeDB").request(TEXT_PLAIN);
 		String response = bldr.get(String.class);
 		assertNotNull(response);
 
@@ -55,12 +78,21 @@ public class TestDataBase {
 
 	}
 
-	@Test
-	public void testAddMission() {
+	private void addMission() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI + "/addMission").request(
-				TEXT_PLAIN);
+		Builder bldr = client.target(BASE_URI + "/addMission").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
+		assertNotNull(response);
+
+		logger.info(response);
+
+	}
+
+	private void removeMission() {
+
+		Client client = newClient();
+		Builder bldr = client.target(BASE_URI + "/removeMission").request(TEXT_PLAIN);
 		String response = bldr.get(String.class);
 		assertNotNull(response);
 

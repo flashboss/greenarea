@@ -57,6 +57,7 @@ import it.vige.greenarea.cl.library.entities.Price;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.ValueMission;
 import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
 
 /**
  * <p>
@@ -74,6 +75,88 @@ public class DataBaseRESTPopulate {
 	private TimeSlotControl tsc;
 	@EJB
 	private UserControl uc;
+	@EJB
+	private MissionFacade mf;
+
+	@GET
+	@Path("/removeDB")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String removeDB() {
+		TimeSlot ts1 = new TimeSlot();
+		ts1.setDayFinish("31-12");
+		ts1.setDayStart("1-01");
+		ts1.setStartTS("9:30");
+		ts1.setFinishTS("11:30");
+		ts1.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		ts1.setTimeToRun(_1_GIORNO_PRIMA);
+		ts1.setTimeToStopRequest(_1_GIORNO_PRIMA);
+		ts1.setTollerance(_20_PER_CENTO);
+		ts1.setVikInd(PREMIA_RISPOSTA_GLOBALE);
+		ts1.setWmy(TUTTI_I_GIORNI);
+		TimeSlot ts2 = new TimeSlot();
+		ts2.setDayFinish("31-12");
+		ts2.setDayStart("1-01");
+		ts2.setStartTS("11:30");
+		ts2.setFinishTS("13:30");
+		ts2.setTimeToAcceptRequest(_3_GIORNI_PRIMA);
+		ts2.setTimeToRun(_1_GIORNO_PRIMA);
+		ts2.setTimeToStopRequest(_1_GIORNO_PRIMA);
+		ts2.setTollerance(_40_PER_CENTO);
+		ts2.setVikInd(PREMIA_RISPOSTA_GLOBALE);
+		ts2.setWmy(TUTTI_I_GIORNI);
+
+		TimeSlot ts3 = new TimeSlot();
+		ts3.setDayFinish("31-12");
+		ts3.setDayStart("1-01");
+		ts3.setStartTS("9:30");
+		ts3.setFinishTS("11:30");
+		ts3.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		ts3.setTimeToRun(_1_GIORNO_PRIMA);
+		ts3.setTimeToStopRequest(_12_ORE_PRIMA);
+		ts3.setTollerance(_20_PER_CENTO);
+		ts3.setVikInd(PREMIA_RISPOSTA_LOCALE);
+		ts3.setWmy(TUTTI_I_GIORNI);
+		
+		tsc.deleteSlotTime(tsc.findTimeSlot(ts1));
+		tsc.deleteSlotTime(tsc.findTimeSlot(ts2));
+		tsc.deleteSlotTime(tsc.findTimeSlot(ts3));
+		ParameterGen pg1 = new ParameterGen();
+		pg1.setMeasureUnit("m");
+		pg1.setNamePG("lunghezza");
+		pg1.setTypePG(COSTO);
+		pg1.setUseType(true);
+		pg1.setDescription("Lunghezza veicolo per libretto");
+		ParameterGen pg2 = new ParameterGen();
+		pg2.setMeasureUnit("Numero");
+		pg2.setNamePG("carico");
+		pg2.setTypePG(BENEFICIO);
+		pg2.setUseType(true);
+		pg2.setDescription("Rapporto da bolla con accompagnamento");
+		ParameterGen pg3 = new ParameterGen();
+		pg3.setMeasureUnit("Numero");
+		pg3.setNamePG("tappe");
+		pg3.setTypePG(BENEFICIO);
+		pg3.setUseType(true);
+		pg3.setDescription("Tappe sul ciclo di consegna");
+		ParameterGen pg4 = new ParameterGen();
+		pg4.setMeasureUnit("kg");
+		pg4.setNamePG("peso");
+		pg4.setTypePG(COSTO);
+		pg4.setUseType(true);
+		pg4.setDescription("Peso del veicolo nel libretto");
+		ParameterGen pg5 = new ParameterGen();
+		pg5.setMeasureUnit("");
+		pg5.setNamePG("euro");
+		pg5.setTypePG(COSTO);
+		pg5.setUseType(true);
+		pg5.setDescription("Categoria Euro con libretto");
+		tsc.deleteParameterGen(tsc.findParameterGen(pg1).get(0));
+		tsc.deleteParameterGen(tsc.findParameterGen(pg2).get(0));
+		tsc.deleteParameterGen(tsc.findParameterGen(pg3).get(0));
+		tsc.deleteParameterGen(tsc.findParameterGen(pg4).get(0));
+		tsc.deleteParameterGen(tsc.findParameterGen(pg5).get(0));
+		return "ok";
+	}
 
 	@GET
 	@Path("/populateDB")
@@ -87,23 +170,25 @@ public class DataBaseRESTPopulate {
 		idTs[0] = st.getIdTS();
 		TimeSlot st1 = tsc.addSlotTime(_3_GIORNI_PRIMA, _1_GIORNO_PRIMA, _1_GIORNO_PRIMA, _40_PER_CENTO, TUTTI_I_GIORNI,
 				"11:30", "13:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
+		tsc.addSlotTime(_2_GIORNI_PRIMA, _12_ORE_PRIMA, _1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI, "9:30", "11:30",
+				"1-01", "31-12", PREMIA_RISPOSTA_LOCALE);
 		idTs[1] = st1.getIdTS();
 		ParameterGen pg;
 		int[] idAr = new int[5];
 		// Creo 6 parametri generali
-		pg = tsc.addParameterGen("lunghezza", COSTO, "m", true, "Lunghezza veicolo da libretto");
+		pg = tsc.addParameterGen("lunghezza", COSTO, "m", true, "Lunghezza veicolo per libretto");
 
 		idAr[0] = pg.getId();
-		pg = tsc.addParameterGen("carico", BENEFICIO, "Numero", true, "Rapporto da bolla di accompagnamento");
+		pg = tsc.addParameterGen("carico", BENEFICIO, "Numero", true, "Rapporto da bolla con accompagnamento");
 		idAr[1] = pg.getId();
 
-		pg = tsc.addParameterGen("tappe", BENEFICIO, "Numero", true, "Tappe nel ciclo di consegna");
+		pg = tsc.addParameterGen("tappe", BENEFICIO, "Numero", true, "Tappe sul ciclo di consegna");
 		idAr[2] = pg.getId();
 
-		pg = tsc.addParameterGen("peso", COSTO, "kg", true, "Peso del veicolo da libretto");
+		pg = tsc.addParameterGen("peso", COSTO, "kg", true, "Peso del veicolo nel libretto");
 		idAr[3] = pg.getId();
 
-		pg = tsc.addParameterGen("euro", COSTO, "", true, "Categoria Euro da libretto");
+		pg = tsc.addParameterGen("euro", COSTO, "", true, "Categoria Euro con libretto");
 		idAr[4] = pg.getId();
 
 		// Configuro i parametri
@@ -257,8 +342,19 @@ public class DataBaseRESTPopulate {
 	@Path("/addMission")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addMission() throws ParseException {
-		TimeSlot timeSlot = tsc.addSlotTime(_2_GIORNI_PRIMA, _12_ORE_PRIMA, _1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI,
-				"9:30", "11:30", "1-01", "31-12", PREMIA_RISPOSTA_LOCALE);
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setDayFinish("31-12");
+		timeSlot.setDayStart("1-01");
+		timeSlot.setStartTS("9:30");
+		timeSlot.setFinishTS("11:30");
+		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
+		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
+		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setVikInd(PREMIA_RISPOSTA_LOCALE);
+		timeSlot.setWmy(TUTTI_I_GIORNI);
+		timeSlot = tsc.findTimeSlot(timeSlot);
+
 		Mission m = new Mission();
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
@@ -379,6 +475,7 @@ public class DataBaseRESTPopulate {
 		m.setValuesMission(new ArrayList<ValueMission>(asList(
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
+		m = new Mission();
 		m.setTimeSlot(timeSlot);
 		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
@@ -386,7 +483,7 @@ public class DataBaseRESTPopulate {
 		m.setName("Domenico");
 		valueMission1 = new ValueMission();
 		valueMission1.setIdParameter(3);
-		valueMission1.setValuePar(8);
+		valueMission1.setValuePar(9);
 		valueMission2 = new ValueMission();
 		valueMission2.setIdParameter(4);
 		valueMission2.setValuePar(25);
@@ -499,5 +596,265 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		uc.addMission(m);
 		return "Mission added";
+	}
+
+	@GET
+	@Path("/removeMission")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String removeMission() throws ParseException {
+
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setDayFinish("31-12");
+		timeSlot.setDayStart("1-01");
+		timeSlot.setStartTS("9:30");
+		timeSlot.setFinishTS("11:30");
+		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
+		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
+		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setVikInd(PREMIA_RISPOSTA_LOCALE);
+		timeSlot.setWmy(TUTTI_I_GIORNI);
+		timeSlot = tsc.findTimeSlot(timeSlot);
+
+		Mission m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Mario");
+		ValueMission valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(5);
+		ValueMission valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(45);
+		ValueMission valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		ValueMission valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(3560);
+		ValueMission valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(0.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("555MK"));
+		m.setCompany("dhl");
+		m.setName("Carlo");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(8);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1000);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Giorgio");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(4);
+		valueMission1.setValuePar(7);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(25);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(3500);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Gianfranco");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(8);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Silvio");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(6);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(3500);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Domenico");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(9);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(25);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Fabrizio");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(5);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Francesco");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(4);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Yuri");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(7);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		m = new Mission();
+		m.setTimeSlot(timeSlot);
+		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setTruck(new Vehicle("44GU4"));
+		m.setCompany("dhl");
+		m.setName("Chiara");
+		valueMission1 = new ValueMission();
+		valueMission1.setIdParameter(3);
+		valueMission1.setValuePar(20);
+		valueMission2 = new ValueMission();
+		valueMission2.setIdParameter(4);
+		valueMission2.setValuePar(60);
+		valueMission3 = new ValueMission();
+		valueMission3.setIdParameter(5);
+		valueMission3.setValuePar(12);
+		valueMission4 = new ValueMission();
+		valueMission4.setIdParameter(6);
+		valueMission4.setValuePar(1200);
+		valueMission5 = new ValueMission();
+		valueMission5.setIdParameter(7);
+		valueMission5.setValuePar(1.6);
+		m.setValuesMission(new ArrayList<ValueMission>(asList(
+				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
+		mf.remove(mf.findMission(m));
+		return "Mission removed";
 	}
 }

@@ -126,7 +126,7 @@ public class UserControl {
 		return m;
 
 	}
-
+	
 	public ValueMission addValueMission(ValueMission vm) {
 		vmf.create(vm);
 		return vm;

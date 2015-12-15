@@ -19,7 +19,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.junit.Assert.assertNotNull;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Filter;
 
 import java.util.List;
 
@@ -27,15 +26,28 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Filter;
 
 public class TestAdministrator {
 
 	private Logger logger = getLogger(getClass());
 
-	@Test
-	public void testAddFilter() {
+	@Before
+	public void init() {
+		addFilter();
+	}
+
+	@After
+	public void close() {
+		deleteFilter();
+	}
+	
+	private void addFilter() {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/addFilter")
@@ -75,8 +87,7 @@ public class TestAdministrator {
 		logger.info(response + "");
 	}
 
-	@Test
-	public void testDeleteFilter() {
+	private void deleteFilter() {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/deleteFilter")

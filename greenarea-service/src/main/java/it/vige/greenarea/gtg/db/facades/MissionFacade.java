@@ -83,7 +83,7 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 			return null;
 		}
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
 		Root<Mission> trRoot = cq.from(Mission.class);
 		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(Mission_.missionState), WAITING),
 				cb.greaterThan(trRoot.get(Mission_.expireTime), convertStringToTimestamp(dateTime)));
@@ -91,10 +91,23 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 
+	public Mission findMission(Mission mission) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
+		Root<Mission> m = cq.from(Mission.class);
+		Predicate timeSlot = cb.equal(m.get(Mission_.timeSlot), mission.getTimeSlot());
+		Predicate startTime = cb.equal(m.get(Mission_.startTime), mission.getStartTime());
+		Predicate truck = cb.equal(m.get(Mission_.truck), mission.getTruck());
+		Predicate company = cb.equal(m.get(Mission_.company), mission.getCompany());
+		cq.select(m).where(cb.and(company, truck, startTime, timeSlot));
+		return em.createQuery(cq).getResultList().get(0);
+
+	}
+
 	public List<Mission> findAllocatedMissions(String owner) {
 
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
 		Root<Mission> trRoot = cq.from(Mission.class);
 		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(Mission_.missionState), STARTED),
 				cb.equal(trRoot.get(Mission_.ownerUser), owner));

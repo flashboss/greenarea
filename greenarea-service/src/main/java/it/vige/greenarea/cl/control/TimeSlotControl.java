@@ -32,6 +32,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -41,9 +45,11 @@ import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.bean.RequestParameter;
 import it.vige.greenarea.cl.bean.TimeSlotInfo;
 import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.cl.library.entities.ParameterGen_;
 import it.vige.greenarea.cl.library.entities.ParameterTS;
 import it.vige.greenarea.cl.library.entities.Price;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.TimeSlot_;
 import it.vige.greenarea.cl.library.entities.TsStat;
 import it.vige.greenarea.cl.library.entities.VikorResult;
 import it.vige.greenarea.cl.sessions.ParameterGenFacade;
@@ -148,6 +154,39 @@ public class TimeSlotControl {
 	 */
 	public TimeSlot findTimeSlot(int idTimeSlot) {
 		return tsf.find(idTimeSlot);
+	}
+
+	/**
+	 * <p>
+	 * Method: findTimeSlot
+	 * </p>
+	 * <p>
+	 * Description: cerca una fascia oraria per Id
+	 * </p>
+	 * 
+	 * @Param int idTimeSlot
+	 * @return TimeSlot ts
+	 * 
+	 */
+	public TimeSlot findTimeSlot(TimeSlot timeSlot) {
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<TimeSlot> cq = cb.createQuery(TimeSlot.class);
+		Root<TimeSlot> ts = cq.from(TimeSlot.class);
+		Predicate dayFinish = cb.equal(ts.get(TimeSlot_.dayFinish), timeSlot.getDayFinish());
+		Predicate dayStart = cb.equal(ts.get(TimeSlot_.dayStart), timeSlot.getDayStart());
+		Predicate finishTS = cb.equal(ts.get(TimeSlot_.finishTS), timeSlot.getFinishTS());
+		Predicate startTS = cb.equal(ts.get(TimeSlot_.startTS), timeSlot.getStartTS());
+		Predicate timeToAcceptRequest = cb.equal(ts.get(TimeSlot_.timeToAcceptRequest),
+				timeSlot.getTimeToAcceptRequest());
+		Predicate timeToRun = cb.equal(ts.get(TimeSlot_.timeToRun), timeSlot.getTimeToRun());
+		Predicate timeToStopRequest = cb.equal(ts.get(TimeSlot_.timeToStopRequest), timeSlot.getTimeToStopRequest());
+		Predicate tollerance = cb.equal(ts.get(TimeSlot_.tollerance), timeSlot.getTollerance());
+		Predicate vikInd = cb.equal(ts.get(TimeSlot_.vikInd), timeSlot.getVikInd());
+		Predicate wmy = cb.equal(ts.get(TimeSlot_.wmy), timeSlot.getWmy());
+		cq.select(ts).where(cb.and(dayFinish, dayStart, finishTS, startTS, timeToAcceptRequest, timeToRun,
+				timeToStopRequest, tollerance, vikInd, wmy));
+		return em.createQuery(cq).getSingleResult();
 	}
 
 	/**
@@ -312,6 +351,37 @@ public class TimeSlotControl {
 
 		List<ParameterGen> result = em.createQuery("SELECT c FROM ParameterGen c WHERE c.useType is true")
 				.getResultList();
+
+		if (result.isEmpty()) {
+			return null;
+		}
+		return result;
+	}
+
+	/**
+	 * <p>
+	 * Method: findParameterGenAvailable
+	 * </p>
+	 * <p>
+	 * Description: Cerca i parametri disponibili alla configurazione,
+	 * cio?????????????????? con useType=1
+	 * </p>
+	 * 
+	 * @param
+	 * @return List<ParameterGen>
+	 */
+	public List<ParameterGen> findParameterGen(ParameterGen parameterGen) {
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<ParameterGen> cq = cb.createQuery(ParameterGen.class);
+		Root<ParameterGen> pg = cq.from(ParameterGen.class);
+		Predicate measureUnit = cb.equal(pg.get(ParameterGen_.measureUnit), parameterGen.getMeasureUnit());
+		Predicate namePG = cb.equal(pg.get(ParameterGen_.namePG), parameterGen.getNamePG());
+		Predicate typePG = cb.equal(pg.get(ParameterGen_.typePG), parameterGen.getTypePG());
+		Predicate description = cb.equal(pg.get(ParameterGen_.description), parameterGen.getDescription());
+		Predicate useType = cb.equal(pg.get(ParameterGen_.useType), parameterGen.isUseType());
+		cq.select(pg).where(cb.and(measureUnit, namePG, typePG, description, useType));
+		List<ParameterGen> result = em.createQuery(cq).getResultList();
 
 		if (result.isEmpty()) {
 			return null;
