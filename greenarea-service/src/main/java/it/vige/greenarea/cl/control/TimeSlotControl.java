@@ -472,6 +472,22 @@ public class TimeSlotControl {
 
 	/**
 	 * <p>
+	 * Method: deletePrice
+	 * </p>
+	 * <p>
+	 * Description: Rimuove un pedaggio a una fascia oraria
+	 * </p>
+	 * 
+	 * @param Price
+	 *            Price
+	 * @return void
+	 */
+	public void deletePrice(Price price) {
+		pf.remove(price);
+	}
+
+	/**
+	 * <p>
 	 * Method: updatePriceToTimeSlot
 	 * </p>
 	 * <p>

@@ -124,6 +124,19 @@ public class SGOTbean {
 		return res;
 	}
 
+	public RequestShippingResponseData deleteShipping(ShippingOrder shippingOrder) {
+		shippingOrder = shippingOrderFacade.find(shippingOrder.getId());
+		clientAccountFacade.remove(shippingOrder.getCustomer());
+		shippingOrderFacade.remove(shippingOrder);
+
+		RequestShippingResponseData res = new RequestShippingResponseData();
+		res.setResult(new ResultOperationResponse(ResultStatus.OK));
+		res.setShippingOrderID(shippingOrder.getId());
+		res.setMaxTimeValidity(new Long(1000));
+		res.setMaxTimeShipment(new Long(1000));
+		return res;
+	}
+	
 	public RequestShippingResponseData addShipping(ShippingOrder shippingOrder) {
 		// mi procuro il client account
 		// TODO andra' fatto prendendolo dalla session

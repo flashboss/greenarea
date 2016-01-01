@@ -229,6 +229,30 @@ public class TimeSlotRESTService {
 
 	/**
 	 * <p>
+	 * Method: deleteTimeSlot
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo cancella un TimeSlot dal sistema
+	 * </p>
+	 * 
+	 * @param TimeSlot
+	 *            tsToDelete
+	 * @return TimeSlot
+	 */
+	@POST
+	@Path("/deleteMissions")
+	@Consumes(APPLICATION_JSON)
+	@Produces(APPLICATION_JSON)
+	public List<Mission> deleteMissions() {
+		List<Mission> missions = missionFacade.findAll();
+		for (Mission mission : missions) {
+			missionFacade.remove(mission);
+		}
+		return missions;
+	}
+
+	/**
+	 * <p>
 	 * Method: addParameterGen
 	 * </p>
 	 * <p>
@@ -309,6 +333,27 @@ public class TimeSlotRESTService {
 	@Consumes(APPLICATION_JSON)
 	public Price addPrices(Price price) {
 		tsc.addPriceToTimeSlot(price);
+		return price;
+	}
+
+	/**
+	 * <p>
+	 * Method: deletePrice
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo cancella un price al sistema associandolo a
+	 * una fascia oraria
+	 * </p>
+	 * 
+	 * @param Price
+	 *            price
+	 * @return Price
+	 */
+	@POST
+	@Path("/deletePrice")
+	@Consumes(APPLICATION_JSON)
+	public Price deletePrices(Price price) {
+		tsc.deletePrice(price);
 		return price;
 	}
 
@@ -922,6 +967,26 @@ public class TimeSlotRESTService {
 	@Consumes(APPLICATION_JSON)
 	public ShippingOrder addShipping(ShippingOrder shippingOrder) {
 		sgotBean.addShipping(shippingOrder);
+		return shippingOrder;
+	}
+
+	/**
+	 * <p>
+	 * Method: deleteShipping
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo aggiunge uno shipping order al sistema
+	 * </p>
+	 * 
+	 * @param ShippingOrder
+	 *            shippingOrder
+	 * @return ShippingOrder
+	 */
+	@POST
+	@Path("/deleteShipping")
+	@Consumes(APPLICATION_JSON)
+	public ShippingOrder deleteShipping(ShippingOrder shippingOrder) {
+		sgotBean.deleteShipping(shippingOrder);
 		return shippingOrder;
 	}
 

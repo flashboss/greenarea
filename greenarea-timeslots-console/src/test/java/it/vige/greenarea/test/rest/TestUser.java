@@ -103,7 +103,7 @@ public class TestUser {
 	public void testGetAllVehicles() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/getVehicles").request(
+		Builder bldr = client.target(BASE_URI_USER + "/getVehiclesForOP/tnt").request(
 				APPLICATION_JSON);
 		List<Vehicle> response = bldr.get(new GenericType<List<Vehicle>>() {
 		});
