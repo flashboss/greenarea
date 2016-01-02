@@ -127,6 +127,12 @@ public class UserControl {
 
 	}
 	
+	public Mission deleteMission(Mission mis) {
+		Mission mission = mf.findMission(mis);
+		em.remove(mission);
+		return mission;
+	}
+	
 	public ValueMission addValueMission(ValueMission vm) {
 		vmf.create(vm);
 		return vm;

@@ -123,6 +123,26 @@ public class UserRESTService {
 
 	/**
 	 * <p>
+	 * Method: addMission
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo aggiunge una missione al sistema lato utente
+	 * </p>
+	 * 
+	 * @param Mission
+	 *            m
+	 * @return Mission
+	 */
+	@POST
+	@Path("/deleteMission")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Mission deleteMission(Mission m) {
+		return uc.deleteMission(m);
+	}
+
+	/**
+	 * <p>
 	 * Method: findAllTimeSlots
 	 * </p>
 	 * <p>

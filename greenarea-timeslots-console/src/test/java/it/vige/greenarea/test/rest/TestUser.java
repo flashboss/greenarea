@@ -14,6 +14,7 @@
 package it.vige.greenarea.test.rest;
 
 import static it.vige.greenarea.Constants.BASE_URI_USER;
+import static it.vige.greenarea.dto.StatoVeicolo.IDLE;
 import static it.vige.greenarea.dto.StatoVeicolo.MAINTAINANCE;
 import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
@@ -21,15 +22,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.junit.Assert.assertNotNull;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.library.entities.ValueMission;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.RichiestaVeicolo;
-import it.vige.greenarea.dto.GreenareaUser;
-import it.vige.greenarea.dto.Veicolo;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -41,6 +33,16 @@ import javax.ws.rs.core.GenericType;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.RichiestaVeicolo;
+import it.vige.greenarea.dto.Veicolo;
+
 public class TestUser {
 
 	private Logger logger = getLogger(getClass());
@@ -49,8 +51,7 @@ public class TestUser {
 	public void testGetInfoRequest() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/getInfoRequest/3")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/getInfoRequest/3").request(APPLICATION_JSON);
 		Request response = bldr.get(Request.class);
 		assertNotNull(response);
 
@@ -62,8 +63,7 @@ public class TestUser {
 	public void testAddMission() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/addMission").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/addMission").request(APPLICATION_JSON);
 		Mission mission = new Mission();
 		mission.setAddressList("nuovo indirizzo");
 		mission.setCompany("nuova compagnia");
@@ -79,10 +79,15 @@ public class TestUser {
 		peso.setIdParameter(8);
 		peso.setValuePar(11.8);
 		mission.setValuesMission(asList(new ValueMission[] { lunghezza, peso }));
-		Mission response = bldr.post(entity(mission, APPLICATION_JSON),
-				Mission.class);
+		Mission response = bldr.post(entity(mission, APPLICATION_JSON), Mission.class);
 		assertNotNull(response);
 
+		logger.info(response + "");
+
+		bldr = client.target(BASE_URI_USER + "/deleteMission").request(APPLICATION_JSON);
+		response = bldr.post(entity(mission, APPLICATION_JSON), Mission.class);
+		assertNotNull(response);
+		
 		logger.info(response + "");
 	}
 
@@ -90,8 +95,7 @@ public class TestUser {
 	public void testFindAllTimeSlots() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findAllTimeSlot")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findAllTimeSlot").request(APPLICATION_JSON);
 		List<TimeSlot> response = bldr.get(new GenericType<List<TimeSlot>>() {
 		});
 		assertNotNull(response);
@@ -103,8 +107,7 @@ public class TestUser {
 	public void testGetAllVehicles() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/getVehiclesForOP/tnt").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/getVehiclesForOP/tnt").request(APPLICATION_JSON);
 		List<Vehicle> response = bldr.get(new GenericType<List<Vehicle>>() {
 		});
 		assertNotNull(response);
@@ -116,12 +119,10 @@ public class TestUser {
 	public void testFindVehiclesWithNoValue() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(APPLICATION_JSON);
 		Veicolo veicolo = new Veicolo();
-		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON),
-				new GenericType<List<Veicolo>>() {
-				});
+		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON), new GenericType<List<Veicolo>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -131,13 +132,11 @@ public class TestUser {
 	public void testFindVehiclesWithAutista() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(APPLICATION_JSON);
 		Veicolo veicolo = new Veicolo();
 		veicolo.setAutista(new GreenareaUser("autista2"));
-		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON),
-				new GenericType<List<Veicolo>>() {
-				});
+		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON), new GenericType<List<Veicolo>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -147,13 +146,11 @@ public class TestUser {
 	public void testFindVehiclesWithVin() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVinVehicles")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVinVehicles").request(APPLICATION_JSON);
 		RichiestaVeicolo veicolo = new RichiestaVeicolo();
 		veicolo.setAutista(new GreenareaUser("autista2"));
-		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON),
-				new GenericType<List<Veicolo>>() {
-				});
+		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON), new GenericType<List<Veicolo>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -163,16 +160,13 @@ public class TestUser {
 	public void testFindVehiclesWithAllFields() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(
-				APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVehicles").request(APPLICATION_JSON);
 		Veicolo veicolo = new Veicolo();
 		veicolo.setAutista(new GreenareaUser("autista2"));
 		veicolo.setSocietaDiTrasporto(new GreenareaUser("buscar"));
-		veicolo.setOperatoreLogistico(new OperatoreLogistico(new GreenareaUser(
-				"dhl")));
-		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON),
-				new GenericType<List<Veicolo>>() {
-				});
+		veicolo.setOperatoreLogistico(new OperatoreLogistico(new GreenareaUser("dhl")));
+		List<Veicolo> response = bldr.post(entity(veicolo, APPLICATION_JSON), new GenericType<List<Veicolo>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -182,8 +176,7 @@ public class TestUser {
 	public void testGetVehiclesForOP() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/getVehiclesForOP/tnt")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/getVehiclesForOP/tnt").request(APPLICATION_JSON);
 		List<Vehicle> response = bldr.get(new GenericType<List<Vehicle>>() {
 		});
 		assertNotNull(response);
@@ -195,13 +188,14 @@ public class TestUser {
 	public void testAggiornaStatoVeicolo() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/aggiornaStatoVeicolo")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/aggiornaStatoVeicolo").request(APPLICATION_JSON);
 		Veicolo veicolo = new Veicolo();
 		veicolo.setTarga("91GTK");
 		veicolo.setStato(MAINTAINANCE.name());
-		Veicolo response = bldr.post(entity(veicolo, APPLICATION_JSON),
-				Veicolo.class);
+		Veicolo response = bldr.post(entity(veicolo, APPLICATION_JSON), Veicolo.class);
+		assertNotNull(response);
+		veicolo.setStato(IDLE.name());
+		response = bldr.post(entity(veicolo, APPLICATION_JSON), Veicolo.class);
 		assertNotNull(response);
 
 		logger.info(response + "");
