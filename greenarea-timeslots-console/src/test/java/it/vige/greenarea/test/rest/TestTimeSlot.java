@@ -14,13 +14,16 @@
 package it.vige.greenarea.test.rest;
 
 import static it.vige.greenarea.Constants.BASE_URI_TS;
+import static it.vige.greenarea.Conversioni.convertiTimeSlotToFasciaOraria;
 import static it.vige.greenarea.dto.AccessoVeicoli.NEGATO;
 import static it.vige.greenarea.dto.AperturaRichieste._2_GIORNI_PRIMA;
 import static it.vige.greenarea.dto.ChiusuraRichieste._1_GIORNO_PRIMA;
 import static it.vige.greenarea.dto.Color.ROSSO;
+import static it.vige.greenarea.dto.Fuel.BENZINA;
 import static it.vige.greenarea.dto.Peso.BASSO;
 import static it.vige.greenarea.dto.Ripetizione.FESTIVI;
 import static it.vige.greenarea.dto.StatoMissione.WAITING;
+import static it.vige.greenarea.dto.StatoVeicolo.IDLE;
 import static it.vige.greenarea.dto.TipoParametro.DA_DECIDERE;
 import static it.vige.greenarea.dto.TipologiaClassifica.CLASSIFICA_STANDARD;
 import static it.vige.greenarea.dto.TipologiaParametro.BOOLEANO;
@@ -33,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -44,6 +48,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.Conversioni;
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.bean.TimeSlotInfo;
 import it.vige.greenarea.cl.library.entities.Mission;
@@ -58,12 +63,21 @@ import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 import it.vige.greenarea.cl.library.entities.TsStat;
 import it.vige.greenarea.cl.library.entities.Vehicle;
 import it.vige.greenarea.dto.FasciaOraria;
+import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.Parametro;
+import it.vige.greenarea.dto.Richiesta;
 import it.vige.greenarea.dto.Sched;
+import it.vige.greenarea.dto.ValoriVeicolo;
+import it.vige.greenarea.dto.Veicolo;
 
 public class TestTimeSlot {
 
 	private Logger logger = getLogger(getClass());
+
+	private TimeSlot timeSlot;
+	private ParameterGen parameterGen;
 
 	@Before
 	public void init() {
@@ -91,10 +105,10 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/addTimeSlot").request(APPLICATION_JSON);
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setDayFinish("11");
-		timeSlot.setDayStart("2");
-		timeSlot.setFinishTS("777");
-		timeSlot.setStartTS("3232");
+		timeSlot.setDayFinish("11-10-2000");
+		timeSlot.setDayStart("2-10-2000");
+		timeSlot.setFinishTS("10:23");
+		timeSlot.setStartTS("11:21");
 		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
 		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
 		timeSlot.setTimeToStopRequest(_1_GIORNO_PRIMA);
@@ -106,14 +120,13 @@ public class TestTimeSlot {
 		assertNotNull(response);
 
 		logger.info(response + "");
-
+		this.timeSlot = response;
 	}
 
 	private void deleteTimeSlot() {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deleteTimeSlot").request(APPLICATION_JSON);
-		TimeSlot timeSlot = new TimeSlot(2);
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON), TimeSlot.class);
 		assertNotNull(response);
 
@@ -135,14 +148,13 @@ public class TestTimeSlot {
 		assertNotNull(response);
 
 		logger.info(response + "");
+		this.parameterGen = response;
 	}
 
 	private void deleteParameterGen() {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deleteParameterGen").request(APPLICATION_JSON);
-		ParameterGen parameterGen = new ParameterGen();
-		parameterGen.setId(1);
 		ParameterGen response = bldr.post(entity(parameterGen, APPLICATION_JSON), ParameterGen.class);
 		assertNotNull(response);
 
@@ -186,8 +198,8 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/configParameterTS").request(APPLICATION_JSON);
 		ParameterTS parameterTS = new ParameterTS();
-		parameterTS.setParGen(new ParameterGen(444));
-		parameterTS.setTs(new TimeSlot(22));
+		parameterTS.setParGen(parameterGen);
+		parameterTS.setTs(timeSlot);
 		parameterTS.setTypePar(DA_DECIDERE);
 		parameterTS.setWeight(BASSO);
 		parameterTS.setMaxValue(432234234);
@@ -202,18 +214,6 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/removeParametersTS").request(APPLICATION_JSON);
-		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setDayFinish("11");
-		timeSlot.setDayStart("2");
-		timeSlot.setFinishTS("777");
-		timeSlot.setStartTS("3232");
-		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
-		timeSlot.setTimeToStopRequest(_1_GIORNO_PRIMA);
-		timeSlot.setTollerance(_50_PER_CENTO);
-		timeSlot.setVikInd(CLASSIFICA_STANDARD);
-		timeSlot.setWmy(FESTIVI);
-		timeSlot.setPa("papomezia");
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON), TimeSlot.class);
 		assertNotNull(response);
 
@@ -225,9 +225,11 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/buildCityLogisticsMission").request(APPLICATION_JSON);
 		Missione missione = new Missione("prova", WAITING);
-		FasciaOraria fasciaOraria = new FasciaOraria();
-		fasciaOraria.setId(0);
+		FasciaOraria fasciaOraria = Conversioni.convertiTimeSlotToFasciaOraria(timeSlot);
+		fasciaOraria.setParametri(new ArrayList<Parametro>());
 		missione.setFasciaOraria(fasciaOraria);
+		Veicolo veicolo = new Veicolo(IDLE.name(), "44GU4");
+		missione.setVeicolo(veicolo);
 		Mission response = bldr.post(entity(missione, APPLICATION_JSON), Mission.class);
 		assertNotNull(response);
 
@@ -239,9 +241,18 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/buildMission").request(APPLICATION_JSON);
 		Missione missione = new Missione("prova", WAITING);
-		FasciaOraria fasciaOraria = new FasciaOraria();
-		fasciaOraria.setId(0);
+		FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot);
+		fasciaOraria.setParametri(new ArrayList<Parametro>());
 		missione.setFasciaOraria(fasciaOraria);
+		Veicolo veicolo = new Veicolo(IDLE.name(), "44GU4");
+		veicolo.setAutista(new GreenareaUser("user"));
+		veicolo.setOperatoreLogistico(new OperatoreLogistico(new GreenareaUser("dhl")));
+		veicolo.setSocietaDiTrasporto(new GreenareaUser("trambus"));
+		ValoriVeicolo valori = new ValoriVeicolo();
+		valori.setFuel(BENZINA.name());
+		veicolo.setValori(valori);
+		missione.setVeicolo(veicolo);
+		missione.setRichieste(new ArrayList<Richiesta>());
 		Mission response = bldr.post(entity(missione, APPLICATION_JSON), Mission.class);
 		assertNotNull(response);
 
@@ -286,18 +297,6 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/updateTimeSlot").request(APPLICATION_JSON);
-		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setDayFinish("11");
-		timeSlot.setDayStart("2");
-		timeSlot.setFinishTS("777");
-		timeSlot.setStartTS("3232");
-		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
-		timeSlot.setTimeToStopRequest(_1_GIORNO_PRIMA);
-		timeSlot.setTollerance(_50_PER_CENTO);
-		timeSlot.setVikInd(CLASSIFICA_STANDARD);
-		timeSlot.setWmy(FESTIVI);
-		timeSlot.setPa("papomezia");
 		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON), TimeSlot.class);
 		assertNotNull(response);
 
@@ -310,14 +309,15 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/updateParameterGen").request(APPLICATION_JSON);
-		ParameterGen parameterGen = new ParameterGen();
-		parameterGen.setId(1);
-		parameterGen.setDescription("mia descrizione");
 		parameterGen.setTypePG(CONTATORE);
-		parameterGen.setMeasureUnit("euro");
-		parameterGen.setNamePG("mio p g");
-		parameterGen.setUseType(true);
 		ParameterGen response = bldr.post(entity(parameterGen, APPLICATION_JSON), ParameterGen.class);
+		assertNotNull(response);
+
+		logger.info(response + "");
+
+		bldr = client.target(BASE_URI_TS + "/updateParameterGen").request(APPLICATION_JSON);
+		parameterGen.setTypePG(BOOLEANO);
+		response = bldr.post(entity(parameterGen, APPLICATION_JSON), ParameterGen.class);
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -468,7 +468,6 @@ public class TestTimeSlot {
 		Builder bldr = client.target(BASE_URI_TS + "/startScheduler").request(APPLICATION_JSON);
 		Transport trasport = new Transport();
 		ShippingOrder shippingOrder = new ShippingOrder("323L");
-		TimeSlot timeSlot = new TimeSlot(122);
 		trasport.setShippingOrder(shippingOrder);
 		trasport.setTimeSlot(timeSlot);
 		String response = bldr.post(entity(trasport, APPLICATION_JSON), String.class);
