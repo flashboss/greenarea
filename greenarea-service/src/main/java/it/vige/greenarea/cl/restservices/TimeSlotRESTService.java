@@ -90,6 +90,7 @@ import it.vige.greenarea.dto.Missione;
 import it.vige.greenarea.dto.Richiesta;
 import it.vige.greenarea.dto.Sched;
 import it.vige.greenarea.dto.Veicolo;
+import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
 import it.vige.greenarea.gtg.db.facades.FreightFacade;
 import it.vige.greenarea.gtg.db.facades.MissionFacade;
 import it.vige.greenarea.gtg.db.facades.TransportFacade;
@@ -153,6 +154,8 @@ public class TimeSlotRESTService {
 	private ValueMissionFacade valueMissionFacade;
 	@EJB
 	private MissionFacade missionFacade;
+	@EJB
+	private ExchangeStopFacade exchangeStopFacade;
 	@EJB
 	private TransportFacade transportFacade;
 	@EJB
@@ -239,16 +242,15 @@ public class TimeSlotRESTService {
 	 *            tsToDelete
 	 * @return TimeSlot
 	 */
-	@POST
+	@GET
 	@Path("/deleteMissions")
-	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
 	public List<Mission> deleteMissions() {
 		List<Mission> missions = missionFacade.findAll();
 		for (Mission mission : missions) {
 			missionFacade.remove(mission);
 		}
-		return missions;
+		return new ArrayList<Mission>();
 	}
 
 	/**

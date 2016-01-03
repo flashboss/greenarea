@@ -241,7 +241,7 @@ public class TimeSlotControl {
 		for (ParameterTS parameter : parameters)
 			ptsf.remove(parameter);
 		tsf.remove(timeSlot);
-		return tsf.find(ts.getIdTS());
+		return new TimeSlot(ts.getIdTS());
 	}
 
 	/**
@@ -319,7 +319,7 @@ public class TimeSlotControl {
 	 */
 	public ParameterGen deleteParameterGen(ParameterGen pg) {
 		pgf.remove(pg);
-		return pgf.find(pg.getId());
+		return new ParameterGen(pg.getId());
 	}
 
 	/**

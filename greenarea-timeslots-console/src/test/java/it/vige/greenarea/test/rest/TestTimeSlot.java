@@ -92,12 +92,12 @@ public class TestTimeSlot {
 
 	@After
 	public void close() {
-		deleteTimeSlot();
-		deleteParameterGen();
-		deletePrices();
-		removeParameterTsToTimeSlot();
-		deleteMissions();
 		deleteShipping();
+		deleteMissions();
+		removeParameterTsToTimeSlot();
+		deletePrices();
+		deleteParameterGen();
+		deleteTimeSlot();
 	}
 
 	private void addTimeSlot() {
@@ -127,7 +127,7 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deleteTimeSlot").request(APPLICATION_JSON);
-		TimeSlot response = bldr.post(entity(timeSlot, APPLICATION_JSON), TimeSlot.class);
+		TimeSlot response = bldr.post(entity(new TimeSlot(timeSlot.getIdTS()), APPLICATION_JSON), TimeSlot.class);
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -155,7 +155,8 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deleteParameterGen").request(APPLICATION_JSON);
-		ParameterGen response = bldr.post(entity(parameterGen, APPLICATION_JSON), ParameterGen.class);
+		ParameterGen response = bldr.post(entity(new ParameterGen(parameterGen.getId()), APPLICATION_JSON),
+				ParameterGen.class);
 		assertNotNull(response);
 
 		logger.info(response + "");
