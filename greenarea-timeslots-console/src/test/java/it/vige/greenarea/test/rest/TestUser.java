@@ -24,6 +24,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -36,6 +37,7 @@ import org.slf4j.Logger;
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.library.entities.Mission;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 import it.vige.greenarea.cl.library.entities.ValueMission;
 import it.vige.greenarea.cl.library.entities.Vehicle;
 import it.vige.greenarea.dto.GreenareaUser;
@@ -67,10 +69,9 @@ public class TestUser {
 		Mission mission = new Mission();
 		mission.setAddressList("nuovo indirizzo");
 		mission.setCompany("nuova compagnia");
-		mission.setStartTime(new Timestamp(342423423));
-		mission.setTimeSlot(new TimeSlot(24234));
-		mission.setTruck(new Vehicle("mio veicolo"));
+		mission.setTruck(new Vehicle("560MK"));
 		mission.setName("missione ino");
+		mission.setStartTime(new Timestamp(new Date().getTime()));
 		mission.setResVikor(322.44);
 		ValueMission lunghezza = new ValueMission();
 		lunghezza.setIdParameter(6);
@@ -87,7 +88,7 @@ public class TestUser {
 		bldr = client.target(BASE_URI_USER + "/deleteMission").request(APPLICATION_JSON);
 		response = bldr.post(entity(mission, APPLICATION_JSON), Mission.class);
 		assertNotNull(response);
-		
+
 		logger.info(response + "");
 	}
 
@@ -196,6 +197,18 @@ public class TestUser {
 		assertNotNull(response);
 		veicolo.setStato(IDLE.name());
 		response = bldr.post(entity(veicolo, APPLICATION_JSON), Veicolo.class);
+		assertNotNull(response);
+
+		logger.info(response + "");
+	}
+
+	@Test
+	public void testGetAllTruckServiceClass() {
+
+		Client client = newClient();
+		Builder bldr = client.target(BASE_URI_USER + "/getTruckServiceClass").request(APPLICATION_JSON);
+		List<TruckServiceClass> response = bldr.get(new GenericType<List<TruckServiceClass>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");

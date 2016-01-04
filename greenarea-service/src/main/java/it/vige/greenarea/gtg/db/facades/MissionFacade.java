@@ -34,7 +34,9 @@ import it.vige.greenarea.cl.library.entities.Freight;
 import it.vige.greenarea.cl.library.entities.FreightItemState;
 import it.vige.greenarea.cl.library.entities.Mission;
 import it.vige.greenarea.cl.library.entities.Mission_;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.ValueMission;
 
 @Stateless
 public class MissionFacade extends AbstractFacade<Mission, Long> {
@@ -95,13 +97,21 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
 		Root<Mission> m = cq.from(Mission.class);
-		Predicate timeSlot = cb.equal(m.get(Mission_.timeSlot), mission.getTimeSlot());
+		TimeSlot timeSlotEntity = mission.getTimeSlot();
+		Predicate timeSlot = cb.equal(m.get(Mission_.timeSlot), timeSlotEntity);
 		Predicate startTime = cb.equal(m.get(Mission_.startTime), mission.getStartTime());
 		Predicate truck = cb.equal(m.get(Mission_.truck), mission.getTruck());
 		Predicate company = cb.equal(m.get(Mission_.company), mission.getCompany());
-		cq.select(m).where(cb.and(company, truck, startTime, timeSlot));
-		return em.createQuery(cq).getResultList().get(0);
-
+		if (timeSlotEntity != null)
+			cq.select(m).where(cb.and(timeSlot, startTime, truck, company));
+		else
+			cq.select(m).where(cb.and(startTime, truck, company));
+		Mission missionEntity = em.createQuery(cq).getResultList().get(0);
+		List<ValueMission> valuesMission = em
+				.createQuery("from ValueMission where mission.id = " + missionEntity.getId(), ValueMission.class)
+				.getResultList();
+		missionEntity.setValuesMission(valuesMission);
+		return missionEntity;
 	}
 
 	public List<Mission> findAllocatedMissions(String owner) {

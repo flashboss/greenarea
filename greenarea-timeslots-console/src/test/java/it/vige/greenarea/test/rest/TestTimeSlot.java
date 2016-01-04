@@ -59,9 +59,7 @@ import it.vige.greenarea.cl.library.entities.ShippingOrder;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.Transport;
 import it.vige.greenarea.cl.library.entities.TransportServiceClass;
-import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 import it.vige.greenarea.cl.library.entities.TsStat;
-import it.vige.greenarea.cl.library.entities.Vehicle;
 import it.vige.greenarea.dto.FasciaOraria;
 import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.Missione;
@@ -573,30 +571,6 @@ public class TestTimeSlot {
 		List<Request> response = bldr.get(new GenericType<List<Request>>() {
 		});
 		assertNull(response);
-
-		logger.info(response + "");
-	}
-
-	@Test
-	public void testGetAllTruckServiceClass() {
-
-		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getTruckServiceClass").request(APPLICATION_JSON);
-		List<TruckServiceClass> response = bldr.get(new GenericType<List<TruckServiceClass>>() {
-		});
-		assertNotNull(response);
-
-		logger.info(response + "");
-	}
-
-	@Test
-	public void testGetVehiclesForOP() {
-
-		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getVehiclesForOP/tnt").request(APPLICATION_JSON);
-		List<Vehicle> response = bldr.get(new GenericType<List<Vehicle>>() {
-		});
-		assertNotNull(response);
 
 		logger.info(response + "");
 	}
