@@ -14,7 +14,6 @@
 package it.vige.greenarea.bpm.tempo.autorizzamissioni;
 
 import static it.vige.greenarea.Constants.BASE_URI_TS;
-import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -42,11 +41,9 @@ public class AggiornamentoRanking extends EmptyAggiornamentoRanking {
 		Client client = newClient();
 		@SuppressWarnings("unchecked")
 		List<Request> allRequests = (List<Request>) execution.getVariable("richieste");
-		for (Request request : allRequests) {
-			Builder bldr = client.target(BASE_URI_TS + "/updateVikor").request(APPLICATION_JSON);
-			bldr.post(entity(asList(new Request[] { request }), APPLICATION_JSON), new GenericType<List<Request>>() {
-			});
-		}
+		Builder bldr = client.target(BASE_URI_TS + "/updateVikor").request(APPLICATION_JSON);
+		bldr.post(entity(allRequests, APPLICATION_JSON), new GenericType<List<Request>>() {
+		});
 	}
 
 }
