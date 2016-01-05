@@ -13,15 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.file;
 
+import static it.vige.greenarea.Utilities.yyyyMMdd;
 import static java.lang.System.getenv;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.InputStream;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,8 +44,6 @@ public class ImportaXLSFile implements ImportaFile {
 
 	private Logger logger = getLogger(getClass());
 
-	private DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-
 	private OperatoreLogistico operatoreLogistico;
 
 	public ImportaXLSFile(OperatoreLogistico operatoreLogistico) {
@@ -61,9 +58,9 @@ public class ImportaXLSFile implements ImportaFile {
 			@Override
 			public boolean accept(File pathname) {
 				long today = 0;
-				String todayStr = dateFormat.format(new Date());
+				String todayStr = yyyyMMdd.format(new Date());
 				try {
-					today = dateFormat.parse(todayStr).getTime();
+					today = yyyyMMdd.parse(todayStr).getTime();
 				} catch (ParseException e) {
 					logger.error("greenarea common", e);
 				}
@@ -166,22 +163,22 @@ public class ImportaXLSFile implements ImportaFile {
 			break;
 		case 6:
 			int data = (int) cell.getNumericCellValue();
-			Date dataFormattata = dateFormat.parse(data + "");
+			Date dataFormattata = yyyyMMdd.parse(data + "");
 			richiestaXML.setDataEarlestPu(dataFormattata);
 			break;
 		case 7:
 			data = (int) cell.getNumericCellValue();
-			dataFormattata = dateFormat.parse(data + "");
+			dataFormattata = yyyyMMdd.parse(data + "");
 			richiestaXML.setDataLatestPu(dataFormattata);
 			break;
 		case 8:
 			data = (int) cell.getNumericCellValue();
-			dataFormattata = dateFormat.parse(data + "");
+			dataFormattata = yyyyMMdd.parse(data + "");
 			richiestaXML.setDataEarlestDelivery(dataFormattata);
 			break;
 		case 9:
 			data = (int) cell.getNumericCellValue();
-			dataFormattata = dateFormat.parse(data + "");
+			dataFormattata = yyyyMMdd.parse(data + "");
 			richiestaXML.setDataLatestDelivery(dataFormattata);
 			break;
 		case 10:

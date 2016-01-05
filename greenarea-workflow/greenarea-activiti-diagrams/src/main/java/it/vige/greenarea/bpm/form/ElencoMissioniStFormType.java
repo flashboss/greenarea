@@ -14,15 +14,14 @@
 package it.vige.greenarea.bpm.form;
 
 import static it.vige.greenarea.Constants.BASE_URI_RICHIESTE;
+import static it.vige.greenarea.Utilities.yyyyMMddNH;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,8 +42,6 @@ public class ElencoMissioniStFormType extends AbstractFormType implements Serial
 	private Logger logger = getLogger(getClass());
 	private static final long serialVersionUID = 1L;
 	protected Map<String, String> values = new LinkedHashMap<String, String>();
-
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-d");
 
 	@Override
 	public String getName() {
@@ -74,10 +71,10 @@ public class ElencoMissioniStFormType extends AbstractFormType implements Serial
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 		RichiestaMissioni richiesta = new RichiestaMissioni();
-		String todayStr = dateFormat.format(new Date());
+		String todayStr = yyyyMMddNH.format(new Date());
 		Date today;
 		try {
-			today = dateFormat.parse(todayStr);
+			today = yyyyMMddNH.parse(todayStr);
 			richiesta.setDataInizio(today);
 			richiesta.setDataFine(today);
 		} catch (ParseException e) {

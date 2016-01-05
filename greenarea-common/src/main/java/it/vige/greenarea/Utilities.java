@@ -22,6 +22,8 @@ import static java.lang.Character.toLowerCase;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
+import static java.util.Locale.ENGLISH;
+import static java.util.Locale.US;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -69,7 +71,23 @@ public class Utilities {
 
 	private static Logger logger = getLogger(Utilities.class);
 
-	private static DateFormat formatter = new SimpleDateFormat("ddMMyyyyhhmmssSSS");
+	public static DateFormat formatter = new SimpleDateFormat("ddMMyyyyhhmmssSSS");
+	public static DateFormat yyyyMMdd = new SimpleDateFormat("yyyyMMdd");
+	public static DateFormat giornata = new SimpleDateFormat("d-MM-yyyy");
+	public static DateFormat orario = new SimpleDateFormat("HH:mm");
+	public static DateFormat hourFormatter = new SimpleDateFormat("HH");
+	public static DateFormat dayFormatter = new SimpleDateFormat("dd");
+	public static DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	public static DateFormat sdfDestination = new SimpleDateFormat("yyyyMMddHHmm");
+	public static DateFormat yyyyMMddDash = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static DateFormat dMyyyy = new SimpleDateFormat("d/M/yyyy");
+	public static DateFormat ddMyyyy = new SimpleDateFormat("dd/MM/yyyy");
+	public static DateFormat yyyyMMddNoH = new SimpleDateFormat("yyyy-MM-dd");
+	public static DateFormat yyyyMMddNH = new SimpleDateFormat("yyyy-MM-d");
+	public static DateFormat yyMMddHHmmss = new SimpleDateFormat("yyMMddHHmmss");
+	public static DateFormat ddMMyyyy = new SimpleDateFormat("dd-MM-yyyy");
+	public static DateFormat usFormatter = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy", US);
+	public static DateFormat enFormatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", ENGLISH);
 
 	private static Poligono poligono;
 
@@ -262,8 +280,6 @@ public class Utilities {
 							&& calendar1.get(YEAR) == calendar2.get(YEAR)
 							&& calendar1.get(MONTH) == calendar2.get(MONTH)) {
 						Double numeroKm = mappaPerGA.get(date).getKm();
-						if (numeroKm == null)
-							numeroKm = 0.0;
 						totaleEmissioni += numeroKm * missione.getVeicolo().getValori().getEmission();
 						totnumeroKm += numeroKm;
 					}
@@ -283,8 +299,6 @@ public class Utilities {
 					&& calendar1.get(MONTH) == calendar2.get(MONTH)) {
 				AccessiInGA accessi = accessiInGA.get(date);
 				numeroKm = accessi.getKm();
-				if (numeroKm == null)
-					numeroKm = 0.0;
 				numeroKm += numeroKm * missione.getVeicolo().getValori().getEmission();
 			}
 		}
@@ -311,8 +325,6 @@ public class Utilities {
 							&& calendar1.get(MONTH) == calendar2.get(MONTH)) {
 						AccessiInGA accessi = accessiInGA.get(date);
 						Double numeroKm = accessi.getKm();
-						if (numeroKm == null)
-							numeroKm = 0.0;
 						totaleEmissioni += numeroKm * missione.getVeicolo().getValori().getEmission();
 					}
 				}

@@ -16,6 +16,7 @@ package it.vige.greenarea.bpm.operatorelogistico.visualizzamissioniautorizzate;
 import static it.vige.greenarea.Constants.BASE_URI_RICHIESTE;
 import static it.vige.greenarea.Conversioni.convertiFasciaOrariaToTimeSlot;
 import static it.vige.greenarea.Utilities.setDettaglio;
+import static it.vige.greenarea.Utilities.yyyyMMddNH;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static java.util.Arrays.asList;
@@ -24,8 +25,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -46,8 +45,6 @@ public class RecuperoDatiMissioni extends EmptyRecuperoDatiMissioni {
 
 	private Logger logger = getLogger(getClass());
 
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-d");
-
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		try {
@@ -57,8 +54,8 @@ public class RecuperoDatiMissioni extends EmptyRecuperoDatiMissioni {
 			Client client = newClient();
 			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 			RichiestaMissioni richiestaMissioni = new RichiestaMissioni();
-			String todayStr = dateFormat.format(new Date());
-			Date today = dateFormat.parse(todayStr);
+			String todayStr = yyyyMMddNH.format(new Date());
+			Date today = yyyyMMddNH.parse(todayStr);
 			richiestaMissioni.setDataInizio(today);
 			richiestaMissioni.setDataFine(today);
 			if (operatoreLogistico != null && !operatoreLogistico.trim().equals("")) {

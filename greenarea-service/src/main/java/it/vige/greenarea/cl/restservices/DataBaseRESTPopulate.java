@@ -13,6 +13,7 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.restservices;
 
+import static it.vige.greenarea.Utilities.dMyyyy;
 import static it.vige.greenarea.dto.AccessoVeicoli.NEGATO;
 import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_FISSO;
 import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_VARIABILE;
@@ -36,9 +37,7 @@ import static it.vige.greenarea.dto.Tolleranza._40_PER_CENTO;
 import static java.util.Arrays.asList;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
@@ -69,7 +68,6 @@ import it.vige.greenarea.gtg.db.facades.MissionFacade;
 @Path("/DataBase")
 @Stateless
 public class DataBaseRESTPopulate {
-	DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
 
 	@EJB
 	private TimeSlotControl tsc;
@@ -116,7 +114,7 @@ public class DataBaseRESTPopulate {
 		ts3.setTollerance(_20_PER_CENTO);
 		ts3.setVikInd(PREMIA_RISPOSTA_LOCALE);
 		ts3.setWmy(TUTTI_I_GIORNI);
-		
+
 		tsc.deleteSlotTime(tsc.findTimeSlot(ts1));
 		tsc.deleteSlotTime(tsc.findTimeSlot(ts2));
 		tsc.deleteSlotTime(tsc.findTimeSlot(ts3));
@@ -357,7 +355,7 @@ public class DataBaseRESTPopulate {
 
 		Mission m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Mario");
@@ -381,7 +379,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("555MK"));
 		m.setCompany("dhl");
 		m.setName("Carlo");
@@ -405,7 +403,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Giorgio");
@@ -429,7 +427,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Gianfranco");
@@ -453,7 +451,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Silvio");
@@ -477,7 +475,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Domenico");
@@ -501,7 +499,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Fabrizio");
@@ -525,7 +523,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Francesco");
@@ -549,7 +547,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Yuri");
@@ -573,7 +571,7 @@ public class DataBaseRESTPopulate {
 		uc.addMission(m);
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Chiara");
@@ -618,7 +616,7 @@ public class DataBaseRESTPopulate {
 
 		Mission m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Mario");
@@ -642,7 +640,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("555MK"));
 		m.setCompany("dhl");
 		m.setName("Carlo");
@@ -666,7 +664,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Giorgio");
@@ -690,7 +688,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Gianfranco");
@@ -714,7 +712,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Silvio");
@@ -737,7 +735,7 @@ public class DataBaseRESTPopulate {
 				new ValueMission[] { valueMission1, valueMission2, valueMission3, valueMission4, valueMission5 })));
 		mf.remove(mf.findMission(m));
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Domenico");
@@ -761,7 +759,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Fabrizio");
@@ -785,7 +783,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Francesco");
@@ -809,7 +807,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Yuri");
@@ -833,7 +831,7 @@ public class DataBaseRESTPopulate {
 		mf.remove(mf.findMission(m));
 		m = new Mission();
 		m.setTimeSlot(timeSlot);
-		m.setStartTime(new Timestamp(dateFormat.parse("2/3/2012").getTime()));
+		m.setStartTime(new Timestamp(dMyyyy.parse("2/3/2012").getTime()));
 		m.setTruck(new Vehicle("44GU4"));
 		m.setCompany("dhl");
 		m.setName("Chiara");

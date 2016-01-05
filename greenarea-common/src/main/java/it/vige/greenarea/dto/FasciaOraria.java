@@ -13,17 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.dto;
 
+import static it.vige.greenarea.Utilities.giornata;
+import static it.vige.greenarea.Utilities.orario;
+
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class FasciaOraria implements Serializable {
 
 	private static final long serialVersionUID = 5101169084273862013L;
-	private DateFormat data = new SimpleDateFormat("d-MM-yyyy");
-	private DateFormat orario = new SimpleDateFormat("HH:mm");
 	private int id;
 	private String nome;
 	private String validita;
@@ -76,7 +75,7 @@ public class FasciaOraria implements Serializable {
 		this.parametri = parametri;
 		this.prezzi = prezzi;
 		this.nome = orario.format(orarioInizio) + " - " + orario.format(orarioFine);
-		this.validita = "dal " + data.format(dataInizio) + " al " + data.format(dataFine);
+		this.validita = "dal " + giornata.format(dataInizio) + " al " + giornata.format(dataFine);
 	}
 
 	public FasciaOraria(int id, List<Parametro> parametri) {
@@ -110,9 +109,9 @@ public class FasciaOraria implements Serializable {
 		String newDataInizio = "";
 		String newDataFine = "";
 		if (dataInizio != null)
-			newDataInizio = data.format(dataInizio);
+			newDataInizio = giornata.format(dataInizio);
 		if (dataFine != null)
-			newDataFine = data.format(dataFine);
+			newDataFine = giornata.format(dataFine);
 		this.validita = "dal " + newDataInizio + " al " + newDataFine;
 	}
 
@@ -125,9 +124,9 @@ public class FasciaOraria implements Serializable {
 		String newDataInizio = "";
 		String newDataFine = "";
 		if (dataInizio != null)
-			newDataInizio = data.format(dataInizio);
+			newDataInizio = giornata.format(dataInizio);
 		if (dataFine != null)
-			newDataFine = data.format(dataFine);
+			newDataFine = giornata.format(dataFine);
 		this.validita = "dal " + newDataInizio + " al " + newDataFine;
 	}
 
@@ -227,11 +226,11 @@ public class FasciaOraria implements Serializable {
 
 	@Override
 	public String toString() {
-		if (data == null || dataInizio == null || orario == null || orarioInizio == null || dataFine == null
+		if (giornata == null || dataInizio == null || orario == null || orarioInizio == null || dataFine == null
 				|| orarioFine == null)
 			return super.toString();
 		else
-			return data.format(dataInizio) + " " + data.format(dataFine) + " | " + orario.format(orarioInizio) + " "
-					+ orario.format(orarioFine);
+			return giornata.format(dataInizio) + " " + giornata.format(dataFine) + " | " + orario.format(orarioInizio)
+					+ " " + orario.format(orarioFine);
 	}
 }

@@ -13,41 +13,39 @@
  ******************************************************************************/
 package it.vige.greenarea.test.file;
 
+import static it.vige.greenarea.Utilities.yyyyMMdd;
 import static java.lang.Thread.currentThread;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import it.vige.greenarea.dto.Filtro;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.GreenareaUser;
-import it.vige.greenarea.file.ImportaCSVFile;
-import it.vige.greenarea.file.ImportaFile;
-import it.vige.greenarea.file.ImportaXLSFile;
-import it.vige.greenarea.vo.RichiestaXML;
 
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
+
+import it.vige.greenarea.dto.Filtro;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.file.ImportaCSVFile;
+import it.vige.greenarea.file.ImportaFile;
+import it.vige.greenarea.file.ImportaXLSFile;
+import it.vige.greenarea.vo.RichiestaXML;
 
 public class ImportaTest {
 
 	@Test
 	public void testParseXlsx_120306_0602Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_120306_0602.xlsx");
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_120306_0602.xlsx");
 		ImportaFile importaFile = new ImportaXLSFile(getOperatoreLogistico());
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
 		assertEquals(richiesteXML.size(), 87);
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
 		RichiestaXML richiestaXML = richiesteXML.get(0);
 		assertEquals(richiestaXML.getShipmentId(), "176190450");
@@ -56,14 +54,10 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 1);
 		assertEquals(richiestaXML.getWeight(), 1.55, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.006, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20120306"));
 		assertEquals(richiestaXML.getTimeFromPu(), 0.3333333333321207, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 0.5833333333321207, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 0.375, 0);
@@ -85,8 +79,7 @@ public class ImportaTest {
 		assertNull(richiestaXML.getTel());
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10123-VIA CALANDRA FRATELLI 5-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10123-VIA CALANDRA FRATELLI 5-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 
 		richiestaXML = richiesteXML.get(57);
@@ -96,14 +89,10 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 2);
 		assertEquals(richiestaXML.getWeight(), 21.5, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.169, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20120306"));
 		assertEquals(richiestaXML.getTimeFromPu(), 0.3333333333321207, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 0.5833333333321207, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 0.375, 0);
@@ -125,8 +114,7 @@ public class ImportaTest {
 		assertNull(richiestaXML.getTel());
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10123-VIA MAZZINI GIUSEPPE 7-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10123-VIA MAZZINI GIUSEPPE 7-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 
 		richiestaXML = richiesteXML.get(86);
@@ -136,14 +124,10 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 1);
 		assertEquals(richiestaXML.getWeight(), 2.0, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.02, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20120306"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20120306"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20120306"));
 		assertEquals(richiestaXML.getTimeFromPu(), 0.3333333333321207, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 0.5833333333321207, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 0.375, 0);
@@ -151,8 +135,7 @@ public class ImportaTest {
 		assertNull(richiestaXML.getHandlingType());
 		assertEquals(richiestaXML.getPackageType(), 'C');
 		assertEquals(richiestaXML.getCustomer(), "COIN TORINO - 548");
-		assertEquals(richiestaXML.getAddress(),
-				"VIA LAGRANGE GIUSEPPE LUIGI 47");
+		assertEquals(richiestaXML.getAddress(), "VIA LAGRANGE GIUSEPPE LUIGI 47");
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
@@ -166,26 +149,23 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "041-2398000");
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10123-VIA LAGRANGE GIUSEPPE LUIGI 47-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10123-VIA LAGRANGE GIUSEPPE LUIGI 47-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 	}
 
 	@Test
 	public void testParseXlsx_120306_0602Errato() throws Exception {
 		/*
-		 * Il file contiene un errore sul weight alla riga 11 poich?????? in formato
-		 * stringa anzich?????? double
+		 * Il file contiene un errore sul weight alla riga 11 poich?????? in
+		 * formato stringa anzich?????? double
 		 */
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ERR_120306_0602.xlsx");
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ERR_120306_0602.xlsx");
 		ImportaFile importaFile = new ImportaXLSFile(getOperatoreLogistico());
 		assertTrue(importaFile.getDirectory().exists());
 		try {
-			importaFile.prelevaDati(inputStream, asList(new Filtro[] {
-					new Filtro("01", "tnt"), new Filtro("02", "tnt"),
-					new Filtro("06", "tnt") }));
+			importaFile.prelevaDati(inputStream,
+					asList(new Filtro[] { new Filtro("01", "tnt"), new Filtro("02", "tnt"), new Filtro("06", "tnt") }));
 			fail();
 		} catch (IllegalStateException ex) {
 
@@ -195,15 +175,12 @@ public class ImportaTest {
 	@Test
 	public void testParseCsv140930_1011Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_140930_1011.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_140930_1011.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
 		assertEquals(richiesteXML.size(), 81);
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
 		RichiestaXML richiestaXML = richiesteXML.get(0);
 		assertEquals(richiestaXML.getShipmentId(), "272013040");
@@ -212,14 +189,10 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 2);
 		assertEquals(richiestaXML.getWeight(), 2.45, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.01, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20140930"));
 		assertEquals(richiestaXML.getTimeFromPu(), 8.0, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 14.0, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 9.0, 0);
@@ -241,8 +214,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10100-VIA CARLO ALBERTO 24-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10100-VIA CARLO ALBERTO 24-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.066110, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.684473, 0.0);
@@ -254,14 +226,10 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 1);
 		assertEquals(richiestaXML.getWeight(), 0.2, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.001, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20140930"));
 		assertEquals(richiestaXML.getTimeFromPu(), 8.0, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 14.0, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 9.0, 0);
@@ -283,8 +251,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertEquals(richiestaXML.getEmail(), "milano@projetexport.it");
 		assertEquals(richiestaXML.getHandlingClass(), 1);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10100-VIA ANDREA DORIA 15-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10100-VIA ANDREA DORIA 15-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.063974, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.684381, 0.0);
@@ -296,22 +263,17 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getPieces(), 1);
 		assertEquals(richiestaXML.getWeight(), 0.66, 0.0);
 		assertEquals(richiestaXML.getVolume(), 0.01, 0.0);
-		assertEquals(richiestaXML.getDataEarlestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestPu(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataEarlestDelivery(),
-				dateFormat.parse("20140930"));
-		assertEquals(richiestaXML.getDataLatestDelivery(),
-				dateFormat.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestPu(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataEarlestDelivery(), yyyyMMdd.parse("20140930"));
+		assertEquals(richiestaXML.getDataLatestDelivery(), yyyyMMdd.parse("20140930"));
 		assertEquals(richiestaXML.getTimeFromPu(), 8.0, 0);
 		assertEquals(richiestaXML.getTimeToPu(), 14.0, 0);
 		assertEquals(richiestaXML.getTimeFromDelivery(), 9.0, 0);
 		assertEquals(richiestaXML.getTimeToDelivery(), 17.0, 0);
 		assertNull(richiestaXML.getHandlingType());
 		assertEquals(richiestaXML.getPackageType(), 'C');
-		assertEquals(richiestaXML.getCustomer(),
-				"STILELIBRI SNC C/O IL NOSTRO TEMPO SS");
+		assertEquals(richiestaXML.getCustomer(), "STILELIBRI SNC C/O IL NOSTRO TEMPO SS");
 		assertEquals(richiestaXML.getAddress(), "VIA S. FRANCESCO DA PAOLA");
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
@@ -326,24 +288,19 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10123-VIA S. FRANCESCO DA PAOLA-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10123-VIA S. FRANCESCO DA PAOLA-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.061035, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.683869, 0.0);
 	}
 
 	@Test
-	public void testParseCsv140930_1011CorrettoConDataOdierna()
-			throws Exception {
+	public void testParseCsv140930_1011CorrettoConDataOdierna() throws Exception {
 		Date date = new Date();
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-		Date newDate = dateFormat.parse(dateFormat.format(date));
+		Date newDate = yyyyMMdd.parse(yyyyMMdd.format(date));
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_140930_1011.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				newDate);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_140930_1011.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), newDate);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
@@ -381,8 +338,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10100-VIA CARLO ALBERTO 24-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10100-VIA CARLO ALBERTO 24-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.066110, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.684473, 0.0);
@@ -419,8 +375,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertEquals(richiestaXML.getEmail(), "milano@projetexport.it");
 		assertEquals(richiestaXML.getHandlingClass(), 1);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10100-VIA ANDREA DORIA 15-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10100-VIA ANDREA DORIA 15-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.063974, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.684381, 0.0);
@@ -442,8 +397,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTimeToDelivery(), 17.0, 0);
 		assertNull(richiestaXML.getHandlingType());
 		assertEquals(richiestaXML.getPackageType(), 'C');
-		assertEquals(richiestaXML.getCustomer(),
-				"STILELIBRI SNC C/O IL NOSTRO TEMPO SS");
+		assertEquals(richiestaXML.getCustomer(), "STILELIBRI SNC C/O IL NOSTRO TEMPO SS");
 		assertEquals(richiestaXML.getAddress(), "VIA S. FRANCESCO DA PAOLA");
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
@@ -458,8 +412,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getTel(), "393488907073");
 		assertNull(richiestaXML.getEmail());
 		assertEquals(richiestaXML.getHandlingClass(), 2);
-		assertEquals(richiestaXML.getLocExtId(),
-				"10123-VIA S. FRANCESCO DA PAOLA-TORINO");
+		assertEquals(richiestaXML.getLocExtId(), "10123-VIA S. FRANCESCO DA PAOLA-TORINO");
 		assertEquals(richiestaXML.getStatus(), 1);
 		assertEquals(richiestaXML.getLatitude(), 45.061035, 0.0);
 		assertEquals(richiestaXML.getLongitude(), 7.683869, 0.0);
@@ -472,15 +425,12 @@ public class ImportaTest {
 		 * poich?? in formato stringa anzich?? double
 		 */
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ERR_140930_1011.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ERR_140930_1011.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		try {
-			importaFile.prelevaDati(inputStream, asList(new Filtro[] {
-					new Filtro("01", "tnt"), new Filtro("02", "tnt"),
-					new Filtro("06", "tnt") }));
+			importaFile.prelevaDati(inputStream,
+					asList(new Filtro[] { new Filtro("01", "tnt"), new Filtro("02", "tnt"), new Filtro("06", "tnt") }));
 			fail();
 		} catch (NumberFormatException ex) {
 
@@ -490,10 +440,8 @@ public class ImportaTest {
 	@Test
 	public void testParseCsv141020_0900Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_141020_0900.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_141020_0900.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
@@ -503,10 +451,8 @@ public class ImportaTest {
 	@Test
 	public void testParseCsv141020_0904Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_141020_0904.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_141020_0904.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
@@ -516,10 +462,8 @@ public class ImportaTest {
 	@Test
 	public void testParseCsv141021_0900Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_141021_0900.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_141021_0900.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
@@ -529,10 +473,8 @@ public class ImportaTest {
 	@Test
 	public void testParseCsv141021_0904Corretto() throws Exception {
 		InputStream inputStream = currentThread().getContextClassLoader()
-				.getResourceAsStream(
-						"it/vige/greenarea/file/TO1_ORD_141021_0904.CSV");
-		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-				null);
+				.getResourceAsStream("it/vige/greenarea/file/TO1_ORD_141021_0904.CSV");
+		ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), null);
 		assertTrue(importaFile.getDirectory().exists());
 		List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
 				asList(new Filtro[] { new Filtro("01", "tnt") }));
@@ -542,8 +484,7 @@ public class ImportaTest {
 	private OperatoreLogistico getOperatoreLogistico() {
 		GreenareaUser greenareaUser = new GreenareaUser();
 		greenareaUser.setId("tnt");
-		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(
-				greenareaUser);
+		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(greenareaUser);
 		return operatoreLogistico;
 	}
 }

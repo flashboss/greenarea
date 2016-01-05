@@ -18,6 +18,7 @@ import static it.vige.greenarea.Conversioni.convertiFasciaOrariaToTimeSlot;
 import static it.vige.greenarea.Conversioni.convertiRichiestaToTransport;
 import static it.vige.greenarea.Conversioni.convertiVeicoloToVehicle;
 import static it.vige.greenarea.GTGsystem.olivetti;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.cl.library.entities.FreightItemState.AVAILABLE;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.assigned;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.waiting;
@@ -33,9 +34,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -85,8 +84,6 @@ public class MissionBuilderBean {
 	private TruckFacade truckFacade;
 	@EJB
 	private Scheduler sc;
-
-	private DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 
 	private GeoLocation base = olivetti;
 
@@ -227,8 +224,8 @@ public class MissionBuilderBean {
 		} else {
 			try {
 				for (Transport transport : transports) {
-					String dateStr = dateFormat.format(transport.getDateMiss());
-					if (dateFormat.parse(dateStr).compareTo(date) == 0 && transport.getRoundCode().equals(roundCode)) {
+					String dateStr = giornata.format(transport.getDateMiss());
+					if (giornata.parse(dateStr).compareTo(date) == 0 && transport.getRoundCode().equals(roundCode)) {
 						filteredTransports.add(transport);
 					}
 				}

@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.custom.ui.operatorelogistico;
 
 import static com.vaadin.ui.themes.Reindeer.LAYOUT_WHITE;
+import static it.vige.greenarea.Utilities.ddMyyyy;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PERFORMANCE_MISSIONI_BONUS;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PERFORMANCE_MISSIONI_NUMERO_GIALLI;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PERFORMANCE_MISSIONI_NUMERO_ROSSI;
@@ -33,7 +34,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -316,12 +316,11 @@ public class PerformanceMissioni extends ReportDetailPanel {
 
 			@Override
 			public int compare(String o1, String o2) {
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 				Date date1 = new Date();
 				Date date2 = new Date();
 				try {
-					date1 = dateFormat.parse(o1);
-					date2 = dateFormat.parse(o2);
+					date1 = ddMyyyy.parse(o1);
+					date2 = ddMyyyy.parse(o2);
 				} catch (ParseException e) {
 					logger.error("parse della data", e);
 				}

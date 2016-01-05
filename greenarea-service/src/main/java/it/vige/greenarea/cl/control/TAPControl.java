@@ -15,13 +15,12 @@ package it.vige.greenarea.cl.control;
 
 import static it.vige.greenarea.Conversioni.addDays;
 import static it.vige.greenarea.Utilities.getPoligonoPerGA;
+import static it.vige.greenarea.Utilities.yyyyMMddDash;
 import static it.vige.greenarea.dto.Selezione.TUTTI;
 import static it.vige.greenarea.geofencing.Distance.calcolateDistance;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -87,8 +86,6 @@ public class TAPControl {
 	private MissionFacade missionFacade;
 
 	private Poligono poligono = getPoligonoPerGA();
-
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	/**
 	 * <p>
@@ -350,7 +347,7 @@ public class TAPControl {
 		for (TapParamData tapParamData : paramGroup.get(tapGroupData)) {
 			if (tapParamData.getName().equals("TIMESTAMP"))
 				try {
-					data = dateFormat.parse(tapParamData.getValue());
+					data = yyyyMMddDash.parse(tapParamData.getValue());
 				} catch (ParseException e) {
 					logger.error("errore sul parsing", e);
 				}
@@ -412,8 +409,8 @@ public class TAPControl {
 							for (TapParamData tapParamData2 : tapParamDatass) {
 								if (tapParamData2.getName().equals("TIMESTAMP"))
 									try {
-										if (dateFormat.parse(tapParamData2.getValue())
-												.compareTo(dateFormat.parse(tapParamData.getValue())) > 0)
+										if (yyyyMMddDash.parse(tapParamData2.getValue())
+												.compareTo(yyyyMMddDash.parse(tapParamData.getValue())) > 0)
 											lastGpsData = tapGroupData;
 										currentGpsData = tapGroupData;
 									} catch (ParseException e) {

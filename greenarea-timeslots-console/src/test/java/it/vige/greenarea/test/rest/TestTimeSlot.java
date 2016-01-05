@@ -15,10 +15,14 @@ package it.vige.greenarea.test.rest;
 
 import static it.vige.greenarea.Constants.BASE_URI_TS;
 import static it.vige.greenarea.Conversioni.convertiTimeSlotToFasciaOraria;
+import static it.vige.greenarea.Utilities.enFormatter;
+import static it.vige.greenarea.Utilities.yyyyMMddNH;
 import static it.vige.greenarea.dto.AccessoVeicoli.NEGATO;
 import static it.vige.greenarea.dto.AperturaRichieste._2_GIORNI_PRIMA;
 import static it.vige.greenarea.dto.ChiusuraRichieste._1_GIORNO_PRIMA;
+import static it.vige.greenarea.dto.Color.GIALLO;
 import static it.vige.greenarea.dto.Color.ROSSO;
+import static it.vige.greenarea.dto.Color.VERDE;
 import static it.vige.greenarea.dto.Fuel.BENZINA;
 import static it.vige.greenarea.dto.Peso.BASSO;
 import static it.vige.greenarea.dto.Ripetizione.FESTIVI;
@@ -26,9 +30,9 @@ import static it.vige.greenarea.dto.StatoMissione.WAITING;
 import static it.vige.greenarea.dto.StatoVeicolo.IDLE;
 import static it.vige.greenarea.dto.TipoParametro.DA_DECIDERE;
 import static it.vige.greenarea.dto.TipologiaClassifica.CLASSIFICA_STANDARD;
-import static it.vige.greenarea.dto.TipologiaParametro.BOOLEANO;
 import static it.vige.greenarea.dto.TipologiaParametro.CONTATORE;
 import static it.vige.greenarea.dto.Tolleranza._50_PER_CENTO;
+import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -36,6 +40,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +81,7 @@ public class TestTimeSlot {
 
 	private TimeSlot timeSlot;
 	private ParameterGen parameterGen;
+	private String dateMission;
 
 	@Before
 	public void init() {
@@ -138,7 +144,7 @@ public class TestTimeSlot {
 		Builder bldr = client.target(BASE_URI_TS + "/addParameterGen").request(APPLICATION_JSON);
 		ParameterGen parameterGen = new ParameterGen();
 		parameterGen.setDescription("mia descrizione");
-		parameterGen.setTypePG(BOOLEANO);
+		parameterGen.setTypePG(CONTATORE);
 		parameterGen.setMeasureUnit("euro");
 		parameterGen.setNamePG("mio p g");
 		parameterGen.setUseType(true);
@@ -165,11 +171,12 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/addPrice").request(APPLICATION_JSON);
 		Price price = new Price();
-		price.setColor(ROSSO);
+		price.setColor(GIALLO);
 		price.setFixPrice(333);
 		price.setMaxPrice(565555);
 		price.setMinPrice(222);
 		price.setTypeEntry(NEGATO);
+		price.setTs(timeSlot);
 		Price response = bldr.post(entity(price, APPLICATION_JSON), Price.class);
 		assertNotNull(response);
 
@@ -181,11 +188,12 @@ public class TestTimeSlot {
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deletePrice").request(APPLICATION_JSON);
 		Price price = new Price();
-		price.setColor(ROSSO);
+		price.setColor(GIALLO);
 		price.setFixPrice(333);
 		price.setMaxPrice(565555);
 		price.setMinPrice(222);
 		price.setTypeEntry(NEGATO);
+		price.setTs(timeSlot);
 		Price response = bldr.post(entity(price, APPLICATION_JSON), Price.class);
 		assertNotNull(response);
 
@@ -241,7 +249,9 @@ public class TestTimeSlot {
 		Builder bldr = client.target(BASE_URI_TS + "/buildMission").request(APPLICATION_JSON);
 		Missione missione = new Missione("prova", WAITING);
 		FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot);
-		fasciaOraria.setParametri(new ArrayList<Parametro>());
+		List<Parametro> parametri = new ArrayList<Parametro>();
+		parametri.add(new Parametro(parameterGen.getId(), "lunghezza"));
+		fasciaOraria.setParametri(parametri);
 		missione.setFasciaOraria(fasciaOraria);
 		Veicolo veicolo = new Veicolo(IDLE.name(), "44GU4");
 		veicolo.setAutista(new GreenareaUser("user"));
@@ -252,10 +262,13 @@ public class TestTimeSlot {
 		veicolo.setValori(valori);
 		missione.setVeicolo(veicolo);
 		missione.setRichieste(new ArrayList<Richiesta>());
+		missione.setLunghezza("15.9");
 		Mission response = bldr.post(entity(missione, APPLICATION_JSON), Mission.class);
 		assertNotNull(response);
 
 		logger.info(response + "");
+		dateMission = enFormatter.format(response.getStartTime());
+		timeSlot = response.getTimeSlot();
 	}
 
 	private void addShipping() {
@@ -315,7 +328,7 @@ public class TestTimeSlot {
 		logger.info(response + "");
 
 		bldr = client.target(BASE_URI_TS + "/updateParameterGen").request(APPLICATION_JSON);
-		parameterGen.setTypePG(BOOLEANO);
+		parameterGen.setTypePG(CONTATORE);
 		response = bldr.post(entity(parameterGen, APPLICATION_JSON), ParameterGen.class);
 		assertNotNull(response);
 
@@ -503,7 +516,7 @@ public class TestTimeSlot {
 	public void testGetrRank() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getRank/573/Fri May 16 00:00:00 CEST 2014")
+		Builder bldr = client.target(BASE_URI_TS + "/getRank/" + timeSlot.getIdTS() + "/" + dateMission)
 				.request(APPLICATION_JSON);
 		List<Request> response = bldr.get(new GenericType<List<Request>>() {
 		});
@@ -515,11 +528,25 @@ public class TestTimeSlot {
 	@Test
 	public void testUpdateVikor() {
 
+		Request request = new Request();
+		request.setCarPlate("44GU4");
+		request.setCompany("dhl");
+		try {
+			request.setDateMiss(yyyyMMddNH.parse(dateMission));
+		} catch (ParseException e) {
+			logger.error("parte test", e);
+		}
+		request.setIdMission(33);
+		request.setIdTimeSlot(timeSlot.getIdTS());
+		request.setPrice(5.6);
+		request.setColor(VERDE);
+		request.setQu(new double[] { 3.2, 7.8, 9.9 });
+
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/updateVikor/573/Fri May 16 00:00:00 CEST 2014")
-				.request(APPLICATION_JSON);
-		List<Request> response = bldr.get(new GenericType<List<Request>>() {
-		});
+		Builder bldr = client.target(BASE_URI_TS + "/updateVikor").request(APPLICATION_JSON);
+		List<Request> response = bldr.post(entity(asList(new Request[] { request }), APPLICATION_JSON),
+				new GenericType<List<Request>>() {
+				});
 		assertNotNull(response);
 
 		logger.info(response + "");

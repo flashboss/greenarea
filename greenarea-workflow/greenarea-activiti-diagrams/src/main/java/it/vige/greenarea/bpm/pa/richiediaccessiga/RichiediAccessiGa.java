@@ -14,6 +14,9 @@
 package it.vige.greenarea.bpm.pa.richiediaccessiga;
 
 import static it.vige.greenarea.Constants.BASE_URI_TAP;
+import static it.vige.greenarea.Utilities.dayFormatter;
+import static it.vige.greenarea.Utilities.ddMMyyyy;
+import static it.vige.greenarea.Utilities.hourFormatter;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static java.util.Arrays.asList;
@@ -22,7 +25,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -62,19 +64,18 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 			Map<Date, AccessiInGA> response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON),
 					new GenericType<Map<Date, AccessiInGA>>() {
 					});
-			SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-			execution.setVariable("dal", df.format(dal));
-			execution.setVariable("al", df.format(al));
+			execution.setVariable("dal", ddMMyyyy.format(dal));
+			execution.setVariable("al", ddMMyyyy.format(al));
 
 			// TODO Mock data da sostituire con i valori della TAP
 			Map<String, Number> reportData = new LinkedHashMap<String, Number>();
 
-			if (df.format(dal).equals(df.format(al))) {
+			if (ddMMyyyy.format(dal).equals(ddMMyyyy.format(al))) {
 				for (int i = 0; i < 24; i++) {
 					int conteggioAccessi = 0;
 					reportData.put("" + i, 0);
 					for (Date date : response.keySet()) {
-						int hour = new Integer(new SimpleDateFormat("HH").format(date));
+						int hour = new Integer(hourFormatter.format(date));
 						if (hour == i) {
 							int conteggio = response.get(date) == null ? 0 : response.get(date).getAccessi();
 							conteggioAccessi += conteggio;
@@ -94,11 +95,11 @@ public class RichiediAccessiGa extends EmptyRichiediAccessiGa {
 
 				while (!ss.equals(ee)) {
 					int conteggioAccessi = 0;
-					day = df.format(ss.getTime()).substring(0, 2);
+					day = ddMMyyyy.format(ss.getTime()).substring(0, 2);
 
 					reportData.put(day, 0);
 					for (Date date : response.keySet()) {
-						String dayOut = new SimpleDateFormat("dd").format(date);
+						String dayOut = dayFormatter.format(date);
 						if (dayOut.equals(day)) {
 							int conteggio = response.get(date) == null ? 0 : response.get(date).getAccessi();
 							conteggioAccessi += conteggio;

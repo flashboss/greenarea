@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.custom.ui.form;
 
 import static com.vaadin.terminal.Sizeable.UNITS_PIXELS;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.MISSIONI_PA_SINTESI_TABLE_FIELDS;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_COLLECTION;
 import static it.vige.greenarea.dto.Operazione.CANCELLAZIONE;
@@ -24,9 +25,7 @@ import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 
 import java.lang.reflect.Method;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -179,11 +178,10 @@ public class MissioniPASintesiFormPropertyRenderer extends GreenareaAbstractForm
 	}
 
 	public String getPropertyLabel(FormProperty formProperty, DettaglioMissione type) {
-		DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 		String message = null;
 		try {
-			message = getMessage(formProperty.getId(), dateFormat.format(type.getDal()),
-					dateFormat.format(type.getAl()));
+			message = getMessage(formProperty.getId(), giornata.format(type.getDal()),
+					giornata.format(type.getAl()));
 		} catch (Exception ex) {
 			if (formProperty.getName() != null) {
 				return formProperty.getName();

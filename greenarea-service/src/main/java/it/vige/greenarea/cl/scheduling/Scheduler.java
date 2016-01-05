@@ -14,15 +14,16 @@
 package it.vige.greenarea.cl.scheduling;
 
 import static it.vige.greenarea.Conversioni.addDays;
+import static it.vige.greenarea.Utilities.dMyyyy;
+import static it.vige.greenarea.Utilities.ddMyyyy;
+import static it.vige.greenarea.Utilities.fmt;
 import static it.vige.greenarea.cl.scheduling.Tone.sound;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
 import static java.util.Calendar.getInstance;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,8 +63,6 @@ import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 public class Scheduler {
 
 	private Logger logger = getLogger(getClass());
-
-	DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
 
 	@PersistenceContext(unitName = "GTGwebPU")
 	private EntityManager em;
@@ -121,8 +120,7 @@ public class Scheduler {
 		try {
 			TimeSlot tiSlo = sc.getTimeSlot();
 			String timeTS = tiSlo.getStartTS() + " " + tiSlo.getFinishTS();
-			DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-			String dateTs = fmt.format(sc.getDateMiss()) + " " + timeTS;
+			String dateTs = ddMyyyy.format(sc.getDateMiss()) + " " + timeTS;
 			sc.setTimeSlot(tiSlo);
 			sc.setTimeAccept(makeDate(dateTs, tiSlo.getTimeToAcceptRequest().getValue()));
 			sc.setTimeClosing(makeDate(dateTs, tiSlo.getTimeToStopRequest().getValue()));
@@ -143,7 +141,6 @@ public class Scheduler {
 	private Date makeDate(String date, int hours) {
 		Calendar c1 = getInstance();
 		try {
-			SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			fmt.setLenient(false);
 			Date d1 = fmt.parse(date);
 			c1.setTime(d1);
@@ -169,11 +166,11 @@ public class Scheduler {
 		Date inizio = richiesta.getOrarioInizio();
 		Date fine = richiesta.getOrarioFine();
 		if (inizio != null) {
-			String strInizio = dateFormat.format(inizio);
-			String strFine = dateFormat.format(fine);
+			String strInizio = dMyyyy.format(inizio);
+			String strFine = dMyyyy.format(fine);
 			try {
-				richiesta.setOrarioInizio(dateFormat.parse(strInizio));
-				richiesta.setOrarioFine(addDays(dateFormat.parse(strFine), 1));
+				richiesta.setOrarioInizio(dMyyyy.parse(strInizio));
+				richiesta.setOrarioFine(addDays(dMyyyy.parse(strFine), 1));
 			} catch (ParseException e) {
 				logger.error("errore nel format della data inizio", e);
 			}

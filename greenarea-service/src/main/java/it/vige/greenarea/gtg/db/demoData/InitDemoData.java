@@ -20,6 +20,8 @@ import static it.vige.greenarea.Conversioni.convertiFiltersToFiltri;
 import static it.vige.greenarea.Conversioni.convertiFreightToShippingItem;
 import static it.vige.greenarea.Conversioni.convertiRichiesteToShippingOrders;
 import static it.vige.greenarea.Utilities.createMockShippingId;
+import static it.vige.greenarea.Utilities.giornata;
+import static it.vige.greenarea.Utilities.yyyyMMddNoH;
 import static it.vige.greenarea.cl.library.entities.FreightType.ALTRO_TIPO;
 import static it.vige.greenarea.cl.library.entities.FreightType.DOCUMENTI;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.waiting;
@@ -51,9 +53,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.InputStream;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -169,21 +169,19 @@ public class InitDemoData extends GTGsystem {
 	@Inject
 	private GTGmanagerBean gTGmanagerBean;
 
-	private List<MissionItem> ml;
-
-	private DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+	private List<MissionItem> ml;	
 
 	public void caricaPolicy() {
 
 		List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
 		List<TimeSlot> allTimeSlots = tsc.findAllTimeSlots();
 		Date d1 = new Date();
-		String dataInizio = dateFormat.format(addDays(d1, -6));
+		String dataInizio = giornata.format(addDays(d1, -6));
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(d1); // Now use today date.
 		c.add(Calendar.DATE, 4); // Adding 5 days
-		String dataFine = dateFormat.format(c.getTime());
+		String dataFine = giornata.format(c.getTime());
 		for (TimeSlot timeSlot : allTimeSlots)
 			if (timeSlot.getDayFinish().equals("12-12-2014") && timeSlot.getDayStart().equals("11-12-2014")
 					|| timeSlot.getDayFinish().equals("13-12-2014") && timeSlot.getDayStart().equals("12-12-2014")
@@ -1812,12 +1810,12 @@ public class InitDemoData extends GTGsystem {
 		if (!transports.isEmpty()) {
 			for (Transport transport : transports) {
 				Date date = transport.getDateMiss();
-				String dateStr = dateFormat.format(date);
+				String dateStr = giornata.format(date);
 				String roundCode = transport.getRoundCode();
 				String codice = roundCode + dateStr;
 				if (!codiciPerTrasporti.contains(codice)) {
 					try {
-						gTGmanagerBean.buildMission(dateFormat.parse(dateStr), roundCode);
+						gTGmanagerBean.buildMission(giornata.parse(dateStr), roundCode);
 						codiciPerTrasporti.add(codice);
 					} catch (ParseException e) {
 						logger.error("formattazione della data", e);
@@ -2015,7 +2013,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento1() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd").format(addDays(new Date(), -5));
+		String dataSpostamento = yyyyMMddNoH.format(addDays(new Date(), -5));
 		TapParamData tapParamData1 = new TapParamData();
 		tapParamData1.setName("TOTAL_ODOMETER");
 		tapParamData1.setValue("0");
@@ -3577,7 +3575,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento2() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd").format(addDays(new Date(), -4));
+		String dataSpostamento = yyyyMMddNoH.format(addDays(new Date(), -4));
 		TapParamData tapParamData278 = new TapParamData();
 		tapParamData278.setName("TOTAL_ODOMETER");
 		tapParamData278.setValue("0");

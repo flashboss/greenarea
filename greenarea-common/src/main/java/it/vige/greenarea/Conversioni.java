@@ -13,6 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea;
 
+import static it.vige.greenarea.Utilities.fmt;
+import static it.vige.greenarea.Utilities.giornata;
+import static it.vige.greenarea.Utilities.orario;
+import static it.vige.greenarea.Utilities.sdfDestination;
 import static it.vige.greenarea.cl.library.entities.FreightType.ALTRO_TIPO;
 import static it.vige.greenarea.cl.library.entities.FreightType.DOCUMENTI;
 import static it.vige.greenarea.dto.StatoMissione.values;
@@ -21,7 +25,6 @@ import static java.util.Arrays.asList;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,7 +83,7 @@ import it.vige.greenarea.dto.ValoriVeicolo;
 import it.vige.greenarea.dto.Veicolo;
 
 public class Conversioni {
-
+	
 	private static Logger logger = getLogger(Conversioni.class);
 
 	public static Request convertiMissioneToRequest(Missione missione) {
@@ -281,8 +284,6 @@ public class Conversioni {
 		TimeSlot timeSlot = null;
 		if (fasciaOraria != null) {
 			timeSlot = new TimeSlot(fasciaOraria.getId());
-			DateFormat giornata = new SimpleDateFormat("d-MM-yyyy");
-			DateFormat orario = new SimpleDateFormat("HH:mm");
 			timeSlot.setDayFinish(giornata.format(fasciaOraria.getDataFine()));
 			timeSlot.setDayStart(giornata.format(fasciaOraria.getDataInizio()));
 			timeSlot.setPa(fasciaOraria.getPa().getId());
@@ -313,8 +314,6 @@ public class Conversioni {
 			List<ParameterGen> parameterGens, List<Price> prices) {
 		FasciaOraria fasciaOraria = null;
 		if (timeSlot != null) {
-			DateFormat giornata = new SimpleDateFormat("d-MM-yyyy");
-			DateFormat orario = new SimpleDateFormat("HH:mm");
 			fasciaOraria = new FasciaOraria();
 			fasciaOraria.setId(timeSlot.getIdTS());
 			try {
@@ -348,8 +347,6 @@ public class Conversioni {
 	public static FasciaOraria convertiTimeSlotToFasciaOraria(TimeSlot timeSlot) {
 		FasciaOraria fasciaOraria = null;
 		if (timeSlot != null) {
-			DateFormat giornata = new SimpleDateFormat("d-MM-yyyy");
-			DateFormat orario = new SimpleDateFormat("HH:mm");
 			fasciaOraria = new FasciaOraria();
 			fasciaOraria.setId(timeSlot.getIdTS());
 			try {
@@ -749,7 +746,6 @@ public class Conversioni {
 			if (timeSlot != null) {
 				sched.setIdTimeSlot(timeSlot.getIdTS());
 				String timeTS = timeSlot.getStartTS() + " " + timeSlot.getFinishTS();
-				DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 				String dateTs = fmt.format(addDays(transport.getDateMiss(), -1)) + " " + timeTS;
 				sched.setTimeSlot(dateTs);
 			}
@@ -778,7 +774,6 @@ public class Conversioni {
 
 		String result;
 		// create SimpleDateFormat object with desired date format
-		SimpleDateFormat sdfDestination = new SimpleDateFormat("yyyyMMddHHmm");
 		// parse the date into another format
 		result = sdfDestination.format(t);
 		return result;
@@ -787,9 +782,8 @@ public class Conversioni {
 	public static Timestamp convertStringToTimestamp(String s) {
 
 		Timestamp result = null;
+		String format = ((SimpleDateFormat)sdfDestination).toPattern();
 		// create SimpleDateFormat object with desired date format
-		String format = "yyyyMMddHHmm";
-		SimpleDateFormat sdfDestination = new SimpleDateFormat(format);
 		while (s.length() < format.length()) {
 			s = s + "0";
 		}

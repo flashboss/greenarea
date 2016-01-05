@@ -248,6 +248,11 @@ public class TimeSlotRESTService {
 	public List<Mission> deleteMissions() {
 		List<Mission> missions = missionFacade.findAll();
 		for (Mission mission : missions) {
+			List<ValueMission> valuesMission = mission.getValuesMission();
+			if (valuesMission != null)
+				for (ValueMission valueMission : valuesMission) {
+					valueMissionFacade.remove(valueMission);
+				}
 			missionFacade.remove(mission);
 		}
 		return new ArrayList<Mission>();
@@ -712,12 +717,12 @@ public class TimeSlotRESTService {
 	 *            List<Request>
 	 * @return List<Request>
 	 */
-	@GET
-	@Path("/updateVikor/{idTimeSlot}/{dateMiss}")
+	@POST
+	@Path("/updateVikor")
+	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public List<Request> updateVikor(@PathParam("idTimeSlot") int idTimeSlot,
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
-		return tsc.updateVikor(null, dateMiss, idTimeSlot);
+	public List<Request> updateVikor(List<Request> requests) {
+		return tsc.updateVikor(requests, requests.get(0).getDateMiss(), requests.get(0).getIdTimeSlot());
 	}
 
 	/**

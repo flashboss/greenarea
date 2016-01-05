@@ -13,6 +13,7 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.control;
 
+import static it.vige.greenarea.Utilities.yyyyMMdd;
 import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_FISSO;
 import static it.vige.greenarea.dto.AccessoVeicoli.PREZZO_VARIABILE;
 import static it.vige.greenarea.dto.Color.GIALLO;
@@ -371,7 +372,7 @@ public class TimeSlotControl {
 	 * @return List<ParameterGen>
 	 */
 	public List<ParameterGen> findParameterGen(ParameterGen parameterGen) {
-		
+
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ParameterGen> cq = cb.createQuery(ParameterGen.class);
 		Root<ParameterGen> pg = cq.from(ParameterGen.class);
@@ -537,58 +538,57 @@ public class TimeSlotControl {
 			ps = con.prepareStatement(
 					"SELECT b.id,a.idParameter,b.company,b.name,b.truck_PLATENUMBER,c.namePG,b.timeSlot_idTS,b.startTime, a.valuePar  "
 							+ "FROM Mission as b JOIN ValueMission as a JOIN ParameterGen as c WHERE b.ID = a.mission_id AND a.idparameter = c.idpg "
-							+ "AND DATE(b.startTime) = ? AND b.timeSlot_idTS = ? AND c.typePg <? ORDER by a.mission_id, a.idParameter  ");
+							+ "AND b.timeSlot_idTS = ? AND c.typePg <? ORDER by a.mission_id, a.idParameter  ");
 			logger.debug("query per missioni: " + ps);
-			java.sql.Date time = new java.sql.Date(dateMission.getTime());
-			ps.setDate(1, time);
-			logger.debug("query per missioni time: " + time);
-			ps.setInt(2, idTimeSlot);
+			ps.setInt(1, idTimeSlot);
 			logger.debug("query per missioni idTimeSlot: " + idTimeSlot);
-			ps.setInt(3, typePg);
+			ps.setInt(2, typePg);
 			logger.debug("query per missioni typePg: " + typePg);
 			rs = ps.executeQuery();
 			int i = 0;
 
 			while (rs.next()) {
+				Date startTime = rs.getDate("startTime");
+				if (yyyyMMdd.format(startTime).equals(yyyyMMdd.format(dateMission))) {
+					Request r = new Request();
+					RequestParameter rp = new RequestParameter();
 
-				Request r = new Request();
-				RequestParameter rp = new RequestParameter();
-
-				if (rList.isEmpty()) {
-					// Se la lista ?? vuota creo una request e
-					// un primo
-					// request
-					// parameter
-					r.setDateMiss(rs.getDate("startTime"));
-					r.setIdMission(rs.getInt("id"));
-					r.setUserName(rs.getString("name"));
-					r.setCompany(rs.getString("company"));
-					r.setCarPlate(rs.getString("truck_PLATENUMBER"));
-					r.setIdTimeSlot(rs.getInt("timeSlot_idTS"));
-					rList.add(r);
-					i++;
-				}
-				if (!rList.isEmpty()) {
-					if (rs.getInt("id") == rList.get(i - 1).getIdMission()) {
+					if (rList.isEmpty()) {
+						// Se la lista ?? vuota creo una request e
+						// un primo
+						// request
+						// parameter
+						r.setDateMiss(rs.getDate("startTime"));
+						r.setIdMission(rs.getInt("id"));
+						r.setUserName(rs.getString("name"));
+						r.setCompany(rs.getString("company"));
+						r.setCarPlate(rs.getString("truck_PLATENUMBER"));
+						r.setIdTimeSlot(rs.getInt("timeSlot_idTS"));
+						rList.add(r);
+						i++;
+					}
+					if (!rList.isEmpty()) {
+						if (rs.getInt("id") == rList.get(i - 1).getIdMission()) {
+							rp.setIdParameter(rs.getInt("idParameter"));
+							rp.setValuePar(rs.getDouble("valuePar"));
+							rp.setName(rs.getString("namePG"));
+							rList.get(i - 1).addRequestParameter(rp);
+						}
+					}
+					if (rs.getInt("id") != rList.get(i - 1).getIdMission()) {
+						r.setDateMiss(rs.getDate("startTime"));
+						r.setIdMission(rs.getInt("id"));
+						r.setUserName(rs.getString("name"));
+						r.setCompany(rs.getString("company"));
+						r.setCarPlate(rs.getString("truck_PLATENUMBER"));
+						r.setIdTimeSlot(rs.getInt("timeSlot_idTS"));
 						rp.setIdParameter(rs.getInt("idParameter"));
 						rp.setValuePar(rs.getDouble("valuePar"));
 						rp.setName(rs.getString("namePG"));
-						rList.get(i - 1).addRequestParameter(rp);
+						r.addRequestParameter(rp);
+						rList.add(r);
+						i++;
 					}
-				}
-				if (rs.getInt("id") != rList.get(i - 1).getIdMission()) {
-					r.setDateMiss(rs.getDate("startTime"));
-					r.setIdMission(rs.getInt("id"));
-					r.setUserName(rs.getString("name"));
-					r.setCompany(rs.getString("company"));
-					r.setCarPlate(rs.getString("truck_PLATENUMBER"));
-					r.setIdTimeSlot(rs.getInt("timeSlot_idTS"));
-					rp.setIdParameter(rs.getInt("idParameter"));
-					rp.setValuePar(rs.getDouble("valuePar"));
-					rp.setName(rs.getString("namePG"));
-					r.addRequestParameter(rp);
-					rList.add(r);
-					i++;
 				}
 			}
 		} catch (Exception e) {

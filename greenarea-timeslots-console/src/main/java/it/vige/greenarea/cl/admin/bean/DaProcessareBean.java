@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.bean;
 
+import static it.vige.greenarea.Utilities.ddMyyyy;
+
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +43,6 @@ public class DaProcessareBean implements Serializable {
 	 */
 	private static final long serialVersionUID = -4451851428174847011L;
 	private TimeSlotRestClient rcDaProcessareBean = new TimeSlotRestClient();
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private ArrayList<RequestView> listaDaProcessare_RichiesteView;
 	private List<Request> listaDaProcessare_Simulazione;
 	private List<Sched> listaAllDaProcessare;
@@ -87,7 +86,7 @@ public class DaProcessareBean implements Serializable {
 	public ArrayList<RequestView> daProcessare_BottoneRichieste(String data, String IdTs) throws Exception {
 
 		String[] soloData = data.split(" ");
-		Date dataNuova = dateFormat.parse(soloData[0]);
+		Date dataNuova = ddMyyyy.parse(soloData[0]);
 		TimeSlotRestClient rcDaProcessare_Richieste = new TimeSlotRestClient();
 		listaDaProcessare_Richieste = rcDaProcessare_Richieste.selectRequests(dataNuova, IdTs, "5");
 		listaDaProcessare_RichiesteView = new ArrayList<RequestView>();
@@ -139,7 +138,7 @@ public class DaProcessareBean implements Serializable {
 	public List<Request> daProcessare_BottoneSimulazione(String data, String IdTs) throws Exception {
 
 		String[] soloData = data.split(" ");
-		Date dataNuova = dateFormat.parse(soloData[0]);
+		Date dataNuova = ddMyyyy.parse(soloData[0]);
 		TimeSlotRestClient rcDaProcessare_Richieste = new TimeSlotRestClient();
 		listaDaProcessare_Simulazione = rcDaProcessare_Richieste.simulRank(IdTs, dataNuova);
 		return listaDaProcessare_Simulazione;

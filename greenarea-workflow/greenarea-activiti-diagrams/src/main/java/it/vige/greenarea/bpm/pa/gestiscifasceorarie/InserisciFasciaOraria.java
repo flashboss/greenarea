@@ -17,6 +17,8 @@ import static it.vige.greenarea.Constants.BASE_URI_ADMINISTRATOR;
 import static it.vige.greenarea.Constants.BASE_URI_TS;
 import static it.vige.greenarea.Conversioni.convertiParametriToParameterTSs;
 import static it.vige.greenarea.Conversioni.convertiTimeSlotToFasciaOraria;
+import static it.vige.greenarea.Utilities.giornata;
+import static it.vige.greenarea.Utilities.orario;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERRORELIEVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
@@ -29,8 +31,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -63,9 +63,6 @@ public class InserisciFasciaOraria extends EmptyInserisciFasciaOraria {
 
 	private Logger logger = getLogger(getClass());
 
-	private DateFormat data = new SimpleDateFormat("d-MM-yyyy");
-	private DateFormat ora = new SimpleDateFormat("HH:mm");
-
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		boolean error = false;
@@ -73,14 +70,14 @@ public class InserisciFasciaOraria extends EmptyInserisciFasciaOraria {
 			super.execute(execution);
 			logger.info("CDI Inserisci Fascia Oraria");
 			TimeSlot timeSlot = new TimeSlot();
-			timeSlot.setDayFinish(data.format(execution.getVariable("datafine")));
-			timeSlot.setDayStart(data.format(execution.getVariable("datainizio")));
+			timeSlot.setDayFinish(giornata.format(execution.getVariable("datafine")));
+			timeSlot.setDayStart(giornata.format(execution.getVariable("datainizio")));
 			Date orarioFine = (Date) execution.getVariable("orariofine");
 			if (orarioFine != null)
-				timeSlot.setFinishTS(ora.format(orarioFine));
+				timeSlot.setFinishTS(orario.format(orarioFine));
 			Date orarioInizio = (Date) execution.getVariable("orarioinizio");
 			if (orarioInizio != null)
-				timeSlot.setStartTS(ora.format(orarioInizio));
+				timeSlot.setStartTS(orario.format(orarioInizio));
 			timeSlot.setPa(((User) execution.getVariable("initiator")).getId());
 			timeSlot.setTimeToAcceptRequest(
 					AperturaRichieste.valueOf((String) execution.getVariable("aperturarichieste")));

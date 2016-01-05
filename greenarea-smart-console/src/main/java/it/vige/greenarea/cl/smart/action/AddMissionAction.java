@@ -13,11 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.smart.action;
 
+import static it.vige.greenarea.Utilities.dMyyyy;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +47,6 @@ public class AddMissionAction extends org.apache.struts.action.Action {
 
 	private Logger logger = getLogger(getClass());
 
-	private DateFormat dateFormat = new SimpleDateFormat("d/M/yyyy");
-
 	/**
 	 * This is the action called from the Struts framework.
 	 * 
@@ -71,7 +68,7 @@ public class AddMissionAction extends org.apache.struts.action.Action {
 		TimeSlotInfo tsi = (TimeSlotInfo) request.getSession().getAttribute("tsi");
 		RestClient rc = new RestClient();
 		String[] dmyhm = amf.getDateMiss().split(" ");
-		Timestamp startTime = new Timestamp(dateFormat.parse(dmyhm[0]).getTime());
+		Timestamp startTime = new Timestamp(dMyyyy.parse(dmyhm[0]).getTime());
 		List<Parametro> parametri = new ArrayList<Parametro>();
 		List<ParameterInfo> parameterInfos = tsi.getParInfoList();
 		for (ParameterInfo parameterInfo : parameterInfos) {

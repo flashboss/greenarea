@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.custom.ui.form;
 
 import static com.vaadin.ui.AbstractSelect.MultiSelectMode.SIMPLE;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PERFORMANCE_VEICOLI_TR_TABLE_FIELDS;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_COLLECTION;
 import static org.activiti.explorer.ExplorerApp.get;
@@ -21,9 +22,7 @@ import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.lang.reflect.Method;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -148,11 +147,10 @@ public class PerformanceVeicoliTRCollectionFormPropertyRenderer
 	}
 
 	public String getPropertyLabel(FormProperty formProperty, PerformanceVeicoli type) {
-		DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 		String message = null;
 		try {
-			message = getMessage(formProperty.getId(), dateFormat.format(type.getDal()),
-					dateFormat.format(type.getAl()));
+			message = getMessage(formProperty.getId(), giornata.format(type.getDal()),
+					giornata.format(type.getAl()));
 		} catch (Exception ex) {
 			if (formProperty.getName() != null) {
 				return formProperty.getName();

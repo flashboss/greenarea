@@ -13,6 +13,7 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.form;
 
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_MISSIONE_BUTTON;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_MISSIONE_CODICE_FILIALE;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_MISSIONE_CREDITO_DI_MOBILITA;
@@ -26,8 +27,6 @@ import static it.vige.greenarea.dto.Color.ROSSO;
 import static it.vige.greenarea.dto.Color.VERDE;
 import static org.activiti.explorer.ExplorerApp.get;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import org.activiti.engine.form.FormProperty;
@@ -53,7 +52,6 @@ public class DettaglioMissioneTRField<T> extends HorizontalLayout implements Fie
 	private static final long serialVersionUID = 1L;
 	protected TextField wrappedField;
 	protected Button policyDetailsButton;
-	private DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
 
 	public DettaglioMissioneTRField(FormProperty formProperty,
 			GreenareaAbstractFormPropertyRenderer<T> greenareaAbstractFormPropertyRenderer, Missione missione) {
@@ -71,7 +69,7 @@ public class DettaglioMissioneTRField<T> extends HorizontalLayout implements Fie
 		missionIdLabel.setStyleName("missione_label");
 		Label missionDateLabel = new Label();
 		missionDateLabel.setValue(i18nManager.getMessage(DETTAGLIO_MISSIONE_DATA_MISSIONE) + " "
-				+ dateFormat.format(missione.getDataInizio()));
+				+ giornata.format(missione.getDataInizio()));
 		missionDateLabel.setStyleName("missione_label");
 		Label agencyCodeLabel = new Label();
 		agencyCodeLabel.setValue(

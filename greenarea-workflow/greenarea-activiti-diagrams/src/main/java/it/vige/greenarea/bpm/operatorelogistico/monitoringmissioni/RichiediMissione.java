@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.operatorelogistico.monitoringmissioni;
 
 import static it.vige.greenarea.Constants.BASE_URI_RICHIESTE;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.aborted;
@@ -30,8 +31,6 @@ import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,8 +70,7 @@ public class RichiediMissione extends EmptyRichiediMissione {
 					});
 			if (response != null && response.size() > 0) {
 				Missione missione = response.get(0);
-				DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
-				execution.setVariable("dataMissione", dateFormat.format(missione.getDataInizio()));
+				execution.setVariable("dataMissione", giornata.format(missione.getDataInizio()));
 				execution.setVariable("elencoStati", createElencoStati(missione));
 			}
 		} catch (Exception ex) {
