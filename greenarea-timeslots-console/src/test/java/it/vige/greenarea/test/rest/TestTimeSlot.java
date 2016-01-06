@@ -82,6 +82,7 @@ public class TestTimeSlot {
 	private TimeSlot timeSlot;
 	private ParameterGen parameterGen;
 	private String dateMission;
+	private ShippingOrder shippingOrder;
 
 	@Before
 	public void init() {
@@ -92,10 +93,12 @@ public class TestTimeSlot {
 		buildCityLogisticsMission();
 		buildMission();
 		addShipping();
+		addScheduler();
 	}
 
 	@After
 	public void close() {
+		removeScheduler();
 		deleteShipping();
 		deleteMissions();
 		removeParameterTsToTimeSlot();
@@ -280,6 +283,7 @@ public class TestTimeSlot {
 		assertNotNull(response);
 
 		logger.info(response + "");
+		shippingOrder = response;
 	}
 
 	private void deleteMissions() {
@@ -346,6 +350,7 @@ public class TestTimeSlot {
 		price.setMaxPrice(565555);
 		price.setMinPrice(222);
 		price.setTypeEntry(NEGATO);
+		price.setTs(timeSlot);
 		Price response = bldr.post(entity(price, APPLICATION_JSON), Price.class);
 		assertNotNull(response);
 
@@ -454,7 +459,8 @@ public class TestTimeSlot {
 	public void testGetParameterOfTimeSlot() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getParameterForRank/5").request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_TS + "/getParameterForRank/" + timeSlot.getIdTS())
+				.request(APPLICATION_JSON);
 		List<ParameterTS> response = bldr.get(new GenericType<List<ParameterTS>>() {
 		});
 		assertNotNull(response);
@@ -473,16 +479,31 @@ public class TestTimeSlot {
 		logger.info(response + "");
 	}
 
-	@Test
-	public void testSimulSch() {
+	private void addScheduler() {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/startScheduler").request(APPLICATION_JSON);
 		Transport trasport = new Transport();
-		ShippingOrder shippingOrder = new ShippingOrder("323L");
 		trasport.setShippingOrder(shippingOrder);
 		trasport.setTimeSlot(timeSlot);
+		try {
+			trasport.setDateMiss(enFormatter.parse(dateMission));
+		} catch (ParseException e) {
+			logger.error("test parsing date", e);
+		}
+		trasport.setAlfacode("mytransport");
 		String response = bldr.post(entity(trasport, APPLICATION_JSON), String.class);
+		assertNotNull(response);
+
+		logger.info(response + "");
+	}
+
+	private void removeScheduler() {
+
+		Client client = newClient();
+		Builder bldr = client.target(BASE_URI_TS + "/deleteSchedulers").request(APPLICATION_JSON);
+		List<Transport> response = bldr.get(new GenericType<List<Transport>>() {
+		});
 		assertNotNull(response);
 
 		logger.info(response + "");
@@ -504,7 +525,7 @@ public class TestTimeSlot {
 	public void testGetAllSchedulesWithParam() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getSchedules/67").request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_TS + "/getSchedules/" + timeSlot.getIdTS()).request(APPLICATION_JSON);
 		List<Transport> response = bldr.get(new GenericType<List<Transport>>() {
 		});
 		assertNotNull(response);
@@ -556,7 +577,8 @@ public class TestTimeSlot {
 	public void testGetPriceOfTimeSlot() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TS + "/getPriceOfTimeSlot/22").request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_TS + "/getPriceOfTimeSlot/" + timeSlot.getIdTS())
+				.request(APPLICATION_JSON);
 		List<Price> response = bldr.get(new GenericType<List<Price>>() {
 		});
 		assertNotNull(response);

@@ -195,7 +195,7 @@ public class TransportFacade extends AbstractFacade<Transport, String> {
 
 	public List<Transport> findSySelection(Transport.TransportState state, String serviceClass) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
+		CriteriaQuery<Transport> cq = cb.createQuery(Transport.class);
 		Root<Transport> trRoot = cq.from(Transport.class);
 		List<TransportServiceClass> transportClassList = transportServiceClassFacade.findBySelection(serviceClass);
 

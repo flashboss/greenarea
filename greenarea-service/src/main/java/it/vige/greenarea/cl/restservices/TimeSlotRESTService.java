@@ -982,7 +982,7 @@ public class TimeSlotRESTService {
 	 * Method: deleteShipping
 	 * </p>
 	 * <p>
-	 * Description: Questo metodo aggiunge uno shipping order al sistema
+	 * Description: Questo metodo elimina uno shipping order dal sistema
 	 * </p>
 	 * 
 	 * @param ShippingOrder
@@ -995,6 +995,28 @@ public class TimeSlotRESTService {
 	public ShippingOrder deleteShipping(ShippingOrder shippingOrder) {
 		sgotBean.deleteShipping(shippingOrder);
 		return shippingOrder;
+	}
+
+	/**
+	 * <p>
+	 * Method: deleteScheduler
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo elimina uno scheduler dal sistema
+	 * </p>
+	 * 
+	 * @param Transport
+	 *            transport
+	 * @return Transport
+	 */
+	@GET
+	@Path("/deleteSchedulers")
+	@Consumes(APPLICATION_JSON)
+	public List<Transport> deleteSchedulers() {
+		List<Transport> transports = transportFacade.findAll();
+		for (Transport transport : transports)
+			transportFacade.remove(transport);
+		return new ArrayList<Transport>();
 	}
 
 	/**
