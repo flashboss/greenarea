@@ -526,7 +526,7 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/getSchedules/" + timeSlot.getIdTS()).request(APPLICATION_JSON);
-		List<Transport> response = bldr.get(new GenericType<List<Transport>>() {
+		List<Sched> response = bldr.get(new GenericType<List<Sched>>() {
 		});
 		assertNotNull(response);
 
@@ -633,6 +633,8 @@ public class TestTimeSlot {
 		FasciaOraria fasciaOraria = new FasciaOraria();
 		fasciaOraria.setId(0);
 		missione.setFasciaOraria(fasciaOraria);
+		Richiesta richiesta = new Richiesta();
+		missione.setRichieste(asList(new Richiesta[]{richiesta}));
 		List<Missione> response = bldr.post(entity(missione, APPLICATION_JSON), new GenericType<List<Missione>>() {
 		});
 		assertNotNull(response);
