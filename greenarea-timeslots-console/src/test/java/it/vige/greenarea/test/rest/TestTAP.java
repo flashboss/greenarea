@@ -16,6 +16,7 @@ package it.vige.greenarea.test.rest;
 import static it.vige.greenarea.Constants.BASE_URI_TAP;
 import static it.vige.greenarea.Conversioni.addDays;
 import static it.vige.greenarea.Utilities.yyyyMMddDash;
+import static it.vige.greenarea.Utilities.yyyyMMddNoH;
 import static it.vige.greenarea.dto.Selezione.TUTTI;
 import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
@@ -182,6 +183,7 @@ public class TestTAP {
 			fail();
 		}
 		Date today = new Date();
+		String formattedToday = yyyyMMddNoH.format(addDays(today, -5));
 		richiestaAccesso.setDataFine(addDays(today, 1));
 		richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI.name() }));
 		removeTapData(client);
@@ -193,11 +195,11 @@ public class TestTAP {
 		assertNotNull(response);
 		assertEquals(response.size(), 7);
 		try {
-			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:00"));
+			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse(formattedToday + " 10:58:00"));
 			assertEquals(accessiInGA.getAccessi(), 1);
 			assertEquals(accessiInGA.getKm(), 0.0, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 0);
-			accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:27"));
+			accessiInGA = response.get(yyyyMMddDash.parse(formattedToday + " 10:58:27"));
 			assertEquals(accessiInGA.getAccessi(), 0);
 			assertEquals(accessiInGA.getKm(), 4.2454313331053627E-4, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 27000);
@@ -211,11 +213,12 @@ public class TestTAP {
 		assertNotNull(response);
 		assertEquals(response.size(), 12);
 		try {
-			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:00"));
+			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse(formattedToday + " 10:58:00"));
 			assertEquals(accessiInGA.getAccessi(), 1);
 			assertEquals(accessiInGA.getKm(), 0.0, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 0);
-			accessiInGA = response.get(yyyyMMddDash.parse("2014-12-20 11:01:46"));
+			formattedToday = yyyyMMddNoH.format(addDays(today, -4));
+			accessiInGA = response.get(yyyyMMddDash.parse(formattedToday + " 11:01:46"));
 			assertEquals(accessiInGA.getAccessi(), 0);
 			assertEquals(accessiInGA.getKm(), 0.0723958705535196, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 64000);
@@ -238,6 +241,7 @@ public class TestTAP {
 			fail();
 		}
 		Date today = new Date();
+		String resultingDate = yyyyMMddNoH.format(addDays(today, -5));
 		richiestaAccesso.setDataFine(addDays(today, 1));
 		richiestaAccesso.setOperatoriLogistici(asList(new String[] { "tnt" }));
 		removeTapData(client);
@@ -249,11 +253,11 @@ public class TestTAP {
 		assertNotNull(response);
 		assertEquals(response.size(), 7);
 		try {
-			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:00"));
+			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse(resultingDate + " 10:58:00"));
 			assertEquals(accessiInGA.getAccessi(), 1);
 			assertEquals(accessiInGA.getKm(), 0.0, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 0);
-			accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:27"));
+			accessiInGA = response.get(yyyyMMddDash.parse(resultingDate + " 10:58:27"));
 			assertEquals(accessiInGA.getAccessi(), 0);
 			assertEquals(accessiInGA.getKm(), 4.2454313331053627E-4, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 27000);
@@ -267,11 +271,12 @@ public class TestTAP {
 		assertNotNull(response);
 		assertEquals(response.size(), 12);
 		try {
-			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse("2014-12-19 10:58:00"));
+			AccessiInGA accessiInGA = response.get(yyyyMMddDash.parse(resultingDate + " 10:58:00"));
 			assertEquals(accessiInGA.getAccessi(), 1);
 			assertEquals(accessiInGA.getKm(), 0.0, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 0);
-			accessiInGA = response.get(yyyyMMddDash.parse("2014-12-20 11:01:46"));
+			resultingDate = yyyyMMddNoH.format(addDays(today, -4));
+			accessiInGA = response.get(yyyyMMddDash.parse(resultingDate + " 11:01:46"));
 			assertEquals(accessiInGA.getAccessi(), 0);
 			assertEquals(accessiInGA.getKm(), 0.0723958705535196, 0);
 			assertEquals(accessiInGA.getTempoTrascorso(), 64000);
