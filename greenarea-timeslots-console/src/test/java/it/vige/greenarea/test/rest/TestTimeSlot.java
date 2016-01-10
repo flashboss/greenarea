@@ -283,7 +283,7 @@ public class TestTimeSlot {
 		assertNotNull(response);
 
 		logger.info(response + "");
-		shippingOrder = response;
+		this.shippingOrder = response;
 	}
 
 	private void deleteMissions() {
@@ -301,7 +301,6 @@ public class TestTimeSlot {
 
 		Client client = newClient();
 		Builder bldr = client.target(BASE_URI_TS + "/deleteShipping").request(APPLICATION_JSON);
-		ShippingOrder shippingOrder = new ShippingOrder("prova");
 		ShippingOrder response = bldr.post(entity(shippingOrder, APPLICATION_JSON), ShippingOrder.class);
 		assertNotNull(response);
 

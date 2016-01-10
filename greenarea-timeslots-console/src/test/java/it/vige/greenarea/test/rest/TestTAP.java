@@ -34,6 +34,7 @@ import java.util.Map;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -53,11 +54,14 @@ public class TestTAP {
 	public void testGetTapOutDatas() {
 
 		Client client = newClient();
+		removeTapData(client);
+		move2(client);
 		Builder bldr = client.target(BASE_URI_TAP + "/getTapOutDatas/75655").request(APPLICATION_JSON);
 		List<TapOutData> response = bldr.get(new GenericType<List<TapOutData>>() {
 		});
 		assertNotNull(response);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -65,6 +69,8 @@ public class TestTAP {
 	public void testGetTapParamsDatas() {
 
 		Client client = newClient();
+		removeTapData(client);
+		move2(client);
 		TapGroupData tapGroupData = new TapGroupData();
 		Builder bldr = client.target(BASE_URI_TAP + "/getTapParamDatas").request(APPLICATION_JSON);
 		List<TapParamData> response = bldr.post(entity(tapGroupData, APPLICATION_JSON),
@@ -72,6 +78,7 @@ public class TestTAP {
 				});
 		assertNotNull(response);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -79,11 +86,14 @@ public class TestTAP {
 	public void testFindAllTapParamsData() {
 
 		Client client = newClient();
+		removeTapData(client);
+		move2(client);
 		Builder bldr = client.target(BASE_URI_TAP + "/getAllTapParams").request(APPLICATION_JSON);
 		List<TapParamData> response = bldr.get(new GenericType<List<TapParamData>>() {
 		});
 		assertNotNull(response);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -91,11 +101,14 @@ public class TestTAP {
 	public void testFindAllTapOutsData() {
 
 		Client client = newClient();
+		removeTapData(client);
+		move2(client);
 		Builder bldr = client.target(BASE_URI_TAP + "/getAllTapOuts").request(APPLICATION_JSON);
 		List<TapOutData> response = bldr.get(new GenericType<List<TapOutData>>() {
 		});
 		assertNotNull(response);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -103,11 +116,14 @@ public class TestTAP {
 	public void testFindAllTapGroupsData() {
 
 		Client client = newClient();
+		removeTapData(client);
+		move2(client);
 		Builder bldr = client.target(BASE_URI_TAP + "/getAllTapGroups").request(APPLICATION_JSON);
 		List<TapGroupData> response = bldr.get(new GenericType<List<TapGroupData>>() {
 		});
 		assertNotNull(response);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -115,21 +131,19 @@ public class TestTAP {
 	public void testFindVeicoliInGA() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TAP + "/cancellaDatiTap").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/spostamento1").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/veicoliInGA").request(APPLICATION_JSON);
+		removeTapData(client);
+		move1(client);
+		Builder bldr = client.target(BASE_URI_TAP + "/veicoliInGA").request(APPLICATION_JSON);
 		int response = bldr.get(Integer.class);
 		assertNotNull(response);
 		assertEquals(response, 1);
-		bldr = client.target(BASE_URI_TAP + "/spostamento2").request(APPLICATION_JSON);
-		bldr.get();
+		move2(client);
 		bldr = client.target(BASE_URI_TAP + "/veicoliInGA").request(APPLICATION_JSON);
 		response = bldr.get(Integer.class);
 		assertNotNull(response);
 		assertEquals(response, 1);
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -137,18 +151,15 @@ public class TestTAP {
 	public void testRichiediPosizioneVeicolo() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_TAP + "/cancellaDatiTap").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/spostamento1").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(APPLICATION_JSON);
+		removeTapData(client);
+		move1(client);
+		Builder bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(APPLICATION_JSON);
 		RichiestaPosizioneVeicolo richiestaPosizioneVeicolo = new RichiestaPosizioneVeicolo();
 		richiestaPosizioneVeicolo.setTarga("EL818YP");
 		String response = bldr.post(entity(richiestaPosizioneVeicolo, APPLICATION_JSON), String.class);
 		assertNotNull(response);
 		assertEquals(response, "7.68086,45.065353888888886");
-		bldr = client.target(BASE_URI_TAP + "/spostamento2").request(APPLICATION_JSON);
-		bldr.get();
+		move2(client);
 		bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(APPLICATION_JSON);
 		richiestaPosizioneVeicolo = new RichiestaPosizioneVeicolo();
 		richiestaPosizioneVeicolo.setTarga("EL818YP");
@@ -156,6 +167,7 @@ public class TestTAP {
 		assertNotNull(response);
 		assertEquals(response, "7.680926388888889,45.06603583333333");
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -169,13 +181,12 @@ public class TestTAP {
 		} catch (ParseException e1) {
 			fail();
 		}
-		richiestaAccesso.setDataFine(addDays(new Date(), 1));
+		Date today = new Date();
+		richiestaAccesso.setDataFine(addDays(today, 1));
 		richiestaAccesso.setOperatoriLogistici(asList(new String[] { TUTTI.name() }));
-		Builder bldr = client.target(BASE_URI_TAP + "/cancellaDatiTap").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/spostamento1").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
+		removeTapData(client);
+		move1(client);
+		Builder bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
 		Map<Date, AccessiInGA> response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON),
 				new GenericType<Map<Date, AccessiInGA>>() {
 				});
@@ -193,8 +204,7 @@ public class TestTAP {
 		} catch (ParseException e) {
 			fail();
 		}
-		bldr = client.target(BASE_URI_TAP + "/spostamento2").request(APPLICATION_JSON);
-		bldr.get();
+		move2(client);
 		bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
 		response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON), new GenericType<Map<Date, AccessiInGA>>() {
 		});
@@ -213,6 +223,7 @@ public class TestTAP {
 			fail();
 		}
 
+		removeTapData(client);
 		logger.info(response + "");
 	}
 
@@ -226,13 +237,12 @@ public class TestTAP {
 		} catch (ParseException e1) {
 			fail();
 		}
-		richiestaAccesso.setDataFine(addDays(new Date(), 1));
+		Date today = new Date();
+		richiestaAccesso.setDataFine(addDays(today, 1));
 		richiestaAccesso.setOperatoriLogistici(asList(new String[] { "tnt" }));
-		Builder bldr = client.target(BASE_URI_TAP + "/cancellaDatiTap").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/spostamento1").request(APPLICATION_JSON);
-		bldr.get();
-		bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
+		removeTapData(client);
+		move1(client);
+		Builder bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
 		Map<Date, AccessiInGA> response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON),
 				new GenericType<Map<Date, AccessiInGA>>() {
 				});
@@ -250,8 +260,7 @@ public class TestTAP {
 		} catch (ParseException e) {
 			fail();
 		}
-		bldr = client.target(BASE_URI_TAP + "/spostamento2").request(APPLICATION_JSON);
-		bldr.get();
+		move2(client);
 		bldr = client.target(BASE_URI_TAP + "/storicoAccessiInGA").request(APPLICATION_JSON);
 		response = bldr.post(entity(richiestaAccesso, APPLICATION_JSON), new GenericType<Map<Date, AccessiInGA>>() {
 		});
@@ -269,7 +278,25 @@ public class TestTAP {
 		} catch (ParseException e) {
 			fail();
 		}
-
+		removeTapData(client);
 		logger.info(response + "");
+	}
+
+	private void move1(Client client) {
+		Builder bldr = client.target(BASE_URI_TAP + "/spostamento1").request(APPLICATION_JSON);
+		Response response = bldr.get();
+		assertNotNull(response);
+	}
+
+	private void move2(Client client) {
+		Builder bldr = client.target(BASE_URI_TAP + "/spostamento2").request(APPLICATION_JSON);
+		Response response = bldr.get();
+		assertNotNull(response);
+	}
+
+	private void removeTapData(Client client) {
+		Builder bldr = client.target(BASE_URI_TAP + "/cancellaDatiTap").request(APPLICATION_JSON);
+		Response response = bldr.get();
+		assertNotNull(response);
 	}
 }

@@ -117,7 +117,16 @@ public class TAPRESTService {
 	@Path("/getAllTapGroups")
 	@Produces(APPLICATION_JSON)
 	public List<TapGroupData> getAllTapGroups() {
-		return tapGroupDataFacade.findAll();
+		List<TapGroupData> tapGroupDatas = tapGroupDataFacade.findAll();
+		for (TapGroupData tapGroupData : tapGroupDatas) {
+			List<TapParamData> tapParamDatas = tapParamDataFacade.findAll(tapGroupData);
+			for (TapParamData tapParamData : tapParamDatas) {
+				tapParamData.setTapGroupData(null);
+			}
+			tapGroupData.setParams(tapParamDatas);
+			tapGroupData.getTapOutData().setGroups(null);
+		}
+		return tapGroupDatas;
 	}
 
 	/**
@@ -134,7 +143,12 @@ public class TAPRESTService {
 	@Path("/getAllTapParams")
 	@Produces(APPLICATION_JSON)
 	public List<TapParamData> getAllTapParams() {
-		return tapParamDataFacade.findAll();
+		List<TapParamData> tapParamDatas = tapParamDataFacade.findAll();
+		for (TapParamData tapParamData : tapParamDatas) {
+			tapParamData.getTapGroupData().setParams(null);
+			tapParamData.getTapGroupData().getTapOutData().setGroups(null);
+		}
+		return tapParamDatas;
 	}
 
 	/**
@@ -151,7 +165,20 @@ public class TAPRESTService {
 	@Path("/getAllTapOuts")
 	@Produces(APPLICATION_JSON)
 	public List<TapOutData> getAllTapOuts() {
-		return tapOutDataFacade.findAll();
+		List<TapOutData> tapOutDatas = tapOutDataFacade.findAll();
+		for (TapOutData tapOutData : tapOutDatas) {
+			List<TapGroupData> tapGroupDatas = tapGroupDataFacade.findByOutData(tapOutData);
+			tapOutData.setGroups(tapGroupDatas);
+			for (TapGroupData tapGroupData : tapGroupDatas) {
+				List<TapParamData> tapParamDatas = tapParamDataFacade.findAll(tapGroupData);
+				tapGroupData.setParams(tapParamDatas);
+				tapGroupData.setTapOutData(null);
+				for (TapParamData tapParamData : tapParamDatas) {
+					tapParamData.setTapGroupData(null);
+				}
+			}
+		}
+		return tapOutDatas;
 	}
 
 	/**

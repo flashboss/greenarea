@@ -161,6 +161,10 @@ public class TapOutData implements Serializable {
 		}
 		return this.groups;
 	}
+	
+	public void setGroups(List<TapGroupData> groups) {
+		this.groups = groups;
+	}
 
 	@Override
 	public int hashCode() {
