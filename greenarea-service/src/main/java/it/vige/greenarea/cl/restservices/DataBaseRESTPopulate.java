@@ -39,6 +39,7 @@ import static java.util.Arrays.asList;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -80,38 +81,41 @@ public class DataBaseRESTPopulate {
 	@Path("/removeDB")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String removeDB() {
+		
 		TimeSlot ts1 = new TimeSlot();
-		ts1.setDayFinish("31-12");
-		ts1.setDayStart("1-01");
+		ts1.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		ts1.setTimeToStopRequest(_1_GIORNO_PRIMA);
+		ts1.setTimeToRun(_1_GIORNO_PRIMA);
+		ts1.setTollerance(_20_PER_CENTO);
 		ts1.setStartTS("9:30");
 		ts1.setFinishTS("11:30");
-		ts1.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		ts1.setTimeToRun(_1_GIORNO_PRIMA);
-		ts1.setTimeToStopRequest(_1_GIORNO_PRIMA);
-		ts1.setTollerance(_20_PER_CENTO);
+		ts1.setDayStart("1-01");
+		ts1.setDayFinish("31-12");
 		ts1.setVikInd(PREMIA_RISPOSTA_GLOBALE);
 		ts1.setWmy(TUTTI_I_GIORNI);
+		
 		TimeSlot ts2 = new TimeSlot();
-		ts2.setDayFinish("31-12");
-		ts2.setDayStart("1-01");
+		ts2.setTimeToAcceptRequest(_3_GIORNI_PRIMA);
+		ts2.setTimeToStopRequest(_1_GIORNO_PRIMA);
+		ts2.setTimeToRun(_1_GIORNO_PRIMA);
+		ts2.setTollerance(_40_PER_CENTO);
 		ts2.setStartTS("11:30");
 		ts2.setFinishTS("13:30");
-		ts2.setTimeToAcceptRequest(_3_GIORNI_PRIMA);
-		ts2.setTimeToRun(_1_GIORNO_PRIMA);
-		ts2.setTimeToStopRequest(_1_GIORNO_PRIMA);
-		ts2.setTollerance(_40_PER_CENTO);
+		ts2.setDayStart("1-01");
+		ts2.setDayFinish("31-12");
 		ts2.setVikInd(PREMIA_RISPOSTA_GLOBALE);
 		ts2.setWmy(TUTTI_I_GIORNI);
 
 		TimeSlot ts3 = new TimeSlot();
-		ts3.setDayFinish("31-12");
-		ts3.setDayStart("1-01");
+		ts3.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		ts3.setTimeToStopRequest(_12_ORE_PRIMA);
+		ts3.setTimeToRun(_1_GIORNO_PRIMA);
+		ts3.setTollerance(_20_PER_CENTO);
+		ts3.setWmy(TUTTI_I_GIORNI);
 		ts3.setStartTS("9:30");
 		ts3.setFinishTS("11:30");
-		ts3.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		ts3.setTimeToRun(_1_GIORNO_PRIMA);
-		ts3.setTimeToStopRequest(_12_ORE_PRIMA);
-		ts3.setTollerance(_20_PER_CENTO);
+		ts3.setDayStart("1-01");
+		ts3.setDayFinish("31-12");
 		ts3.setVikInd(PREMIA_RISPOSTA_LOCALE);
 		ts3.setWmy(TUTTI_I_GIORNI);
 
@@ -170,6 +174,15 @@ public class DataBaseRESTPopulate {
 				"11:30", "13:30", "1-01", "31-12", PREMIA_RISPOSTA_GLOBALE);
 		tsc.addSlotTime(_2_GIORNI_PRIMA, _12_ORE_PRIMA, _1_GIORNO_PRIMA, _20_PER_CENTO, TUTTI_I_GIORNI, "9:30", "11:30",
 				"1-01", "31-12", PREMIA_RISPOSTA_LOCALE);
+		List<TimeSlot> timeSlots = tsc.findAllTimeSlots();
+		for (TimeSlot timeSlot : timeSlots) {
+			System.out.println("timeSlot id = "+timeSlot.getIdTS());
+			System.out.println("timeSlot getDayFinish = "+timeSlot.getDayFinish());
+			System.out.println("timeSlot getDayStart = "+timeSlot.getDayStart());
+			System.out.println("timeSlot getStartTS = "+timeSlot.getStartTS());
+			System.out.println("timeSlot getTimeToAcceptRequest = "+timeSlot.getTimeToAcceptRequest());
+			System.out.println("timeSlot getTimeToStopRequest = "+timeSlot.getTimeToStopRequest());
+		}
 		idTs[1] = st1.getIdTS();
 		ParameterGen pg;
 		int[] idAr = new int[5];
@@ -340,17 +353,18 @@ public class DataBaseRESTPopulate {
 	@Path("/addMission")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addMission() throws ParseException {
+		
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setDayFinish("31-12");
-		timeSlot.setDayStart("1-01");
+		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
+		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
+		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setWmy(TUTTI_I_GIORNI);
 		timeSlot.setStartTS("9:30");
 		timeSlot.setFinishTS("11:30");
-		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
-		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
-		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setDayStart("1-01");
+		timeSlot.setDayFinish("31-12");
 		timeSlot.setVikInd(PREMIA_RISPOSTA_LOCALE);
-		timeSlot.setWmy(TUTTI_I_GIORNI);
 		timeSlot = tsc.findTimeSlot(timeSlot);
 
 		Mission m = new Mission();
@@ -602,16 +616,16 @@ public class DataBaseRESTPopulate {
 	public String removeMission() throws ParseException {
 
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setDayFinish("31-12");
-		timeSlot.setDayStart("1-01");
+		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
+		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
+		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
+		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setWmy(TUTTI_I_GIORNI);
 		timeSlot.setStartTS("9:30");
 		timeSlot.setFinishTS("11:30");
-		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
-		timeSlot.setTimeToRun(_1_GIORNO_PRIMA);
-		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
-		timeSlot.setTollerance(_20_PER_CENTO);
+		timeSlot.setDayStart("1-01");
+		timeSlot.setDayFinish("31-12");
 		timeSlot.setVikInd(PREMIA_RISPOSTA_LOCALE);
-		timeSlot.setWmy(TUTTI_I_GIORNI);
 		timeSlot = tsc.findTimeSlot(timeSlot);
 
 		Mission m = new Mission();

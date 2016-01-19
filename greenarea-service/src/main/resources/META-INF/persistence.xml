@@ -34,8 +34,6 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 			<property name="hibernate.show_sql" value="true" />
 			<property name="javax.persistence.schema-generation.database.action"
 				value="MAVEN_REPLACER_SCHEMA_GENERATION" />
-			<property name="javax.persistence.sql-load-script-source"
-				value="loaddata.sql" />
 		</properties>
 	</persistence-unit>
 </persistence>
