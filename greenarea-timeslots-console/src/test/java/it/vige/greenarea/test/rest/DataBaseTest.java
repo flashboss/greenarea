@@ -13,91 +13,90 @@
  ******************************************************************************/
 package it.vige.greenarea.test.rest;
 
-import static it.vige.greenarea.Constants.BASE_URI_ADMINISTRATOR;
 import static javax.ws.rs.client.ClientBuilder.newClient;
-import static javax.ws.rs.client.Entity.entity;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import static org.junit.Assert.assertNotNull;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import java.util.List;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.core.GenericType;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-import it.vige.greenarea.cl.library.entities.Filter;
+public class DataBaseTest {
 
-public class TestAdministrator {
+	private static final String BASE_URI = "http://localhost:8080/greenarea-service/resources/DataBase";
 
 	private Logger logger = getLogger(getClass());
 
 	@Before
 	public void init() {
-		addFilter();
+		populateDB();
+		addMission();
 	}
 
 	@After
 	public void close() {
-		deleteFilter();
+		removeMission();
+		removeDB();
 	}
-	
-	private void addFilter() {
+
+	private void populateDB() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/addFilter")
-				.request(APPLICATION_JSON);
-		Filter filter = new Filter("08", "dhl");
-		Filter response = bldr.post(entity(filter, APPLICATION_JSON),
-				Filter.class);
+		Builder bldr = client.target(BASE_URI + "/populateDB").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
 		assertNotNull(response);
 
-		logger.info(response + "");
+		logger.info(response);
+
+	}
+
+	private void removeDB() {
+
+		Client client = newClient();
+		Builder bldr = client.target(BASE_URI + "/removeDB").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
+		assertNotNull(response);
+
+		logger.info(response);
+
 	}
 
 	@Test
-	public void testFindAllFiltersForOP() {
+	public void testRetHello() {
 
 		Client client = newClient();
-		Builder bldr = client.target(
-				BASE_URI_ADMINISTRATOR + "/getFiltersForOP/dhl").request(
-				APPLICATION_JSON);
-		List<Filter> response = bldr.get(new GenericType<List<Filter>>() {
-		});
+		Builder bldr = client.target(BASE_URI + "/hello").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
 		assertNotNull(response);
 
-		logger.info(response + "");
+		logger.info(response);
+
 	}
 
-	@Test
-	public void testFindAllFilters() {
+	private void addMission() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/getFilters")
-				.request(APPLICATION_JSON);
-		List<Filter> response = bldr.get(new GenericType<List<Filter>>() {
-		});
+		Builder bldr = client.target(BASE_URI + "/addMission").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
 		assertNotNull(response);
 
-		logger.info(response + "");
+		logger.info(response);
+
 	}
 
-	private void deleteFilter() {
+	private void removeMission() {
 
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/deleteFilter")
-				.request(APPLICATION_JSON);
-		Filter filter = new Filter("08", "dhl");
-		Filter response = bldr.post(entity(filter, APPLICATION_JSON),
-				Filter.class);
+		Builder bldr = client.target(BASE_URI + "/removeMission").request(TEXT_PLAIN);
+		String response = bldr.get(String.class);
 		assertNotNull(response);
 
-		logger.info(response + "");
-	}
+		logger.info(response);
 
+	}
 }

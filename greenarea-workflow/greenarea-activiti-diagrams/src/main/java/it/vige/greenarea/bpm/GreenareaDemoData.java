@@ -93,7 +93,7 @@ public class GreenareaDemoData {
 				"org/activiti/explorer/images/fozzie.jpg", asList("user"), null);
 		createUser(identityService, "amministratore", "Luca", "Stancapiano", "vulit", "greenareavige@gmail.com",
 				"org/activiti/explorer/images/kermit.jpg", asList("user", "admin"),
-				asList("birthDate", "15-05-1976", "jobTitle", "Consulente", "location", "Guidonia", "phone",
+				asList("birthDate", "15-05-1976", "jobTitle", "Consulente", "location", GUIDONIA, "phone",
 						"+393381584484", "twitterName", "flashboss", "skype", "flashboss62"));
 		createUser(identityService, "dhl", "Frodo", "Baggins", "vulit", "frodobaggins@vige.it",
 				"org/activiti/explorer/images/fozzie.jpg", asList(OPERATORE_LOGISTICO, "user"), null);

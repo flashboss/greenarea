@@ -13,6 +13,7 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
+import static it.vige.greenarea.Constants.ITALY;
 import static it.vige.greenarea.sgapl.sgot.webservice.ResultStatus.NOK;
 import static java.lang.String.valueOf;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
@@ -138,11 +139,11 @@ public class SGAPLconsoleController implements Serializable, MqConstants, SGAPLc
 		// ripulisco i campi per estimate
 		DBGeoLocation estiamteFrom = new DBGeoLocation();
 		DBGeoLocation estiamteTo = new DBGeoLocation();
-		estiamteFrom.setCountry("IT");
+		estiamteFrom.setCountry(ITALY);
 		estiamteFrom.setAdminAreaLevel2(currentOrder.getFrom().getAdminAreaLevel2());
 		estiamteFrom.setCity(currentOrder.getFrom().getCity());
 		estiamteFrom.setZipCode(currentOrder.getFrom().getZipCode());
-		estiamteTo.setCountry("IT");
+		estiamteTo.setCountry(ITALY);
 		estiamteTo.setAdminAreaLevel2(currentOrder.getTo().getAdminAreaLevel2());
 		estiamteTo.setCity(currentOrder.getTo().getCity());
 		estiamteTo.setZipCode(currentOrder.getTo().getZipCode());

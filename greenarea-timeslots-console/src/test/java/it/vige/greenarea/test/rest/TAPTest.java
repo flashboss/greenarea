@@ -47,7 +47,7 @@ import it.vige.greenarea.dto.AccessiInGA;
 import it.vige.greenarea.dto.RichiestaAccesso;
 import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
 
-public class TestTAP {
+public class TAPTest {
 
 	private Logger logger = getLogger(getClass());
 

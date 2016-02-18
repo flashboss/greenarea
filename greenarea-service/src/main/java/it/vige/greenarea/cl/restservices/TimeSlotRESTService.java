@@ -69,6 +69,7 @@ import it.vige.greenarea.cl.bean.TimeSlotInfo;
 import it.vige.greenarea.cl.control.TimeSlotControl;
 import it.vige.greenarea.cl.control.VehicleControl;
 import it.vige.greenarea.cl.library.entities.ExchangeStop;
+import it.vige.greenarea.cl.library.entities.Freight;
 import it.vige.greenarea.cl.library.entities.Mission;
 import it.vige.greenarea.cl.library.entities.ParameterGen;
 import it.vige.greenarea.cl.library.entities.ParameterTS;
@@ -90,6 +91,7 @@ import it.vige.greenarea.dto.Missione;
 import it.vige.greenarea.dto.Richiesta;
 import it.vige.greenarea.dto.Sched;
 import it.vige.greenarea.dto.Veicolo;
+import it.vige.greenarea.gtg.db.demoData.InitDemoData;
 import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
 import it.vige.greenarea.gtg.db.facades.FreightFacade;
 import it.vige.greenarea.gtg.db.facades.MissionFacade;
@@ -166,6 +168,8 @@ public class TimeSlotRESTService {
 	private MissionBuilderBean missionBuilderBean;
 	@EJB
 	private TransportServiceClassFacade transportServiceClassFacade;
+	@EJB
+	private InitDemoData initDemoData;
 
 	/**
 	 * <p>
@@ -247,6 +251,14 @@ public class TimeSlotRESTService {
 	@Produces(APPLICATION_JSON)
 	public List<Mission> deleteMissions() {
 		List<Mission> missions = missionFacade.findAll();
+		for (Mission mission : missions) {
+			List<ExchangeStop> exchangeStops = exchangeStopFacade.findAll(mission);
+			if (exchangeStops != null)
+				for (ExchangeStop exchangeStop : exchangeStops) {
+					exchangeStopFacade.remove(exchangeStop);
+				}
+		}
+		missions = missionFacade.findAll();
 		for (Mission mission : missions) {
 			List<ValueMission> valuesMission = mission.getValuesMission();
 			if (valuesMission != null)
@@ -808,6 +820,31 @@ public class TimeSlotRESTService {
 
 	/**
 	 * <p>
+	 * Method:addTransports
+	 * </p>
+	 * <p>
+	 * Description: Add transports
+	 * </p>
+	 *
+	 * @param today
+	 * @return
+	 * @throws ParseException
+	 */
+	@GET
+	@Path("/addTransports")
+	@Produces(APPLICATION_JSON)
+	public List<String> addTransports() throws ParseException {
+		List<String> alfacodes = new ArrayList<String>();
+		initDemoData.caricaTrasporti();
+		List<Transport> transports = transportFacade.findAll();
+		for (Transport transport : transports) {
+			alfacodes.add(transport.getAlfacode());
+		}
+		return alfacodes;
+	}
+
+	/**
+	 * <p>
 	 * Method: buildCityLogisticsMission
 	 * </p>
 	 * <p>
@@ -954,7 +991,22 @@ public class TimeSlotRESTService {
 				valueMissionFacade.create(vm);
 			}
 		missionFacade.create(mission);
-		return mission;
+		Mission result = new Mission();
+		result.setTimeSlot(mission.getTimeSlot());
+		result.setStartTime(mission.getStartTime());
+		/*
+		 * for (ExchangeStop exchangeStop : mission.getExchangeStops()) { for
+		 * (Freight freight : exchangeStop.getCollectingList()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null); } for
+		 * (Freight freight : exchangeStop.getDeliveryList()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null);
+		 * freight.setTransport(null); } } for (Transport transport :
+		 * mission.getTransports()) { transport.setMission(null); for (Freight
+		 * freight : transport.getFreightItems()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null);
+		 * freight.setTransport(null); } }
+		 */
+		return result;
 	}
 
 	/**
@@ -1013,6 +1065,11 @@ public class TimeSlotRESTService {
 	@Path("/deleteSchedulers")
 	@Consumes(APPLICATION_JSON)
 	public List<Transport> deleteSchedulers() {
+		List<Freight> freights = freightFacade.findAll();
+		if (freights != null)
+			for (Freight freight : freights) {
+				freightFacade.remove(freight);
+			}
 		List<Transport> transports = transportFacade.findAll();
 		for (Transport transport : transports)
 			transportFacade.remove(transport);

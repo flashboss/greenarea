@@ -13,6 +13,8 @@
  ******************************************************************************/
 package it.vige.greenarea.sgrl.webservices;
 
+import static it.vige.greenarea.Constants.ITALY;
+import static it.vige.greenarea.geo.CAP.getProvincia;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_DESTINATION_ADDRESS;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_PARAMETERS;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_SOURCE_ADDRESS;
@@ -29,7 +31,6 @@ import org.slf4j.Logger;
 
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.geo.CAP;
 import it.vige.greenarea.geo.GisService;
 import it.vige.greenarea.ln.routing.LNGraphAnalysis;
 import it.vige.greenarea.ln.routing.LNPath;
@@ -123,7 +124,7 @@ public class LogisticNetworkRouting {
 		// se non ho country code e non ho coordinate metto IT come default
 		if ((gl.getCountry() == null || gl.getCountry().isEmpty()) && (gl.getLatitude() == 0.)
 				&& (gl.getLongitude() == 0.))
-			gl.setCountry("IT");
+			gl.setCountry(ITALY);
 		// se mi manca indirizzo o coordinate gl e' non valido
 		if ((gl.getCity() == null || gl.getCity().isEmpty())
 				&& (gl.getAdminAreaLevel1() == null || gl.getAdminAreaLevel1().isEmpty())
@@ -147,10 +148,10 @@ public class LogisticNetworkRouting {
 		} else {
 			try {
 				// verifico che cap esista, se non esiste lo metto a null
-				if (CAP.getProvincia(gl.getZipCode()) == null) {
+				if (getProvincia(gl.getZipCode()) == null) {
 					gl.setZipCode(null);
 				}
-				if (gl.getCountry().toUpperCase().startsWith("IT") && (gl.getZipCode() == null)) {
+				if (gl.getCountry().toUpperCase().startsWith(ITALY) && (gl.getZipCode() == null)) {
 					// vediamo se c'e' almeno la citta' o la provincia
 					if ((gl.getCity() == null || gl.getCity().isEmpty())
 							&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2().isEmpty())) {

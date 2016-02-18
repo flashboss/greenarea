@@ -35,6 +35,7 @@ import static it.vige.greenarea.dto.TipologiaParametro.COSTO;
 import static it.vige.greenarea.dto.Tolleranza._20_PER_CENTO;
 import static it.vige.greenarea.dto.Tolleranza._40_PER_CENTO;
 import static java.util.Arrays.asList;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -46,7 +47,6 @@ import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import it.vige.greenarea.cl.control.TimeSlotControl;
 import it.vige.greenarea.cl.control.UserControl;
@@ -79,9 +79,9 @@ public class DataBaseRESTPopulate {
 
 	@GET
 	@Path("/removeDB")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(TEXT_PLAIN)
 	public String removeDB() {
-		
+
 		TimeSlot ts1 = new TimeSlot();
 		ts1.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
 		ts1.setTimeToStopRequest(_1_GIORNO_PRIMA);
@@ -93,7 +93,7 @@ public class DataBaseRESTPopulate {
 		ts1.setDayFinish("31-12");
 		ts1.setVikInd(PREMIA_RISPOSTA_GLOBALE);
 		ts1.setWmy(TUTTI_I_GIORNI);
-		
+
 		TimeSlot ts2 = new TimeSlot();
 		ts2.setTimeToAcceptRequest(_3_GIORNI_PRIMA);
 		ts2.setTimeToStopRequest(_1_GIORNO_PRIMA);
@@ -162,7 +162,7 @@ public class DataBaseRESTPopulate {
 
 	@GET
 	@Path("/populateDB")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(TEXT_PLAIN)
 	public String pupulateDB() {
 		// Creo una fascia oraria
 
@@ -176,12 +176,12 @@ public class DataBaseRESTPopulate {
 				"1-01", "31-12", PREMIA_RISPOSTA_LOCALE);
 		List<TimeSlot> timeSlots = tsc.findAllTimeSlots();
 		for (TimeSlot timeSlot : timeSlots) {
-			System.out.println("timeSlot id = "+timeSlot.getIdTS());
-			System.out.println("timeSlot getDayFinish = "+timeSlot.getDayFinish());
-			System.out.println("timeSlot getDayStart = "+timeSlot.getDayStart());
-			System.out.println("timeSlot getStartTS = "+timeSlot.getStartTS());
-			System.out.println("timeSlot getTimeToAcceptRequest = "+timeSlot.getTimeToAcceptRequest());
-			System.out.println("timeSlot getTimeToStopRequest = "+timeSlot.getTimeToStopRequest());
+			System.out.println("timeSlot id = " + timeSlot.getIdTS());
+			System.out.println("timeSlot getDayFinish = " + timeSlot.getDayFinish());
+			System.out.println("timeSlot getDayStart = " + timeSlot.getDayStart());
+			System.out.println("timeSlot getStartTS = " + timeSlot.getStartTS());
+			System.out.println("timeSlot getTimeToAcceptRequest = " + timeSlot.getTimeToAcceptRequest());
+			System.out.println("timeSlot getTimeToStopRequest = " + timeSlot.getTimeToStopRequest());
 		}
 		idTs[1] = st1.getIdTS();
 		ParameterGen pg;
@@ -344,16 +344,16 @@ public class DataBaseRESTPopulate {
 
 	@GET
 	@Path("/hello")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(TEXT_PLAIN)
 	public String retHello() {
 		return "Hello!";
 	}
 
 	@GET
 	@Path("/addMission")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(TEXT_PLAIN)
 	public String addMission() throws ParseException {
-		
+
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setTimeToAcceptRequest(_2_GIORNI_PRIMA);
 		timeSlot.setTimeToStopRequest(_12_ORE_PRIMA);
@@ -611,8 +611,8 @@ public class DataBaseRESTPopulate {
 	}
 
 	@GET
-	@Path("/removeMission")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Path("/removeMission/")
+	@Produces(TEXT_PLAIN)
 	public String removeMission() throws ParseException {
 
 		TimeSlot timeSlot = new TimeSlot();

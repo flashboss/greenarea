@@ -45,7 +45,7 @@ import it.vige.greenarea.dto.OperatoreLogistico;
 import it.vige.greenarea.dto.RichiestaVeicolo;
 import it.vige.greenarea.dto.Veicolo;
 
-public class TestUser {
+public class UserTest {
 
 	private Logger logger = getLogger(getClass());
 

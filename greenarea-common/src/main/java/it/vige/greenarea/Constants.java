@@ -14,7 +14,7 @@
 package it.vige.greenarea;
 
 public interface Constants {
-
+	
 	String BASE_URI_TS = "http://localhost:8080/greenarea-service/resources/TimeSlot";
 
 	String BASE_URI_RICHIESTE = "http://localhost:8080/greenarea-service/resources/Richieste";
@@ -34,6 +34,8 @@ public interface Constants {
 	String LIVORNO = "Livorno";
 
 	String POMEZIA = "Pomezia";
+	
+	String ITALY = "IT";
 
 	String OPERATORE_LOGISTICO = "operatorelogistico";
 

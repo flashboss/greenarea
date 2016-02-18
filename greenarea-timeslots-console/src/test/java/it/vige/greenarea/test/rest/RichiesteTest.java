@@ -39,7 +39,7 @@ import javax.ws.rs.core.GenericType;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-public class TestRichieste {
+public class RichiesteTest {
 
 	private Logger logger = getLogger(getClass());
 

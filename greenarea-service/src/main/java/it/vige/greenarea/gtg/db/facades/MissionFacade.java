@@ -25,6 +25,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -90,7 +91,8 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(Mission_.missionState), WAITING),
 				cb.greaterThan(trRoot.get(Mission_.expireTime), convertStringToTimestamp(dateTime)));
 		cq = cq.select(trRoot).where(wherePredicate);
-		return getEntityManager().createQuery(cq).getResultList();
+		TypedQuery<Mission> query = getEntityManager().createQuery(cq);
+		return query.getResultList();
 	}
 
 	public Mission findMission(Mission mission) {

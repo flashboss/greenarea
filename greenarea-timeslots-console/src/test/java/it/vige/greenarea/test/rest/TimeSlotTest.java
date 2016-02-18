@@ -75,7 +75,7 @@ import it.vige.greenarea.dto.Sched;
 import it.vige.greenarea.dto.ValoriVeicolo;
 import it.vige.greenarea.dto.Veicolo;
 
-public class TestTimeSlot {
+public class TimeSlotTest {
 
 	private Logger logger = getLogger(getClass());
 

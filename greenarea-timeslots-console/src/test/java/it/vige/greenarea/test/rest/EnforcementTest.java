@@ -25,7 +25,7 @@ import javax.ws.rs.client.Invocation.Builder;
 import org.junit.Test;
 import org.slf4j.Logger;
 
-public class TestEnforcement {
+public class EnforcementTest {
 
 	private static final String BASE_URI = "http://localhost:8080/greenarea-service/resources/Enforcement";
 

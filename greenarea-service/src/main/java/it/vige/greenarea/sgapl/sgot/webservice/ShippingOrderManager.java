@@ -13,6 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.webservice;
 
+import static it.vige.greenarea.Constants.GUIDONIA;
+import static it.vige.greenarea.Constants.ITALY;
+import static it.vige.greenarea.Constants.LIVORNO;
 import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertiShippingOrderDataToShippingOrder;
 import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertiShippingOrderDataToShippingOrders;
 import static it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.CONFIRM_NULL_SHIPPING_ID;
@@ -80,13 +83,13 @@ public class ShippingOrderManager {
 		DBGeoLocation mitt = new DBGeoLocation();
 		mitt.setName("Stabilimento Rozzano");
 		mitt.setAdminAreaLevel1("Toscana");
-		mitt.setAdminAreaLevel2("Livorno");
+		mitt.setAdminAreaLevel2(LIVORNO);
 		mitt.setCity("Rozzano");
 		mitt.setZipCode("20089");
 		DBGeoLocation dest = new DBGeoLocation();
 		dest.setName("Negozio di Via Roma");
 		dest.setAdminAreaLevel1("Lazio");
-		dest.setAdminAreaLevel2("Guidonia");
+		dest.setAdminAreaLevel2(GUIDONIA);
 		dest.setCity("Roma");
 		dest.setZipCode("10121");
 		dest.setNumber("12");
@@ -95,9 +98,9 @@ public class ShippingOrderManager {
 		mittest.setName("");
 		mittest.setAdminAreaLevel1(null);
 		mittest.setAdminAreaLevel2("");
-		mittest.setCity("Guidonia");
+		mittest.setCity(GUIDONIA);
 		mittest.setZipCode("10148");
-		mittest.setCountry("IT");
+		mittest.setCountry(ITALY);
 		mittest.setNumber("");
 		mittest.setRadius(0);
 		mittest.setStreet("");
@@ -106,7 +109,7 @@ public class ShippingOrderManager {
 		destest.setAdminAreaLevel1(null);
 		destest.setAdminAreaLevel2("TO");
 		destest.setCity("");
-		destest.setCountry("IT");
+		destest.setCountry(ITALY);
 		destest.setZipCode("10121");
 		destest.setNumber("");
 		destest.setStreet("");

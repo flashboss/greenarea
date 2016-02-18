@@ -13,6 +13,8 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice;
 
+import static it.vige.greenarea.gtg.webservice.auth.LDAPauth.doAuthentication;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,7 +27,6 @@ import javax.xml.ws.WebServiceContext;
 import com.unboundid.ldap.sdk.LDAPException;
 
 import it.vige.greenarea.gtg.ejb.MissionHandlerBean;
-import it.vige.greenarea.gtg.webservice.auth.LDAPauth;
 import it.vige.greenarea.gtg.webservice.exceptions.GTGexception;
 import it.vige.greenarea.gtg.webservice.wsdata.FreightItemAction;
 import it.vige.greenarea.gtg.webservice.wsdata.MissionItem;
@@ -52,7 +53,7 @@ public class GTGservice {
 	@WebMethod(operationName = "userLogin")
 	public void userLogin() throws LDAPException {
 		// TODO write your implementation code here:
-		LDAPauth.doAuthentication(wsContext);
+		doAuthentication(wsContext);
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class GTGservice {
 	@WebMethod(operationName = "getMissions")
 	public List<MissionItem> getMissions(@WebParam(name = "dateTime") String dateTime) throws LDAPException {
 
-		String user = LDAPauth.doAuthentication(wsContext);
+		String user = doAuthentication(wsContext);
 
 		return missionHandlerBean.getMissions(dateTime, user);
 	}
@@ -74,7 +75,7 @@ public class GTGservice {
 			@WebParam(name = "cause") int cause, @WebParam(name = "note") String note,
 			@WebParam(name = "dateTime") String dateTime) throws LDAPException, GTGexception {
 
-		String user = LDAPauth.doAuthentication(wsContext);
+		String user = doAuthentication(wsContext);
 
 		missionHandlerBean.changeMissionState(user, missionId, state, cause, note, dateTime);
 	}
@@ -87,7 +88,7 @@ public class GTGservice {
 			@WebParam(name = "freightItemsAction") List<FreightItemAction> freightItemsAction)
 					throws LDAPException, GTGexception {
 
-		String user = LDAPauth.doAuthentication(wsContext);
+		String user = doAuthentication(wsContext);
 		try {
 			missionHandlerBean.notifyFreightItemActions(user, freightItemsAction);
 		} catch (Exception ex) {

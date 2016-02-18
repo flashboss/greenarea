@@ -13,13 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.restservices;
 
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 import it.vige.greenarea.cl.bean.Request;
 import it.vige.greenarea.cl.control.EnforcementControl;
@@ -36,7 +37,7 @@ public class EnforcementRESTService {
 
 	@GET
 	@Path("/getInfoRequest/{idTimeSlot}/{idVehicle}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(APPLICATION_JSON)
 	public Request getInfoRequest(@PathParam("idTimeSlot") int idTimeSlot, @PathParam("idVehicle") String idVehicle) {
 		return ec.getInfoRequest(idTimeSlot, idVehicle);
 	}

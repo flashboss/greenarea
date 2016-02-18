@@ -14,6 +14,7 @@
 package it.vige.greenarea.cl.control;
 
 import static it.vige.greenarea.Conversioni.convertiVehiclesToVeicoli;
+import static it.vige.greenarea.cl.scheduling.Tone.sound;
 import static it.vige.greenarea.dto.Color.values;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -42,7 +43,6 @@ import it.vige.greenarea.cl.library.entities.ShippingOrder;
 import it.vige.greenarea.cl.library.entities.Transport;
 import it.vige.greenarea.cl.library.entities.ValueMission;
 import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.cl.scheduling.Tone;
 import it.vige.greenarea.cl.sessions.ValueMissionFacade;
 import it.vige.greenarea.dto.RichiestaVeicolo;
 import it.vige.greenarea.dto.StatoVeicolo;
@@ -98,7 +98,7 @@ public class UserControl {
 		mf.create(m);
 
 		try {
-			Tone.sound(1600, 100);
+			sound(1600, 100);
 		} catch (LineUnavailableException ex) {
 			logger.error("add mission", ex);
 		}

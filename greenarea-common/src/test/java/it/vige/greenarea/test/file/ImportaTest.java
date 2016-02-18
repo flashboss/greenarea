@@ -13,6 +13,7 @@
  ******************************************************************************/
 package it.vige.greenarea.test.file;
 
+import static it.vige.greenarea.Constants.ITALY;
 import static it.vige.greenarea.Utilities.yyyyMMdd;
 import static java.lang.Thread.currentThread;
 import static java.util.Arrays.asList;
@@ -69,7 +70,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -104,7 +105,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -139,7 +140,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -204,7 +205,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10100);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -241,7 +242,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10100);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -278,7 +279,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -328,7 +329,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10100);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -365,7 +366,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10100);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
@@ -402,7 +403,7 @@ public class ImportaTest {
 		assertEquals(richiestaXML.getZipCode(), 10123);
 		assertEquals(richiestaXML.getProvince(), "TO");
 		assertEquals(richiestaXML.getCity(), "TORINO");
-		assertEquals(richiestaXML.getCountry(), "IT");
+		assertEquals(richiestaXML.getCountry(), ITALY);
 		assertEquals(richiestaXML.getShoppingCentre(), 0);
 		assertEquals(richiestaXML.getRoundCode(), "01");
 		assertEquals(richiestaXML.getTntType(), "D");
