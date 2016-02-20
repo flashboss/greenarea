@@ -107,6 +107,7 @@ public class ImportaXLSFile implements ImportaFile {
 			if (acceptRoundCode(roundCode))
 				richiesteXML.add(richiestaXML);
 		}
+		workbook.close();
 		return richiesteXML;
 	}
 

@@ -88,7 +88,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-topic=GatTopic</address>
+									<address>subsystem=messaging-activemq,server=default,jms-topic=GatTopic</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["GatTopic",
@@ -96,7 +96,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-topic=VectorTopic</address>
+									<address>subsystem=messaging-activemq,server=default,jms-topic=VectorTopic</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["VectorTopic",
@@ -104,7 +104,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyLogger</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=ItseasyLogger</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["ItseasyLogger",
@@ -112,7 +112,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyDest</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=ItseasyDest</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["ItseasyDest",
@@ -120,7 +120,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesTimeSlot</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesTimeSlot</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesTimeSlot",
@@ -128,7 +128,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesParameterGen</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesParameterGen</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesParameterGen",
@@ -136,7 +136,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messParameterTS</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messParameterTS</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["messParameterTS",
@@ -144,7 +144,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesMission</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesMission</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesMission",
@@ -152,7 +152,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesPrice</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesPrice</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesPrice",
@@ -160,7 +160,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messValueMessage</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messValueMessage</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["messValueMessage",
@@ -168,7 +168,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messSchedule</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messSchedule</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["messSchedule",
@@ -176,7 +176,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVehicle</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesVehicle</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesVehicle",
@@ -184,7 +184,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messTsStat</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messTsStat</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["messTsStat",
@@ -192,7 +192,7 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVikorResult</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesVikorResult</address>
 									<properties>
 										<durable>true</durable>
 										<entries>!!["mesVikorResult",
@@ -225,33 +225,33 @@
 										handler failed: null", "rolled-back"
 										=> true }
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-topic=GatTopic:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-topic=GatTopic:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-topic=VectorTopic:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-topic=VectorTopic:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=ItseasyLogger:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=ItseasyLogger:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=ItseasyDest:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=ItseasyDest:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesTimeSlot:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesTimeSlot:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesParameterGen:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesParameterGen:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messParameterTS:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messParameterTS:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesMission:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesMission:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesPrice:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesPrice:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messValueMessage:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messValueMessage:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messSchedule:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messSchedule:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesVehicle:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesVehicle:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesVikorResult:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesVikorResult:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messTsStat:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messTsStat:remove
 									</command>
 								</commands>
 							</afterDeployment>
