@@ -44,7 +44,7 @@
 
 	<servlet>
 		<servlet-name>Vaadin Application Servlet</servlet-name>
-		<servlet-class>it.vige.greenarea.bpm.custom.servlet.GreenareaExplorerApplicationServlet</servlet-class>
+		<servlet-class>org.activiti.explorer.servlet.ExplorerApplicationServlet</servlet-class>
 		<init-param>
 			<param-name>widgetset</param-name>
 			<param-value>org.activiti.explorer.CustomWidgetset</param-value>

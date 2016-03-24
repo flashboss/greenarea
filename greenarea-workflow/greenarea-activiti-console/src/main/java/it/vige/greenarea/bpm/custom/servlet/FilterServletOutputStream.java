@@ -12,6 +12,10 @@ public class FilterServletOutputStream extends ServletOutputStream {
 	private DataOutputStream stream;
 	private WriteListener writeListener;
 
+	public WriteListener getWriteListener() {
+		return writeListener;
+	}
+
 	public FilterServletOutputStream(OutputStream output) {
 		stream = new DataOutputStream(output);
 	}
