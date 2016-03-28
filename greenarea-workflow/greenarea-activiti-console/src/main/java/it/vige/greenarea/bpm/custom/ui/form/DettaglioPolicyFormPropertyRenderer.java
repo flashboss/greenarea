@@ -13,18 +13,17 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.form;
 
-import it.vige.greenarea.bpm.custom.ui.form.dettagliopolicy.DettaglioPolicyField;
-import it.vige.greenarea.bpm.form.DettaglioPolicyFormType;
-import it.vige.greenarea.dto.FasciaOraria;
-
 import java.lang.reflect.Method;
 
 import org.activiti.engine.form.FormProperty;
 
 import com.vaadin.ui.Field;
 
-public class DettaglioPolicyFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.custom.ui.form.dettagliopolicy.DettaglioPolicyField;
+import it.vige.greenarea.bpm.form.DettaglioPolicyFormType;
+import it.vige.greenarea.dto.FasciaOraria;
+
+public class DettaglioPolicyFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	/**
 	 * 
@@ -47,8 +46,7 @@ public class DettaglioPolicyFormPropertyRenderer<T> extends
 		FasciaOraria fasciaOraria = null;
 		if (value != null)
 			fasciaOraria = (FasciaOraria) arg0.getType().getInformation(value);
-		DettaglioPolicyField<T> field = new DettaglioPolicyField<T>(arg0, this,
-				fasciaOraria);
+		DettaglioPolicyField<T> field = new DettaglioPolicyField<T>(arg0, this, fasciaOraria);
 		return field;
 	}
 

@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.model;
 
-import it.vige.greenarea.costmodels.ConstantCost;
-
 import org.w3c.dom.Element;
 
+import it.vige.greenarea.costmodels.ConstantCost;
+
 /**
- *         rappresenta il Vettore che prende in carico un trasporto
+ * rappresenta il Vettore che prende in carico un trasporto
  */
 public class LNSimpleCarrier extends LNEdge {
 	/**
@@ -81,8 +81,7 @@ public class LNSimpleCarrier extends LNEdge {
 	@Override
 	public Element toElement() {
 		Element edgeDescriptor = super.toElement();
-		edgeDescriptor.setAttribute("biDirectional",
-				Boolean.toString(biDirectional));
+		edgeDescriptor.setAttribute("biDirectional", Boolean.toString(biDirectional));
 		return edgeDescriptor;
 	}
 

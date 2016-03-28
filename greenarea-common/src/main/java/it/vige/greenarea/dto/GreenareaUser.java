@@ -29,8 +29,7 @@ public class GreenareaUser implements Serializable {
 
 	}
 
-	public GreenareaUser(String id, String firstName, String lastName,
-			String email, String password) {
+	public GreenareaUser(String id, String firstName, String lastName, String email, String password) {
 		super();
 		this.id = id;
 		this.firstName = firstName;

@@ -17,12 +17,6 @@ import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertiOutDataToTa
 import static it.vige.greenarea.tap.spreceiver.ws.ResultStatus.KO;
 import static it.vige.greenarea.tap.spreceiver.ws.ResultStatus.OK;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.TapGroupData;
-import it.vige.greenarea.cl.library.entities.TapOutData;
-import it.vige.greenarea.cl.library.entities.TapParamData;
-import it.vige.greenarea.tap.facades.TapGroupDataFacade;
-import it.vige.greenarea.tap.facades.TapOutDataFacade;
-import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
 import java.util.List;
 
@@ -35,6 +29,13 @@ import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.TapGroupData;
+import it.vige.greenarea.cl.library.entities.TapOutData;
+import it.vige.greenarea.cl.library.entities.TapParamData;
+import it.vige.greenarea.tap.facades.TapGroupDataFacade;
+import it.vige.greenarea.tap.facades.TapOutDataFacade;
+import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
 @WebService(name = "spPushDataService", targetNamespace = "http://tap.vige.it/spReceiver/ws")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
@@ -69,8 +70,7 @@ public class SpPushDataService {
 					if (tapParamDatas != null) {
 						for (TapParamData tapParamData : tapParamDatas) {
 							tapParamDataFacade.create(tapParamData);
-							logCreateTapParamData(tapParamData, tapParamData
-									+ "");
+							logCreateTapParamData(tapParamData, tapParamData + "");
 						}
 					}
 				}
@@ -82,8 +82,7 @@ public class SpPushDataService {
 						for (TapParamData tapParamData : tapParamDatas) {
 							tapParamData.setTapGroupData(tapGroupData);
 							tapParamDataFacade.edit(tapParamData);
-							logEditTapParamData(tapParamData,
-									tapParamData + "", tapGroupData + "");
+							logEditTapParamData(tapParamData, tapParamData + "", tapGroupData + "");
 						}
 					}
 				}
@@ -94,8 +93,7 @@ public class SpPushDataService {
 				for (TapGroupData tapGroupData : tapGroupDatas) {
 					tapGroupData.setTapOutData(tapOutData);
 					tapGroupDataFacade.edit(tapGroupData);
-					logEditTapGroupData(tapGroupData, tapGroupData + "",
-							tapOutData + "");
+					logEditTapGroupData(tapGroupData, tapGroupData + "", tapOutData + "");
 				}
 			}
 		} catch (Exception ex) {
@@ -121,48 +119,36 @@ public class SpPushDataService {
 
 	private void logCreateTapParamData(TapParamData entity, String nome) {
 		if (entity != null) {
-			logger.debug("TapParamData tapParamData" + nome
-					+ " = new TapParamData();");
+			logger.debug("TapParamData tapParamData" + nome + " = new TapParamData();");
 			if (entity.getName() != null)
-				logger.debug("tapParamData" + nome + ".setName(\""
-						+ entity.getName() + "\");");
+				logger.debug("tapParamData" + nome + ".setName(\"" + entity.getName() + "\");");
 			if (entity.getValue() != null)
-				logger.debug("tapParamData" + nome + ".setValue(\""
-						+ entity.getValue() + "\");");
+				logger.debug("tapParamData" + nome + ".setValue(\"" + entity.getValue() + "\");");
 			logger.debug("tapParamDataFacade.create(tapParamData" + nome + ");");
 		}
 	}
 
-	private void logEditTapParamData(TapParamData entity, String nomeParamData,
-			String nomeGroupData) {
+	private void logEditTapParamData(TapParamData entity, String nomeParamData, String nomeGroupData) {
 		if (entity != null) {
-			logger.debug("tapParamData" + nomeParamData
-					+ ".setTapGroupData(tapGroupData" + nomeGroupData + ");");
-			logger.debug("tapParamDataFacade.edit(tapParamData" + nomeParamData
-					+ ");");
+			logger.debug("tapParamData" + nomeParamData + ".setTapGroupData(tapGroupData" + nomeGroupData + ");");
+			logger.debug("tapParamDataFacade.edit(tapParamData" + nomeParamData + ");");
 		}
 	}
 
 	private void logCreateTapOutData(TapOutData entity, String nome) {
 		if (entity != null) {
-			logger.debug("TapOutData tapOutData" + nome
-					+ " = new TapOutData();");
+			logger.debug("TapOutData tapOutData" + nome + " = new TapOutData();");
 			if (entity.getCodeFunction() != null)
-				logger.debug("tapOutData" + nome + ".setCodeFunction(\""
-						+ entity.getCodeFunction() + "\");");
+				logger.debug("tapOutData" + nome + ".setCodeFunction(\"" + entity.getCodeFunction() + "\");");
 			if (entity.getServiceProvider() != null)
-				logger.debug("tapOutData" + nome + ".setServiceProvider(\""
-						+ entity.getServiceProvider() + "\");");
+				logger.debug("tapOutData" + nome + ".setServiceProvider(\"" + entity.getServiceProvider() + "\");");
 			if (entity.getVin() != null)
-				logger.debug("tapOutData" + nome + ".setVin(\""
-						+ entity.getVin() + "\");");
+				logger.debug("tapOutData" + nome + ".setVin(\"" + entity.getVin() + "\");");
 			if (entity.getDate() != null) {
-				logger.debug("GregorianCalendar gregorianCalendar" + nome
-						+ " = new GregorianCalendar();");
-				logger.debug("gregorianCalendar" + nome + ".setTime(new Date("
-						+ entity.getDate().getTime().getTime() + "L));");
-				logger.debug("tapOutData" + nome + ".setDate(gregorianCalendar"
-						+ nome + ");");
+				logger.debug("GregorianCalendar gregorianCalendar" + nome + " = new GregorianCalendar();");
+				logger.debug("gregorianCalendar" + nome + ".setTime(new Date(" + entity.getDate().getTime().getTime()
+						+ "L));");
+				logger.debug("tapOutData" + nome + ".setDate(gregorianCalendar" + nome + ");");
 			}
 			logger.debug("tapOutDataFacade.create(tapOutData" + nome + ");");
 		}
@@ -170,22 +156,17 @@ public class SpPushDataService {
 
 	private void logCreateTapGroupData(TapGroupData entity, String nome) {
 		if (entity != null) {
-			logger.debug("TapGroupData tapGroupData" + nome
-					+ " = new TapGroupData();");
+			logger.debug("TapGroupData tapGroupData" + nome + " = new TapGroupData();");
 			if (entity.getName() != null)
-				logger.debug("tapGroupData" + nome + ".setName(\""
-						+ entity.getName() + "\");");
+				logger.debug("tapGroupData" + nome + ".setName(\"" + entity.getName() + "\");");
 			logger.debug("tapGroupDataFacade.create(tapGroupData" + nome + ");");
 		}
 	}
 
-	private void logEditTapGroupData(TapGroupData entity, String nomeGroupData,
-			String nomeOutData) {
+	private void logEditTapGroupData(TapGroupData entity, String nomeGroupData, String nomeOutData) {
 		if (entity != null) {
-			logger.debug("tapGroupData" + nomeGroupData
-					+ ".setTapOutData(tapOutData" + nomeOutData + ");");
-			logger.debug("tapGroupDataFacade.edit(tapGroupData" + nomeGroupData
-					+ ");");
+			logger.debug("tapGroupData" + nomeGroupData + ".setTapOutData(tapOutData" + nomeOutData + ");");
+			logger.debug("tapGroupDataFacade.edit(tapGroupData" + nomeGroupData + ");");
 		}
 	}
 

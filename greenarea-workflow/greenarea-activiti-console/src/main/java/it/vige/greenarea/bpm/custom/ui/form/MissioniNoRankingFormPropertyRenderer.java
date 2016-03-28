@@ -24,10 +24,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.form.MissioniNoRankingFormType;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.Pacco;
-import it.vige.greenarea.dto.Richiesta;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -46,8 +42,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public class MissioniNoRankingFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Missione> {
+import it.vige.greenarea.bpm.form.MissioniNoRankingFormType;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.Pacco;
+import it.vige.greenarea.dto.Richiesta;
+
+public class MissioniNoRankingFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Missione> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<Missione> table;
@@ -63,8 +63,7 @@ public class MissioniNoRankingFormPropertyRenderer extends
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
 
-		values = (Map<String, Missione>) formProperty.getType().getInformation(
-				"values");
+		values = (Map<String, Missione>) formProperty.getType().getInformation("values");
 		List<Missione> valuesMissioni = new ArrayList<Missione>(values.values());
 		Collections.sort(valuesMissioni, new Comparator<Missione>() {
 
@@ -75,38 +74,31 @@ public class MissioniNoRankingFormPropertyRenderer extends
 			}
 
 		});
-		table = new GreenareaPagedTable<Missione>(valuesMissioni,
-				getGreenareaFormPropertiesForm());
+		table = new GreenareaPagedTable<Missione>(valuesMissioni, getGreenareaFormPropertiesForm());
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(false);
 		table.setStyleName(STYLE_COLLECTION);
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ "compagnia");
+			String id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "compagnia");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "nome");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ "numeroconsegnepreviste");
+			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "numeroconsegnepreviste");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ "numeroritiriprevisti");
+			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "numeroritiriprevisti");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "carico");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ "tipoalimentazione");
+			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "tipoalimentazione");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "euro");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ "caricopercentuale");
+			id = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "caricopercentuale");
 			table.addContainerProperty(id, String.class, null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);
@@ -159,21 +151,19 @@ public class MissioniNoRankingFormPropertyRenderer extends
 			if (richiesta.getTipo().equals(CONSEGNA.name())) {
 				Pacco[] pacchi = richiesta.getPacchi();
 				for (Pacco pacco : pacchi)
-					caricoTotale += new Double(pacco.getAttributi().get(
-							"Weight"));
+					caricoTotale += new Double(pacco.getAttributi().get("Weight"));
 			}
 		}
 		result.add(df.format(caricoTotale));
 		String tipoAlimentazione = type.getVeicolo().getValori().getFuel();
 		try {
-			tipoAlimentazione = i18nManager.getMessage(MISSIONI_TABLE_FIELDS
-					+ tipoAlimentazione);
+			tipoAlimentazione = i18nManager.getMessage(MISSIONI_TABLE_FIELDS + tipoAlimentazione);
 		} catch (Exception ex) {
 			logger.error("errore internazionalizzazione ", tipoAlimentazione);
 		}
 		result.add(tipoAlimentazione);
-		result.add(i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "euro_value")
-				+ " " + type.getVeicolo().getValori().getEuro());
+		result.add(i18nManager.getMessage(MISSIONI_TABLE_FIELDS + "euro_value") + " "
+				+ type.getVeicolo().getValori().getEuro());
 		double caricoTotaleVeicolo = type.getVeicolo().getValori().getWeight();
 		result.add(df.format(caricoTotale / caricoTotaleVeicolo * 100) + "%");
 		if (formProperty.isWritable())
@@ -185,16 +175,14 @@ public class MissioniNoRankingFormPropertyRenderer extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);
 		buttons.setWidth(20, UNITS_PIXELS);
 		buttons.addStyleName(STYLE_DETAIL_BLOCK);
 		for (String operation : mapOperations.keySet()) {
-			if (operation.equals(MODIFICA.name())
-					|| operation.equals(CANCELLAZIONE.name())
+			if (operation.equals(MODIFICA.name()) || operation.equals(CANCELLAZIONE.name())
 					|| operation.equals(DETTAGLIO.name())) {
 				addButton(operation, buttons, item, table);
 			}

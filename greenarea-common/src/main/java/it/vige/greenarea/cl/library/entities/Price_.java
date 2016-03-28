@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import it.vige.greenarea.dto.AccessoVeicoli;
-import it.vige.greenarea.dto.Color;
-
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+
+import it.vige.greenarea.dto.AccessoVeicoli;
+import it.vige.greenarea.dto.Color;
 
 @Generated(value = "EclipseLink-2.3.2.v20111125-r10461", date = "2013-06-18T15:04:43")
 @StaticMetamodel(Price.class)

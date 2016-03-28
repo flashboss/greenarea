@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.dto;
 
-import it.vige.greenarea.vo.Selectable;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.Format;
 import java.util.List;
 
 import org.apache.commons.lang.time.FastDateFormat;
+
+import it.vige.greenarea.vo.Selectable;
 
 public class Missione implements Serializable, Selectable {
 
@@ -60,16 +60,14 @@ public class Missione implements Serializable, Selectable {
 		this.veicolo = veicolo;
 	}
 
-	public Missione(String nome, StatoMissione stato, Veicolo veicolo,
-			List<Richiesta> richieste) {
+	public Missione(String nome, StatoMissione stato, Veicolo veicolo, List<Richiesta> richieste) {
 		this(nome, stato, veicolo);
 		this.richieste = richieste;
 	}
 
-	public Missione(String nome, String compagnia, String lunghezza,
-			String carico, String tappe, String euro, String peso,
-			StatoMissione stato, List<Richiesta> richieste, Veicolo veicolo,
-			Timestamp dataInizio, FasciaOraria fasciaOraria) {
+	public Missione(String nome, String compagnia, String lunghezza, String carico, String tappe, String euro,
+			String peso, StatoMissione stato, List<Richiesta> richieste, Veicolo veicolo, Timestamp dataInizio,
+			FasciaOraria fasciaOraria) {
 		this(nome, stato, veicolo, richieste);
 		this.compagnia = compagnia;
 		this.lunghezza = lunghezza;
@@ -219,9 +217,9 @@ public class Missione implements Serializable, Selectable {
 		else
 			return null;
 	}
-	
+
 	public void setValue(String value) {
-		
+
 	}
 
 }

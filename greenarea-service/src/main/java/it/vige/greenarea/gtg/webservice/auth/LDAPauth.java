@@ -32,20 +32,17 @@ public class LDAPauth {
 
 	private static Logger logger = getLogger(LDAPauth.class);
 
-	public static String doAuthentication(WebServiceContext wsContext)
-			throws LDAPException {
+	public static String doAuthentication(WebServiceContext wsContext) throws LDAPException {
 
 		String result;
 		MessageContext mctx = wsContext.getMessageContext();
 
-		Map<String, Object> http_headers = (Map) mctx
-				.get(MessageContext.HTTP_REQUEST_HEADERS);
+		Map<String, Object> http_headers = (Map) mctx.get(MessageContext.HTTP_REQUEST_HEADERS);
 		List<Object> list = (List) http_headers.get("Authorization");
 
 		if (list == null || list.isEmpty()) {
 			result = "Authentication failed! This WS needs BASIC Authentication!";
-			throw new LDAPException(ResultCode.AUTH_METHOD_NOT_SUPPORTED,
-					result);
+			throw new LDAPException(ResultCode.AUTH_METHOD_NOT_SUPPORTED, result);
 		}
 
 		String userpass = (String) list.get(0);

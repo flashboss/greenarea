@@ -16,7 +16,6 @@ package it.vige.greenarea.bpm.custom.ui.form;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PAGINAZIONE_PAG;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PAGINAZIONE_PER_PAGINA;
 import static org.activiti.explorer.ExplorerApp.get;
-import it.vige.greenarea.vo.Selectable;
 
 import java.util.Collection;
 
@@ -37,6 +36,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
+import it.vige.greenarea.vo.Selectable;
+
 public class GreenareaPagedTable<T> extends PagedTable {
 
 	/**
@@ -50,14 +51,13 @@ public class GreenareaPagedTable<T> extends PagedTable {
 
 	private GreenareaFormPropertiesForm greenareaFormPropertiesForm;
 
-	public GreenareaPagedTable(Collection<T> values,
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
+	public GreenareaPagedTable(Collection<T> values, GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
 		this.values = values;
 		this.greenareaFormPropertiesForm = greenareaFormPropertiesForm;
 	}
 
-	public GreenareaPagedTable(Collection<T> values,
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm, int maxRecords) {
+	public GreenareaPagedTable(Collection<T> values, GreenareaFormPropertiesForm greenareaFormPropertiesForm,
+			int maxRecords) {
 		this(values, greenareaFormPropertiesForm);
 		this.maxRecords = maxRecords;
 	}
@@ -66,8 +66,7 @@ public class GreenareaPagedTable<T> extends PagedTable {
 	public HorizontalLayout createControls() {
 		I18nManager I18nManager = get().getI18nManager();
 		final PagedTableContainer container = (PagedTableContainer) getContainerDataSource();
-		Label itemsPerPageLabel = new Label(
-				I18nManager.getMessage(PAGINAZIONE_PER_PAGINA));
+		Label itemsPerPageLabel = new Label(I18nManager.getMessage(PAGINAZIONE_PER_PAGINA));
 		final ComboBox itemsPerPageSelect = new ComboBox();
 
 		itemsPerPageSelect.addItem("3");
@@ -80,32 +79,25 @@ public class GreenareaPagedTable<T> extends PagedTable {
 		itemsPerPageSelect.addListener(new ValueChangeListener() {
 			private static final long serialVersionUID = -2255853716069800092L;
 
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				setPageLength(Integer.valueOf(String.valueOf(event
-						.getProperty().getValue())));
+			public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+				setPageLength(Integer.valueOf(String.valueOf(event.getProperty().getValue())));
 			}
 		});
 		itemsPerPageSelect.select(maxRecords + "");
-		Label pageLabel = new Label(I18nManager.getMessage(PAGINAZIONE_PAG)
-				+ "&nbsp;", Label.CONTENT_XHTML);
+		Label pageLabel = new Label(I18nManager.getMessage(PAGINAZIONE_PAG) + "&nbsp;", Label.CONTENT_XHTML);
 		final TextField currentPageTextField = new TextField();
 		currentPageTextField.setValue(String.valueOf(getCurrentPage()));
 		currentPageTextField.addValidator(new IntegerValidator(null));
 		Label separatorLabel = new Label("&nbsp;/&nbsp;", Label.CONTENT_XHTML);
-		final Label totalPagesLabel = new Label(
-				String.valueOf(getTotalAmountOfPages()), Label.CONTENT_XHTML);
+		final Label totalPagesLabel = new Label(String.valueOf(getTotalAmountOfPages()), Label.CONTENT_XHTML);
 		currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
 		currentPageTextField.setImmediate(true);
 		currentPageTextField.addListener(new ValueChangeListener() {
 			private static final long serialVersionUID = -2255853716069800092L;
 
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
-				if (currentPageTextField.isValid()
-						&& currentPageTextField.getValue() != null) {
-					int page = Integer.valueOf(String
-							.valueOf(currentPageTextField.getValue()));
+			public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+				if (currentPageTextField.isValid() && currentPageTextField.getValue() != null) {
+					int page = Integer.valueOf(String.valueOf(currentPageTextField.getValue()));
 					setCurrentPage(page);
 				}
 			}
@@ -123,25 +115,16 @@ public class GreenareaPagedTable<T> extends PagedTable {
 
 			public void buttonClick(ClickEvent event) {
 				setCurrentPage(0);
-				if (values != null && !values.isEmpty()
-						&& values.iterator().next() instanceof Selectable) {
-					Selectable selectable = (Selectable) values.toArray()[container
-							.getStartIndex()];
+				if (values != null && !values.isEmpty() && values.iterator().next() instanceof Selectable) {
+					Selectable selectable = (Selectable) values.toArray()[container.getStartIndex()];
 					GreenareaFormPropertiesComponent greenareaFormPropertiesComponent = (GreenareaFormPropertiesComponent) greenareaFormPropertiesForm
 							.getComponent(1);
-					FormProperty formProperty = greenareaFormPropertiesComponent
-							.getFormProperties().get(0);
+					FormProperty formProperty = greenareaFormPropertiesComponent.getFormProperties().get(0);
 					FormPropertyRenderer formPropertyRenderer = greenareaFormPropertiesComponent
 							.getRenderer(formProperty);
-					greenareaFormPropertiesComponent
-							.getForm()
-							.getField(
-									greenareaFormPropertiesComponent
-											.getFormProperties().get(0).getId())
-							.setValue(
-									formPropertyRenderer
-											.getPropertyLabel(formProperty)
-											+ " " + selectable.getValue());
+					greenareaFormPropertiesComponent.getForm()
+							.getField(greenareaFormPropertiesComponent.getFormProperties().get(0).getId()).setValue(
+									formPropertyRenderer.getPropertyLabel(formProperty) + " " + selectable.getValue());
 				}
 			}
 		});
@@ -150,25 +133,16 @@ public class GreenareaPagedTable<T> extends PagedTable {
 
 			public void buttonClick(ClickEvent event) {
 				previousPage();
-				if (values != null && !values.isEmpty()
-						&& values.iterator().next() instanceof Selectable) {
-					Selectable selectable = (Selectable) values.toArray()[container
-							.getStartIndex()];
+				if (values != null && !values.isEmpty() && values.iterator().next() instanceof Selectable) {
+					Selectable selectable = (Selectable) values.toArray()[container.getStartIndex()];
 					GreenareaFormPropertiesComponent greenareaFormPropertiesComponent = (GreenareaFormPropertiesComponent) greenareaFormPropertiesForm
 							.getComponent(1);
-					FormProperty formProperty = greenareaFormPropertiesComponent
-							.getFormProperties().get(0);
+					FormProperty formProperty = greenareaFormPropertiesComponent.getFormProperties().get(0);
 					FormPropertyRenderer formPropertyRenderer = greenareaFormPropertiesComponent
 							.getRenderer(formProperty);
-					greenareaFormPropertiesComponent
-							.getForm()
-							.getField(
-									greenareaFormPropertiesComponent
-											.getFormProperties().get(0).getId())
-							.setValue(
-									formPropertyRenderer
-											.getPropertyLabel(formProperty)
-											+ " " + selectable.getValue());
+					greenareaFormPropertiesComponent.getForm()
+							.getField(greenareaFormPropertiesComponent.getFormProperties().get(0).getId()).setValue(
+									formPropertyRenderer.getPropertyLabel(formProperty) + " " + selectable.getValue());
 				}
 			}
 		});
@@ -177,25 +151,16 @@ public class GreenareaPagedTable<T> extends PagedTable {
 
 			public void buttonClick(ClickEvent event) {
 				nextPage();
-				if (values != null && !values.isEmpty()
-						&& values.iterator().next() instanceof Selectable) {
-					Selectable selectable = (Selectable) values.toArray()[container
-							.getStartIndex()];
+				if (values != null && !values.isEmpty() && values.iterator().next() instanceof Selectable) {
+					Selectable selectable = (Selectable) values.toArray()[container.getStartIndex()];
 					GreenareaFormPropertiesComponent greenareaFormPropertiesComponent = (GreenareaFormPropertiesComponent) greenareaFormPropertiesForm
 							.getComponent(1);
-					FormProperty formProperty = greenareaFormPropertiesComponent
-							.getFormProperties().get(0);
+					FormProperty formProperty = greenareaFormPropertiesComponent.getFormProperties().get(0);
 					FormPropertyRenderer formPropertyRenderer = greenareaFormPropertiesComponent
 							.getRenderer(formProperty);
-					greenareaFormPropertiesComponent
-							.getForm()
-							.getField(
-									greenareaFormPropertiesComponent
-											.getFormProperties().get(0).getId())
-							.setValue(
-									formPropertyRenderer
-											.getPropertyLabel(formProperty)
-											+ " " + selectable.getValue());
+					greenareaFormPropertiesComponent.getForm()
+							.getField(greenareaFormPropertiesComponent.getFormProperties().get(0).getId()).setValue(
+									formPropertyRenderer.getPropertyLabel(formProperty) + " " + selectable.getValue());
 				}
 			}
 		});
@@ -204,25 +169,16 @@ public class GreenareaPagedTable<T> extends PagedTable {
 
 			public void buttonClick(ClickEvent event) {
 				setCurrentPage(getTotalAmountOfPages());
-				if (values != null && !values.isEmpty()
-						&& values.iterator().next() instanceof Selectable) {
-					Selectable selectable = (Selectable) values.toArray()[container
-							.getStartIndex()];
+				if (values != null && !values.isEmpty() && values.iterator().next() instanceof Selectable) {
+					Selectable selectable = (Selectable) values.toArray()[container.getStartIndex()];
 					GreenareaFormPropertiesComponent greenareaFormPropertiesComponent = (GreenareaFormPropertiesComponent) greenareaFormPropertiesForm
 							.getComponent(1);
-					FormProperty formProperty = greenareaFormPropertiesComponent
-							.getFormProperties().get(0);
+					FormProperty formProperty = greenareaFormPropertiesComponent.getFormProperties().get(0);
 					FormPropertyRenderer formPropertyRenderer = greenareaFormPropertiesComponent
 							.getRenderer(formProperty);
-					greenareaFormPropertiesComponent
-							.getForm()
-							.getField(
-									greenareaFormPropertiesComponent
-											.getFormProperties().get(0).getId())
-							.setValue(
-									formPropertyRenderer
-											.getPropertyLabel(formProperty)
-											+ " " + selectable.getValue());
+					greenareaFormPropertiesComponent.getForm()
+							.getField(greenareaFormPropertiesComponent.getFormProperties().get(0).getId()).setValue(
+									formPropertyRenderer.getPropertyLabel(formProperty) + " " + selectable.getValue());
 				}
 			}
 		});
@@ -256,8 +212,7 @@ public class GreenareaPagedTable<T> extends PagedTable {
 		pageSize.addComponent(itemsPerPageLabel);
 		pageSize.addComponent(itemsPerPageSelect);
 		pageSize.setComponentAlignment(itemsPerPageLabel, Alignment.MIDDLE_LEFT);
-		pageSize.setComponentAlignment(itemsPerPageSelect,
-				Alignment.MIDDLE_LEFT);
+		pageSize.setComponentAlignment(itemsPerPageSelect, Alignment.MIDDLE_LEFT);
 		pageSize.setSpacing(true);
 		pageManagement.addComponent(first);
 		pageManagement.addComponent(previous);
@@ -270,30 +225,24 @@ public class GreenareaPagedTable<T> extends PagedTable {
 		pageManagement.setComponentAlignment(first, Alignment.MIDDLE_LEFT);
 		pageManagement.setComponentAlignment(previous, Alignment.MIDDLE_LEFT);
 		pageManagement.setComponentAlignment(pageLabel, Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(currentPageTextField,
-				Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(separatorLabel,
-				Alignment.MIDDLE_LEFT);
-		pageManagement.setComponentAlignment(totalPagesLabel,
-				Alignment.MIDDLE_LEFT);
+		pageManagement.setComponentAlignment(currentPageTextField, Alignment.MIDDLE_LEFT);
+		pageManagement.setComponentAlignment(separatorLabel, Alignment.MIDDLE_LEFT);
+		pageManagement.setComponentAlignment(totalPagesLabel, Alignment.MIDDLE_LEFT);
 		pageManagement.setComponentAlignment(next, Alignment.MIDDLE_LEFT);
 		pageManagement.setComponentAlignment(last, Alignment.MIDDLE_LEFT);
 		pageManagement.setWidth(null);
 		pageManagement.setSpacing(true);
 		controlBar.addComponent(pageSize);
 		controlBar.addComponent(pageManagement);
-		controlBar.setComponentAlignment(pageManagement,
-				Alignment.MIDDLE_CENTER);
+		controlBar.setComponentAlignment(pageManagement, Alignment.MIDDLE_CENTER);
 		controlBar.setWidth("100%");
 		controlBar.setExpandRatio(pageSize, 1);
 		addListener(new PageChangeListener() {
 			public void pageChanged(PagedTableChangeEvent event) {
 				first.setEnabled(container.getStartIndex() > 0);
 				previous.setEnabled(container.getStartIndex() > 0);
-				next.setEnabled(container.getStartIndex() < container
-						.getRealSize() - getPageLength());
-				last.setEnabled(container.getStartIndex() < container
-						.getRealSize() - getPageLength());
+				next.setEnabled(container.getStartIndex() < container.getRealSize() - getPageLength());
+				last.setEnabled(container.getStartIndex() < container.getRealSize() - getPageLength());
 				currentPageTextField.setValue(String.valueOf(getCurrentPage()));
 				totalPagesLabel.setValue(getTotalAmountOfPages());
 				itemsPerPageSelect.setValue(String.valueOf(getPageLength()));
@@ -315,8 +264,7 @@ public class GreenareaPagedTable<T> extends PagedTable {
 		return greenareaFormPropertiesForm;
 	}
 
-	public void setGreenareaFormPropertiesForm(
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
+	public void setGreenareaFormPropertiesForm(GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
 		this.greenareaFormPropertiesForm = greenareaFormPropertiesForm;
 	}
 }

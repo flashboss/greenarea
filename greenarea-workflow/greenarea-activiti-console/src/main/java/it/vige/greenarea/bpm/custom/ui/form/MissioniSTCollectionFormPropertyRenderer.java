@@ -25,11 +25,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.custom.ui.GreenareaMissioniTableCellStyleGenerator;
-import it.vige.greenarea.bpm.form.MissioniSTCollectionFormType;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.Pacco;
-import it.vige.greenarea.dto.Richiesta;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -46,8 +41,13 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public class MissioniSTCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Missione> {
+import it.vige.greenarea.bpm.custom.ui.GreenareaMissioniTableCellStyleGenerator;
+import it.vige.greenarea.bpm.form.MissioniSTCollectionFormType;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.Pacco;
+import it.vige.greenarea.dto.Richiesta;
+
+public class MissioniSTCollectionFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Missione> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<Missione> table;
@@ -63,14 +63,11 @@ public class MissioniSTCollectionFormPropertyRenderer extends
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
 
-		values = (Map<String, Missione>) formProperty.getType().getInformation(
-				"values");
-		table = new GreenareaPagedTable<Missione>(values.values(),
-				getGreenareaFormPropertiesForm());
+		values = (Map<String, Missione>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<Missione>(values.values(), getGreenareaFormPropertiesForm());
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(false);
 		table.setStyleName(STYLE_COLLECTION);
@@ -78,44 +75,33 @@ public class MissioniSTCollectionFormPropertyRenderer extends
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "nome");
+			String id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "nome");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ "codicefiliale");
+			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "codicefiliale");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ "statomissione");
+			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "statomissione");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "numeroconsegnepreviste");
+			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "numeroconsegnepreviste");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ "numerocollidaconsegnare");
+			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "numerocollidaconsegnare");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "numeroritiriprevisti");
+			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "numeroritiriprevisti");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ "numerocollidaritirare");
+			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "numerocollidaritirare");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "carico");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ "targaveicolo");
+			id = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "targaveicolo");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "euro");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "tipoalimentazione");
+			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "tipoalimentazione");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "caricopercentuale");
+			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "caricopercentuale");
 			table.addContainerProperty(id, String.class, null);
 			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "ranking");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS
-					+ "creditomobilita");
+			id = i18nManager.getMessage(MISSIONI_ST_TABLE_FIELDS + "creditomobilita");
 			table.addContainerProperty(id, String.class, null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);
@@ -161,12 +147,10 @@ public class MissioniSTCollectionFormPropertyRenderer extends
 		for (Richiesta richiesta : richieste) {
 			if (richiesta.getTipo().equals(CONSEGNA.name())) {
 				numeroConsegne++;
-				numeroColliConsegne = numeroColliConsegne
-						+ richiesta.getPacchi().length;
+				numeroColliConsegne = numeroColliConsegne + richiesta.getPacchi().length;
 			} else {
 				numeroRitiri++;
-				numeroColliRitiri = numeroColliRitiri
-						+ richiesta.getPacchi().length;
+				numeroColliRitiri = numeroColliRitiri + richiesta.getPacchi().length;
 			}
 		}
 		result.add(numeroConsegne);
@@ -178,19 +162,16 @@ public class MissioniSTCollectionFormPropertyRenderer extends
 			if (richiesta.getTipo().equals(CONSEGNA.name())) {
 				Pacco[] pacchi = richiesta.getPacchi();
 				for (Pacco pacco : pacchi)
-					caricoTotale += new Double(pacco.getAttributi().get(
-							"Weight"));
+					caricoTotale += new Double(pacco.getAttributi().get("Weight"));
 			}
 		}
 		result.add(df.format(caricoTotale));
 		result.add(type.getVeicolo().getTarga());
-		result.add(i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-				+ "euro_value")
-				+ " " + type.getVeicolo().getValori().getEuro());
+		result.add(i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + "euro_value") + " "
+				+ type.getVeicolo().getValori().getEuro());
 		String tipoAlimentazione = type.getVeicolo().getValori().getFuel();
 		try {
-			tipoAlimentazione = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS
-					+ tipoAlimentazione);
+			tipoAlimentazione = i18nManager.getMessage(MISSIONI_OP_TABLE_FIELDS + tipoAlimentazione);
 		} catch (Exception ex) {
 			logger.error("errore internazionalizzazione ", tipoAlimentazione);
 		}
@@ -208,16 +189,14 @@ public class MissioniSTCollectionFormPropertyRenderer extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);
 		buttons.setWidth(20, UNITS_PIXELS);
 		buttons.addStyleName(STYLE_DETAIL_BLOCK);
 		for (String operation : mapOperations.keySet()) {
-			if (operation.equals(MODIFICA.name())
-					|| operation.equals(CANCELLAZIONE.name())
+			if (operation.equals(MODIFICA.name()) || operation.equals(CANCELLAZIONE.name())
 					|| operation.equals(DETTAGLIO.name())) {
 				addButton(operation, buttons, item, table);
 			}

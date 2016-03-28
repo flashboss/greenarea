@@ -20,8 +20,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
@@ -29,6 +27,9 @@ import javax.ws.rs.client.Invocation.Builder;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
 
 public class RichiediPosizioneVeicolo extends EmptyRichiediPosizioneVeicolo {
 	private Logger logger = getLogger(getClass());
@@ -44,17 +45,13 @@ public class RichiediPosizioneVeicolo extends EmptyRichiediPosizioneVeicolo {
 			richiestaPosizioneVeicolo.setTarga(targa);
 			richiestaPosizioneVeicolo.setIdMissione(idMissione);
 			Client client = newClient();
-			Builder bldr = client.target(BASE_URI_TAP + "/getLastPosition")
-					.request(APPLICATION_JSON);
-			String response = bldr.post(
-					entity(richiestaPosizioneVeicolo, APPLICATION_JSON),
-					String.class);
+			Builder bldr = client.target(BASE_URI_TAP + "/getLastPosition").request(APPLICATION_JSON);
+			String response = bldr.post(entity(richiestaPosizioneVeicolo, APPLICATION_JSON), String.class);
 			logger.debug("coordinate calcolate: " + response);
 			execution.setVariable("reportData", response);
 
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerichiestaposizioneveicolost");

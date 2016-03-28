@@ -15,12 +15,11 @@ package it.vige.greenarea.bpm.form;
 
 import java.io.Serializable;
 
-import it.vige.greenarea.dto.FasciaOraria;
-
 import org.activiti.engine.form.AbstractFormType;
 
-public class DettaglioPolicyFormType extends AbstractFormType implements
-		Serializable {
+import it.vige.greenarea.dto.FasciaOraria;
+
+public class DettaglioPolicyFormType extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = 3503702529278473233L;
 

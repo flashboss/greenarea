@@ -42,20 +42,18 @@ public class Address implements Serializable {
 		this.zipCode = zip;
 	}
 
-	public Address(String street, String number, String zip, String city,
-			String province) {
+	public Address(String street, String number, String zip, String city, String province) {
 		this(street, number, zip, city);
 		this.province = province;
 	}
 
-	public Address(String street, String number, String zipCode, String city,
-			String province, String region) {
+	public Address(String street, String number, String zipCode, String city, String province, String region) {
 		this(street, number, zipCode, city, province);
 		this.region = region;
 	}
 
-	public Address(String street, String number, String zipCode, String city,
-			String province, String region, String country) {
+	public Address(String street, String number, String zipCode, String city, String province, String region,
+			String country) {
 		this(street, number, zipCode, city, province, region);
 		this.country = country;
 	}
@@ -154,12 +152,12 @@ public class Address implements Serializable {
 			return false;
 		}
 		Address other = (Address) object;
-		if (((this.street == null && other.street != null) || (this.street != null && !this.street
-				.equals(other.street)))
-				|| ((this.number == null && other.number != null) || (this.number != null && !this.number
-						.equals(other.number)))
-				|| ((this.city == null && other.city != null) || (this.city != null && !this.city
-						.equals(other.city)))) {
+		if (((this.street == null && other.street != null)
+				|| (this.street != null && !this.street.equals(other.street)))
+				|| ((this.number == null && other.number != null)
+						|| (this.number != null && !this.number.equals(other.number)))
+				|| ((this.city == null && other.city != null)
+						|| (this.city != null && !this.city.equals(other.city)))) {
 			return false;
 		}
 		return true;

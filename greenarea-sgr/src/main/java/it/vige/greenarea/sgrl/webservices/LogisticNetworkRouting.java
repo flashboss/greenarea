@@ -13,17 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.sgrl.webservices;
 
+import static it.vige.greenarea.Constants.ITALY;
+import static it.vige.greenarea.geo.CAP.getProvincia;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_DESTINATION_ADDRESS;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_PARAMETERS;
 import static it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError.INVALID_SOURCE_ADDRESS;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.geo.CAP;
-import it.vige.greenarea.geo.GisService;
-import it.vige.greenarea.ln.routing.LNGraphAnalysis;
-import it.vige.greenarea.ln.routing.LNPath;
-import it.vige.greenarea.sgrl.LogisticNetworkManager;
 
 import java.util.ArrayList;
 
@@ -33,6 +28,13 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.geo.GisService;
+import it.vige.greenarea.ln.routing.LNGraphAnalysis;
+import it.vige.greenarea.ln.routing.LNPath;
+import it.vige.greenarea.sgrl.LogisticNetworkManager;
 
 @WebService(serviceName = "LogisticNetworkRouting")
 public class LogisticNetworkRouting {
@@ -50,11 +52,9 @@ public class LogisticNetworkRouting {
 	 * dei vettori usati per una possibile route **** Serve solo per test
 	 */
 	@WebMethod(operationName = "getRoutes")
-	public java.lang.String[] getRoutes(
-			@WebParam(name = "source") final GeoLocation source,
+	public java.lang.String[] getRoutes(@WebParam(name = "source") final GeoLocation source,
 			@WebParam(name = "destination") final GeoLocation destination,
-			@WebParam(name = "options") final String options)
-			throws SGRLServiceException {
+			@WebParam(name = "options") final String options) throws SGRLServiceException {
 		LNGraphAnalysis lng = new LNGraphAnalysis();
 		GeoLocationInterface sourceI, destinationI;
 		if (gis == null) {
@@ -71,8 +71,7 @@ public class LogisticNetworkRouting {
 		if (destinationI == null) {
 			throw new SGRLServiceException(INVALID_DESTINATION_ADDRESS);
 		}
-		ArrayList<LNPath> paths = lng.getLogisticPaths(
-				logisticNetworkManager.getActiveNetwork(), sourceI,
+		ArrayList<LNPath> paths = lng.getLogisticPaths(logisticNetworkManager.getActiveNetwork(), sourceI,
 				destinationI);
 		String[] result = new String[paths.size()];
 		for (int i = 0; i < paths.size(); i++) {
@@ -84,16 +83,14 @@ public class LogisticNetworkRouting {
 
 	/**
 	 * Web service operation getLNPaths restituisce un array di
-	 * SGRLLogisticPaths ciascuno dei quali ?????? una sequenza di ExchangeStop ed il
-	 * primo e l'ultimo sono geoFrom, ovvero l'origine della spedizione e geoTo,
-	 * ovvero la destinazione
+	 * SGRLLogisticPaths ciascuno dei quali ?????? una sequenza di ExchangeStop
+	 * ed il primo e l'ultimo sono geoFrom, ovvero l'origine della spedizione e
+	 * geoTo, ovvero la destinazione
 	 */
 	@WebMethod(operationName = "getLNPaths")
-	public SgrlLogisticPath[] getLNPaths(
-			@WebParam(name = "source") final GeoLocation source,
-			@WebParam(name = "destination") final GeoLocation destination,
-			@WebParam(name = "options") String options)
-			throws SGRLServiceException {
+	public SgrlLogisticPath[] getLNPaths(@WebParam(name = "source") final GeoLocation source,
+			@WebParam(name = "destination") final GeoLocation destination, @WebParam(name = "options") String options)
+					throws SGRLServiceException {
 		LNGraphAnalysis lng = new LNGraphAnalysis();
 		GeoLocationInterface sourceI, destinationI;
 		if (gis == null) {
@@ -111,8 +108,7 @@ public class LogisticNetworkRouting {
 			throw new SGRLServiceException(INVALID_DESTINATION_ADDRESS);
 		}
 		ArrayList<SgrlLogisticPath> result = new ArrayList<SgrlLogisticPath>();
-		ArrayList<LNPath> paths = lng.getLogisticPaths(
-				logisticNetworkManager.getActiveNetwork(), sourceI,
+		ArrayList<LNPath> paths = lng.getLogisticPaths(logisticNetworkManager.getActiveNetwork(), sourceI,
 				destinationI);
 		int i = 0;
 		for (LNPath p : paths) {
@@ -126,28 +122,24 @@ public class LogisticNetworkRouting {
 		if (gl == null)
 			return null;
 		// se non ho country code e non ho coordinate metto IT come default
-		if ((gl.getCountry() == null || gl.getCountry().isEmpty())
-				&& (gl.getLatitude() == 0.) && (gl.getLongitude() == 0.))
-			gl.setCountry("IT");
+		if ((gl.getCountry() == null || gl.getCountry().isEmpty()) && (gl.getLatitude() == 0.)
+				&& (gl.getLongitude() == 0.))
+			gl.setCountry(ITALY);
 		// se mi manca indirizzo o coordinate gl e' non valido
 		if ((gl.getCity() == null || gl.getCity().isEmpty())
-				&& (gl.getAdminAreaLevel1() == null || gl.getAdminAreaLevel1()
-						.isEmpty())
-				&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2()
-						.isEmpty())
-				&& (gl.getZipCode() == null || gl.getZipCode().isEmpty())
-				&& (gl.getLatitude() == 0.) && (gl.getLongitude() == 0.)) {
+				&& (gl.getAdminAreaLevel1() == null || gl.getAdminAreaLevel1().isEmpty())
+				&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2().isEmpty())
+				&& (gl.getZipCode() == null || gl.getZipCode().isEmpty()) && (gl.getLatitude() == 0.)
+				&& (gl.getLongitude() == 0.)) {
 			return null;
 		}
 		GeoLocationInterface result = null;
 		if ((gl.getCity() == null || gl.getCity().isEmpty())
-				&& (gl.getAdminAreaLevel1() == null || gl.getAdminAreaLevel1()
-						.isEmpty())
-				&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2()
-						.isEmpty())
+				&& (gl.getAdminAreaLevel1() == null || gl.getAdminAreaLevel1().isEmpty())
+				&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2().isEmpty())
 				&& (gl.getZipCode() == null || gl.getZipCode().isEmpty())
-				&& (gl.getCountry() == null || gl.getCountry().isEmpty())
-				&& gl.getLatitude() != 0. && gl.getLongitude() != 0.) {
+				&& (gl.getCountry() == null || gl.getCountry().isEmpty()) && gl.getLatitude() != 0.
+				&& gl.getLongitude() != 0.) {
 			try {
 				result = gis.reverseGeoCode(gl);
 			} catch (GisService.GeoCodingException ex) {
@@ -156,15 +148,13 @@ public class LogisticNetworkRouting {
 		} else {
 			try {
 				// verifico che cap esista, se non esiste lo metto a null
-				if (CAP.getProvincia(gl.getZipCode()) == null) {
+				if (getProvincia(gl.getZipCode()) == null) {
 					gl.setZipCode(null);
 				}
-				if (gl.getCountry().toUpperCase().startsWith("IT")
-						&& (gl.getZipCode() == null)) {
+				if (gl.getCountry().toUpperCase().startsWith(ITALY) && (gl.getZipCode() == null)) {
 					// vediamo se c'e' almeno la citta' o la provincia
 					if ((gl.getCity() == null || gl.getCity().isEmpty())
-							&& (gl.getAdminAreaLevel2() == null || gl
-									.getAdminAreaLevel2().isEmpty())) {
+							&& (gl.getAdminAreaLevel2() == null || gl.getAdminAreaLevel2().isEmpty())) {
 						// non ci sono percio' non posso calcolare indirizzo
 						return null;
 					}
@@ -181,8 +171,7 @@ public class LogisticNetworkRouting {
 
 	private void _printLNPath(int i, LNPath p) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("route ").append(Integer.toString(i)).append(": ")
-				.append(p.toString()).append("\n");
+		sb.append("route ").append(Integer.toString(i)).append(": ").append(p.toString()).append("\n");
 		logger.info(sb.toString());
 	}
 
@@ -190,11 +179,9 @@ public class LogisticNetworkRouting {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "getSGRLRoutes")
-	public SgrlRoute[] getSGRLRoutes(
-			@WebParam(name = "source") final GeoLocation source,
-			@WebParam(name = "destination") final GeoLocation destination,
-			@WebParam(name = "options") String options)
-			throws SGRLServiceException {
+	public SgrlRoute[] getSGRLRoutes(@WebParam(name = "source") final GeoLocation source,
+			@WebParam(name = "destination") final GeoLocation destination, @WebParam(name = "options") String options)
+					throws SGRLServiceException {
 		LNGraphAnalysis lng = new LNGraphAnalysis();
 		GeoLocationInterface sourceI, destinationI;
 		if (gis == null) {
@@ -212,8 +199,7 @@ public class LogisticNetworkRouting {
 			throw new SGRLServiceException(INVALID_DESTINATION_ADDRESS);
 		}
 		ArrayList<SgrlRoute> result = new ArrayList<SgrlRoute>();
-		ArrayList<LNPath> paths = lng.getLogisticPaths(
-				logisticNetworkManager.getActiveNetwork(), sourceI,
+		ArrayList<LNPath> paths = lng.getLogisticPaths(logisticNetworkManager.getActiveNetwork(), sourceI,
 				destinationI);
 		int i = 0;
 		for (LNPath p : paths) {
@@ -228,8 +214,7 @@ public class LogisticNetworkRouting {
 		while (swapped) {
 			swapped = false;
 			for (int i = 0; i < rl.size(); i++) {
-				if (i + 1 < rl.size()
-						&& rl.get(i).getCost() > rl.get(i + 1).getCost()) {
+				if (i + 1 < rl.size() && rl.get(i).getCost() > rl.get(i + 1).getCost()) {
 					swapped = true;
 					rl.set(i, rl.get(i + 1));
 				}

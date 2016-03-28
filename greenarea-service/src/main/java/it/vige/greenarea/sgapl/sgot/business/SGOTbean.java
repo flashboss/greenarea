@@ -41,36 +41,6 @@ import static it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultSt
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Customer;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.cl.library.entities.Filter;
-import it.vige.greenarea.cl.library.entities.ShippingItem;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.GreenareaUser;
-import it.vige.greenarea.file.ImportaCSVFile;
-import it.vige.greenarea.file.ImportaFile;
-import it.vige.greenarea.gtg.db.facades.FreightFacade;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
-import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyStoreInfo;
-import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
-import it.vige.greenarea.sgapl.sgot.facade.CustomerFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingItemFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.GetShippingStatusResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.GetTrackingUrlResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.LocateShippingResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.RequestShippingResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.RequestShippingsResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ResultOperationResponse;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderData;
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultStatus;
-import it.vige.greenarea.vo.RichiestaXML;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,6 +58,37 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Customer;
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.cl.library.entities.Filter;
+import it.vige.greenarea.cl.library.entities.ShippingItem;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.dto.GreenareaUser;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.file.ImportaCSVFile;
+import it.vige.greenarea.file.ImportaFile;
+import it.vige.greenarea.gtg.db.facades.FreightFacade;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
+import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyStoreInfo;
+import it.vige.greenarea.sgapl.sgot.business.exception.GATException;
+import it.vige.greenarea.sgapl.sgot.facade.CustomerFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingItemFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultStatus;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.GetShippingStatusResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.GetTrackingUrlResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.LocateShippingResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.RequestShippingResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.RequestShippingsResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ResultOperationResponse;
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderData;
+import it.vige.greenarea.vo.RichiestaXML;
 
 @Named("sgotBean")
 @Stateless
@@ -109,8 +110,7 @@ public class SGOTbean {
 	private TransportServiceClassFacade transportServiceClassFacade;
 	@EJB
 	private ShippingOrderFacade shippingOrderFacade;
-	ItseasyStoreInfo store = new ItseasyStoreInfo(OBJ_FACTORY_JMS_TYPE, "",
-			JMS_PRINCIPAL, JMS_Credential);
+	ItseasyStoreInfo store = new ItseasyStoreInfo(OBJ_FACTORY_JMS_TYPE, "", JMS_PRINCIPAL, JMS_Credential);
 
 	public RequestShippingResponseData addShippingItem(ShippingItem shippingItem) {
 		shippingItemFacade.create(shippingItem);
@@ -124,19 +124,31 @@ public class SGOTbean {
 		return res;
 	}
 
+	public RequestShippingResponseData deleteShipping(ShippingOrder shippingOrder) {
+		shippingOrder = shippingOrderFacade.find(shippingOrder.getId());
+		clientAccountFacade.remove(shippingOrder.getCustomer());
+		shippingOrderFacade.remove(shippingOrder);
+
+		RequestShippingResponseData res = new RequestShippingResponseData();
+		res.setResult(new ResultOperationResponse(ResultStatus.OK));
+		res.setShippingOrderID(shippingOrder.getId());
+		res.setMaxTimeValidity(new Long(1000));
+		res.setMaxTimeShipment(new Long(1000));
+		return res;
+	}
+	
 	public RequestShippingResponseData addShipping(ShippingOrder shippingOrder) {
 		// mi procuro il client account
 		// TODO andra' fatto prendendolo dalla session
 		// per ora cerco il primo clientaccount disponibile, se non c'e' lo
 		// creo:
-		Customer customer = new Customer(shippingOrder.getDestinatario()
-				.getName(), shippingOrder.getMittente().getName(), "");
+		Customer customer = new Customer(shippingOrder.getDestinatario().getName(),
+				shippingOrder.getMittente().getName(), "");
 		try {
 			clientAccountFacade.create(customer);
 		} catch (Exception ex) {
-			return new RequestShippingResponseData(createErrorResponse(
-					UNKNOWN_REF_CONTRACT,
-					"Request Shipping: Ref contract is unknown"));
+			return new RequestShippingResponseData(
+					createErrorResponse(UNKNOWN_REF_CONTRACT, "Request Shipping: Ref contract is unknown"));
 		}
 		shippingOrder.setOrderStatus(suspended);
 		shippingOrder.setCustomer(customer);
@@ -163,8 +175,7 @@ public class SGOTbean {
 
 	}
 
-	public RequestShippingResponseData requestShipping(
-			ShippingOrder shippingOrder) {
+	public RequestShippingResponseData requestShipping(ShippingOrder shippingOrder) {
 
 		RequestShippingResponseData res = addShipping(shippingOrder);
 		ShippingOrder so = shippingOrderFacade.find(res.getShippingOrderID());
@@ -175,16 +186,14 @@ public class SGOTbean {
 
 		} catch (GATException ex) {
 			shippingOrderFacade.remove(so);
-			return new RequestShippingResponseData(createErrorResponse(
-					REQUEST_SHIPPING_NO_TRANSPORT,
-					"Request Shipping: No transport available"));
+			return new RequestShippingResponseData(
+					createErrorResponse(REQUEST_SHIPPING_NO_TRANSPORT, "Request Shipping: No transport available"));
 		}
 		res.setTotalCost(cost);
 		return res;
 	}
 
-	public ResultOperationResponse requestShippings(
-			List<ShippingOrder> richieste) {
+	public ResultOperationResponse requestShippings(List<ShippingOrder> richieste) {
 		ResultOperationResponse result = new ResultOperationResponse(OK);
 		try {
 			int i = 0;
@@ -205,21 +214,16 @@ public class SGOTbean {
 	public String caricaTrasportiDaFile(InputStream inputStream) {
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		ImportaFile importaFile = new ImportaCSVFile(new OperatoreLogistico(
-				new GreenareaUser("tnt")), null);
+		ImportaFile importaFile = new ImportaCSVFile(new OperatoreLogistico(new GreenareaUser("tnt")), null);
 
 		try {
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt").request(
-					APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt").request(APPLICATION_JSON);
 			List<Filter> filters = bldr.get(new GenericType<List<Filter>>() {
 			});
 
-			List<RichiestaXML> richiesteXML = importaFile.prelevaDati(
-					inputStream, convertiFiltersToFiltri(filters));
-			List<Richiesta> richieste = importaFile.convertiARichieste(
-					richiesteXML,
+			List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
+			List<Richiesta> richieste = importaFile.convertiARichieste(richiesteXML,
 					new OperatoreLogistico(new GreenareaUser("tnt")));
 			requestShippings(convertiRichiesteToShippingOrders(richieste));
 		} catch (Exception ex) {
@@ -231,36 +235,30 @@ public class SGOTbean {
 				logger.error("Errore nella chiusura del file");
 			}
 		}
-		FacesMessage msg = new FacesMessage(
-				"GTG database inizializzato correttamente");
+		FacesMessage msg = new FacesMessage("GTG database inizializzato correttamente");
 		context.addMessage(null, msg);
 		return "";
 	}
 
 	public RequestShippingsResponseData getShippings(String operatoreLogistico) {
 		List<ShippingOrderData> shippingOrderDatas = null;
-		RequestShippingsResponseData result = new RequestShippingsResponseData(
-				new ResultOperationResponse(OK));
+		RequestShippingsResponseData result = new RequestShippingsResponseData(new ResultOperationResponse(OK));
 		try {
-			List<ShippingOrder> shippingOrders = shippingOrderFacade
-					.findAll(operatoreLogistico);
+			List<ShippingOrder> shippingOrders = shippingOrderFacade.findAll(operatoreLogistico);
 			for (ShippingOrder shippingOrder : shippingOrders)
-				shippingOrder.setShippingItems(shippingItemFacade
-						.findAll(shippingOrder));
+				shippingOrder.setShippingItems(shippingItemFacade.findAll(shippingOrder));
 			shippingOrderDatas = new ArrayList<ShippingOrderData>();
 			for (ShippingOrder ShippingOrder : shippingOrders)
 				shippingOrderDatas.add(convertiRichiesta(ShippingOrder));
 		} catch (Exception ex) {
 			logger.error("errore nell'inserimento degli ordini", ex);
-			result = new RequestShippingsResponseData(
-					new ResultOperationResponse(NOK));
+			result = new RequestShippingsResponseData(new ResultOperationResponse(NOK));
 		}
 		result.setShippings(shippingOrderDatas);
 		return result;
 	}
 
-	public RequestShippingResponseData estimateShipping(
-			ShippingOrderData shippingOrder) {
+	public RequestShippingResponseData estimateShipping(ShippingOrderData shippingOrder) {
 
 		String cost;
 		DBGeoLocation mitt = new DBGeoLocation();
@@ -280,13 +278,11 @@ public class SGOTbean {
 
 		try {
 
-			cost = gATbean.estimateTransportCost(mitt, dest,
-					new HashMap<String, String>());
+			cost = gATbean.estimateTransportCost(mitt, dest, new HashMap<String, String>());
 
 		} catch (GATException ex) {
-			return new RequestShippingResponseData(createErrorResponse(
-					ESTIMATE_SHIPPING_NO_TRANSPORT,
-					"Estimate Shipping: No transport available"));
+			return new RequestShippingResponseData(
+					createErrorResponse(ESTIMATE_SHIPPING_NO_TRANSPORT, "Estimate Shipping: No transport available"));
 		}
 		RequestShippingResponseData res = new RequestShippingResponseData();
 		res.setResult(new ResultOperationResponse(ResultStatus.OK));
@@ -303,8 +299,7 @@ public class SGOTbean {
 		if (so == null) {
 			result.setStatus(ResultStatus.NOK);
 			result.setErrorCode(CONFIRM_UNKNOWN_SHIPPING_ID);
-			result.setErrorDescription("Confirm Shipping: shipping order ID <"
-					+ shippingOrderID + "> is unknown");
+			result.setErrorDescription("Confirm Shipping: shipping order ID <" + shippingOrderID + "> is unknown");
 		} else {
 			if (so.getOrderStatus().equals(suspended)) {
 				so.setOrderStatus(ready);
@@ -329,8 +324,7 @@ public class SGOTbean {
 		if (so == null) {
 			result.setStatus(ResultStatus.NOK);
 			result.setErrorCode(DROP_UNKNOWN_SHIPPING_ID);
-			result.setErrorDescription("Confirm Shipping: shipping order ID <"
-					+ shippingOrderID + "> is unknown");
+			result.setErrorDescription("Confirm Shipping: shipping order ID <" + shippingOrderID + "> is unknown");
 		} else {
 			if (so.getOrderStatus().equals(suspended)) {
 				shippingOrderFacade.remove(so);
@@ -351,28 +345,21 @@ public class SGOTbean {
 	public LocateShippingResponseData locateShipping(String shippingOrderID) {
 		ShippingOrder so = shippingOrderFacade.find(shippingOrderID);
 		if (so == null) {
-			return new LocateShippingResponseData(createErrorResponse(
-					LOCATE_UNKNOWN_SHIPPING_ID,
-					"Locate Shipping: shipping order ID <" + shippingOrderID
-							+ "> is unknown"));
+			return new LocateShippingResponseData(createErrorResponse(LOCATE_UNKNOWN_SHIPPING_ID,
+					"Locate Shipping: shipping order ID <" + shippingOrderID + "> is unknown"));
 		}
-		if (so.getOrderStatus().equals(ready)
-				|| so.getOrderStatus().equals(ongoing)) {
+		if (so.getOrderStatus().equals(ready) || so.getOrderStatus().equals(ongoing)) {
 			LocateShippingResponseData locateRes;
 
 			Transport t = so.getTransport();
-			locateRes = new LocateShippingResponseData(
-					new ResultOperationResponse(ResultStatus.OK));
+			locateRes = new LocateShippingResponseData(new ResultOperationResponse(ResultStatus.OK));
 			locateRes.setTransportState(t.getTransportState());
 			locateRes.setExchangeSiteName(null);
 			if ((t.getTransportState().equals(SGAPLconstants.READY_STATUS))
-					|| (t.getTransportState()
-							.equals(SGAPLconstants.DONE_STATUS))) {
-				locateRes.setExchangeSiteName(t.getRoute()
-						.get(t.getActiveLegIndex()).getSource().getName());
+					|| (t.getTransportState().equals(SGAPLconstants.DONE_STATUS))) {
+				locateRes.setExchangeSiteName(t.getRoute().get(t.getActiveLegIndex()).getSource().getName());
 				StringBuilder sb = new StringBuilder();
-				GeoLocationInterface gli = t.getRoute()
-						.get(t.getActiveLegIndex()).getSource().getLocation();
+				GeoLocationInterface gli = t.getRoute().get(t.getActiveLegIndex()).getSource().getLocation();
 				if (gli.getStreet() != null && (gli.getStreet().length() > 0)) {
 					sb.append(gli.getStreet());
 				}
@@ -382,28 +369,21 @@ public class SGOTbean {
 				if (gli.getCity() != null && (gli.getCity().length() > 0)) {
 					sb.append(" - ").append(gli.getCity()).append(" ");
 				}
-				if (gli.getAdminAreaLevel2() != null
-						&& gli.getAdminAreaLevel2().length() > 0) {
-					sb.append(" (").append(gli.getAdminAreaLevel2())
-							.append(")");
+				if (gli.getAdminAreaLevel2() != null && gli.getAdminAreaLevel2().length() > 0) {
+					sb.append(" (").append(gli.getAdminAreaLevel2()).append(")");
 				}
-				if (gli.getAdminAreaLevel1() != null
-						&& gli.getAdminAreaLevel1().length() > 0) {
+				if (gli.getAdminAreaLevel1() != null && gli.getAdminAreaLevel1().length() > 0) {
 					sb.append(" - ").append(gli.getAdminAreaLevel1());
 				}
 
 				locateRes.setAddress(sb.toString());
-			} else if (t.getTransportState().equals(
-					SGAPLconstants.ON_DELIVERY_STATUS)) {
-				locateRes.setAddress(t.getRoute().get(t.getActiveLegIndex())
-						.getVector());
+			} else if (t.getTransportState().equals(SGAPLconstants.ON_DELIVERY_STATUS)) {
+				locateRes.setAddress(t.getRoute().get(t.getActiveLegIndex()).getVector());
 			}
 			return locateRes;
 		} else {
-			return new LocateShippingResponseData(createErrorResponse(
-					CANNOT_LOCATE, "locate Shipping: Shipping ID <"
-							+ shippingOrderID + "> is not active: "
-							+ "status is: " + so.getOrderStatus().toString()));
+			return new LocateShippingResponseData(createErrorResponse(CANNOT_LOCATE, "locate Shipping: Shipping ID <"
+					+ shippingOrderID + "> is not active: " + "status is: " + so.getOrderStatus().toString()));
 		}
 
 	}
@@ -412,10 +392,8 @@ public class SGOTbean {
 		ShippingOrder so = shippingOrderFacade.find(shippingID);
 		GetTrackingUrlResponseData result = new GetTrackingUrlResponseData();
 		if (so == null) {
-			result.setResult(createErrorResponse(
-					GET_TRACKING_UNKNOWN_SHIPPING_ID,
-					"Get Tracking URL: ShippingID <" + shippingID
-							+ "> is unknown"));
+			result.setResult(createErrorResponse(GET_TRACKING_UNKNOWN_SHIPPING_ID,
+					"Get Tracking URL: ShippingID <" + shippingID + "> is unknown"));
 			result.setUrl("");
 		} else {
 			result.setResult(new ResultOperationResponse(ResultStatus.OK));
@@ -429,10 +407,8 @@ public class SGOTbean {
 		ShippingOrder so = shippingOrderFacade.find(shippingID);
 		GetShippingStatusResponseData result = new GetShippingStatusResponseData();
 		if (so == null) {
-			result.setResult(createErrorResponse(
-					GET_STATUS_UNKNOWN_SHIPPING_ID,
-					"Get Order Status: ShippingID <" + shippingID
-							+ "> is unknown"));
+			result.setResult(createErrorResponse(GET_STATUS_UNKNOWN_SHIPPING_ID,
+					"Get Order Status: ShippingID <" + shippingID + "> is unknown"));
 			result.setShippingStatus(unknown);
 		} else {
 			result.setResult(new ResultOperationResponse(ResultStatus.OK));

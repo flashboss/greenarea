@@ -18,11 +18,6 @@ import static it.vige.greenarea.dto.StatoMissione.COMPLETED;
 import static it.vige.greenarea.dto.StatoMissione.REJECTED;
 import static it.vige.greenarea.dto.StatoMissione.STARTED;
 import static it.vige.greenarea.dto.StatoMissione.WAITING;
-import it.vige.greenarea.cl.library.entities.Freight;
-import it.vige.greenarea.cl.library.entities.FreightItemState;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.Mission_;
-import it.vige.greenarea.cl.library.entities.Transport;
 
 import java.util.List;
 
@@ -30,10 +25,19 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.FreightItemState;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.Mission_;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.ValueMission;
 
 @Stateless
 public class MissionFacade extends AbstractFacade<Mission, Long> {
@@ -82,23 +86,42 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 			return null;
 		}
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
 		Root<Mission> trRoot = cq.from(Mission.class);
-		Predicate wherePredicate = cb.and(cb.equal(
-				trRoot.get(Mission_.missionState), WAITING), cb.greaterThan(
-				trRoot.get(Mission_.expireTime),
-				convertStringToTimestamp(dateTime)));
+		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(Mission_.missionState), WAITING),
+				cb.greaterThan(trRoot.get(Mission_.expireTime), convertStringToTimestamp(dateTime)));
 		cq = cq.select(trRoot).where(wherePredicate);
-		return getEntityManager().createQuery(cq).getResultList();
+		TypedQuery<Mission> query = getEntityManager().createQuery(cq);
+		return query.getResultList();
+	}
+
+	public Mission findMission(Mission mission) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
+		Root<Mission> m = cq.from(Mission.class);
+		TimeSlot timeSlotEntity = mission.getTimeSlot();
+		Predicate timeSlot = cb.equal(m.get(Mission_.timeSlot), timeSlotEntity);
+		Predicate startTime = cb.equal(m.get(Mission_.startTime), mission.getStartTime());
+		Predicate truck = cb.equal(m.get(Mission_.truck), mission.getTruck());
+		Predicate company = cb.equal(m.get(Mission_.company), mission.getCompany());
+		if (timeSlotEntity != null)
+			cq.select(m).where(cb.and(timeSlot, startTime, truck, company));
+		else
+			cq.select(m).where(cb.and(startTime, truck, company));
+		Mission missionEntity = em.createQuery(cq).getResultList().get(0);
+		List<ValueMission> valuesMission = em
+				.createQuery("from ValueMission where mission.id = " + missionEntity.getId(), ValueMission.class)
+				.getResultList();
+		missionEntity.setValuesMission(valuesMission);
+		return missionEntity;
 	}
 
 	public List<Mission> findAllocatedMissions(String owner) {
 
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
+		CriteriaQuery<Mission> cq = cb.createQuery(Mission.class);
 		Root<Mission> trRoot = cq.from(Mission.class);
-		Predicate wherePredicate = cb.and(
-				cb.equal(trRoot.get(Mission_.missionState), STARTED),
+		Predicate wherePredicate = cb.and(cb.equal(trRoot.get(Mission_.missionState), STARTED),
 				cb.equal(trRoot.get(Mission_.ownerUser), owner));
 		cq = cq.select(trRoot).where(wherePredicate);
 		return getEntityManager().createQuery(cq).getResultList();
@@ -107,8 +130,7 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 	public void completeMission(Mission mission) {
 		mission.setMissionState(COMPLETED);
 		for (Transport tr : mission.getTransports()) {
-			if (!tr.getTransportState().equals(
-					Transport.TransportState.completed)) {
+			if (!tr.getTransportState().equals(Transport.TransportState.completed)) {
 				tr.setTransportState(Transport.TransportState.waiting);
 				tr.setMission(null);
 				transportFacade.edit(tr);
@@ -129,8 +151,7 @@ public class MissionFacade extends AbstractFacade<Mission, Long> {
 	public void rejectMission(Mission mission) {
 		mission.setMissionState(REJECTED);
 		for (Transport tr : mission.getTransports()) {
-			if (!tr.getTransportState().equals(
-					Transport.TransportState.completed)) {
+			if (!tr.getTransportState().equals(Transport.TransportState.completed)) {
 				tr.setTransportState(Transport.TransportState.waiting);
 				tr.setMission(null);
 				transportFacade.edit(tr);

@@ -13,15 +13,15 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.dto.GeoLocation;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.dto.GeoLocation;
 
 @XmlType(name = "GeoReference")
 @XmlAccessorType(XmlAccessType.FIELD)

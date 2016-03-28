@@ -13,8 +13,8 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.db.demoData;
 
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 
 /**
  *
@@ -24,9 +24,9 @@ import javax.enterprise.context.Dependent;
 @Dependent
 public class ConsoleController {
 
-    /**
-     * Creates a new instance of ConsoleController
-     */
-    public ConsoleController() {
-    }
+	/**
+	 * Creates a new instance of ConsoleController
+	 */
+	public ConsoleController() {
+	}
 }

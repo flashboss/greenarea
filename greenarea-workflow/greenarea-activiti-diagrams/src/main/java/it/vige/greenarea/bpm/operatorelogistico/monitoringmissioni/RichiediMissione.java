@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.operatorelogistico.monitoringmissioni;
 
 import static it.vige.greenarea.Constants.BASE_URI_RICHIESTE;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.aborted;
@@ -29,13 +30,7 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +42,11 @@ import javax.ws.rs.core.GenericType;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.dto.RichiestaMissioni;
 
 public class RichiediMissione extends EmptyRichiediMissione {
 
@@ -64,24 +64,17 @@ public class RichiediMissione extends EmptyRichiediMissione {
 				richiestaMissioni.setId(idMissione);
 			}
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-					APPLICATION_JSON);
-			List<Missione> response = bldr.post(
-					entity(richiestaMissioni, APPLICATION_JSON),
+			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
+			List<Missione> response = bldr.post(entity(richiestaMissioni, APPLICATION_JSON),
 					new GenericType<List<Missione>>() {
 					});
 			if (response != null && response.size() > 0) {
 				Missione missione = response.get(0);
-				DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
-				execution.setVariable("dataMissione",
-						dateFormat.format(missione.getDataInizio()));
-				execution.setVariable("elencoStati",
-						createElencoStati(missione));
+				execution.setVariable("dataMissione", giornata.format(missione.getDataInizio()));
+				execution.setVariable("elencoStati", createElencoStati(missione));
 			}
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerichiestamissione");

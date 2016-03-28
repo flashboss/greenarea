@@ -22,9 +22,6 @@ import static org.activiti.explorer.Messages.TASK_COMPLETE;
 import static org.activiti.explorer.Messages.TASK_COMPLETED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_PANEL;
-import it.vige.greenarea.bpm.custom.ui.GreenareaFormLayout;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 import java.util.List;
 import java.util.Map;
@@ -55,6 +52,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+import it.vige.greenarea.bpm.custom.ui.GreenareaFormLayout;
+import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
+
 public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 
 	private static final long serialVersionUID = 144744131312540177L;
@@ -78,15 +79,13 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 	protected TaskRelatedContentComponent relatedContent;
 	protected Button completeButton;
 
-	public VisualizzaMissioniAutorizzateTrPanel(Task task,
-			DettaglioPage taskPage) {
+	public VisualizzaMissioniAutorizzateTrPanel(Task task, DettaglioPage taskPage) {
 		this.task = task;
 		this.taskPage = taskPage;
 
 		this.taskService = getDefaultProcessEngine().getTaskService();
 		this.formService = getDefaultProcessEngine().getFormService();
-		this.repositoryService = getDefaultProcessEngine()
-				.getRepositoryService();
+		this.repositoryService = getDefaultProcessEngine().getRepositoryService();
 		this.viewManager = get().getViewManager();
 		this.i18nManager = get().getI18nManager();
 		this.notificationManager = get().getNotificationManager();
@@ -140,8 +139,7 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 	 */
 	public void addDetailComponent(Component c, int index) {
 		if (mainPanel.getContent() instanceof AbstractOrderedLayout) {
-			((AbstractOrderedLayout) mainPanel.getContent()).addComponent(c,
-					index);
+			((AbstractOrderedLayout) mainPanel.getContent()).addComponent(c, index);
 		} else {
 			throw new UnsupportedOperationException(
 					"Cannot add components indexed component, detail content is not AbstractOrderedLayout");
@@ -153,8 +151,7 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 	 */
 	public void setDetailExpandRatio(Component component, float ratio) {
 		if (mainPanel.getContent() instanceof AbstractOrderedLayout) {
-			((AbstractOrderedLayout) mainPanel.getContent()).setExpandRatio(
-					component, ratio);
+			((AbstractOrderedLayout) mainPanel.getContent()).setExpandRatio(component, ratio);
 		} else {
 			throw new UnsupportedOperationException(
 					"Cannot set ExpandRatio, detail content is not AbstractOrderedLayout");
@@ -199,15 +196,13 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 	protected void initTaskForm() {
 		// Check if task requires a form
 		TaskFormData formData = formService.getTaskFormData(task.getId());
-		if (formData != null && formData.getFormProperties() != null
-				&& formData.getFormProperties().size() > 0) {
+		if (formData != null && formData.getFormProperties() != null && formData.getFormProperties().size() > 0) {
 			taskForm = new GreenareaFormPropertiesForm();
 			taskForm.setMainTitle(taskPage.getMainTitle());
 			if (task.getTaskDefinitionKey().equals("visualizzaReport")
-					|| task.getTaskDefinitionKey()
-							.equals("visualizzaDettaglio"))
-				((Form) ((FormPropertiesComponent) taskForm.getComponent(1))
-						.getComponent(0)).setLayout(new GreenareaFormLayout());
+					|| task.getTaskDefinitionKey().equals("visualizzaDettaglio"))
+				((Form) ((FormPropertiesComponent) taskForm.getComponent(1)).getComponent(0))
+						.setLayout(new GreenareaFormLayout());
 			taskForm.setFormProperties(formData.getFormProperties());
 
 			final VisualizzaMissioniAutorizzateTrPanel visualizzaMissioniAutorizzateTrPanel = this;
@@ -218,16 +213,12 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 				@Override
 				protected void handleFormSubmit(FormPropertiesEvent event) {
 					Map<String, String> properties = event.getFormProperties();
-					String missioni_autorizzate_op_missione = properties
-							.get("missioni_autorizzate_tr_missione");
-					if (missioni_autorizzate_op_missione != null
-							&& missioni_autorizzate_op_missione.equals(""))
+					String missioni_autorizzate_op_missione = properties.get("missioni_autorizzate_tr_missione");
+					if (missioni_autorizzate_op_missione != null && missioni_autorizzate_op_missione.equals(""))
 						properties.remove("missioni_autorizzate_tr_missione");
 					formService.submitTaskFormData(task.getId(), properties);
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
-					List<Task> tasks = taskService.createTaskQuery()
-							.processInstanceId(task.getProcessInstanceId())
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
+					List<Task> tasks = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId())
 							.active().list();
 					if (tasks.size() == 1) {
 						task = tasks.get(0);
@@ -272,14 +263,12 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 					}
 
 					taskService.complete(task.getId());
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
 					taskPage.refreshSelectNext();
 				}
 			});
 
-			completeButton.setEnabled(isCurrentUserAssignee()
-					|| isCurrentUserOwner());
+			completeButton.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
 			buttonLayout.addComponent(completeButton);
 		}
 	}
@@ -295,9 +284,8 @@ public class VisualizzaMissioniAutorizzateTrPanel extends VerticalLayout {
 	}
 
 	protected boolean canUserClaimTask() {
-		return taskService.createTaskQuery()
-				.taskCandidateUser(get().getLoggedInUser().getId())
-				.taskId(task.getId()).count() == 1;
+		return taskService.createTaskQuery().taskCandidateUser(get().getLoggedInUser().getId()).taskId(task.getId())
+				.count() == 1;
 	}
 
 	protected void addEmptySpace(ComponentContainer container) {

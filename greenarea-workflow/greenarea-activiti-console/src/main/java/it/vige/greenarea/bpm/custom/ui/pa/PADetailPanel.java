@@ -32,8 +32,7 @@ public class PADetailPanel extends DetailPanel {
 
 	private I18nManager i18nManager = get().getI18nManager();
 
-	private transient RepositoryService repositoryService = getDefaultProcessEngine()
-			.getRepositoryService();
+	private transient RepositoryService repositoryService = getDefaultProcessEngine().getRepositoryService();
 
 	private AbstractTablePage parentPage;
 
@@ -74,62 +73,39 @@ public class PADetailPanel extends DetailPanel {
 				addDetailComponent(new DefinizioneAreaGeografica());
 				break;
 			case "0-1-0":
-				String processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("letturaParametri")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new LetturaParametri(processDefinitionId,
-						this));
+				String processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("letturaParametri").latestVersion().singleResult().getId();
+				addDetailComponent(new LetturaParametri(processDefinitionId, this));
 				break;
 			case "0-1-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("letturaFasceOrarie")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new LetturaFasceOrarie(processDefinitionId,
-						this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("letturaFasceOrarie").latestVersion().singleResult().getId();
+				addDetailComponent(new LetturaFasceOrarie(processDefinitionId, this));
 				break;
 			case "1-0":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery()
-						.active()
-						.processDefinitionKey("visualizzaMissioniAutorizzatePA")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new VisualizzaMissioniAutorizzate(
-						processDefinitionId, this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("visualizzaMissioniAutorizzatePA").latestVersion().singleResult().getId();
+				addDetailComponent(new VisualizzaMissioniAutorizzate(processDefinitionId, this));
 				break;
 			case "1-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("simulazioneMissioni")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new SimulazioneMissioni(processDefinitionId,
-						this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("simulazioneMissioni").latestVersion().singleResult().getId();
+				addDetailComponent(new SimulazioneMissioni(processDefinitionId, this));
 				break;
 			case "3-0":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("accessoInGA")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new AccessoInGA(
-						processDefinitionId, this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("accessoInGA").latestVersion().singleResult().getId();
+				addDetailComponent(new AccessoInGA(processDefinitionId, this));
 				break;
 			case "3-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("richiediReportMissioniPA")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new RichiediReportMissioni(
-						processDefinitionId, this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("richiediReportMissioniPA").latestVersion().singleResult().getId();
+				addDetailComponent(new RichiediReportMissioni(processDefinitionId, this));
 				break;
 			case "3-2":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery()
-						.active()
-						.processDefinitionKey("impattoAmbientale")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new ImpattoAmbientale(
-						processDefinitionId, this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("impattoAmbientale").latestVersion().singleResult().getId();
+				addDetailComponent(new ImpattoAmbientale(processDefinitionId, this));
 				break;
 			}
 		} else {

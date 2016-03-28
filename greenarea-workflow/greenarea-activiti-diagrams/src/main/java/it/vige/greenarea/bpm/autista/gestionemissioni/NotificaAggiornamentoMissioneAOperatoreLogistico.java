@@ -18,8 +18,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 import org.activiti.engine.delegate.DelegateTask;
 import org.slf4j.Logger;
 
-public class NotificaAggiornamentoMissioneAOperatoreLogistico extends
-		EmptyNotificaAggiornamentoMissioneAOperatoreLogistico {
+public class NotificaAggiornamentoMissioneAOperatoreLogistico
+		extends EmptyNotificaAggiornamentoMissioneAOperatoreLogistico {
 
 	private static final long serialVersionUID = 1382234736647448083L;
 

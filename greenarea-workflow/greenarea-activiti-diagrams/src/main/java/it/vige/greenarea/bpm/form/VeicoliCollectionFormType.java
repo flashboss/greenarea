@@ -21,8 +21,7 @@ import java.util.Map;
 
 import org.activiti.engine.form.AbstractFormType;
 
-public class VeicoliCollectionFormType<T> extends AbstractFormType implements
-		Serializable {
+public class VeicoliCollectionFormType<T> extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = 716196969672651847L;
 	private Map<String, T> values = new HashMap<String, T>();

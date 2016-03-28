@@ -14,39 +14,40 @@
 package it.vige.greenarea.cl.library.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 
 @Embeddable
 public class Attachment implements Serializable {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6761818910741542191L;
 
-	@Column( name = "NAME", length = 40 )
-    private String name;
-    
-    @Lob
-    Serializable contents;
+	@Column(name = "NAME", length = 40)
+	private String name;
 
-    public Attachment(){}
+	@Lob
+	Serializable contents;
 
-    public Serializable getContents() {
-        return contents;
-    }
+	public Attachment() {
+	}
 
-    public void setContents(Serializable contents) {
-        this.contents = contents;
-    }
+	public Serializable getContents() {
+		return contents;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setContents(Serializable contents) {
+		this.contents = contents;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
-

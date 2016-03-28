@@ -16,8 +16,7 @@ package it.vige.greenarea.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-public class DettaglioMissione implements Serializable,
-		Comparable<DettaglioMissione> {
+public class DettaglioMissione implements Serializable, Comparable<DettaglioMissione> {
 
 	private static final long serialVersionUID = 1461687331653317142L;
 	private final static String TOTALE = "missioni_pa_sintesi_table_fields_totale";

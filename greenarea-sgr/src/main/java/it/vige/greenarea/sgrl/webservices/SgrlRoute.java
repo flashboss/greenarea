@@ -13,18 +13,18 @@
  ******************************************************************************/
 package it.vige.greenarea.sgrl.webservices;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.mxgraph.model.mxCell;
+
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.ln.model.LNEdge;
 import it.vige.greenarea.ln.model.LNNode;
 import it.vige.greenarea.ln.model.LNSite;
 import it.vige.greenarea.ln.routing.LNPath;
 import it.vige.greenarea.sgrl.webservices.SGRLServiceException.SGRLServiceError;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-
-import com.mxgraph.model.mxCell;
 
 public class SgrlRoute implements Serializable {
 	/**
@@ -68,15 +68,12 @@ public class SgrlRoute implements Serializable {
 			c.setNameDetails(((LNEdge) o).getDescription());
 			result.getRoute().add(c);
 			o = path.getPath()[i + 1].getValue();
-			if (!(o instanceof LNNode) || !(o instanceof LNSite)
-					&& !(path.getPath().length == i + 2))
+			if (!(o instanceof LNNode) || !(o instanceof LNSite) && !(path.getPath().length == i + 2))
 				throw new SGRLServiceException(SGRLServiceError.SYSTEM_ERROR);
 			xs = new SGRLExchangeStop();
 			xs.setName(((LNNode) o).getName());
 			xs.setNameDetails(((LNNode) o).getDescription());
-			xs.setLocation(new GeoLocation(
-					(path.getPath().length == i + 2 ? path.getGeoTo()
-							: (LNSite) o)));
+			xs.setLocation(new GeoLocation((path.getPath().length == i + 2 ? path.getGeoTo() : (LNSite) o)));
 			result.getRoute().add(xs);
 		}
 		result.setCost(path.getCost());

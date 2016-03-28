@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.form;
 
-import it.vige.greenarea.dto.Richiesta;
-
 import java.io.Serializable;
 import java.text.Format;
 import java.util.Date;
@@ -23,8 +21,9 @@ import java.util.List;
 import org.activiti.engine.form.AbstractFormType;
 import org.apache.commons.lang3.time.FastDateFormat;
 
-public class DateSimulazioniViewFormType extends AbstractFormType implements
-		Serializable {
+import it.vige.greenarea.dto.Richiesta;
+
+public class DateSimulazioniViewFormType extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = -7584212910516167286L;
 	private String datePattern;

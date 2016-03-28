@@ -15,11 +15,6 @@ package it.vige.greenarea.cl.library.entities;
 
 import static javax.persistence.GenerationType.AUTO;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
-import it.vige.greenarea.dto.AperturaRichieste;
-import it.vige.greenarea.dto.ChiusuraRichieste;
-import it.vige.greenarea.dto.Ripetizione;
-import it.vige.greenarea.dto.TipologiaClassifica;
-import it.vige.greenarea.dto.Tolleranza;
 
 import java.io.Serializable;
 
@@ -29,6 +24,12 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.AperturaRichieste;
+import it.vige.greenarea.dto.ChiusuraRichieste;
+import it.vige.greenarea.dto.Ripetizione;
+import it.vige.greenarea.dto.TipologiaClassifica;
+import it.vige.greenarea.dto.Tolleranza;
 
 @Entity
 @XmlRootElement
@@ -201,12 +202,9 @@ public class TimeSlot implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TimeSlot [idTS=" + idTS + ", timeToAcceptRequest="
-				+ timeToAcceptRequest + ", timeToStopRequest="
-				+ timeToStopRequest + ", timeToRun=" + timeToRun
-				+ ", tollerance=" + tollerance + ", wmy=" + wmy + ", startTS="
-				+ startTS + ", finishTS=" + finishTS + ", dayStart=" + dayStart
-				+ ", dayFinish=" + dayFinish + ", vikInd=" + vikInd + ", pa="
-				+ pa + "]";
+		return "TimeSlot [idTS=" + idTS + ", timeToAcceptRequest=" + timeToAcceptRequest + ", timeToStopRequest="
+				+ timeToStopRequest + ", timeToRun=" + timeToRun + ", tollerance=" + tollerance + ", wmy=" + wmy
+				+ ", startTS=" + startTS + ", finishTS=" + finishTS + ", dayStart=" + dayStart + ", dayFinish="
+				+ dayFinish + ", vikInd=" + vikInd + ", pa=" + pa + "]";
 	}
 }

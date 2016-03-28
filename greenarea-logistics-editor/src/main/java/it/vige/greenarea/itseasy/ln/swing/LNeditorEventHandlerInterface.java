@@ -25,8 +25,7 @@ public interface LNeditorEventHandlerInterface {
 		private String message = "";
 		private LNeventType type;
 
-		public LNeditorEvent(Window source, LNeventType type,
-				Object userObject, String message) {
+		public LNeditorEvent(Window source, LNeventType type, Object userObject, String message) {
 			this(type, userObject, message);
 		}
 

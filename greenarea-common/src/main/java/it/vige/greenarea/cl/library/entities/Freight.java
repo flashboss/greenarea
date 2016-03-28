@@ -13,13 +13,8 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import static javax.persistence.FetchType.EAGER;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -44,13 +39,14 @@ public class Freight implements Serializable {
 	private ExchangeStop pickUpPoint;
 	@ManyToOne
 	private ExchangeStop dropDownPoint;
-	@ElementCollection(fetch = EAGER)
-	private List<Attachment> attachments;
+	/*
+	 * @ElementCollection(fetch = EAGER) private List<Attachment> attachments;
+	 */
 	@ManyToOne
 	private Transport transport;
 
 	public Freight() {
-		attachments = new ArrayList<Attachment>();
+		// attachments = new ArrayList<Attachment>();
 		freightState = FreightItemState.AVAILABLE;
 	}
 
@@ -75,19 +71,6 @@ public class Freight implements Serializable {
 		this.description = description;
 	}
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
-
-	/*
-	 * public char[] getCodeId() { return codeId; }
-	 * 
-	 * public void setCodeId(char[] codeId) { this.codeId = codeId; }
-	 */
 	public double getHeight() {
 		return height;
 	}

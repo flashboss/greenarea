@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.webservice.wsdata;
 
-import it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultStatus;
-
 import java.io.Serializable;
+
+import it.vige.greenarea.sgapl.sgot.webservice.wsdata.CommonData.ResultStatus;
 
 public class ResultOperationResponse implements Serializable {
 

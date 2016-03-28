@@ -39,8 +39,7 @@ public class GeoFencingAlgorithm {
 	public boolean isInGA() {
 		List<Linea> lines = calculateLines(poligono);
 		List<Linea> intersectionLines = filterIntersectingLines(lines, y);
-		List<Punto> intersectionPoints = calculateIntersectionPoints(
-				intersectionLines, y);
+		List<Punto> intersectionPoints = calculateIntersectionPoints(intersectionLines, y);
 		sortPointsByX(intersectionPoints);
 		return calculateInside(intersectionPoints, x);
 	}

@@ -150,8 +150,8 @@ public class TapOutData implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link GroupData }
+	 * Objects of the following type(s) are allowed in the list {@link GroupData
+	 * }
 	 * 
 	 * 
 	 */
@@ -160,6 +160,10 @@ public class TapOutData implements Serializable {
 			groups = new ArrayList<TapGroupData>();
 		}
 		return this.groups;
+	}
+	
+	public void setGroups(List<TapGroupData> groups) {
+		this.groups = groups;
 	}
 
 	@Override

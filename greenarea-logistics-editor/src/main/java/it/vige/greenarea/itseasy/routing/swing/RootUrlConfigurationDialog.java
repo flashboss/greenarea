@@ -14,18 +14,19 @@
 package it.vige.greenarea.itseasy.routing.swing;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkManagementService;
-import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkRoutingService;
-import it.vige.greenarea.utilities.Application;
-import it.vige.greenarea.utilities.NetworkResourceTest;
-import it.vige.greenarea.utilities.NetworkResourceTest.NetworkTestType;
 
 import java.awt.Color;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkManagementService;
+import it.vige.greenarea.itseasy.sgrl.wswrapper.LogisticNetworkRoutingService;
+import it.vige.greenarea.utilities.Application;
+import it.vige.greenarea.utilities.NetworkResourceTest;
+import it.vige.greenarea.utilities.NetworkResourceTest.NetworkTestType;
 
 public class RootUrlConfigurationDialog extends javax.swing.JDialog {
 
@@ -82,86 +83,44 @@ public class RootUrlConfigurationDialog extends javax.swing.JDialog {
 		});
 
 		testConnectionButton.setText(I18N.getString("testConnectionButton"));
-		testConnectionButton
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						testConnectionButtonActionPerformed(evt);
-					}
-				});
+		testConnectionButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				testConnectionButtonActionPerformed(evt);
+			}
+		});
 
 		testResultMessage.setForeground(new java.awt.Color(255, 0, 0));
 		testResultMessage.setText("jLabel2");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(39, 39, 39)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												false)
-												.addComponent(jLabel1)
-												.addComponent(
-														urlTextField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														437,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING,
-																				false)
-																				.addComponent(
-																						saveButton,
-																						javax.swing.GroupLayout.Alignment.LEADING,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						169,
-																						Short.MAX_VALUE)
-																				.addComponent(
-																						testConnectionButton,
-																						javax.swing.GroupLayout.Alignment.LEADING,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						javax.swing.GroupLayout.DEFAULT_SIZE,
-																						Short.MAX_VALUE))
-																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																.addComponent(
-																		testResultMessage,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE)))
-								.addContainerGap(
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(35, 35, 35)
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(39, 39, 39)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 								.addComponent(jLabel1)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(urlTextField,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
+								.addComponent(urlTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 437,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(saveButton)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														testConnectionButton)
-												.addComponent(testResultMessage))
-								.addContainerGap(38, Short.MAX_VALUE)));
+						.addGroup(layout.createSequentialGroup()
+								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+										.addComponent(saveButton, javax.swing.GroupLayout.Alignment.LEADING,
+												javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+								.addComponent(testConnectionButton, javax.swing.GroupLayout.Alignment.LEADING,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE))
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(testResultMessage, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(35, 35, 35).addComponent(jLabel1)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(urlTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(saveButton)
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(testConnectionButton).addComponent(testResultMessage))
+				.addContainerGap(38, Short.MAX_VALUE)));
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -194,12 +153,10 @@ public class RootUrlConfigurationDialog extends javax.swing.JDialog {
 		testResultMessage.setText("");
 	}// GEN-LAST:event_urlTextFieldKeyTyped
 
-	private void testConnectionButtonActionPerformed(
-			java.awt.event.ActionEvent evt) {// GEN-FIRST:event_testConnectionButtonActionPerformed
+	private void testConnectionButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_testConnectionButtonActionPerformed
 		try {
 			new URL(urlTextField.getText());
-			if (!NetworkResourceTest.test(NetworkTestType.HTTPTEST,
-					urlTextField.getText())) {
+			if (!NetworkResourceTest.test(NetworkTestType.HTTPTEST, urlTextField.getText())) {
 				testResultMessage.setForeground(Color.RED);
 				testResultMessage.setText(I18N.getString("testFailed"));
 			} else {
@@ -230,8 +187,7 @@ public class RootUrlConfigurationDialog extends javax.swing.JDialog {
 		 * /tutorial/uiswing/lookandfeel/plaf.html
 		 */
 		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-					.getInstalledLookAndFeels()) {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					javax.swing.UIManager.setLookAndFeel(info.getClassName());
 					break;
@@ -254,8 +210,7 @@ public class RootUrlConfigurationDialog extends javax.swing.JDialog {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
-				RootUrlConfigurationDialog dialog = new RootUrlConfigurationDialog(
-						new java.awt.Frame(), true);
+				RootUrlConfigurationDialog dialog = new RootUrlConfigurationDialog(new java.awt.Frame(), true);
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
 					@Override

@@ -16,7 +16,6 @@ package it.vige.greenarea.bpm.form;
 import static it.vige.greenarea.bpm.UserConverter.convertToGreenareaUser;
 import static it.vige.greenarea.dto.Selezione.TUTTI;
 import static org.activiti.engine.ProcessEngines.getDefaultProcessEngine;
-import it.vige.greenarea.dto.OperatoreLogistico;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -29,8 +28,9 @@ import org.activiti.engine.form.AbstractFormType;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
 
-public class OperatoreLogisticoFormType extends AbstractFormType implements
-		Serializable {
+import it.vige.greenarea.dto.OperatoreLogistico;
+
+public class OperatoreLogisticoFormType extends AbstractFormType implements Serializable {
 
 	/**
 	 * 
@@ -66,23 +66,20 @@ public class OperatoreLogisticoFormType extends AbstractFormType implements
 	protected void validateValue(String value) {
 		if (value != null) {
 			if (values != null && !values.containsKey(value)) {
-				throw new ActivitiIllegalArgumentException(
-						"Invalid value for enum form property: " + value);
+				throw new ActivitiIllegalArgumentException("Invalid value for enum form property: " + value);
 			}
 		}
 	}
 
 	private void getOperatoriLogistici() {
-		IdentityService identityService = getDefaultProcessEngine()
-				.getIdentityService();
+		IdentityService identityService = getDefaultProcessEngine().getIdentityService();
 		UserQuery operatoriLogisticiQuery = identityService.createUserQuery();
 		operatoriLogisticiQuery.memberOfGroup("operatorelogistico");
 		List<User> users = operatoriLogisticiQuery.list();
 		values.clear();
 		values.put(TUTTI.name(), TUTTI.name());
 		for (User user : users) {
-			OperatoreLogistico op = new OperatoreLogistico(
-					convertToGreenareaUser(user));
+			OperatoreLogistico op = new OperatoreLogistico(convertToGreenareaUser(user));
 			values.put(op.getId(), op.getId());
 		}
 	}

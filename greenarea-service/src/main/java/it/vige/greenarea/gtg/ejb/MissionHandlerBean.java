@@ -26,6 +26,17 @@ import static it.vige.greenarea.gtg.webservice.exceptions.GTGexception.GTGerrorC
 import static it.vige.greenarea.gtg.webservice.exceptions.GTGexception.GTGerrorCodes.UNKNOWN_MISSION_ID;
 import static it.vige.greenarea.gtg.webservice.exceptions.GTGexception.GTGerrorCodes.UNKNOWN_MISSION_STATE;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.cl.library.entities.Attachment;
 import it.vige.greenarea.cl.library.entities.Freight;
 import it.vige.greenarea.cl.library.entities.FreightItemState;
@@ -41,16 +52,6 @@ import it.vige.greenarea.gtg.webservice.wsdata.ExchangeStopItem;
 import it.vige.greenarea.gtg.webservice.wsdata.FreightItemAction;
 import it.vige.greenarea.gtg.webservice.wsdata.MissionItem;
 import it.vige.greenarea.gtg.webservice.wsdata.TransportItem;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
-import org.slf4j.Logger;
 
 @Stateless
 public class MissionHandlerBean {
@@ -74,10 +75,8 @@ public class MissionHandlerBean {
 			Date now = new Date();
 			dateTime = convertTimestampToString(new Timestamp(now.getTime()));
 		}
-		List<Mission> allocatedMissions = missionFacade
-				.findAllocatedMissions(user);
-		List<Mission> avaliableMissions = missionFacade
-				.findAvailableMissions(dateTime);
+		List<Mission> allocatedMissions = missionFacade.findAllocatedMissions(user);
+		List<Mission> avaliableMissions = missionFacade.findAvailableMissions(dateTime);
 		logger.debug("ws missions executing demo: " + demo);
 		logger.debug("ws missions executing dateTime: " + dateTime);
 		logger.debug("ws missions executing user: " + user);
@@ -101,31 +100,24 @@ public class MissionHandlerBean {
 				List<TransportItem> transportItems = mission.getTransports();
 				if (transportItems != null) {
 					for (TransportItem transportItem : transportItems) {
-						logger.debug("ws missions           transportItem.getCode() = "
-								+ transportItem.getCode());
+						logger.debug("ws missions           transportItem.getCode() = " + transportItem.getCode());
 					}
 				}
-				List<ExchangeStopItem> exchangeStops = mission
-						.getExchangeStops();
+				List<ExchangeStopItem> exchangeStops = mission.getExchangeStops();
 				if (exchangeStops != null) {
 					for (ExchangeStopItem exchangeStopItem : exchangeStops) {
-						logger.debug("ws missions           exchangeStop.getId() = "
-								+ exchangeStopItem.getId());
-						List<String> collectingItems = exchangeStopItem
-								.getCollectingItems();
+						logger.debug("ws missions           exchangeStop.getId() = " + exchangeStopItem.getId());
+						List<String> collectingItems = exchangeStopItem.getCollectingItems();
 						if (collectingItems != null) {
 							for (String collectingItem : collectingItems) {
-								logger.debug("ws missions                      collectingItem = "
-										+ collectingItem);
+								logger.debug("ws missions                      collectingItem = " + collectingItem);
 
 							}
 						}
-						List<String> deliveryItems = exchangeStopItem
-								.getDeliveryItems();
+						List<String> deliveryItems = exchangeStopItem.getDeliveryItems();
 						if (deliveryItems != null) {
 							for (String deliveryItem : deliveryItems) {
-								logger.debug("ws missions                      deliveryItem = "
-										+ deliveryItem);
+								logger.debug("ws missions                      deliveryItem = " + deliveryItem);
 
 							}
 						}
@@ -136,8 +128,8 @@ public class MissionHandlerBean {
 		return result;
 	}
 
-	public void changeMissionState(String user, Long missionId, int state,
-			int cause, String note, String dateTime) throws GTGexception {
+	public void changeMissionState(String user, Long missionId, int state, int cause, String note, String dateTime)
+			throws GTGexception {
 		logger.debug("ws mission state executing user: " + user);
 		logger.debug("ws mission state executing missionId: " + missionId);
 		logger.debug("ws mission state executing state: " + state);
@@ -155,8 +147,7 @@ public class MissionHandlerBean {
 		}
 		Timestamp t = convertStringToTimestamp(dateTime);
 		// TODO bisogna cambiare lo stato della entity Mission....
-		logger.debug("Mission ID: " + missionId + " modifico stato in " + state
-				+ " @" + t.toString());
+		logger.debug("Mission ID: " + missionId + " modifico stato in " + state + " @" + t.toString());
 		StatoMissione newStatoMissione = convertIntToStatoMissione(state);
 		// ATTENzione se il nuovo stato e' sconosciuto lascio quello vecchio
 		if (newStatoMissione == null) {
@@ -165,8 +156,7 @@ public class MissionHandlerBean {
 
 			throw new GTGexception(UNKNOWN_MISSION_STATE, param);
 		}
-		List<Mission> avaliableMissions = missionFacade
-				.findAllocatedMissions(user);
+		List<Mission> avaliableMissions = missionFacade.findAllocatedMissions(user);
 		switch (newStatoMissione) {
 		case STARTED:
 
@@ -210,25 +200,20 @@ public class MissionHandlerBean {
 		sb.append("Mission state changed at ").append(dateTime);
 		sb.append(" note: ").append(note);
 		a.setContents(sb.toString());
-		mission.getAttachments().add(a);
+		// mission.getAttachments().add(a);
 		missionFacade.edit(mission);
 	}
 
-	public void notifyFreightItemActions(String user,
-			List<FreightItemAction> freightItemsAction) throws GTGexception {
+	public void notifyFreightItemActions(String user, List<FreightItemAction> freightItemsAction) throws GTGexception {
 		logger.debug("ws notify state executing user: " + user);
 		if (freightItemsAction != null)
 			for (FreightItemAction freightItemAct : freightItemsAction) {
-				logger.debug("ws notify state executing freightItemAct getDateTime: "
-						+ freightItemAct.getDateTime());
+				logger.debug("ws notify state executing freightItemAct getDateTime: " + freightItemAct.getDateTime());
 				logger.debug("ws notify state executing freightItemAct getFreightItemCode: "
 						+ freightItemAct.getFreightItemCode());
-				logger.debug("ws notify state executing freightItemAct getNote: "
-						+ freightItemAct.getNote());
-				logger.debug("ws notify state executing freightItemAct getState: "
-						+ freightItemAct.getState());
-				logger.debug("ws notify state executing freightItemAct getCause: "
-						+ freightItemAct.getCause());
+				logger.debug("ws notify state executing freightItemAct getNote: " + freightItemAct.getNote());
+				logger.debug("ws notify state executing freightItemAct getState: " + freightItemAct.getState());
+				logger.debug("ws notify state executing freightItemAct getCause: " + freightItemAct.getCause());
 				logger.debug("ws notify state executing freightItemAct getExchangeStopId: "
 						+ freightItemAct.getExchangeStopId());
 			}
@@ -236,8 +221,7 @@ public class MissionHandlerBean {
 		if (demo) {
 			return;
 		}
-		List<Mission> avaliableMissions = missionFacade
-				.findAllocatedMissions(user);
+		List<Mission> avaliableMissions = missionFacade.findAllocatedMissions(user);
 		if ((avaliableMissions == null) || (avaliableMissions.isEmpty())) {
 			ArrayList<String> param = new ArrayList<String>();
 			param.add(user);
@@ -259,8 +243,7 @@ public class MissionHandlerBean {
 				param.add(user);
 				throw new GTGexception(NOTIFY_FREIGHT_STATUS_NOT_ALLOWED, param);
 			}
-			FreightItemState newState = convertIntToFreightItemState(fia
-					.getState());
+			FreightItemState newState = convertIntToFreightItemState(fia.getState());
 			if (newState == null) {
 				ArrayList<String> param = new ArrayList<String>();
 				param.add(String.valueOf(fia.getState()));
@@ -271,16 +254,14 @@ public class MissionHandlerBean {
 			a.setName("Change Freight State");
 			StringBuilder sb = new StringBuilder();
 			sb.append("Freight state changed at ").append(fia.getDateTime());
-			sb.append(" in exchangeStop: ")
-					.append(exchangeStopFacade.find(fia.getExchangeStopId())
-							.toString());
+			sb.append(" in exchangeStop: ").append(exchangeStopFacade.find(fia.getExchangeStopId()).toString());
 			sb.append(" new state: ").append(newState.toString());
 			if (fia.getCause() != null) {
 				sb.append(" cause: ").append(fia.getCause());
 			}
 			sb.append(" notes: ").append(fia.getNote());
 			a.setContents(sb.toString());
-			f.getAttachments().add(a);
+			// f.getAttachments().add(a);
 			freightFacade.changeFreightStatus(f.getCodeId(), newState);
 		}
 	}

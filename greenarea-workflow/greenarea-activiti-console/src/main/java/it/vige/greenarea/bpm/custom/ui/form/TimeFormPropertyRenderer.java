@@ -13,9 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.form;
 
-import it.vige.greenarea.bpm.custom.ui.TimeField;
-import it.vige.greenarea.bpm.form.TimeFormType;
-
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,8 +23,10 @@ import org.activiti.explorer.Messages;
 
 import com.vaadin.ui.Field;
 
-public class TimeFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+import it.vige.greenarea.bpm.custom.ui.TimeField;
+import it.vige.greenarea.bpm.form.TimeFormType;
+
+public class TimeFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 3182117599032514508L;
 
@@ -39,11 +38,9 @@ public class TimeFormPropertyRenderer<T> extends
 	public Field getPropertyField(FormProperty formProperty) {
 		// Writable string
 		TimeField timeField = new TimeField(getPropertyLabel(formProperty));
-		String datePattern = (String) formProperty.getType().getInformation(
-				"datePattern");
+		String datePattern = (String) formProperty.getType().getInformation("datePattern");
 		timeField.setRequired(formProperty.isRequired());
-		timeField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		timeField.setRequiredError(getMessage(Messages.FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		timeField.setEnabled(formProperty.isWritable());
 
 		if (formProperty.getValue() != null) {
@@ -67,8 +64,7 @@ public class TimeFormPropertyRenderer<T> extends
 
 		if (selectedDate != null) {
 			// Use the datePattern specified in the form property type
-			String datePattern = (String) formProperty.getType()
-					.getInformation("datePattern");
+			String datePattern = (String) formProperty.getType().getInformation("datePattern");
 			SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
 			return dateFormat.format(selectedDate);
 		}

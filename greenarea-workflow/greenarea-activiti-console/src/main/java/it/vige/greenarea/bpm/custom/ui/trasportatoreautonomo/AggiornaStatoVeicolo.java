@@ -18,9 +18,6 @@ import static it.vige.greenarea.bpm.custom.GreenareaMessages.AGGIORNA_STATO_VEIC
 import static org.activiti.engine.ProcessEngines.getDefaultProcessEngine;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.navigation.ProcessNavigator.process_URI_PART;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.trasportatoreautonomo.aggiornastatoveicolo.AggiornaStatoVeicoloPage;
-import it.vige.greenarea.bpm.custom.ui.dettaglio.trasportatoreautonomo.aggiornastatoveicolo.AggiornaStatoVeicoloPanel;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -35,25 +32,24 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import it.vige.greenarea.bpm.custom.ui.dettaglio.trasportatoreautonomo.aggiornastatoveicolo.AggiornaStatoVeicoloPage;
+import it.vige.greenarea.bpm.custom.ui.dettaglio.trasportatoreautonomo.aggiornastatoveicolo.AggiornaStatoVeicoloPanel;
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
+
 public class AggiornaStatoVeicolo extends AbstractProcessDefinitionDetailPanel {
 
 	private static final long serialVersionUID = -5903548585312958722L;
 
-	protected transient RuntimeService runtimeService = getDefaultProcessEngine()
-			.getRuntimeService();
-	protected transient TaskService taskService = getDefaultProcessEngine()
-			.getTaskService();
-	protected NotificationManager notificationManager = get()
-			.getNotificationManager();
+	protected transient RuntimeService runtimeService = getDefaultProcessEngine().getRuntimeService();
+	protected transient TaskService taskService = getDefaultProcessEngine().getTaskService();
+	protected NotificationManager notificationManager = get().getNotificationManager();
 	protected GreenareaFormPropertiesForm processDefinitionStartForm;
 
 	private Label mainTitle;
 
-	public AggiornaStatoVeicolo(String processDefinitionId,
-			TrasportatoreAutonomoDetailPanel detailPanel) {
+	public AggiornaStatoVeicolo(String processDefinitionId, TrasportatoreAutonomoDetailPanel detailPanel) {
 		super(processDefinitionId, detailPanel.getParentPage());
-		this.mainTitle = (Label) detailPanel.getMainPanel()
-				.getComponentIterator().next();
+		this.mainTitle = (Label) detailPanel.getMainPanel().getComponentIterator().next();
 		executeProcess();
 	}
 
@@ -74,17 +70,13 @@ public class AggiornaStatoVeicolo extends AbstractProcessDefinitionDetailPanel {
 	public void executeProcess() {
 		// Just start the process-instance since it has no form.
 		// TODO: Error handling
-		ProcessInstance processInstance = runtimeService
-				.startProcessInstanceById(processDefinition.getId());
+		ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
 
 		// Show notification of success
-		notificationManager
-				.showInformationNotification(AGGIORNA_STATO_VEICOLO_SELEZIONA);
+		notificationManager.showInformationNotification(AGGIORNA_STATO_VEICOLO_SELEZIONA);
 
-		Task task = taskService.createTaskQuery()
-				.processInstanceId(processInstance.getId()).singleResult();
-		Component detailComponent = new AggiornaStatoVeicoloPanel(
-				task,
+		Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+		Component detailComponent = new AggiornaStatoVeicoloPanel(task,
 				new AggiornaStatoVeicoloPage(processInstance.getId(), mainTitle));
 		addComponent(detailComponent);
 	}
@@ -94,8 +86,7 @@ public class AggiornaStatoVeicolo extends AbstractProcessDefinitionDetailPanel {
 	}
 
 	protected void changeUrl(String processDefinitionId) {
-		UriFragment processDefinitionFragment = new UriFragment(
-				process_URI_PART, processDefinitionId);
+		UriFragment processDefinitionFragment = new UriFragment(process_URI_PART, processDefinitionId);
 		get().setCurrentUriFragment(processDefinitionFragment);
 	}
 

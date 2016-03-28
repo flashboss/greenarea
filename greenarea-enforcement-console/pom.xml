@@ -58,12 +58,6 @@
 			<artifactId>greenarea-common</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>it.vige.greenarea</groupId>
-			<artifactId>greenarea-service</artifactId>
-			<version>${project.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>struts</groupId>
 			<artifactId>struts</artifactId>
 			<version>1.2.9</version>

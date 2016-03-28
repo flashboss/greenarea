@@ -17,9 +17,6 @@ import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addErrorMessage
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addSuccessMessage;
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.getSelectItems;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
-import it.vige.greenarea.gtg.db.facades.TruckFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -38,6 +35,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
+import it.vige.greenarea.gtg.db.facades.TruckFacade;
 
 @Named("truckController")
 @SessionScoped
@@ -76,9 +77,8 @@ public class TruckController implements Serializable {
 
 				@Override
 				public DataModel createPageDataModel() {
-					return new ListDataModel(getFacade().findRange(
-							new int[] { getPageFirstItem(),
-									getPageFirstItem() + getPageSize() }));
+					return new ListDataModel(getFacade()
+							.findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() }));
 				}
 			};
 		}
@@ -92,8 +92,7 @@ public class TruckController implements Serializable {
 
 	public String prepareView() {
 		current = (Vehicle) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "View";
 	}
 
@@ -106,44 +105,34 @@ public class TruckController implements Serializable {
 	public String create() {
 		try {
 			getFacade().create(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TruckCreated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TruckCreated"));
 			return prepareCreate();
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String prepareEdit() {
 		current = (Vehicle) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "Edit";
 	}
 
 	public String update() {
 		try {
 			getFacade().edit(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TruckUpdated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TruckUpdated"));
 			return "View";
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String destroy() {
 		current = (Vehicle) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		performDestroy();
 		recreatePagination();
 		recreateModel();
@@ -166,13 +155,9 @@ public class TruckController implements Serializable {
 	private void performDestroy() {
 		try {
 			getFacade().remove(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"TruckDeleted"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("TruckDeleted"));
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 		}
 	}
 
@@ -187,9 +172,7 @@ public class TruckController implements Serializable {
 			}
 		}
 		if (selectedItemIndex >= 0) {
-			current = getFacade().findRange(
-					new int[] { selectedItemIndex, selectedItemIndex + 1 })
-					.get(0);
+			current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
 		}
 	}
 
@@ -232,15 +215,13 @@ public class TruckController implements Serializable {
 
 		private static Logger logger = getLogger(TruckControllerConverter.class);
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
 			TruckFacade ejbFacade = null;
 			try {
-				ejbFacade = (TruckFacade) new InitialContext()
-						.lookup("java:global/greenarea-service/TruckFacade");
+				ejbFacade = (TruckFacade) new InitialContext().lookup("java:global/greenarea-service/TruckFacade");
 			} catch (NamingException e) {
 				logger.error("getAsObject", e);
 			}
@@ -259,8 +240,7 @@ public class TruckController implements Serializable {
 			return sb.toString();
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -268,8 +248,7 @@ public class TruckController implements Serializable {
 				Vehicle o = (Vehicle) object;
 				return o.getPlateNumber();
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
 						+ "; expected type: " + Vehicle.class.getName());
 			}
 		}

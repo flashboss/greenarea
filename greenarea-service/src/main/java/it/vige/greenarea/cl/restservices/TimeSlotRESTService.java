@@ -33,38 +33,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.jboss.resteasy.util.FindAnnotation.findAnnotation;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.bean.TimeSlotInfo;
-import it.vige.greenarea.cl.control.TimeSlotControl;
-import it.vige.greenarea.cl.control.VehicleControl;
-import it.vige.greenarea.cl.library.entities.ExchangeStop;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.Price;
-import it.vige.greenarea.cl.library.entities.ShippingItem;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.cl.library.entities.TransportServiceClass;
-import it.vige.greenarea.cl.library.entities.TsStat;
-import it.vige.greenarea.cl.library.entities.ValueMission;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.cl.scheduling.Scheduler;
-import it.vige.greenarea.cl.sessions.ParameterGenFacade;
-import it.vige.greenarea.cl.sessions.ParameterTSFacade;
-import it.vige.greenarea.cl.sessions.ValueMissionFacade;
-import it.vige.greenarea.dto.FasciaOraria;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.Sched;
-import it.vige.greenarea.dto.Veicolo;
-import it.vige.greenarea.gtg.db.facades.FreightFacade;
-import it.vige.greenarea.gtg.db.facades.MissionFacade;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
-import it.vige.greenarea.gtg.ejb.MissionBuilderBean;
-import it.vige.greenarea.sgapl.sgot.business.SGOTbean;
 
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
@@ -96,6 +64,42 @@ import org.jboss.resteasy.annotations.StringParameterUnmarshallerBinder;
 import org.jboss.resteasy.spi.StringParameterUnmarshaller;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.bean.TimeSlotInfo;
+import it.vige.greenarea.cl.control.TimeSlotControl;
+import it.vige.greenarea.cl.control.VehicleControl;
+import it.vige.greenarea.cl.library.entities.ExchangeStop;
+import it.vige.greenarea.cl.library.entities.Freight;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.Price;
+import it.vige.greenarea.cl.library.entities.ShippingItem;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.TransportServiceClass;
+import it.vige.greenarea.cl.library.entities.TsStat;
+import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.cl.scheduling.Scheduler;
+import it.vige.greenarea.cl.sessions.ParameterGenFacade;
+import it.vige.greenarea.cl.sessions.ParameterTSFacade;
+import it.vige.greenarea.cl.sessions.ValueMissionFacade;
+import it.vige.greenarea.dto.FasciaOraria;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.dto.Sched;
+import it.vige.greenarea.dto.Veicolo;
+import it.vige.greenarea.gtg.db.demoData.InitDemoData;
+import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
+import it.vige.greenarea.gtg.db.facades.FreightFacade;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.gtg.db.facades.TransportServiceClassFacade;
+import it.vige.greenarea.gtg.ejb.MissionBuilderBean;
+import it.vige.greenarea.sgapl.sgot.business.SGOTbean;
+
 /**
  * <p>
  * Class: TimeSlotRESTService
@@ -117,8 +121,7 @@ public class TimeSlotRESTService {
 		String value();
 	}
 
-	public static class DateFormatter implements
-			StringParameterUnmarshaller<Date> {
+	public static class DateFormatter implements StringParameterUnmarshaller<Date> {
 		private SimpleDateFormat formatter;
 
 		public void setAnnotations(Annotation[] annotations) {
@@ -154,6 +157,8 @@ public class TimeSlotRESTService {
 	@EJB
 	private MissionFacade missionFacade;
 	@EJB
+	private ExchangeStopFacade exchangeStopFacade;
+	@EJB
 	private TransportFacade transportFacade;
 	@EJB
 	private FreightFacade freightFacade;
@@ -163,6 +168,8 @@ public class TimeSlotRESTService {
 	private MissionBuilderBean missionBuilderBean;
 	@EJB
 	private TransportServiceClassFacade transportServiceClassFacade;
+	@EJB
+	private InitDemoData initDemoData;
 
 	/**
 	 * <p>
@@ -225,6 +232,42 @@ public class TimeSlotRESTService {
 	public TimeSlot deleteTimeSlot(TimeSlot tsToDelete) {
 		return tsc.deleteSlotTime(tsToDelete);
 
+	}
+
+	/**
+	 * <p>
+	 * Method: deleteTimeSlot
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo cancella un TimeSlot dal sistema
+	 * </p>
+	 * 
+	 * @param TimeSlot
+	 *            tsToDelete
+	 * @return TimeSlot
+	 */
+	@GET
+	@Path("/deleteMissions")
+	@Produces(APPLICATION_JSON)
+	public List<Mission> deleteMissions() {
+		List<Mission> missions = missionFacade.findAll();
+		for (Mission mission : missions) {
+			List<ExchangeStop> exchangeStops = exchangeStopFacade.findAll(mission);
+			if (exchangeStops != null)
+				for (ExchangeStop exchangeStop : exchangeStops) {
+					exchangeStopFacade.remove(exchangeStop);
+				}
+		}
+		missions = missionFacade.findAll();
+		for (Mission mission : missions) {
+			List<ValueMission> valuesMission = mission.getValuesMission();
+			if (valuesMission != null)
+				for (ValueMission valueMission : valuesMission) {
+					valueMissionFacade.remove(valueMission);
+				}
+			missionFacade.remove(mission);
+		}
+		return new ArrayList<Mission>();
 	}
 
 	/**
@@ -314,6 +357,27 @@ public class TimeSlotRESTService {
 
 	/**
 	 * <p>
+	 * Method: deletePrice
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo cancella un price al sistema associandolo a
+	 * una fascia oraria
+	 * </p>
+	 * 
+	 * @param Price
+	 *            price
+	 * @return Price
+	 */
+	@POST
+	@Path("/deletePrice")
+	@Consumes(APPLICATION_JSON)
+	public Price deletePrices(Price price) {
+		tsc.deletePrice(price);
+		return price;
+	}
+
+	/**
+	 * <p>
 	 * Method: updatePrice
 	 * </p>
 	 * <p>
@@ -342,7 +406,8 @@ public class TimeSlotRESTService {
 	 * positivo restituisce un TimeSlot
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return TimeSlot
 	 */
 	@GET
@@ -439,8 +504,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/findParameterOfTimeSlot/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<ParameterTS> findParameterOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<ParameterTS> findParameterOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getParameterForRank(idTimeSlot);
 	}
 
@@ -505,10 +569,8 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/requests/{dateMiss}/{idTimeSlot}/{typePG}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> selectRequests(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
-			@PathParam("idTimeSlot") int idTimeSlot,
-			@PathParam("typePG") int typePg) {
+	public List<Request> selectRequests(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+			@PathParam("idTimeSlot") int idTimeSlot, @PathParam("typePG") int typePg) {
 		logger.info("Dentro select");
 		return tsc.selectMission(dateMiss, idTimeSlot, typePg);
 
@@ -530,8 +592,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/simulRank/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> simulRank(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+	public List<Request> simulRank(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
 			@PathParam("idTimeSlot") int idTimeSlot) {
 		List<Request> c = tsc.simulRank(dateMiss, idTimeSlot);
 		return c;
@@ -552,8 +613,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getParameterForRank/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<ParameterTS> getParameterOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<ParameterTS> getParameterOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getParameterForRank(idTimeSlot);
 	}
 
@@ -566,7 +626,8 @@ public class TimeSlotRESTService {
 	 * Oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return TimeSlotInfo
 	 */
 	@GET
@@ -585,8 +646,10 @@ public class TimeSlotRESTService {
 	 * prossimi days giorni
 	 * </p>
 	 * 
-	 * @param int days
-	 * @param int idTimeSlot
+	 * @param int
+	 *            days
+	 * @param int
+	 *            idTimeSlot
 	 * @return
 	 */
 	@POST
@@ -621,8 +684,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getSchedules/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<Sched> getAllSchedules(
-			@PathParam("idTimeSlot") Integer idTimeslot) {
+	public List<Sched> getAllSchedules(@PathParam("idTimeSlot") Integer idTimeslot) {
 		List<Transport> transports = sc.getSchedules(idTimeslot);
 		return convertiTransportsToScheds(transports);
 	}
@@ -636,15 +698,16 @@ public class TimeSlotRESTService {
 	 * a una data stabilita
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
-	 * @param int dateMiss es gmaaaa
+	 * @param int
+	 *            idTimeSlot
+	 * @param int
+	 *            dateMiss es gmaaaa
 	 * @return List<Request>
 	 */
 	@GET
 	@Path("/getRank/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> getrRank(
-			@PathParam("idTimeSlot") int idTimeSlot,
+	public List<Request> getrRank(@PathParam("idTimeSlot") int idTimeSlot,
 			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
 		return tsc.getRank(dateMiss, idTimeSlot);
 	}
@@ -658,18 +721,20 @@ public class TimeSlotRESTService {
 	 * a una data stabilita
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
-	 * @param int dateMiss es gmaaaa
-	 * @param int List<Request>
+	 * @param int
+	 *            idTimeSlot
+	 * @param int
+	 *            dateMiss es gmaaaa
+	 * @param int
+	 *            List<Request>
 	 * @return List<Request>
 	 */
-	@GET
-	@Path("/updateVikor/{idTimeSlot}/{dateMiss}")
+	@POST
+	@Path("/updateVikor")
+	@Consumes(APPLICATION_JSON)
 	@Produces(APPLICATION_JSON)
-	public List<Request> updateVikor(
-			@PathParam("idTimeSlot") int idTimeSlot,
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
-		return tsc.updateVikor(null, dateMiss, idTimeSlot);
+	public List<Request> updateVikor(List<Request> requests) {
+		return tsc.updateVikor(requests, requests.get(0).getDateMiss(), requests.get(0).getIdTimeSlot());
 	}
 
 	/**
@@ -681,14 +746,14 @@ public class TimeSlotRESTService {
 	 * oraria
 	 * </p>
 	 * 
-	 * @param int idTimeSlot
+	 * @param int
+	 *            idTimeSlot
 	 * @return List<Price>
 	 */
 	@GET
 	@Path("/getPriceOfTimeSlot/{idTimeSlot}")
 	@Produces(APPLICATION_JSON)
-	public List<Price> getPriceOfTimeSlot(
-			@PathParam("idTimeSlot") int idTimeSlot) {
+	public List<Price> getPriceOfTimeSlot(@PathParam("idTimeSlot") int idTimeSlot) {
 		return tsc.getPriceOfTimeSlot(idTimeSlot);
 	}
 
@@ -726,8 +791,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/getStoryBoard/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> getStoryBoard(
-			@PathParam("idTimeSlot") int idTimeSlot,
+	public List<Request> getStoryBoard(@PathParam("idTimeSlot") int idTimeSlot,
 			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss) {
 		return tsc.getStoryBoard(idTimeSlot, dateMiss);
 	}
@@ -747,12 +811,36 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/simul/{idTimeSlot}/{dateMiss}")
 	@Produces(APPLICATION_JSON)
-	public List<Request> simul(
-			@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
+	public List<Request> simul(@PathParam("dateMiss") @DateFormat("EEE MMM d HH:mm:ss z yyyy") Date dateMiss,
 			@PathParam("idTimeSlot") int idTimeSlot) {
 
 		List<Request> c = tsc.simulRank(dateMiss, idTimeSlot);
 		return c;
+	}
+
+	/**
+	 * <p>
+	 * Method:addTransports
+	 * </p>
+	 * <p>
+	 * Description: Add transports
+	 * </p>
+	 *
+	 * @param today
+	 * @return
+	 * @throws ParseException
+	 */
+	@GET
+	@Path("/addTransports")
+	@Produces(APPLICATION_JSON)
+	public List<String> addTransports() throws ParseException {
+		List<String> alfacodes = new ArrayList<String>();
+		initDemoData.caricaTrasporti();
+		List<Transport> transports = transportFacade.findAll();
+		for (Transport transport : transports) {
+			alfacodes.add(transport.getAlfacode());
+		}
+		return alfacodes;
 	}
 
 	/**
@@ -796,22 +884,17 @@ public class TimeSlotRESTService {
 		List<String> allRoundCodes = prelevaRoundCodesMissioni(richiesteDaMissione);
 		for (Date date : allDates) {
 			for (String roundCode : allRoundCodes) {
-				List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade
-						.findAll();
+				List<TransportServiceClass> transportSvcClassList = transportServiceClassFacade.findAll();
 				List<Mission> result = new ArrayList<Mission>();
 				Client client = newClient();
-				Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot")
-						.request(APPLICATION_JSON);
-				List<TimeSlot> timeSlots = bldr
-						.get(new GenericType<List<TimeSlot>>() {
-						});
+				Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot").request(APPLICATION_JSON);
+				List<TimeSlot> timeSlots = bldr.get(new GenericType<List<TimeSlot>>() {
+				});
 				List<FasciaOraria> fasceOrarie = new ArrayList<FasciaOraria>();
 				try {
 					for (TimeSlot timeSlot : timeSlots) {
-						FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(
-								timeSlot, asList(new ParameterTS[] {}),
-								asList(new ParameterGen[] {}),
-								asList(new Price[] {}));
+						FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot,
+								asList(new ParameterTS[] {}), asList(new ParameterGen[] {}), asList(new Price[] {}));
 						setDettaglio(timeSlot, client, fasciaOraria);
 						fasceOrarie.add(fasciaOraria);
 					}
@@ -819,16 +902,13 @@ public class TimeSlotRESTService {
 					logger.error("errore nel recupero del dettaglio");
 				}
 				for (TransportServiceClass trServiceClass : transportSvcClassList) {
-					List<Transport> transportsToBeDone = missionBuilderBean
-							.getTrasportiDaEseguire(trServiceClass,
-									richiesteDaMissione, date, roundCode);
+					List<Transport> transportsToBeDone = missionBuilderBean.getTrasportiDaEseguire(trServiceClass,
+							richiesteDaMissione, date, roundCode);
 					String operatoreLogistico = "";
 					if (!transportsToBeDone.isEmpty())
-						operatoreLogistico = transportsToBeDone.get(0)
-								.getOperatoreLogistico();
-					Set<Vehicle> idleTrucks = missionBuilderBean
-							.getVeicoliDisponibili(trServiceClass, roundCode,
-									operatoreLogistico);
+						operatoreLogistico = transportsToBeDone.get(0).getOperatoreLogistico();
+					Set<Vehicle> idleTrucks = missionBuilderBean.getVeicoliDisponibili(trServiceClass, roundCode,
+							operatoreLogistico);
 					for (Transport t : transportsToBeDone) {
 						t.setFreightItems(freightFacade.findAll(t));
 					}
@@ -840,34 +920,26 @@ public class TimeSlotRESTService {
 						Veicolo veicolo = convertiVehicleToVeicolo(truck);
 						missioneEntry.setVeicolo(veicolo);
 						missioneEntry.setRichieste(richieste);
-						Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(
-								richieste, fasceOrarie, veicolo);
+						Map<Richiesta, FasciaOraria> richiestePerFasciaOraria = associaFasciaOrariaARichiesta(richieste,
+								fasceOrarie, veicolo);
 						Mission missione = new Mission();
-						aggiungiValoriAMissione(missioneEntry,
-								richiestePerFasciaOraria);
+						aggiungiValoriAMissione(missioneEntry, richiestePerFasciaOraria);
 						Timestamp timestamp = new Timestamp(date.getTime());
-						missionBuilderBean.buildSgaplMission(missioneEntry,
-								missione, timestamp);
-						missionBuilderBean.buildCityLogisticsMission(
-								missioneEntry, missione, timestamp);
+						missionBuilderBean.buildSgaplMission(missioneEntry, missione, timestamp);
+						missionBuilderBean.buildCityLogisticsMission(missioneEntry, missione, timestamp);
 
-						logger.debug(format(
-								"->Assigned %s for \"%s\" service class\n",
-								missione, trServiceClass.getDescription()));
-						List<ValueMission> valuesMission = missione
-								.getValuesMission();
+						logger.debug(format("->Assigned %s for \"%s\" service class\n", missione,
+								trServiceClass.getDescription()));
+						List<ValueMission> valuesMission = missione.getValuesMission();
 						missione.setValuesMission(null);
 						if (valuesMission != null)
 							for (ValueMission vm : valuesMission) {
 								vm.setMission(missione);
 							}
-						missione.setTimeSlot(tsc.findTimeSlot(missione
-								.getTimeSlot().getIdTS()));
+						missione.setTimeSlot(tsc.findTimeSlot(missione.getTimeSlot().getIdTS()));
 						missione.setName(new Random().nextInt(1000) + "");
-						for (ExchangeStop exchangeStop : missione
-								.getExchangeStops())
-							exchangeStop.setId(new Long(new Random()
-									.nextInt(1000)));
+						for (ExchangeStop exchangeStop : missione.getExchangeStops())
+							exchangeStop.setId(new Long(new Random().nextInt(1000)));
 						missioniCostruite.add(missione);
 						result.add(missione);
 						idleTrucks.remove(truck);
@@ -884,8 +956,7 @@ public class TimeSlotRESTService {
 		}
 		List<Missione> missioni = convertiMissionsToMissioni(missioniCostruite);
 		for (Missione missione : missioni) {
-			List<Request> c = tsc.simulRank(missione.getDataInizio(), missione
-					.getFasciaOraria().getId());
+			List<Request> c = tsc.simulRank(missione.getDataInizio(), missione.getFasciaOraria().getId());
 			if (c != null && c.size() > 0) {
 				missione.setRanking(c.get(0).getColor());
 				missione.setCreditoMobilita(c.get(0).getPrice());
@@ -920,7 +991,22 @@ public class TimeSlotRESTService {
 				valueMissionFacade.create(vm);
 			}
 		missionFacade.create(mission);
-		return mission;
+		Mission result = new Mission();
+		result.setTimeSlot(mission.getTimeSlot());
+		result.setStartTime(mission.getStartTime());
+		/*
+		 * for (ExchangeStop exchangeStop : mission.getExchangeStops()) { for
+		 * (Freight freight : exchangeStop.getCollectingList()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null); } for
+		 * (Freight freight : exchangeStop.getDeliveryList()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null);
+		 * freight.setTransport(null); } } for (Transport transport :
+		 * mission.getTransports()) { transport.setMission(null); for (Freight
+		 * freight : transport.getFreightItems()) {
+		 * freight.setDropDownPoint(null); freight.setPickUpPoint(null);
+		 * freight.setTransport(null); } }
+		 */
+		return result;
 	}
 
 	/**
@@ -941,6 +1027,53 @@ public class TimeSlotRESTService {
 	public ShippingOrder addShipping(ShippingOrder shippingOrder) {
 		sgotBean.addShipping(shippingOrder);
 		return shippingOrder;
+	}
+
+	/**
+	 * <p>
+	 * Method: deleteShipping
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo elimina uno shipping order dal sistema
+	 * </p>
+	 * 
+	 * @param ShippingOrder
+	 *            shippingOrder
+	 * @return ShippingOrder
+	 */
+	@POST
+	@Path("/deleteShipping")
+	@Consumes(APPLICATION_JSON)
+	public ShippingOrder deleteShipping(ShippingOrder shippingOrder) {
+		sgotBean.deleteShipping(shippingOrder);
+		return shippingOrder;
+	}
+
+	/**
+	 * <p>
+	 * Method: deleteScheduler
+	 * </p>
+	 * <p>
+	 * Description: Questo metodo elimina uno scheduler dal sistema
+	 * </p>
+	 * 
+	 * @param Transport
+	 *            transport
+	 * @return Transport
+	 */
+	@GET
+	@Path("/deleteSchedulers")
+	@Consumes(APPLICATION_JSON)
+	public List<Transport> deleteSchedulers() {
+		List<Freight> freights = freightFacade.findAll();
+		if (freights != null)
+			for (Freight freight : freights) {
+				freightFacade.remove(freight);
+			}
+		List<Transport> transports = transportFacade.findAll();
+		for (Transport transport : transports)
+			transportFacade.remove(transport);
+		return new ArrayList<Transport>();
 	}
 
 	/**
@@ -977,8 +1110,7 @@ public class TimeSlotRESTService {
 	@GET
 	@Path("/findTransportServiceClass/{description}")
 	@Produces(APPLICATION_JSON)
-	public List<TransportServiceClass> findTransportServiceClass(
-			@PathParam("description") String description) {
+	public List<TransportServiceClass> findTransportServiceClass(@PathParam("description") String description) {
 		return tscf.findBySelection(description);
 	}
 }

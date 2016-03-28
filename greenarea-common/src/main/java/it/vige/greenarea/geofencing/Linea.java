@@ -14,7 +14,7 @@
 package it.vige.greenarea.geofencing;
 
 public class Linea {
-	
+
 	private Punto from;
 	private Punto to;
 

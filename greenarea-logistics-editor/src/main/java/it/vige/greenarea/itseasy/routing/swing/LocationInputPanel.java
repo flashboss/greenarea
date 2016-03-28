@@ -14,14 +14,6 @@
 package it.vige.greenarea.itseasy.routing.swing;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.geo.GisService;
-import it.vige.greenarea.geo.GisService.GeoCodingException;
-import it.vige.greenarea.ln.model.LNSite;
-import it.vige.greenarea.utilities.LNutilities;
 
 import java.awt.Color;
 import java.awt.Dialog;
@@ -34,6 +26,15 @@ import javax.swing.JButton;
 import org.slf4j.Logger;
 
 import com.mxgraph.swing.mxGraphComponent;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.geo.GisService;
+import it.vige.greenarea.geo.GisService.GeoCodingException;
+import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
+import it.vige.greenarea.ln.model.LNSite;
+import it.vige.greenarea.utilities.LNutilities;
 
 public class LocationInputPanel extends javax.swing.JPanel {
 
@@ -60,10 +61,8 @@ public class LocationInputPanel extends javax.swing.JPanel {
 		initComponents();
 	}
 
-	private static final String explicitAddress = "<"
-			+ I18N.getString("ExplicitAddress") + ">";
-	private static final String gpsPoint = "<" + I18N.getString("GPSpoint")
-			+ ">";
+	private static final String explicitAddress = "<" + I18N.getString("ExplicitAddress") + ">";
+	private static final String gpsPoint = "<" + I18N.getString("GPSpoint") + ">";
 
 	protected void refreshComponents() {
 		nodesMap = LNutilities.getLNSitesMap();
@@ -72,8 +71,7 @@ public class LocationInputPanel extends javax.swing.JPanel {
 		Collections.sort(keys);
 		keys.add(0, explicitAddress);
 		keys.add(1, gpsPoint);
-		nodeListCombo.setModel(new javax.swing.DefaultComboBoxModel(keys
-				.toArray()));
+		nodeListCombo.setModel(new javax.swing.DefaultComboBoxModel(keys.toArray()));
 		displayAddressData(site);
 		displayGpsData(site);
 		addressFieldsSetFocusable(true);
@@ -112,8 +110,8 @@ public class LocationInputPanel extends javax.swing.JPanel {
 		jLabel2 = new javax.swing.JLabel();
 		errorMessage = new javax.swing.JLabel();
 
-		nodeListCombo.setModel(new javax.swing.DefaultComboBoxModel(
-				new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+		nodeListCombo.setModel(
+				new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 		nodeListCombo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				nodeListComboActionPerformed(evt);
@@ -141,8 +139,7 @@ public class LocationInputPanel extends javax.swing.JPanel {
 		jLabel11.setText(I18N.getString("Street"));
 
 		longitudeField.setText("jTextField1");
-		longitudeField
-				.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		longitudeField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		longitudeField.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				longitudeFieldKeyTyped(evt);
@@ -178,11 +175,9 @@ public class LocationInputPanel extends javax.swing.JPanel {
 			}
 		});
 
-		countryLabel1
-				.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+		countryLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 		countryLabel1.setText(I18N.getString("Country"));
-		countryLabel1
-				.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+		countryLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
 		jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel13.setText(I18N.getString("Latitude"));
@@ -194,11 +189,9 @@ public class LocationInputPanel extends javax.swing.JPanel {
 			}
 		});
 
-		regionLabel1
-				.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+		regionLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
 		regionLabel1.setText(I18N.getString("Region"));
-		regionLabel1
-				.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+		regionLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
 		doGeocodeButton.setText(I18N.getString("GeoCodeAction"));
 		doGeocodeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -221,265 +214,120 @@ public class LocationInputPanel extends javax.swing.JPanel {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING)
-												.addComponent(
-														errorMessage,
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+								layout.createSequentialGroup().addContainerGap()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(errorMessage, javax.swing.GroupLayout.Alignment.LEADING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addGroup(layout.createSequentialGroup()
+												.addGroup(layout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+																false)
+														.addComponent(longitudeField).addComponent(latitudeField,
+																javax.swing.GroupLayout.PREFERRED_SIZE, 95,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(jLabel14).addComponent(jLabel13)))
+								.addGroup(layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addGroup(javax.swing.GroupLayout.Alignment.LEADING,
+														layout.createSequentialGroup().addComponent(jLabel11)
+																.addGap(18, 18, 18).addComponent(streetField))
+										.addGroup(layout.createSequentialGroup().addGroup(layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(jLabel3)
+												.addGroup(layout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(layout
+																.createParallelGroup(
+																		javax.swing.GroupLayout.Alignment.TRAILING)
+																.addComponent(countryLabel1).addComponent(regionLabel1))
+														.addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+																77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+												.addGap(18, 18,
+														18)
+												.addGroup(layout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(regionField).addComponent(countryField)
+														.addComponent(provinceField).addComponent(cityField))))
+										.addGap(169, 169, 169))
+								.addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(jLabel12).addComponent(jLabel1))
+										.addGap(18, 18, 18)
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 42,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(zipField))
+										.addGap(270, 270, 270))
+								.addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(nodeListCombo, javax.swing.GroupLayout.Alignment.LEADING,
+														javax.swing.GroupLayout.PREFERRED_SIZE, 227,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(doGeocodeButton,
 														javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING,
-																				false)
-																				.addComponent(
-																						longitudeField)
-																				.addComponent(
-																						latitudeField,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						95,
-																						javax.swing.GroupLayout.PREFERRED_SIZE))
-																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addComponent(
-																						jLabel14)
-																				.addComponent(
-																						jLabel13)))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																				.addGroup(
-																						javax.swing.GroupLayout.Alignment.LEADING,
-																						layout.createSequentialGroup()
-																								.addComponent(
-																										jLabel11)
-																								.addGap(18,
-																										18,
-																										18)
-																								.addComponent(
-																										streetField))
-																				.addGroup(
-																						layout.createSequentialGroup()
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.TRAILING)
-																												.addComponent(
-																														jLabel3)
-																												.addGroup(
-																														layout.createParallelGroup(
-																																javax.swing.GroupLayout.Alignment.LEADING)
-																																.addGroup(
-																																		layout.createParallelGroup(
-																																				javax.swing.GroupLayout.Alignment.TRAILING)
-																																				.addComponent(
-																																						countryLabel1)
-																																				.addComponent(
-																																						regionLabel1))
-																																.addComponent(
-																																		jLabel2,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																																		77,
-																																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-																								.addGap(18,
-																										18,
-																										18)
-																								.addGroup(
-																										layout.createParallelGroup(
-																												javax.swing.GroupLayout.Alignment.LEADING)
-																												.addComponent(
-																														regionField)
-																												.addComponent(
-																														countryField)
-																												.addComponent(
-																														provinceField)
-																												.addComponent(
-																														cityField))))
-																.addGap(169,
-																		169,
-																		169))
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.LEADING,
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																				.addComponent(
-																						jLabel12)
-																				.addComponent(
-																						jLabel1))
-																.addGap(18, 18,
-																		18)
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.LEADING)
-																				.addComponent(
-																						numberField,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						42,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						zipField))
-																.addGap(270,
-																		270,
-																		270))
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.LEADING,
-														layout.createSequentialGroup()
-																.addGroup(
-																		layout.createParallelGroup(
-																				javax.swing.GroupLayout.Alignment.TRAILING)
-																				.addComponent(
-																						nodeListCombo,
-																						javax.swing.GroupLayout.Alignment.LEADING,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						227,
-																						javax.swing.GroupLayout.PREFERRED_SIZE)
-																				.addComponent(
-																						doGeocodeButton,
-																						javax.swing.GroupLayout.Alignment.LEADING,
-																						javax.swing.GroupLayout.PREFERRED_SIZE,
-																						152,
-																						javax.swing.GroupLayout.PREFERRED_SIZE))
-																.addGap(252,
-																		252,
-																		252)))
-								.addGap(55, 55, 55)));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(nodeListCombo,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										24,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(31, 31, 31)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														countryField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(countryLabel1))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														regionField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(regionLabel1))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														provinceField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel2))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														cityField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel3))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(jLabel11)
-												.addComponent(
-														streetField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE, 152,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														numberField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel12))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														zipField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel1))
-								.addGap(29, 29, 29)
-								.addComponent(doGeocodeButton)
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-										15, Short.MAX_VALUE)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														latitudeField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(jLabel13))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(
-														longitudeField,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														jLabel14,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														16,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGap(29, 29, 29)
-								.addComponent(errorMessage,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										26,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(31, 31, 31)));
+										.addGap(252, 252, 252))).addGap(55, 55, 55)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addContainerGap()
+						.addComponent(nodeListCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 24,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(31, 31, 31)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(countryLabel1))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(regionField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(regionLabel1))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(provinceField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel2))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel3))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel11).addComponent(streetField,
+										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel12))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(zipField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel1))
+						.addGap(29, 29, 29).addComponent(doGeocodeButton)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(latitudeField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel13))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(longitudeField, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 16,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addGap(29, 29, 29).addComponent(errorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 26,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(31, 31, 31)));
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void countryFieldKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_countryFieldKeyTyped
@@ -626,8 +474,7 @@ public class LocationInputPanel extends javax.swing.JPanel {
 		site.setZipCode("");
 	}
 
-	private void copyLocationData(GeoLocationInterface from,
-			GeoLocationInterface site) {
+	private void copyLocationData(GeoLocationInterface from, GeoLocationInterface site) {
 		site.setCountry(from.getCountry());
 		site.setAdminAreaLevel1(from.getAdminAreaLevel1());
 		site.setAdminAreaLevel2(from.getAdminAreaLevel2());

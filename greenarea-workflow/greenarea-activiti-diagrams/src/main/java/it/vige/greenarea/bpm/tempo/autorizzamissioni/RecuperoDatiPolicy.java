@@ -23,12 +23,6 @@ import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.Price;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.dto.FasciaOraria;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +37,13 @@ import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.Price;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.dto.FasciaOraria;
+
 public class RecuperoDatiPolicy extends EmptyRecuperoDatiPolicy {
 
 	private Logger logger = getLogger(getClass());
@@ -51,24 +52,20 @@ public class RecuperoDatiPolicy extends EmptyRecuperoDatiPolicy {
 	public void execute(DelegateExecution execution) throws Exception {
 		super.execute(execution);
 		logger.info("CDI Recupero Dati Policy");
-		IdentityService identityService = execution.getEngineServices()
-				.getIdentityService();
+		IdentityService identityService = execution.getEngineServices().getIdentityService();
 		UserQuery operatoriLogisticiQuery = identityService.createUserQuery();
 		operatoriLogisticiQuery.memberOfGroup("pa");
 		List<User> users = operatoriLogisticiQuery.list();
 		Client client = newClient();
 		@SuppressWarnings("unchecked")
-		List<User> pubblicheamministrazioni = (List<User>) execution
-				.getVariable("pubblicheamministrazioni");
+		List<User> pubblicheamministrazioni = (List<User>) execution.getVariable("pubblicheamministrazioni");
 		List<TimeSlot> allFasceOrarie = new ArrayList<TimeSlot>();
 		try {
 			for (User user : users) {
-				Builder bldr = client.target(
-						BASE_URI_TS + "/findAllTimeSlot/" + user.getId())
+				Builder bldr = client.target(BASE_URI_TS + "/findAllTimeSlot/" + user.getId())
 						.request(APPLICATION_JSON);
-				List<TimeSlot> response = bldr
-						.get(new GenericType<List<TimeSlot>>() {
-						});
+				List<TimeSlot> response = bldr.get(new GenericType<List<TimeSlot>>() {
+				});
 				if (response == null || response.size() == 0) {
 					pubblicheamministrazioni.add(user);
 				} else
@@ -76,24 +73,20 @@ public class RecuperoDatiPolicy extends EmptyRecuperoDatiPolicy {
 				logger.info(response + "");
 			}
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERRORELIEVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			return;
 		}
 		if (pubblicheamministrazioni.size() > 0) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERRORELIEVE);
 			messaggio.setTipo(ERROREDATIMANCANTI);
 		} else {
 			@SuppressWarnings("unchecked")
-			List<FasciaOraria> fasceOrarie = (List<FasciaOraria>) execution
-					.getVariable("fasceorarie");
+			List<FasciaOraria> fasceOrarie = (List<FasciaOraria>) execution.getVariable("fasceorarie");
 			for (TimeSlot timeSlot : allFasceOrarie) {
-				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(
-						timeSlot, asList(new ParameterTS[] {}),
+				FasciaOraria fasciaOraria = convertiTimeSlotToFasciaOraria(timeSlot, asList(new ParameterTS[] {}),
 						asList(new ParameterGen[] {}), asList(new Price[] {}));
 				setDettaglio(timeSlot, client, fasciaOraria);
 				fasceOrarie.add(fasciaOraria);

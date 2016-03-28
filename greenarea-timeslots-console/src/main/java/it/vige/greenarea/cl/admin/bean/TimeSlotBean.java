@@ -14,18 +14,19 @@
 package it.vige.greenarea.cl.admin.bean;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
-import it.vige.greenarea.cl.library.entities.Price;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.admin.entity.ParameterTSView;
-import it.vige.greenarea.cl.admin.entity.PriceView;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.admin.entity.ParameterTSView;
+import it.vige.greenarea.cl.admin.entity.PriceView;
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
+import it.vige.greenarea.cl.library.entities.ParameterTS;
+import it.vige.greenarea.cl.library.entities.Price;
+import it.vige.greenarea.cl.library.entities.TimeSlot;
 
 /**
  * <p>
@@ -71,8 +72,7 @@ public class TimeSlotBean implements Serializable {
 	 * @return
 	 */
 
-	public List<ParameterTSView> timeSlot_BottoneVisualizza(String IdTs)
-			throws Exception {
+	public List<ParameterTSView> timeSlot_BottoneVisualizza(String IdTs) throws Exception {
 
 		IdTimeslot = IdTs;
 		logger.debug(IdTs);
@@ -81,24 +81,18 @@ public class TimeSlotBean implements Serializable {
 		rclistaParGen = new TimeSlotRestClient();
 		listaTimeSlot_VisualizzaView = new ArrayList<ParameterTSView>();
 		TimeSlotRestClient rcTimeSlot_Visualizza = new TimeSlotRestClient();
-		listaTimeSlot_Visualizza = rcTimeSlot_Visualizza
-				.findParameterOfTimeSlot(IdTs);
+		listaTimeSlot_Visualizza = rcTimeSlot_Visualizza.findParameterOfTimeSlot(IdTs);
 		for (int i = 0; i < listaTimeSlot_Visualizza.size(); i++) {
 			parameterTSView = new ParameterTSView();
 			TimeSlot ts = listaTimeSlot_Visualizza.get(i).getTs();
 			if (ts != null)
 				parameterTSView.setIdPTS(ts.getIdTS());
-			parameterTSView.setParGen(listaTimeSlot_Visualizza.get(i)
-					.getParGen());
+			parameterTSView.setParGen(listaTimeSlot_Visualizza.get(i).getParGen());
 			parameterTSView.setTs(ts);
-			parameterTSView.setTypePar(listaTimeSlot_Visualizza.get(i)
-					.getTypePar());
-			parameterTSView.setWeight(listaTimeSlot_Visualizza.get(i)
-					.getWeight());
-			parameterTSView.setMaxVal(listaTimeSlot_Visualizza.get(i)
-					.getMaxValue());
-			parameterTSView.setMinVal(listaTimeSlot_Visualizza.get(i)
-					.getMinValue());
+			parameterTSView.setTypePar(listaTimeSlot_Visualizza.get(i).getTypePar());
+			parameterTSView.setWeight(listaTimeSlot_Visualizza.get(i).getWeight());
+			parameterTSView.setMaxVal(listaTimeSlot_Visualizza.get(i).getMaxValue());
+			parameterTSView.setMinVal(listaTimeSlot_Visualizza.get(i).getMinValue());
 
 			listaTimeSlot_VisualizzaView.add(parameterTSView);
 		}

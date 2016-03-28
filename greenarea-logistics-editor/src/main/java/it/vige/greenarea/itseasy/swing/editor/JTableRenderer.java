@@ -100,14 +100,12 @@ public class JTableRenderer extends JComponent {
 	 * 
 	 */
 	@SuppressWarnings("serial")
-	public JTableRenderer(final Object cell,
-			final mxGraphComponent graphContainer) {
+	public JTableRenderer(final Object cell, final mxGraphComponent graphContainer) {
 		this.cell = cell;
 		this.graphContainer = graphContainer;
 		this.graph = graphContainer.getGraph();
 		setLayout(new BorderLayout());
-		setBorder(BorderFactory.createCompoundBorder(
-				ShadowBorder.getSharedInstance(),
+		setBorder(BorderFactory.createCompoundBorder(ShadowBorder.getSharedInstance(),
 				BorderFactory.createBevelBorder(BevelBorder.RAISED)));
 
 		JPanel title = new JPanel();
@@ -116,9 +114,7 @@ public class JTableRenderer extends JComponent {
 		title.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 1));
 		title.setLayout(new BorderLayout());
 
-		JLabel icon = new JLabel(new ImageIcon(
-				JTableRenderer.class
-						.getResource(IMAGE_PATH + "preferences.gif")));
+		JLabel icon = new JLabel(new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "preferences.gif")));
 		icon.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 1));
 		title.add(icon, BorderLayout.WEST);
 
@@ -132,17 +128,12 @@ public class JTableRenderer extends JComponent {
 		toolBar2.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 2));
 		toolBar2.setOpaque(false);
 		JButton button = new JButton(
-				new AbstractAction("", new ImageIcon(
-						JTableRenderer.class.getResource(IMAGE_PATH
-								+ "minimize.gif"))) {
+				new AbstractAction("", new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "minimize.gif"))) {
 
 					public void actionPerformed(ActionEvent e) {
-						graph.foldCells(graph.isCellCollapsed(cell), false,
-								new Object[] { cell });
-						((JButton) e.getSource()).setIcon(new ImageIcon(
-								JTableRenderer.class.getResource(IMAGE_PATH
-										+ ((graph.isCellCollapsed(cell)) ? "maximize.gif"
-												: "minimize.gif"))));
+						graph.foldCells(graph.isCellCollapsed(cell), false, new Object[] { cell });
+						((JButton) e.getSource()).setIcon(new ImageIcon(JTableRenderer.class.getResource(
+								IMAGE_PATH + ((graph.isCellCollapsed(cell)) ? "maximize.gif" : "minimize.gif"))));
 					}
 				});
 		button.setPreferredSize(new Dimension(16, 16));
@@ -168,17 +159,15 @@ public class JTableRenderer extends JComponent {
 			add(scrollPane, BorderLayout.CENTER);
 		}
 
-		scrollPane.getVerticalScrollBar().addAdjustmentListener(
-				new AdjustmentListener() {
+		scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
 
-					public void adjustmentValueChanged(AdjustmentEvent e) {
-						graphContainer.refresh();
-					}
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				graphContainer.refresh();
+			}
 
-				});
+		});
 
-		label = new JLabel(new ImageIcon(
-				JTableRenderer.class.getResource(IMAGE_PATH + "resize.gif")));
+		label = new JLabel(new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "resize.gif")));
 		label.setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
 
 		JPanel panel = new JPanel();
@@ -231,29 +220,24 @@ public class JTableRenderer extends JComponent {
 			}
 
 			// Initiates a resize event in the handler
-			mxCellHandler handler = graphContainer.getSelectionCellsHandler()
-					.getHandler(cell);
+			mxCellHandler handler = graphContainer.getSelectionCellsHandler().getHandler(cell);
 
 			if (handler != null) {
 				// Starts the resize at index 7 (bottom right)
-				handler.start(
-						SwingUtilities.convertMouseEvent(
-								(Component) e.getSource(), e,
-								graphContainer.getGraphControl()), index);
+				handler.start(SwingUtilities.convertMouseEvent((Component) e.getSource(), e,
+						graphContainer.getGraphControl()), index);
 				e.consume();
 			}
 		}
 
 		public void mouseReleased(MouseEvent e) {
 			graphContainer.getGraphControl().dispatchEvent(
-					SwingUtilities.convertMouseEvent((Component) e.getSource(),
-							e, graphContainer.getGraphControl()));
+					SwingUtilities.convertMouseEvent((Component) e.getSource(), e, graphContainer.getGraphControl()));
 		}
 
 		public void mouseDragged(MouseEvent e) {
 			graphContainer.getGraphControl().dispatchEvent(
-					SwingUtilities.convertMouseEvent((Component) e.getSource(),
-							e, graphContainer.getGraphControl()));
+					SwingUtilities.convertMouseEvent((Component) e.getSource(), e, graphContainer.getGraphControl()));
 		}
 
 		public void mouseMoved(MouseEvent e) {
@@ -281,15 +265,12 @@ public class JTableRenderer extends JComponent {
 			for (int i = 0; i < 30; i++) {
 				data[i][0] = new Boolean(false);
 				data[i][1] = "Column " + i;
-				data[i][2] = (Math.random() > 0.5) ? new ImageIcon(
-						JTableRenderer.class.getResource(IMAGE_PATH
-								+ "preferences.gif")) : null;
-				data[i][3] = (Math.random() > 0.5) ? new ImageIcon(
-						JTableRenderer.class.getResource(IMAGE_PATH
-								+ "preferences.gif")) : null;
-				data[i][4] = (Math.random() > 0.5) ? new ImageIcon(
-						JTableRenderer.class.getResource(IMAGE_PATH
-								+ "preferences.gif")) : null;
+				data[i][2] = (Math.random() > 0.5)
+						? new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "preferences.gif")) : null;
+				data[i][3] = (Math.random() > 0.5)
+						? new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "preferences.gif")) : null;
+				data[i][4] = (Math.random() > 0.5)
+						? new ImageIcon(JTableRenderer.class.getResource(IMAGE_PATH + "preferences.gif")) : null;
 			}
 			setModel(createModel());
 			setTableHeader(null);
@@ -346,8 +327,7 @@ public class JTableRenderer extends JComponent {
 		 * 
 		 */
 		public DropTarget getDropTarget() {
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
-					.isLocalDrag()) {
+			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler()).isLocalDrag()) {
 				return super.getDropTarget();
 			}
 
@@ -367,13 +347,12 @@ public class JTableRenderer extends JComponent {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see
-		 * java.awt.dnd.DropTargetListener#dragOver(java.awt.dnd.DropTargetDragEvent
-		 * )
+		 * @see java.awt.dnd.DropTargetListener#dragOver(java.awt.dnd.
+		 * DropTargetDragEvent )
 		 */
 		public void dragOver(DropTargetDragEvent e) {
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
-					.isLocalDrag() && JTableRenderer.this != dragSource) {
+			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler()).isLocalDrag()
+					&& JTableRenderer.this != dragSource) {
 				Point p = e.getLocation();
 				int row = rowAtPoint(p);
 				getSelectionModel().setSelectionInterval(row, row);
@@ -404,9 +383,8 @@ public class JTableRenderer extends JComponent {
 				Point p = e.getLocation();
 				int targetRow = rowAtPoint(p);
 
-				Object edge = graph.insertEdge(null, null, null,
-						dragSource.cell, JTableRenderer.this.cell, "sourceRow="
-								+ sourceRow + ";targetRow=" + targetRow);
+				Object edge = graph.insertEdge(null, null, null, dragSource.cell, JTableRenderer.this.cell,
+						"sourceRow=" + sourceRow + ";targetRow=" + targetRow);
 				graph.setSelectionCell(edge);
 				dragSource = null;
 				e.dropComplete(true);

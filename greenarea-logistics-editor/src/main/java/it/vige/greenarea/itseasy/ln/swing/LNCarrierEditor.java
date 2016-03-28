@@ -13,13 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
+import java.util.EventObject;
+
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.view.mxICellEditor;
-import java.util.EventObject;
 
-public class LNCarrierEditor extends javax.swing.JFrame implements
-		mxICellEditor {
+public class LNCarrierEditor extends javax.swing.JFrame implements mxICellEditor {
 	/**
 	 * 
 	 */
@@ -48,21 +48,14 @@ public class LNCarrierEditor extends javax.swing.JFrame implements
 
 		jButton1.setText("jButton1");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
-				getContentPane());
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup()
-						.addContainerGap(264, Short.MAX_VALUE)
-						.addComponent(jButton1).addGap(57, 57, 57)));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup()
-						.addContainerGap(182, Short.MAX_VALUE)
-						.addComponent(jButton1).addGap(93, 93, 93)));
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+						.addContainerGap(264, Short.MAX_VALUE).addComponent(jButton1).addGap(57, 57, 57)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+						.addContainerGap(182, Short.MAX_VALUE).addComponent(jButton1).addGap(93, 93, 93)));
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents

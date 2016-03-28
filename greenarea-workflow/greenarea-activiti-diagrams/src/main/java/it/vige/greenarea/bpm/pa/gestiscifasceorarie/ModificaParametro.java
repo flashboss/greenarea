@@ -13,13 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.pa.gestiscifasceorarie;
 
-import it.vige.greenarea.dto.Parametro;
-
 import java.util.List;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Parametro;
 
 public class ModificaParametro implements TaskListener {
 
@@ -29,10 +29,8 @@ public class ModificaParametro implements TaskListener {
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
 		DelegateExecution execution = delegateTask.getExecution();
-		List<Parametro> parametri = (List<Parametro>) execution
-				.getVariable("parametriaggiunti");
-		Parametro parametroLocal = (Parametro) execution
-				.getVariableLocal("parametroaggiunto");
+		List<Parametro> parametri = (List<Parametro>) execution.getVariable("parametriaggiunti");
+		Parametro parametroLocal = (Parametro) execution.getVariableLocal("parametroaggiunto");
 		for (Parametro parametro : parametri) {
 			if (parametro.getIdGen() == parametroLocal.getIdGen()) {
 				parametro.setValoreMinimo(parametroLocal.getValoreMinimo());

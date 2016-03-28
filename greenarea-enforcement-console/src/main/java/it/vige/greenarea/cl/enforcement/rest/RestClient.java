@@ -15,10 +15,11 @@ package it.vige.greenarea.cl.enforcement.rest;
 
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import it.vige.greenarea.cl.bean.Request;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation;
+
+import it.vige.greenarea.cl.bean.Request;
 
 /**
  * Jersey REST client generated for REST resource:EnforcementRESTService
@@ -41,11 +42,10 @@ public class RestClient {
 		client = newClient();
 	}
 
-	public Request getInfoRequest(String idTimeSlot, String idVehicle)
-			throws Exception {
-		Invocation.Builder bldr = client.target(
-				BASE_URI + "/Enforcement/getInfoRequest/" + idTimeSlot + "/"
-						+ idVehicle).request(APPLICATION_JSON);
+	public Request getInfoRequest(String idTimeSlot, String idVehicle) throws Exception {
+		Invocation.Builder bldr = client
+				.target(BASE_URI + "/Enforcement/getInfoRequest/" + idTimeSlot + "/" + idVehicle)
+				.request(APPLICATION_JSON);
 		return bldr.get(Request.class);
 	}
 

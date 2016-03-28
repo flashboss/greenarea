@@ -13,7 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.io.Serializable;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +39,6 @@ public class ExchangeStop implements Serializable {
 	private List<Freight> deliveryList;
 	@Column(name = "DRIVERNOTES", length = 200)
 	private String driverNotes;
-	@ElementCollection(fetch = EAGER)
-	private List<Attachment> attachments;
 	@Embedded
 	private TruckLoadDescriptor truckLoad;
 	@Embedded
@@ -52,7 +48,6 @@ public class ExchangeStop implements Serializable {
 		location = new DBGeoLocation();
 		collectingList = new ArrayList<Freight>();
 		deliveryList = new ArrayList<Freight>();
-		attachments = new ArrayList<Attachment>();
 		truckLoad = new TruckLoadDescriptor();
 	}
 
@@ -62,14 +57,6 @@ public class ExchangeStop implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
 	}
 
 	public List<Freight> getCollectingList() {
@@ -119,8 +106,7 @@ public class ExchangeStop implements Serializable {
 			return false;
 		}
 		ExchangeStop other = (ExchangeStop) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;

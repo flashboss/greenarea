@@ -13,7 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.library.entities;
 
-import it.vige.greenarea.dto.Color;
 import static javax.persistence.GenerationType.AUTO;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 
@@ -26,6 +25,8 @@ import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.Color;
 
 /**
  *
@@ -130,8 +131,7 @@ public class VikorResult implements Serializable {
 			return false;
 		}
 		VikorResult other = (VikorResult) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
@@ -139,8 +139,7 @@ public class VikorResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return "it.vige.greenarea.cl.library.entities.vikorResult[ id=" + id
-				+ " ]";
+		return "it.vige.greenarea.cl.library.entities.vikorResult[ id=" + id + " ]";
 	}
 
 }

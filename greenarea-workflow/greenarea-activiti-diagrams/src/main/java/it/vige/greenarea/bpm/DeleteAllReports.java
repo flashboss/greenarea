@@ -26,16 +26,12 @@ public class DeleteAllReports implements ExecutionListener {
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
-		RuntimeService runtimeService = execution.getEngineServices()
-				.getRuntimeService();
-		String currentUserId = (String) execution
-				.getVariableLocal("currentUserId");
-		List<ProcessInstance> reportProcessInstances = runtimeService
-				.createProcessInstanceQuery().variableValueEquals("report")
-				.involvedUser(currentUserId).list();
+		RuntimeService runtimeService = execution.getEngineServices().getRuntimeService();
+		String currentUserId = (String) execution.getVariableLocal("currentUserId");
+		List<ProcessInstance> reportProcessInstances = runtimeService.createProcessInstanceQuery()
+				.variableValueEquals("report").involvedUser(currentUserId).list();
 		for (ProcessInstance reportProcessInstance : reportProcessInstances) {
-			runtimeService.deleteProcessInstance(reportProcessInstance.getId(),
-					"Solo un report nella pagina");
+			runtimeService.deleteProcessInstance(reportProcessInstance.getId(), "Solo un report nella pagina");
 		}
 
 	}

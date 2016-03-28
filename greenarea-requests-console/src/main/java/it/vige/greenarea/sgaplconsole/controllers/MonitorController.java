@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
-import it.vige.greenarea.sgaplconsole.data.MonitorMsg;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Singleton;
 import javax.inject.Named;
+
+import it.vige.greenarea.sgaplconsole.data.MonitorMsg;
 
 @Singleton
 @Named("monitorController")

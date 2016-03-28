@@ -28,8 +28,7 @@ public class DettaglioListQuery extends AbstractTaskListQuery {
 
 	@Override
 	protected TaskQuery getQuery() {
-		return taskService.createTaskQuery().taskAssignee(userId)
-				.processInstanceId(id).orderByTaskId().asc();
+		return taskService.createTaskQuery().taskAssignee(userId).processInstanceId(id).orderByTaskId().asc();
 	}
 
 }

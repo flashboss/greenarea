@@ -14,25 +14,9 @@
 package it.vige.greenarea.cl.control;
 
 import static it.vige.greenarea.Conversioni.convertiVehiclesToVeicoli;
+import static it.vige.greenarea.cl.scheduling.Tone.sound;
 import static it.vige.greenarea.dto.Color.values;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.Conversioni;
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.bean.RequestParameter;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.cl.library.entities.Transport;
-import it.vige.greenarea.cl.library.entities.ValueMission;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.cl.scheduling.Tone;
-import it.vige.greenarea.cl.sessions.ValueMissionFacade;
-import it.vige.greenarea.dto.RichiestaVeicolo;
-import it.vige.greenarea.dto.StatoVeicolo;
-import it.vige.greenarea.dto.Veicolo;
-import it.vige.greenarea.gtg.db.facades.MissionFacade;
-import it.vige.greenarea.gtg.db.facades.TransportFacade;
-import it.vige.greenarea.gtg.db.facades.TruckFacade;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,6 +34,23 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.Conversioni;
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.bean.RequestParameter;
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.cl.sessions.ValueMissionFacade;
+import it.vige.greenarea.dto.RichiestaVeicolo;
+import it.vige.greenarea.dto.StatoVeicolo;
+import it.vige.greenarea.dto.Veicolo;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
+import it.vige.greenarea.gtg.db.facades.TransportFacade;
+import it.vige.greenarea.gtg.db.facades.TruckFacade;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 /**
  *
@@ -77,8 +78,7 @@ public class UserControl {
 	@EJB
 	private TruckFacade tf;
 
-	private void connectionClose(ResultSet rs, PreparedStatement ps,
-			Connection conn) {
+	private void connectionClose(ResultSet rs, PreparedStatement ps, Connection conn) {
 
 		try {
 			if (rs != null)
@@ -98,7 +98,7 @@ public class UserControl {
 		mf.create(m);
 
 		try {
-			Tone.sound(1600, 100);
+			sound(1600, 100);
 		} catch (LineUnavailableException ex) {
 			logger.error("add mission", ex);
 		}
@@ -106,8 +106,7 @@ public class UserControl {
 		try {
 
 			Date da = mis.getStartTime();
-			Query query = em
-					.createQuery("Select a from Transport as a where a.dateMiss = :dateMiss");
+			Query query = em.createQuery("Select a from Transport as a where a.dateMiss = :dateMiss");
 			query.setParameter("dateMiss", da);
 			@SuppressWarnings("unchecked")
 			List<Transport> rs = (List<Transport>) query.getResultList();
@@ -127,7 +126,13 @@ public class UserControl {
 		return m;
 
 	}
-
+	
+	public Mission deleteMission(Mission mis) {
+		Mission mission = mf.findMission(mis);
+		em.remove(mission);
+		return mission;
+	}
+	
 	public ValueMission addValueMission(ValueMission vm) {
 		vmf.create(vm);
 		return vm;
@@ -144,11 +149,10 @@ public class UserControl {
 
 			con = ds.getConnection();
 
-			ps = con.prepareStatement("SELECT * " + " FROM Mission as a "
-					+ " LEFT JOIN VikorResult as c ON a.id = c.idMission "
-					+ " JOIN ValueMission as b " + " JOIN ParameterGen as d "
-					+ " WHERE a.id= b.mission_id "
-					+ " AND b.idParameter = d.idpg " + " AND a.id = ?");
+			ps = con.prepareStatement(
+					"SELECT * " + " FROM Mission as a " + " LEFT JOIN VikorResult as c ON a.id = c.idMission "
+							+ " JOIN ValueMission as b " + " JOIN ParameterGen as d " + " WHERE a.id= b.mission_id "
+							+ " AND b.idParameter = d.idpg " + " AND a.id = ?");
 
 			ps.setInt(1, idMission);
 			rs = ps.executeQuery();
@@ -239,11 +243,9 @@ public class UserControl {
 		if (veicolo.getAutista() != null)
 			query.setParameter("autista", veicolo.getAutista().getId());
 		if (veicolo.getOperatoreLogistico() != null)
-			query.setParameter("operatoreLogistico", veicolo
-					.getOperatoreLogistico().getId());
+			query.setParameter("operatoreLogistico", veicolo.getOperatoreLogistico().getId());
 		if (veicolo.getSocietaDiTrasporto() != null)
-			query.setParameter("societaDiTrasporto", veicolo
-					.getSocietaDiTrasporto().getId());
+			query.setParameter("societaDiTrasporto", veicolo.getSocietaDiTrasporto().getId());
 		@SuppressWarnings("unchecked")
 		List<Vehicle> vehicleList = query.getResultList();
 		List<Veicolo> veicoli = convertiVehiclesToVeicoli(vehicleList);
@@ -295,11 +297,9 @@ public class UserControl {
 		if (veicolo.getAutista() != null)
 			query.setParameter("autista", veicolo.getAutista().getId());
 		if (veicolo.getOperatoreLogistico() != null)
-			query.setParameter("operatoreLogistico", veicolo
-					.getOperatoreLogistico().getId());
+			query.setParameter("operatoreLogistico", veicolo.getOperatoreLogistico().getId());
 		if (veicolo.getSocietaDiTrasporto() != null)
-			query.setParameter("societaDiTrasporto", veicolo
-					.getSocietaDiTrasporto().getId());
+			query.setParameter("societaDiTrasporto", veicolo.getSocietaDiTrasporto().getId());
 		@SuppressWarnings("unchecked")
 		List<Vehicle> vehicleList = query.getResultList();
 		List<Veicolo> veicoli = convertiVehiclesToVeicoli(vehicleList);

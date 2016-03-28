@@ -22,38 +22,38 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class TabPanelController implements Serializable {
 
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3938976759683442063L;
 	final int ORDER_LIST_INDEX = 0;
-    final int GAT_CONSOLE_INDEX = 1;
-    final int NEW_ORDER_INDEX = 2;
-    
-    int tabViewIndex = ORDER_LIST_INDEX;
-    
-  //  @ManagedProperty(value = "#{newOrderConrtoller}")
-  //  NewOrderConrtoller newOrderConrtoller;
+	final int GAT_CONSOLE_INDEX = 1;
+	final int NEW_ORDER_INDEX = 2;
 
-    /**
-     * Creates a new instance of HomeBeanController
-     */
-    public TabPanelController() {
-    }
+	int tabViewIndex = ORDER_LIST_INDEX;
 
-    public int getTabViewIndex() {
-        return tabViewIndex;
-    }
+	// @ManagedProperty(value = "#{newOrderConrtoller}")
+	// NewOrderConrtoller newOrderConrtoller;
 
-    public void setTabViewIndex(int tabViewIndex) {
-        this.tabViewIndex = tabViewIndex;
-    }
+	/**
+	 * Creates a new instance of HomeBeanController
+	 */
+	public TabPanelController() {
+	}
 
-/*    public NewOrderConrtoller getNewOrderConrtoller() {
-        return newOrderConrtoller;
-    }
+	public int getTabViewIndex() {
+		return tabViewIndex;
+	}
 
-    public void setNewOrderConrtoller(NewOrderConrtoller newOrderConrtoller) {
-        this.newOrderConrtoller = newOrderConrtoller;
-    }*/
+	public void setTabViewIndex(int tabViewIndex) {
+		this.tabViewIndex = tabViewIndex;
+	}
+
+	/*
+	 * public NewOrderConrtoller getNewOrderConrtoller() { return
+	 * newOrderConrtoller; }
+	 * 
+	 * public void setNewOrderConrtoller(NewOrderConrtoller newOrderConrtoller)
+	 * { this.newOrderConrtoller = newOrderConrtoller; }
+	 */
 }

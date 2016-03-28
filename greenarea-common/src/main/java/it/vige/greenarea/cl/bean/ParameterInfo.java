@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.bean;
 
-import it.vige.greenarea.dto.Peso;
-import it.vige.greenarea.dto.TipoParametro;
-import it.vige.greenarea.dto.TipologiaParametro;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.Peso;
+import it.vige.greenarea.dto.TipoParametro;
+import it.vige.greenarea.dto.TipologiaParametro;
 
 /**
  *

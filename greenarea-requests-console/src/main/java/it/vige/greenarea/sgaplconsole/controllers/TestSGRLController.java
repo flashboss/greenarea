@@ -14,10 +14,6 @@
 package it.vige.greenarea.sgaplconsole.controllers;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgrl.webservices.GeoLocation;
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting_Service;
-import it.vige.greenarea.sgrl.webservices.SGRLServiceException_Exception;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,6 +25,11 @@ import javax.faces.context.FacesContext;
 import javax.xml.ws.WebServiceRef;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.sgrl.webservices.GeoLocation;
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting_Service;
+import it.vige.greenarea.sgrl.webservices.SGRLServiceException_Exception;
 
 @ManagedBean
 @SessionScoped
@@ -69,19 +70,17 @@ public class TestSGRLController implements Serializable {
 			routes = getSGRLRoutes(fromLoc, toLoc, null);
 		} catch (Exception ex) {
 			logger.error("errore gat", ex);
-			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"SGRL exception ", ex.getMessage());
+			msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "SGRL exception ", ex.getMessage());
 		}
 		if ((routes == null) || (routes.isEmpty())) {
-			msg = new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Catena Logistica ", "*** nessun percorso disponibile ***");
+			msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Catena Logistica ",
+					"*** nessun percorso disponibile ***");
 		} else {
 			StringBuilder sb = new StringBuilder();
 			for (String node : routes) {
 				sb.append(node).append(" >>> ");
 			}
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Catena Logistica ", sb.toString());
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Catena Logistica ", sb.toString());
 		}
 		context.addMessage(null, msg);
 		return null;
@@ -103,15 +102,13 @@ public class TestSGRLController implements Serializable {
 		this.toLoc = toLoc;
 	}
 
-	private List<String> getSGRLRoutes(GeoLocation source,
-			GeoLocation destination, String options)
+	private List<String> getSGRLRoutes(GeoLocation source, GeoLocation destination, String options)
 			throws SGRLServiceException_Exception {
 		// Note that the injected javax.xml.ws.Service reference as well as port
 		// objects are not thread safe.
 		// If the calling of port operations may lead to race condition some
 		// synchronization is required.
-		LogisticNetworkRouting logisticNetworkRouting = service
-				.getLogisticNetworkRoutingPort();
+		LogisticNetworkRouting logisticNetworkRouting = service.getLogisticNetworkRoutingPort();
 		return logisticNetworkRouting.getRoutes(source, destination, options);
 	}
 

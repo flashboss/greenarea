@@ -20,8 +20,6 @@ import static it.vige.greenarea.dto.TipoRichiesta.RITIRO;
 import static java.lang.Math.floor;
 import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
-import it.vige.greenarea.vo.RichiestaXML;
-import it.vige.greenarea.vo.Selectable;
 
 import java.io.Serializable;
 import java.text.Format;
@@ -33,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.time.FastDateFormat;
+
+import it.vige.greenarea.vo.RichiestaXML;
+import it.vige.greenarea.vo.Selectable;
 
 public class Richiesta implements Serializable, Selectable {
 
@@ -65,8 +66,7 @@ public class Richiesta implements Serializable, Selectable {
 	public Richiesta() {
 	}
 
-	public Richiesta(Pacco[] pacchi, Map<String, String> terminiDiConsegna,
-			String note) {
+	public Richiesta(Pacco[] pacchi, Map<String, String> terminiDiConsegna, String note) {
 		this.pacchi = pacchi;
 		this.terminiDiConsegna = terminiDiConsegna;
 		this.note = note;
@@ -123,15 +123,11 @@ public class Richiesta implements Serializable, Selectable {
 		if (tipo.equals("D")) {
 			cal.setTime(xml.getDataEarlestDelivery());
 			cal.add(HOUR_OF_DAY, (int) xml.getTimeFromDelivery());
-			cal.add(MINUTE,
-					new Integer(new String(floor(xml.getTimeFromDelivery())
-							+ "").split("\\.")[1]));
+			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeFromDelivery()) + "").split("\\.")[1]));
 			orarioInizio = cal.getTime();
 			cal.setTime(xml.getDataLatestDelivery());
 			cal.add(HOUR_OF_DAY, (int) xml.getTimeToDelivery());
-			cal.add(MINUTE,
-					new Integer(new String(floor(xml.getTimeToDelivery()) + "")
-							.split("\\.")[1]));
+			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeToDelivery()) + "").split("\\.")[1]));
 			orarioFine = cal.getTime();
 			fromName = "operatore";
 			fromAddress = convertiGeoLocationToIndirizzo(olivetti);
@@ -150,13 +146,11 @@ public class Richiesta implements Serializable, Selectable {
 		} else {
 			cal.setTime(xml.getDataEarlestPu());
 			cal.add(HOUR_OF_DAY, (int) xml.getTimeFromPu());
-			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeFromPu())
-					+ "").split("\\.")[1]));
+			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeFromPu()) + "").split("\\.")[1]));
 			orarioInizio = cal.getTime();
 			cal.setTime(xml.getDataLatestPu());
 			cal.add(HOUR_OF_DAY, (int) xml.getTimeToPu());
-			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeToPu())
-					+ "").split("\\.")[1]));
+			cal.add(MINUTE, new Integer(new String(floor(xml.getTimeToPu()) + "").split("\\.")[1]));
 			orarioFine = cal.getTime();
 			toName = "operatore";
 			toAddress = convertiGeoLocationToIndirizzo(olivetti);
@@ -337,8 +331,7 @@ public class Richiesta implements Serializable, Selectable {
 
 	@Override
 	public String toString() {
-		return (shipmentId != null ? shipmentId + " | " : " | ")
-				+ (roundCode != null ? roundCode + " | " : " | ")
+		return (shipmentId != null ? shipmentId + " | " : " | ") + (roundCode != null ? roundCode + " | " : " | ")
 				+ (tipo != null ? tipo + " | " : "");
 	}
 

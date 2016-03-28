@@ -20,24 +20,24 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType(name="GeoLocation")
+@XmlType(name = "GeoLocation")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeoLocation implements GeoLocationInterface, Serializable {
 
 	private static final long serialVersionUID = 2486518276595934321L;
 	@XmlElement(required = true)
-    private String country;
-    private String adminAreaLevel1;
-    private String adminAreaLevel2;
-    @XmlElement(required = true)
-    private String city;
-    @XmlElement(required = true)
-    private String street;
-    private String number;
-    private String zipCode;
-    private double latitude;
-    private double longitude;
-    private long radius = new Long(20);
+	private String country;
+	private String adminAreaLevel1;
+	private String adminAreaLevel2;
+	@XmlElement(required = true)
+	private String city;
+	@XmlElement(required = true)
+	private String street;
+	private String number;
+	private String zipCode;
+	private double latitude;
+	private double longitude;
+	private long radius = new Long(20);
 
 	public GeoLocation() {
 	}
@@ -74,55 +74,49 @@ public class GeoLocation implements GeoLocationInterface, Serializable {
 		this.zipCode = zip;
 	}
 
-	public GeoLocation(String street, String number, String zip, String city,
-			String province) {
+	public GeoLocation(String street, String number, String zip, String city, String province) {
 		this(street, number, zip, city);
 		this.adminAreaLevel2 = province;
 	}
 
-	public GeoLocation(String street, String number, String zipCode,
-			String city, String province, String region) {
+	public GeoLocation(String street, String number, String zipCode, String city, String province, String region) {
 		this(street, number, zipCode, city, province);
 		this.adminAreaLevel1 = region;
 	}
 
-	public GeoLocation(String street, String number, String zipCode,
-			String city, String province, String region, String country) {
+	public GeoLocation(String street, String number, String zipCode, String city, String province, String region,
+			String country) {
 		this(street, number, zipCode, city, province, region);
 		this.country = country;
 	}
 
-	public GeoLocation(String street, String number, String city, double lat,
-			double lon) {
+	public GeoLocation(String street, String number, String city, double lat, double lon) {
 		this(street, number, city);
 		this.latitude = lat;
 		this.longitude = lon;
 	}
 
-	public GeoLocation(String street, String number, String zip, String city,
-			double lat, double lon) {
+	public GeoLocation(String street, String number, String zip, String city, double lat, double lon) {
 		this(street, number, zip, city);
 		this.latitude = lat;
 		this.longitude = lon;
 	}
 
-	public GeoLocation(String street, String number, String zip, String city,
-			String province, double lat, double lon) {
+	public GeoLocation(String street, String number, String zip, String city, String province, double lat, double lon) {
 		this(street, number, zip, city, province);
 		this.latitude = lat;
 		this.longitude = lon;
 	}
 
-	public GeoLocation(String street, String number, String zipCode,
-			String city, String province, String region, double lat, double lon) {
+	public GeoLocation(String street, String number, String zipCode, String city, String province, String region,
+			double lat, double lon) {
 		this(street, number, zipCode, city, province, region);
 		this.latitude = lat;
 		this.longitude = lon;
 	}
 
-	public GeoLocation(String street, String number, String zipCode,
-			String city, String province, String region, String country,
-			double lat, double lon) {
+	public GeoLocation(String street, String number, String zipCode, String city, String province, String region,
+			String country, double lat, double lon) {
 		this(street, number, zipCode, city, province, region, country);
 		this.latitude = lat;
 		this.longitude = lon;
@@ -212,10 +206,8 @@ public class GeoLocation implements GeoLocationInterface, Serializable {
 	public String toString() {
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("(lat: ").append(Double.toString(latitude)).append(", lon: ")
-				.append(Double.toString(longitude));
-		sb.append(") address: ").append(street).append(" ").append(number)
-				.append(", ").append(city).append(", ");
+		sb.append("(lat: ").append(Double.toString(latitude)).append(", lon: ").append(Double.toString(longitude));
+		sb.append(") address: ").append(street).append(" ").append(number).append(", ").append(city).append(", ");
 		sb.append(zipCode).append(" ( ").append(adminAreaLevel1).append(" )");
 		return sb.toString();
 	}

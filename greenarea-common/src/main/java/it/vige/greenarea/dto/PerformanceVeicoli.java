@@ -101,8 +101,7 @@ public class PerformanceVeicoli implements Serializable {
 		return numeroMedioConsegneAMissione;
 	}
 
-	public void setNumeroMedioConsegneAMissione(
-			int numeroMedioConsegneAMissione) {
+	public void setNumeroMedioConsegneAMissione(int numeroMedioConsegneAMissione) {
 		this.numeroMedioConsegneAMissione = numeroMedioConsegneAMissione;
 	}
 
@@ -110,8 +109,7 @@ public class PerformanceVeicoli implements Serializable {
 		return percentualeConsegneABuonFine;
 	}
 
-	public void setPercentualeConsegneABuonFine(
-			double percentualeConsegneABuonFine) {
+	public void setPercentualeConsegneABuonFine(double percentualeConsegneABuonFine) {
 		this.percentualeConsegneABuonFine = percentualeConsegneABuonFine;
 	}
 
@@ -119,8 +117,7 @@ public class PerformanceVeicoli implements Serializable {
 		return numeroMedioDiRitiriAMissione;
 	}
 
-	public void setNumeroMedioDiRitiriAMissione(
-			int numeroMedioDiRitiriAMissione) {
+	public void setNumeroMedioDiRitiriAMissione(int numeroMedioDiRitiriAMissione) {
 		this.numeroMedioDiRitiriAMissione = numeroMedioDiRitiriAMissione;
 	}
 

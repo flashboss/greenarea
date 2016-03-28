@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.dettaglio.trasportatoreautonomo.aggiornastatoveicolo;
 
+import org.activiti.engine.task.Task;
+
 import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPage;
 import it.vige.greenarea.bpm.custom.ui.dettaglio.DettaglioPanel;
-
-import org.activiti.engine.task.Task;
 
 public class AggiornaStatoVeicoloPanel extends DettaglioPanel {
 

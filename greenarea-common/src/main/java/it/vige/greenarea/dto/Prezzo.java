@@ -26,11 +26,11 @@ public class Prezzo implements Serializable {
 	private String typeEntry;
 
 	public Prezzo() {
-		
+
 	}
-	
-	public Prezzo(FasciaOraria fasciaOraria, Color color, double maxPrice,
-			double minPrice, double fixPrice, String typeEntry) {
+
+	public Prezzo(FasciaOraria fasciaOraria, Color color, double maxPrice, double minPrice, double fixPrice,
+			String typeEntry) {
 		super();
 		this.fasciaOraria = fasciaOraria;
 		this.color = color;

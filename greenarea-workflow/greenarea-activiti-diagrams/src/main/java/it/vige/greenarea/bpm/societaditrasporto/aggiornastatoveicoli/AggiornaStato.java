@@ -20,8 +20,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.Veicolo;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Invocation.Builder;
@@ -29,6 +27,9 @@ import javax.ws.rs.client.Invocation.Builder;
 import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.Veicolo;
 
 public class AggiornaStato extends EmptyAggiornaStato {
 
@@ -41,14 +42,10 @@ public class AggiornaStato extends EmptyAggiornaStato {
 			logger.info("CDI Aggiorna Stato");
 			Veicolo veicolo = (Veicolo) execution.getVariable("veicolo");
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_USER + "/aggiornaStatoVeicolo").request(
-					APPLICATION_JSON);
-			veicolo = bldr.post(entity(veicolo, APPLICATION_JSON),
-					Veicolo.class);
+			Builder bldr = client.target(BASE_URI_USER + "/aggiornaStatoVeicolo").request(APPLICATION_JSON);
+			veicolo = bldr.post(entity(veicolo, APPLICATION_JSON), Veicolo.class);
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("erroreAggiornaStato");

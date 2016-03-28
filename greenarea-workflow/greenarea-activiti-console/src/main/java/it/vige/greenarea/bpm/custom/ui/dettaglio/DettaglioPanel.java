@@ -20,7 +20,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.TASK_COMPLETE;
 import static org.activiti.explorer.Messages.TASK_COMPLETED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 import java.util.Map;
 
@@ -45,6 +44,8 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaFormPropertiesForm;
 
 /**
  * The central panel on the task page, showing all the details of a task.
@@ -75,8 +76,7 @@ public class DettaglioPanel extends DetailPanel {
 
 		this.taskService = getDefaultProcessEngine().getTaskService();
 		this.formService = getDefaultProcessEngine().getFormService();
-		this.repositoryService = getDefaultProcessEngine()
-				.getRepositoryService();
+		this.repositoryService = getDefaultProcessEngine().getRepositoryService();
 		this.viewManager = get().getViewManager();
 		this.i18nManager = get().getI18nManager();
 		this.notificationManager = get().getNotificationManager();
@@ -115,8 +115,7 @@ public class DettaglioPanel extends DetailPanel {
 	protected void initTaskForm() {
 		// Check if task requires a form
 		TaskFormData formData = formService.getTaskFormData(task.getId());
-		if (formData != null && formData.getFormProperties() != null
-				&& formData.getFormProperties().size() > 0) {
+		if (formData != null && formData.getFormProperties() != null && formData.getFormProperties().size() > 0) {
 			taskForm = new GreenareaFormPropertiesForm();
 			taskForm.setMainTitle(taskPage.getMainTitle());
 			taskForm.setFormProperties(formData.getFormProperties());
@@ -129,8 +128,7 @@ public class DettaglioPanel extends DetailPanel {
 				protected void handleFormSubmit(FormPropertiesEvent event) {
 					Map<String, String> properties = event.getFormProperties();
 					formService.submitTaskFormData(task.getId(), properties);
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
 					taskPage.refreshSelectNext();
 				}
 
@@ -169,14 +167,12 @@ public class DettaglioPanel extends DetailPanel {
 					}
 
 					taskService.complete(task.getId());
-					notificationManager.showInformationNotification(
-							TASK_COMPLETED, task.getName());
+					notificationManager.showInformationNotification(TASK_COMPLETED, task.getName());
 					taskPage.refreshSelectNext();
 				}
 			});
 
-			completeButton.setEnabled(isCurrentUserAssignee()
-					|| isCurrentUserOwner());
+			completeButton.setEnabled(isCurrentUserAssignee() || isCurrentUserOwner());
 			buttonLayout.addComponent(completeButton);
 		}
 	}
@@ -192,9 +188,8 @@ public class DettaglioPanel extends DetailPanel {
 	}
 
 	protected boolean canUserClaimTask() {
-		return taskService.createTaskQuery()
-				.taskCandidateUser(get().getLoggedInUser().getId())
-				.taskId(task.getId()).count() == 1;
+		return taskService.createTaskQuery().taskCandidateUser(get().getLoggedInUser().getId()).taskId(task.getId())
+				.count() == 1;
 	}
 
 	protected void addEmptySpace(ComponentContainer container) {

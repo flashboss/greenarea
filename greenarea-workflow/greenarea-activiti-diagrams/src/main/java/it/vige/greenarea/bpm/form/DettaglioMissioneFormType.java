@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.form;
 
-import it.vige.greenarea.dto.Missione;
-
 import java.io.Serializable;
 
 import org.activiti.engine.form.AbstractFormType;
 
+import it.vige.greenarea.dto.Missione;
+
 public class DettaglioMissioneFormType extends AbstractFormType implements Serializable {
 
 	private static final long serialVersionUID = 3503702529278473233L;
-	
+
 	private Missione missione;
 
 	@Override

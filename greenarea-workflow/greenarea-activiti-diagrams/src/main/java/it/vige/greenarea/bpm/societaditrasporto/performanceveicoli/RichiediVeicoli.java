@@ -22,9 +22,6 @@ import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.PerformanceVeicoli;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
 import java.util.Date;
 import java.util.List;
@@ -37,6 +34,10 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.PerformanceVeicoli;
+import it.vige.greenarea.dto.RichiestaMissioni;
+
 public class RichiediVeicoli extends EmptyRichiediVeicoli {
 
 	private Logger logger = getLogger(getClass());
@@ -48,37 +49,28 @@ public class RichiediVeicoli extends EmptyRichiediVeicoli {
 			logger.info("CDI Richiedi Veicoli");
 			Date dal = (Date) execution.getVariable("dal");
 			Date al = (Date) execution.getVariable("al");
-			String operatoreLogistico = (String) execution
-					.getVariable("operatorelogistico");
-			String societaDiTrasporto = (String) execution
-					.getVariable("currentUserId");
+			String operatoreLogistico = (String) execution.getVariable("operatorelogistico");
+			String societaDiTrasporto = (String) execution.getVariable("currentUserId");
 			Client client = newClient();
 			Builder bldr = null;
-			bldr = client.target(BASE_URI_RICHIESTE + "/getPerformanceVeicoli")
-					.request(APPLICATION_JSON);
+			bldr = client.target(BASE_URI_RICHIESTE + "/getPerformanceVeicoli").request(APPLICATION_JSON);
 			RichiestaMissioni richiestaMissioni = new RichiestaMissioni();
 			richiestaMissioni.setDataInizio(dal);
 			richiestaMissioni.setDataFine(al);
-			richiestaMissioni
-					.setSocietaDiTrasporto(asList(new String[] { societaDiTrasporto }));
-			if (operatoreLogistico != null
-					&& !operatoreLogistico.trim().equals("")
+			richiestaMissioni.setSocietaDiTrasporto(asList(new String[] { societaDiTrasporto }));
+			if (operatoreLogistico != null && !operatoreLogistico.trim().equals("")
 					&& !operatoreLogistico.equals(TUTTI.name())) {
 				String[] operatoriLogistici = new String[] { operatoreLogistico };
-				richiestaMissioni
-						.setOperatoriLogistici(asList(operatoriLogistici));
+				richiestaMissioni.setOperatoriLogistici(asList(operatoriLogistici));
 			}
-			List<PerformanceVeicoli> response = bldr.post(
-					entity(richiestaMissioni, APPLICATION_JSON),
+			List<PerformanceVeicoli> response = bldr.post(entity(richiestaMissioni, APPLICATION_JSON),
 					new GenericType<List<PerformanceVeicoli>>() {
 					});
 			@SuppressWarnings("unchecked")
-			List<PerformanceVeicoli> veicoli = (List<PerformanceVeicoli>) execution
-					.getVariable("veicoli");
+			List<PerformanceVeicoli> veicoli = (List<PerformanceVeicoli>) execution.getVariable("veicoli");
 			veicoli.addAll(response);
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("erroreRichiediVeicoli");

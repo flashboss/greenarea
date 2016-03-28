@@ -18,7 +18,6 @@ import static it.vige.greenarea.cl.library.entities.Transport.TransportState.val
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.values;
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.getSelectItems;
 import static java.util.Arrays.asList;
-import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 
 import java.io.Serializable;
 
@@ -29,6 +28,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
+
+import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 
 @Named("transportStateController")
 @SessionScoped
@@ -58,8 +59,7 @@ public class TransportStateController implements Serializable {
 	@FacesConverter(forClass = TransportState.class)
 	public static class TransportStateControllerConverter implements Converter {
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
@@ -78,8 +78,7 @@ public class TransportStateController implements Serializable {
 			return sb.toString();
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -87,8 +86,7 @@ public class TransportStateController implements Serializable {
 				TransportState o = (TransportState) object;
 				return o.name();
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
 						+ "; expected type: " + TransportState.class.getName());
 			}
 		}

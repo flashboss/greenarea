@@ -13,12 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.smart.action;
 
-import it.vige.greenarea.cl.bean.TimeSlotInfo;
-import it.vige.greenarea.cl.library.entities.TruckServiceClass;
-import it.vige.greenarea.cl.smart.actionform.OptionTSForm;
-import it.vige.greenarea.cl.smart.restclient.RestClient;
-import it.vige.greenarea.dto.Sched;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import it.vige.greenarea.cl.bean.TimeSlotInfo;
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
+import it.vige.greenarea.cl.smart.actionform.OptionTSForm;
+import it.vige.greenarea.cl.smart.restclient.RestClient;
+import it.vige.greenarea.dto.Sched;
 
 /**
  *
@@ -49,9 +49,8 @@ public class SelectTimeSlotAction extends org.apache.struts.action.Action {
 	 * @return
 	 */
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		OptionTSForm optForm = (OptionTSForm) form;
 		String idTimeSlot = String.valueOf(optForm.getIdTimeSlot());
@@ -59,11 +58,9 @@ public class SelectTimeSlotAction extends org.apache.struts.action.Action {
 		List<TruckServiceClass> liVe = rc.getAllTruckServiceClasses();
 		TimeSlotInfo tsi = rc.getInfoTimeSlot(idTimeSlot);
 
-		List<Sched> schedForSelectedTimeslot = rc.getSchedules(Integer
-				.parseInt(idTimeSlot));
+		List<Sched> schedForSelectedTimeslot = rc.getSchedules(Integer.parseInt(idTimeSlot));
 		request.getSession().setAttribute("liSche", schedForSelectedTimeslot);
-		request.getSession().setAttribute("liScheSi",
-				schedForSelectedTimeslot.size());
+		request.getSession().setAttribute("liScheSi", schedForSelectedTimeslot.size());
 
 		request.getSession().setAttribute("liVe", liVe);
 		request.getSession().setAttribute("sizeVe", liVe.size());

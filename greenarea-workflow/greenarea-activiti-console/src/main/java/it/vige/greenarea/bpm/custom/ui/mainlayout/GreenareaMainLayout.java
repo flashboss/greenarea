@@ -13,14 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.custom.ui.mainlayout;
 
-import static it.vige.greenarea.Constants.GENOVA;
-import static it.vige.greenarea.Constants.MILANO;
+import static it.vige.greenarea.Constants.GUIDONIA;
+import static it.vige.greenarea.Constants.LIVORNO;
 import static it.vige.greenarea.Constants.PA;
-import static it.vige.greenarea.Constants.TORINO;
+import static it.vige.greenarea.Constants.POMEZIA;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_NAV;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_MAIN_CONTENT;
-import it.vige.greenarea.bpm.UserConverter;
 
 import org.activiti.explorer.ui.mainlayout.MainLayout;
 import org.activiti.explorer.ui.mainlayout.MainMenuBarFactory;
@@ -28,6 +27,8 @@ import org.activiti.explorer.ui.mainlayout.MainMenuBarFactory;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
+
+import it.vige.greenarea.bpm.UserConverter;
 
 public class GreenareaMainLayout extends MainLayout {
 
@@ -54,8 +55,7 @@ public class GreenareaMainLayout extends MainLayout {
 		addComponent(customLayout);
 		initTitle2();
 
-		this.mainMenuBar = get().getComponentFactory(MainMenuBarFactory.class)
-				.create();
+		this.mainMenuBar = get().getComponentFactory(MainMenuBarFactory.class).create();
 		customLayout.addComponent(mainMenuBar, "nav");
 
 	}
@@ -64,8 +64,7 @@ public class GreenareaMainLayout extends MainLayout {
 		center = new VerticalLayout();
 		center.addStyleName(STYLE_NAV);
 
-		this.mainMenuBar = get().getComponentFactory(MainMenuBarFactory.class)
-				.create();
+		this.mainMenuBar = get().getComponentFactory(MainMenuBarFactory.class).create();
 		center.addComponent(mainMenuBar);
 
 		head.addComponent(center);
@@ -74,18 +73,14 @@ public class GreenareaMainLayout extends MainLayout {
 	protected void initTitle2() {
 		CustomLayout title = null;
 		UserConverter userConverter = new UserConverter();
-		if (userConverter
-				.isUserInGroup(get().getLoggedInUser().getGroups(), PA)) {
+		if (userConverter.isUserInGroup(get().getLoggedInUser().getGroups(), PA)) {
 
-			if (userConverter.isUserInGroup(
-					get().getLoggedInUser().getGroups(), TORINO))
-				title = new CustomLayout("logotorino");
-			else if (userConverter.isUserInGroup(get().getLoggedInUser()
-					.getGroups(), GENOVA))
-				title = new CustomLayout("logogenova");
-			else if (userConverter.isUserInGroup(get().getLoggedInUser()
-					.getGroups(), MILANO))
-				title = new CustomLayout("logomilano");
+			if (userConverter.isUserInGroup(get().getLoggedInUser().getGroups(), GUIDONIA))
+				title = new CustomLayout("logoguidonia");
+			else if (userConverter.isUserInGroup(get().getLoggedInUser().getGroups(), POMEZIA))
+				title = new CustomLayout("logopomezia");
+			else if (userConverter.isUserInGroup(get().getLoggedInUser().getGroups(), LIVORNO))
+				title = new CustomLayout("logolivorno");
 			customLayout.addComponent(title, "logo");
 
 		}

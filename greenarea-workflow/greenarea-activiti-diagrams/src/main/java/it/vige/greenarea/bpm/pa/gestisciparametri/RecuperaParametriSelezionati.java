@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.pa.gestisciparametri;
 
-import it.vige.greenarea.dto.Parametro;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Parametro;
 
 public class RecuperaParametriSelezionati implements TaskListener {
 
@@ -27,8 +27,7 @@ public class RecuperaParametriSelezionati implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<Parametro> parametri = (Collection<Parametro>) delegateTask
-				.getVariable("parametri");
+		Collection<Parametro> parametri = (Collection<Parametro>) delegateTask.getVariable("parametri");
 		delegateTask.setVariable("parametriselezionati", parametri);
 	}
 

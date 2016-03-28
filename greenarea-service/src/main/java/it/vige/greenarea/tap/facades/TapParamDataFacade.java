@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.tap.facades;
 
-import it.vige.greenarea.cl.library.entities.TapGroupData;
-import it.vige.greenarea.cl.library.entities.TapOutData;
-import it.vige.greenarea.cl.library.entities.TapParamData;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +22,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import it.vige.greenarea.cl.library.entities.TapGroupData;
+import it.vige.greenarea.cl.library.entities.TapOutData;
+import it.vige.greenarea.cl.library.entities.TapParamData;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 @Stateless
 public class TapParamDataFacade extends AbstractFacade<TapParamData, Integer> {
@@ -68,8 +68,7 @@ public class TapParamDataFacade extends AbstractFacade<TapParamData, Integer> {
 
 	}
 
-	public Map<TapGroupData, List<TapParamData>> findAll(
-			List<TapOutData> tapOutDatas) {
+	public Map<TapGroupData, List<TapParamData>> findAll(List<TapOutData> tapOutDatas) {
 		String query = "select a from TapParamData a where a.tapGroupData.tapOutData in :id and a.tapGroupData.name = 'GPS_DATA' and (a.name = 'LATITUDE' or a.name='LONGITUDE' or a.name='TIMESTAMP')";
 		Query q = getEntityManager().createQuery(query);
 		q.setParameter("id", tapOutDatas);

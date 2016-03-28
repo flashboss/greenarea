@@ -1,5 +1,7 @@
 package it.vige.greenarea.bpm.custom;
 
+import org.activiti.explorer.demo.DemoDataGenerator;
+
 /******************************************************************************
  * Vige, Home of Professional Open Source Copyright 2010, Vige, and           *
  * individual contributors by the @authors tag. See the copyright.txt in the  *
@@ -14,8 +16,6 @@ package it.vige.greenarea.bpm.custom;
  * limitations under the License.                                             *
  ******************************************************************************/
 import it.vige.greenarea.bpm.GreenareaDemoData;
-
-import org.activiti.explorer.demo.DemoDataGenerator;
 
 public class GreenareaDataGenerator extends DemoDataGenerator {
 

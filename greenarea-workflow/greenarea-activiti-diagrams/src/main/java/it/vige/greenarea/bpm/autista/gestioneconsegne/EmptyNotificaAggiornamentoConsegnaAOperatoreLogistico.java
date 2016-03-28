@@ -19,8 +19,7 @@ import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.slf4j.Logger;
 
-public class EmptyNotificaAggiornamentoConsegnaAOperatoreLogistico implements
-		TaskListener {
+public class EmptyNotificaAggiornamentoConsegnaAOperatoreLogistico implements TaskListener {
 
 	private static final long serialVersionUID = -8910912400842400764L;
 

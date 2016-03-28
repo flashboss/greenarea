@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.ln.swing;
 
+import java.util.EventObject;
+
 import com.mxgraph.swing.mxGraphComponent;
 
-import it.vige.greenarea.I18N.*;
+import it.vige.greenarea.I18N.I18N;
 import it.vige.greenarea.ln.model.LNSimpleCarrier;
-
-import java.util.EventObject;
 
 public class LNSimpleCarrierEditor extends LNEdgeEditor {
 	/**

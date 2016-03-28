@@ -13,9 +13,9 @@
  ******************************************************************************/
 package it.vige.greenarea.dto;
 
-import it.vige.greenarea.cl.library.entities.TruckServiceClass;
-
 import java.io.Serializable;
+
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 
 public class ValoriVeicolo implements Serializable {
 

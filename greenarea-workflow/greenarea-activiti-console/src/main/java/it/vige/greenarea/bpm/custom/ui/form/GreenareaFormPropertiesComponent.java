@@ -33,8 +33,7 @@ public class GreenareaFormPropertiesComponent extends FormPropertiesComponent {
 	private FormProperty operations;
 	private GreenareaFormPropertiesForm greenareaFormPropertiesForm;
 
-	public GreenareaFormPropertiesComponent(
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
+	public GreenareaFormPropertiesComponent(GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
 		super();
 		this.greenareaFormPropertiesForm = greenareaFormPropertiesForm;
 	}
@@ -49,8 +48,7 @@ public class GreenareaFormPropertiesComponent extends FormPropertiesComponent {
 		if (formProperties != null) {
 			for (FormProperty formProperty : formProperties) {
 				FormPropertyRenderer renderer = getRenderer(formProperty);
-				if (formProperty.getType() instanceof EnumFormType
-						&& formProperty.getId().contains(OPERAZIONE)) {
+				if (formProperty.getType() instanceof EnumFormType && formProperty.getId().contains(OPERAZIONE)) {
 					operations = formProperty;
 				}
 
@@ -71,12 +69,10 @@ public class GreenareaFormPropertiesComponent extends FormPropertiesComponent {
 	public FormPropertyRenderer getRenderer(FormProperty formProperty) {
 		FormType formPropertyType = formProperty.getType();
 		if (formPropertyType == null) {
-			return formPropertyRendererManager
-					.getTypeLessFormPropertyRenderer();
+			return formPropertyRendererManager.getTypeLessFormPropertyRenderer();
 		} else {
 			FormPropertyRenderer formPropertyRenderer;
-			formPropertyRenderer = formPropertyRendererManager
-					.getPropertyRendererForType(formProperty.getType());
+			formPropertyRenderer = formPropertyRendererManager.getPropertyRendererForType(formProperty.getType());
 			if (formPropertyRenderer instanceof GreenareaAbstractFormPropertyRenderer) {
 				((GreenareaAbstractFormPropertyRenderer<?>) formPropertyRenderer)
 						.setGreenareaFormPropertiesForm(greenareaFormPropertiesForm);
@@ -89,8 +85,7 @@ public class GreenareaFormPropertiesComponent extends FormPropertiesComponent {
 		return greenareaFormPropertiesForm;
 	}
 
-	public void setGreenareaFormPropertiesForm(
-			GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
+	public void setGreenareaFormPropertiesForm(GreenareaFormPropertiesForm greenareaFormPropertiesForm) {
 		this.greenareaFormPropertiesForm = greenareaFormPropertiesForm;
 	}
 

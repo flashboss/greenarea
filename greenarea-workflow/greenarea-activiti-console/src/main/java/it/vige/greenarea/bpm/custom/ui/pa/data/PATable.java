@@ -40,8 +40,7 @@ public class PATable extends Table {
 		String counter = "0";
 		try {
 			Client client = newClient();
-			Builder bldr = client.target(BASE_URI_TAP + "/veicoliInGA")
-					.request(APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_TAP + "/veicoliInGA").request(APPLICATION_JSON);
 			int response = bldr.get(Integer.class);
 			return response + "";
 		} catch (Exception ex) {

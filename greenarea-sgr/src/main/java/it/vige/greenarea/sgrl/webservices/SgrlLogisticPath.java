@@ -13,15 +13,15 @@
  ******************************************************************************/
 package it.vige.greenarea.sgrl.webservices;
 
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.ln.model.LNCell;
-import it.vige.greenarea.ln.routing.LNPath;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.mxgraph.model.mxCell;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.ln.model.LNCell;
+import it.vige.greenarea.ln.routing.LNPath;
 
 public class SgrlLogisticPath implements Serializable {
 	/**

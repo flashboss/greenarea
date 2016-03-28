@@ -14,44 +14,44 @@
 package it.vige.greenarea.dto;
 
 public interface GeoLocationInterface {
-        public String getZipCode();
+	public String getZipCode();
 
-        public void setZipCode(String cap);
+	public void setZipCode(String cap);
 
-        public String getCity();
+	public String getCity();
 
-        public void setCity(String city);
+	public void setCity(String city);
 
-        public String getCountry();
-        
-        public void setCountry(String country);
+	public String getCountry();
 
-        public double getLatitude();
+	public void setCountry(String country);
 
-        public void setLatitude(double latitude);
+	public double getLatitude();
 
-        public double getLongitude();
+	public void setLatitude(double latitude);
 
-        public void setLongitude(double longitude);
+	public double getLongitude();
 
-        public String getNumber();
+	public void setLongitude(double longitude);
 
-        public void setNumber(String number);
+	public String getNumber();
 
-        public long getRadius();
+	public void setNumber(String number);
 
-        public void setRadius(long radius);
+	public long getRadius();
 
-        public String getAdminAreaLevel1();
+	public void setRadius(long radius);
 
-        public void setAdminAreaLevel1(String region);
+	public String getAdminAreaLevel1();
 
-        public String getAdminAreaLevel2();
+	public void setAdminAreaLevel1(String region);
 
-        public void setAdminAreaLevel2(String adminAreaLevel2);
+	public String getAdminAreaLevel2();
 
-        public String getStreet();
+	public void setAdminAreaLevel2(String adminAreaLevel2);
 
-        public void setStreet(String street);
-        
+	public String getStreet();
+
+	public void setStreet(String street);
+
 }

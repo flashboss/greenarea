@@ -14,7 +14,6 @@
 package it.vige.greenarea.cl.messages;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.ParameterTS;
 
 import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
@@ -28,6 +27,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.ParameterTS;
 
 /**
  *

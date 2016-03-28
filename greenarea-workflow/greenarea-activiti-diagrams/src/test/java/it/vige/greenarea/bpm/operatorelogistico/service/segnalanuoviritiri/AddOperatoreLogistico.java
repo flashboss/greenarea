@@ -32,7 +32,7 @@ public class AddOperatoreLogistico implements ExecutionListener {
 				.getIdentityService();
 		UserQuery operatoreLogisticoQuery = identityService.createUserQuery();
 		GreenareaUser operatoreLogistico = convertToGreenareaUser(operatoreLogisticoQuery
-				.userId("pamilano").singleResult());
+				.userId("palivorno").singleResult());
 		execution.setVariableLocal("operatorelogistico",
 				new OperatoreLogistico(operatoreLogistico));
 	}

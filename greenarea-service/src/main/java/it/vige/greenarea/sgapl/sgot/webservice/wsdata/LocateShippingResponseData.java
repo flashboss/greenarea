@@ -14,9 +14,10 @@
 package it.vige.greenarea.sgapl.sgot.webservice.wsdata;
 
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.unknown;
-import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 
 import java.io.Serializable;
+
+import it.vige.greenarea.cl.library.entities.Transport.TransportState;
 
 public class LocateShippingResponseData implements Serializable {
 

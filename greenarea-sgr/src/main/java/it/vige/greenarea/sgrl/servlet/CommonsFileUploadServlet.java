@@ -57,16 +57,15 @@ public class CommonsFileUploadServlet extends HttpServlet {
 		String realPath = getServletContext().getRealPath(DESTINATION_DIR_PATH);
 		destinationDir = new File(realPath);
 		if (!destinationDir.isDirectory()) {
-			throw new ServletException(DESTINATION_DIR_PATH
-					+ " is not a directory");
+			throw new ServletException(DESTINATION_DIR_PATH + " is not a directory");
 		}
 		logger.info("realpath=" + realPath);
 
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/plain");
 		out.println("<h1>Servlet File Upload Example using Commons File Upload</h1>");
@@ -87,8 +86,8 @@ public class CommonsFileUploadServlet extends HttpServlet {
 
 	}
 
-	protected void workingdoPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void workingdoPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		response.setContentType("text/plain");
 		out.println("<h1>Servlet File Upload Example using Commons File Upload</h1>");
@@ -118,14 +117,11 @@ public class CommonsFileUploadServlet extends HttpServlet {
 				 * Handle Form Fields.
 				 */
 				if (item.isFormField()) {
-					out.println("File Name = " + item.getFieldName()
-							+ ", Value = " + item.getString());
+					out.println("File Name = " + item.getFieldName() + ", Value = " + item.getString());
 				} else {
 					// Handle Uploaded files.
-					out.println("Field Name = " + item.getFieldName()
-							+ ", File Name = " + item.getName()
-							+ ", Content type = " + item.getContentType()
-							+ ", File Size = " + item.getSize());
+					out.println("Field Name = " + item.getFieldName() + ", File Name = " + item.getName()
+							+ ", Content type = " + item.getContentType() + ", File Size = " + item.getSize());
 					/*
 					 * Write file to the ultimate location.
 					 */
@@ -155,8 +151,8 @@ public class CommonsFileUploadServlet extends HttpServlet {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	protected void processRequest(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try {
@@ -168,8 +164,7 @@ public class CommonsFileUploadServlet extends HttpServlet {
 			out.println("<title>Servlet CommonsFileUploadServlet</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Servlet CommonsFileUploadServlet at "
-					+ request.getContextPath() + "</h1>");
+			out.println("<h1>Servlet CommonsFileUploadServlet at " + request.getContextPath() + "</h1>");
 			out.println("</body>");
 			out.println("</html>");
 		} finally {
@@ -178,7 +173,8 @@ public class CommonsFileUploadServlet extends HttpServlet {
 	}
 
 	// <editor-fold defaultstate="collapsed"
-	// desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+	// desc="HttpServlet methods. Click on the + sign on the left to edit the
+	// code.">
 	/**
 	 * Handles the HTTP <code>GET</code> method.
 	 * 
@@ -192,8 +188,8 @@ public class CommonsFileUploadServlet extends HttpServlet {
 	 *             if an I/O error occurs
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		processRequest(request, response);
 	}
 

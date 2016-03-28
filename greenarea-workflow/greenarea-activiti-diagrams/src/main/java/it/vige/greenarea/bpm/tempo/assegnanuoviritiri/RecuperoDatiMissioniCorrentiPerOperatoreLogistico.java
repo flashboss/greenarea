@@ -18,8 +18,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
-public class RecuperoDatiMissioniCorrentiPerOperatoreLogistico extends
-		EmptyRecuperoDatiMissioniCorrentiPerOperatoreLogistico {
+public class RecuperoDatiMissioniCorrentiPerOperatoreLogistico
+		extends EmptyRecuperoDatiMissioniCorrentiPerOperatoreLogistico {
 
 	private Logger logger = getLogger(getClass());
 

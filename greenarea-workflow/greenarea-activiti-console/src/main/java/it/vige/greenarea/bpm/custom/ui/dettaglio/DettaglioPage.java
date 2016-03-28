@@ -22,8 +22,6 @@ import static org.activiti.explorer.navigation.TaskNavigator.TASK_URI_PART;
 import static org.activiti.explorer.ui.Images.TASK_22;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_SCROLLABLE;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_TASK_LIST;
-import it.vige.greenarea.bpm.custom.GreenareaViewManager;
-import it.vige.greenarea.bpm.custom.ui.home.HomePage;
 
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
@@ -41,6 +39,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
+import it.vige.greenarea.bpm.custom.GreenareaViewManager;
+import it.vige.greenarea.bpm.custom.ui.home.HomePage;
+
 /**
  * The page displaying all tasks currently in ones inbox.
  */
@@ -49,8 +50,7 @@ public class DettaglioPage extends HomePage {
 	private static final long serialVersionUID = 1L;
 	private Label mainTitle;
 
-	protected transient TaskService taskService = getDefaultProcessEngine()
-			.getTaskService();
+	protected transient TaskService taskService = getDefaultProcessEngine().getTaskService();
 
 	private String taskId;
 	protected String processInstanceId;
@@ -121,8 +121,7 @@ public class DettaglioPage extends HomePage {
 		taskTable.setContainerDataSource(taskListContainer);
 
 		// Create column header
-		taskTable.addGeneratedColumn("icon", new ThemeImageColumnGenerator(
-				TASK_22));
+		taskTable.addGeneratedColumn("icon", new ThemeImageColumnGenerator(TASK_22));
 		taskTable.setColumnWidth("icon", 22);
 
 		taskTable.addContainerProperty("name", String.class, null);

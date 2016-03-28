@@ -17,15 +17,16 @@ import static it.vige.greenarea.sgaplconsole.controllers.utils.Converters.conver
 import static it.vige.greenarea.sgaplconsole.controllers.utils.Converters.convertOrderData;
 import static it.vige.greenarea.sgaplconsole.controllers.utils.Converters.convertShippingItem;
 import static it.vige.greenarea.sgaplconsole.controllers.utils.Converters.convertShippingItemList;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingItemData;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingItemData;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails;
 
 public class MyOrder implements Serializable {
 
@@ -60,8 +61,7 @@ public class MyOrder implements Serializable {
 		shippingItems = new ArrayList<FreightItem>();
 
 		orderData = new ShippingOrderData();
-		orderData
-				.setTerminiDiConsegna(new ShippingOrderData.TerminiDiConsegna());
+		orderData.setTerminiDiConsegna(new ShippingOrderData.TerminiDiConsegna());
 	}
 
 	public MyOrder(ShippingOrderDetails sd) {
@@ -192,15 +192,13 @@ public class MyOrder implements Serializable {
 		// sb.append(" - ").append(toAddress.toString());
 		sb.append(" (").append(orderData.getNote()).append(") ");
 		sb.append("ITEMS: ");
-		for (Iterator<ShippingItemData> it = orderData.getShippingItems()
-				.iterator(); it.hasNext();) {
+		for (Iterator<ShippingItemData> it = orderData.getShippingItems().iterator(); it.hasNext();) {
 			ShippingItemData si = it.next();
 			sb.append(si.toString()).append(" | ");
 		}
 		if (!orderData.getTerminiDiConsegna().getEntry().isEmpty()) {
 			sb.append("TERMINI DI CONSEGNA: ");
-			for (ShippingOrderData.TerminiDiConsegna.Entry t : orderData
-					.getTerminiDiConsegna().getEntry()) {
+			for (ShippingOrderData.TerminiDiConsegna.Entry t : orderData.getTerminiDiConsegna().getEntry()) {
 				sb.append(t.toString()).append(" | ");
 			}
 		}

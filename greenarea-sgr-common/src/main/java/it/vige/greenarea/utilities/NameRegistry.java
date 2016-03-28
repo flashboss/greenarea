@@ -17,8 +17,7 @@ public class NameRegistry {
 
 	// TODO:
 	public static boolean registerName(String domain, String name) {
-		if (domain != null && !domain.isEmpty() && name != null
-				&& !name.isEmpty()) {
+		if (domain != null && !domain.isEmpty() && name != null && !name.isEmpty()) {
 			return true;
 
 		} else
@@ -27,8 +26,7 @@ public class NameRegistry {
 
 	// TODO:
 	public static boolean dropName(String domain, String name) {
-		if (domain != null && !domain.isEmpty() && name != null
-				&& !name.isEmpty()) {
+		if (domain != null && !domain.isEmpty() && name != null && !name.isEmpty()) {
 			return true;
 
 		} else

@@ -14,18 +14,15 @@
 package it.vige.greenarea.bpm.custom.ui.form;
 
 import static com.vaadin.ui.AbstractSelect.MultiSelectMode.SIMPLE;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.PERFORMANCE_VEICOLI_ST_TABLE_FIELDS;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_COLLECTION;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType;
-import it.vige.greenarea.dto.PerformanceVeicoli;
 
 import java.lang.reflect.Method;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,8 +35,11 @@ import org.slf4j.Logger;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Table;
 
-public class PerformanceVeicoliSTCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<PerformanceVeicoli> {
+import it.vige.greenarea.bpm.form.PerformanceVeicoliSTCollectionFormType;
+import it.vige.greenarea.dto.PerformanceVeicoli;
+
+public class PerformanceVeicoliSTCollectionFormPropertyRenderer
+		extends GreenareaAbstractFormPropertyRenderer<PerformanceVeicoli> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private Table table;
@@ -55,13 +55,10 @@ public class PerformanceVeicoliSTCollectionFormPropertyRenderer extends
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
 
-		values = (Map<String, PerformanceVeicoli>) formProperty.getType()
-				.getInformation("values");
-		table = new GreenareaPagedTable<PerformanceVeicoli>(values.values(),
-				getGreenareaFormPropertiesForm());
+		values = (Map<String, PerformanceVeicoli>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<PerformanceVeicoli>(values.values(), getGreenareaFormPropertiesForm());
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(formProperty.isWritable());
 		table.setMultiSelect(true);
@@ -70,36 +67,26 @@ public class PerformanceVeicoliSTCollectionFormPropertyRenderer extends
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager
-					.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "targa");
+			String id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "targa");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "tipoalimentazione");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "tipoalimentazione");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "classeEcologica");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "classeEcologica");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "numeromissioni");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "numeromissioni");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "numerokm");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "numerokm");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "consumoTotale");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "consumoTotale");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "numeroMedioConsegneAMissione");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "numeroMedioConsegneAMissione");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "percentualeConsegneABuonFine");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "percentualeConsegneABuonFine");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-					+ "numeroMedioDiRitiriAMissione");
+			id = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "numeroMedioDiRitiriAMissione");
 			table.addContainerProperty(id, String.class, null);
 			boolean captionOK = false;
-			for (Map.Entry<String, PerformanceVeicoli> enumEntry : values
-					.entrySet()) {
+			for (Map.Entry<String, PerformanceVeicoli> enumEntry : values.entrySet()) {
 
 				id = enumEntry.getKey();
 				PerformanceVeicoli value = enumEntry.getValue();
@@ -136,23 +123,19 @@ public class PerformanceVeicoliSTCollectionFormPropertyRenderer extends
 		return true;
 	}
 
-	private Object[] getValues(PerformanceVeicoli type,
-			FormProperty formProperty) {
+	private Object[] getValues(PerformanceVeicoli type, FormProperty formProperty) {
 		List<Object> result = new ArrayList<Object>();
 		result.add(type.getTarga());
 		String tipoAlimentazione = type.getTipoAlimentazione().name();
 		I18nManager i18nManager = get().getI18nManager();
 		try {
-			tipoAlimentazione = i18nManager
-					.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-							+ tipoAlimentazione);
+			tipoAlimentazione = i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + tipoAlimentazione);
 		} catch (Exception ex) {
 			logger.error("errore internazionalizzazione ", tipoAlimentazione);
 		}
 		result.add(tipoAlimentazione);
-		result.add(i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS
-				+ "euro_value")
-				+ " " + type.getClasseEcologica());
+		result.add(i18nManager.getMessage(PERFORMANCE_VEICOLI_ST_TABLE_FIELDS + "euro_value") + " "
+				+ type.getClasseEcologica());
 		result.add(type.getNumeroMissioni());
 		result.add(df.format(type.getNumeroKmPercorsiInGA()));
 		result.add(df.format(type.getConsumoTotale()));
@@ -164,14 +147,10 @@ public class PerformanceVeicoliSTCollectionFormPropertyRenderer extends
 		return result.toArray();
 	}
 
-	public String getPropertyLabel(FormProperty formProperty,
-			PerformanceVeicoli type) {
-		DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+	public String getPropertyLabel(FormProperty formProperty, PerformanceVeicoli type) {
 		String message = null;
 		try {
-			message = getMessage(formProperty.getId(),
-					dateFormat.format(type.getDal()),
-					dateFormat.format(type.getAl()));
+			message = getMessage(formProperty.getId(), giornata.format(type.getDal()), giornata.format(type.getAl()));
 		} catch (Exception ex) {
 			if (formProperty.getName() != null) {
 				return formProperty.getName();

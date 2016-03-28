@@ -17,51 +17,50 @@ import java.io.Serializable;
 
 public class ShippingOrderDataResponse implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    private Long shippingOrderID;
-    private double totalCost;
-    private Long maxTimeShipment;
-    private Long maxTimeValidity;
+	private static final long serialVersionUID = 1L;
 
-    public ShippingOrderDataResponse(Long shippingOrderID, double totalCost, Long maxTimeShipment, Long maxTimeValidity) {
-        this.shippingOrderID = shippingOrderID;
-        this.totalCost = totalCost;
-        this.maxTimeShipment = maxTimeShipment;
-        this.maxTimeValidity = maxTimeValidity;
-    }
-    
-    
+	private Long shippingOrderID;
+	private double totalCost;
+	private Long maxTimeShipment;
+	private Long maxTimeValidity;
 
-    public Long getMaxTimeShipment() {
-        return maxTimeShipment;
-    }
+	public ShippingOrderDataResponse(Long shippingOrderID, double totalCost, Long maxTimeShipment,
+			Long maxTimeValidity) {
+		this.shippingOrderID = shippingOrderID;
+		this.totalCost = totalCost;
+		this.maxTimeShipment = maxTimeShipment;
+		this.maxTimeValidity = maxTimeValidity;
+	}
 
-    public void setMaxTimeShipment(Long maxTimeShipment) {
-        this.maxTimeShipment = maxTimeShipment;
-    }
+	public Long getMaxTimeShipment() {
+		return maxTimeShipment;
+	}
 
-    public Long getMaxTimeValidity() {
-        return maxTimeValidity;
-    }
+	public void setMaxTimeShipment(Long maxTimeShipment) {
+		this.maxTimeShipment = maxTimeShipment;
+	}
 
-    public void setMaxTimeValidity(Long maxTimeValidity) {
-        this.maxTimeValidity = maxTimeValidity;
-    }
-    
-    public Long getShippingOrderID() {
-        return shippingOrderID;
-    }
+	public Long getMaxTimeValidity() {
+		return maxTimeValidity;
+	}
 
-    public void setShippingOrderID(Long shippingOrderID) {
-        this.shippingOrderID = shippingOrderID;
-    }
+	public void setMaxTimeValidity(Long maxTimeValidity) {
+		this.maxTimeValidity = maxTimeValidity;
+	}
 
-    public double getTotalCost() {
-        return totalCost;
-    }
+	public Long getShippingOrderID() {
+		return shippingOrderID;
+	}
 
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
-    }
+	public void setShippingOrderID(Long shippingOrderID) {
+		this.shippingOrderID = shippingOrderID;
+	}
+
+	public double getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(double totalCost) {
+		this.totalCost = totalCost;
+	}
 }

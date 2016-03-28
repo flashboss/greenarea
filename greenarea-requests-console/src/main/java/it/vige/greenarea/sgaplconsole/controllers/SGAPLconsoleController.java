@@ -13,33 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.sgaplconsole.controllers;
 
+import static it.vige.greenarea.Constants.ITALY;
 import static it.vige.greenarea.sgapl.sgot.webservice.ResultStatus.NOK;
 import static java.lang.String.valueOf;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.application.FacesMessage.SEVERITY_WARN;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.sgapl.sgot.webservice.GATException_Exception;
-import it.vige.greenarea.sgapl.sgot.webservice.RequestShippingResponseData;
-import it.vige.greenarea.sgapl.sgot.webservice.ResultOperationResponse;
-import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService;
-import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService_Service;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingItemData;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData.TerminiDiConsegna;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager;
-import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager_Service;
-import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
-import it.vige.greenarea.sgrl.webservices.ObjectFactory;
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
-import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
-import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
-import it.vige.greenarea.sgaplconsole.controllers.utils.Converters;
-import it.vige.greenarea.sgaplconsole.data.MyOrder;
-import it.vige.greenarea.sgaplconsole.data.MyTransport;
-
 
 //import it.vige.greenarea.sgaplconsole.data.TerminiDiConsegna;
 import java.io.Serializable;
@@ -61,10 +41,30 @@ import javax.xml.ws.WebServiceRef;
 
 import org.slf4j.Logger;
 
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.itseasy.lib.configurationData.MqConstants;
+import it.vige.greenarea.itseasy.lib.configurationData.SGAPLconstants;
+import it.vige.greenarea.itseasy.lib.mqClientUtil.ItseasyProducer;
+import it.vige.greenarea.sgapl.sgot.webservice.GATException_Exception;
+import it.vige.greenarea.sgapl.sgot.webservice.RequestShippingResponseData;
+import it.vige.greenarea.sgapl.sgot.webservice.ResultOperationResponse;
+import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService;
+import it.vige.greenarea.sgapl.sgot.webservice.SGOTadminService_Service;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingItemData;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData.TerminiDiConsegna;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderDetails;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager;
+import it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderManager_Service;
+import it.vige.greenarea.sgapl.sgot.webservice.TransportInfo;
+import it.vige.greenarea.sgaplconsole.controllers.utils.Converters;
+import it.vige.greenarea.sgaplconsole.data.MyOrder;
+import it.vige.greenarea.sgaplconsole.data.MyTransport;
+import it.vige.greenarea.sgrl.webservices.ObjectFactory;
+
 @ManagedBean(name = "sgaplConsoleController")
 @SessionScoped
-public class SGAPLconsoleController implements Serializable, MqConstants,
-		SGAPLconstants {
+public class SGAPLconsoleController implements Serializable, MqConstants, SGAPLconstants {
 
 	private Logger logger = getLogger(getClass());
 
@@ -94,8 +94,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		int count = sodList.size();
 		if ((sodList != null) && (!sodList.isEmpty())) {
 			for (ShippingOrderDetails sd : sodList) {
-				if ((sd.getStato().equals("completed"))
-						|| (sd.getStato().equals("returning"))) {
+				if ((sd.getStato().equals("completed")) || (sd.getStato().equals("returning"))) {
 					// non carico gli ordini gia' completati
 					continue;
 				}
@@ -116,8 +115,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 				orderList.add(currentOrder);
 			}
 		}
-		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Ordini caricati: ",
-				valueOf(count));
+		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Ordini caricati: ", valueOf(count));
 
 		return msg;
 	}
@@ -127,15 +125,13 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		ShippingOrderData shData = new ShippingOrderData();
 		shData.setShipmentId(currentOrder.getId());
 		shData.setTerminiDiConsegna(new ShippingOrderData.TerminiDiConsegna());
-		for (TerminiDiConsegna.Entry entry : currentOrder.getOrderData()
-				.getTerminiDiConsegna().getEntry()) {
+		for (TerminiDiConsegna.Entry entry : currentOrder.getOrderData().getTerminiDiConsegna().getEntry()) {
 			ShippingOrderData.TerminiDiConsegna.Entry shEntry = new ShippingOrderData.TerminiDiConsegna.Entry();
 			shEntry.setKey(entry.getKey());
 			shEntry.setValue(entry.getValue());
 			shData.getTerminiDiConsegna().getEntry().add(shEntry);
 		}
-		for (ShippingItemData sid : currentOrder.getOrderData()
-				.getShippingItems()) {
+		for (ShippingItemData sid : currentOrder.getOrderData().getShippingItems()) {
 
 			shData.getShippingItems().add(sid);
 		}
@@ -143,23 +139,19 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		// ripulisco i campi per estimate
 		DBGeoLocation estiamteFrom = new DBGeoLocation();
 		DBGeoLocation estiamteTo = new DBGeoLocation();
-		estiamteFrom.setCountry("IT");
-		estiamteFrom.setAdminAreaLevel2(currentOrder.getFrom()
-				.getAdminAreaLevel2());
+		estiamteFrom.setCountry(ITALY);
+		estiamteFrom.setAdminAreaLevel2(currentOrder.getFrom().getAdminAreaLevel2());
 		estiamteFrom.setCity(currentOrder.getFrom().getCity());
 		estiamteFrom.setZipCode(currentOrder.getFrom().getZipCode());
-		estiamteTo.setCountry("IT");
-		estiamteTo
-				.setAdminAreaLevel2(currentOrder.getTo().getAdminAreaLevel2());
+		estiamteTo.setCountry(ITALY);
+		estiamteTo.setAdminAreaLevel2(currentOrder.getTo().getAdminAreaLevel2());
 		estiamteTo.setCity(currentOrder.getTo().getCity());
 		estiamteTo.setZipCode(currentOrder.getTo().getZipCode());
-		res = estimateShipping(currentOrder.getFrom().getName(),
-				Converters.convertAddress(estiamteFrom), currentOrder.getTo()
-						.getName(), Converters.convertAddress(estiamteTo),
-				shData);
+		res = estimateShipping(currentOrder.getFrom().getName(), Converters.convertAddress(estiamteFrom),
+				currentOrder.getTo().getName(), Converters.convertAddress(estiamteTo), shData);
 		if (res.getResult().getStatus().equals(NOK)) {
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Request Order ", res.getResult().getErrorDescription());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Request Order ",
+					res.getResult().getErrorDescription());
 
 			return msg;
 		}
@@ -168,8 +160,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		// se va bene assegno a shipping order i nuovi valori:
 
 		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Valutazione Costo",
-				"Ordine: " + currentOrder.getId() + " costo: "
-						+ res.getTotalCost());
+				"Ordine: " + currentOrder.getId() + " costo: " + res.getTotalCost());
 		return msg;
 	}
 
@@ -178,25 +169,21 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		ShippingOrderData shData = new ShippingOrderData();// sgotObj.createShippingOrderData();
 		shData.setShipmentId(currentOrder.getId());
 		shData.setTerminiDiConsegna(new ShippingOrderData.TerminiDiConsegna());// sgotObj.createShippingOrderDataTerminiDiConsegna());
-		for (TerminiDiConsegna.Entry entry : currentOrder.getOrderData()
-				.getTerminiDiConsegna().getEntry()) {
+		for (TerminiDiConsegna.Entry entry : currentOrder.getOrderData().getTerminiDiConsegna().getEntry()) {
 			ShippingOrderData.TerminiDiConsegna.Entry shEntry = new ShippingOrderData.TerminiDiConsegna.Entry();// sgotObj.createShippingOrderDataTerminiDiConsegnaEntry();
 			shEntry.setKey(entry.getKey());
 			shEntry.setValue(entry.getValue());
 			shData.getTerminiDiConsegna().getEntry().add(shEntry);
 		}
-		for (ShippingItemData fi : currentOrder.getOrderData()
-				.getShippingItems()) {
+		for (ShippingItemData fi : currentOrder.getOrderData().getShippingItems()) {
 			shData.getShippingItems().add(fi);
 		}
 		RequestShippingResponseData res;
-		res = requestShipping(currentOrder.getFrom().getName(),
-				Converters.convertAddress(currentOrder.getFrom()), currentOrder
-						.getTo().getName(),
-				Converters.convertAddress(currentOrder.getTo()), shData);
+		res = requestShipping(currentOrder.getFrom().getName(), Converters.convertAddress(currentOrder.getFrom()),
+				currentOrder.getTo().getName(), Converters.convertAddress(currentOrder.getTo()), shData);
 		if (res.getResult().getStatus().equals(NOK)) {
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Request Order ", res.getResult().getErrorDescription());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Request Order ",
+					res.getResult().getErrorDescription());
 			return msg;
 		}
 		// se va bene assegno a shipping order i nuovi valori:
@@ -209,8 +196,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 			trInfo = getTransportInfo(currentOrder.getTransportID());
 		} catch (Exception ex) {
 			logger.error("errore gat", ex);
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Request Order ", ex.getMessage());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Request Order ", ex.getMessage());
 			return msg;
 		}
 		FacesMessage msg;
@@ -220,23 +206,20 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 			transportList.add(currentTransport);
 
 			msg = new FacesMessage(SEVERITY_INFO, "Successo Request",
-					"Ordine: " + currentOrder.getId()
-							+ " con trasporto numero: "
-							+ currentTransport.getId());
+					"Ordine: " + currentOrder.getId() + " con trasporto numero: " + currentTransport.getId());
 		} else {
-			msg = new FacesMessage(SEVERITY_WARN, "Error Request", "Ordine: "
-					+ currentOrder.getId() + " non ha nessun trasporto!!!");
+			msg = new FacesMessage(SEVERITY_WARN, "Error Request",
+					"Ordine: " + currentOrder.getId() + " non ha nessun trasporto!!!");
 
 		}
 		return msg;
 	}
 
 	public FacesMessage confirmOrder(MyOrder currentOrder) {
-		ResultOperationResponse confirmShipping = confirmShipping(currentOrder
-				.getId());
+		ResultOperationResponse confirmShipping = confirmShipping(currentOrder.getId());
 		if (confirmShipping.getStatus().equals(NOK)) {
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Conferma Ordine: ", confirmShipping.getErrorDescription());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Conferma Ordine: ",
+					confirmShipping.getErrorDescription());
 			return msg;
 		}
 
@@ -249,8 +232,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 					trInfo = getTransportInfo(currentOrder.getTransportID());
 				} catch (GATException_Exception ex) {
 					logger.error("errore gat", ex);
-					FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-							"Conferma Ordine: ", ex.getMessage());
+					FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Conferma Ordine: ", ex.getMessage());
 					return msg;
 				}
 				if (trInfo != null) {
@@ -267,11 +249,9 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 
 	public FacesMessage dropOrder(MyOrder currentOrder) {
 
-		ResultOperationResponse dropShipping = dropShipping(currentOrder
-				.getId());
+		ResultOperationResponse dropShipping = dropShipping(currentOrder.getId());
 		if (dropShipping.getStatus().equals(NOK)) {
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Drop Ordine: ", dropShipping.getErrorDescription());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Drop Ordine: ", dropShipping.getErrorDescription());
 			return msg;
 		}
 
@@ -296,8 +276,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		for (MyTransport t : transportList) {
 			if (t.getOrderID().equals(currentOrder.getId())) {
 				msg = new FacesMessage(SEVERITY_INFO, "Locate Ordine: ",
-						" Ordine " + currentOrder.getId()
-								+ " in carico al vettore: " + t.getVettore());
+						" Ordine " + currentOrder.getId() + " in carico al vettore: " + t.getVettore());
 				return msg;
 			}
 		}
@@ -323,23 +302,20 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		producer.publishTextMessage(gatTopic, jmsProducer, "Partito ",
-				properties);
+		producer.publishTextMessage(gatTopic, jmsProducer, "Partito ", properties);
 		TransportInfo info;
 		try {
 			info = getTransportInfo(trID);
 		} catch (GATException_Exception ex) {
 			logger.error("errore gat", ex);
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Avvio trasporto: ", ex.getMessage());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Avvio trasporto: ", ex.getMessage());
 			return msg;
 		}
 
 		refreshTransports();
 		refreshOrder(info.getOrderID());
 
-		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Avvio trasporto ",
-				"confermato per ordine: " + trID);
+		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Avvio trasporto ", "confermato per ordine: " + trID);
 		return msg;
 	}
 
@@ -359,22 +335,19 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		producer.publishTextMessage(gatTopic, jmsProducer, "Completato ",
-				properties);
+		producer.publishTextMessage(gatTopic, jmsProducer, "Completato ", properties);
 		TransportInfo info;
 		try {
 			info = getTransportInfo(trID);
 		} catch (Exception ex) {
 			logger.error("errore gat", ex);
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Avvio trasporto: ", ex.getMessage());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Avvio trasporto: ", ex.getMessage());
 			return msg;
 		}
 
 		refreshTransports();
 		refreshOrder(info.getOrderID());
-		FacesMessage msg = new FacesMessage(SEVERITY_INFO,
-				"Consegna trasporto ", "consegnato ordine: " + trID);
+		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Consegna trasporto ", "consegnato ordine: " + trID);
 		return msg;
 	}
 
@@ -396,31 +369,27 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 
 		ItseasyProducer producer = new ItseasyProducer();
 		JMSProducer jmsProducer = jmsContext.createProducer();
-		producer.publishTextMessage(gatTopic, jmsProducer, "Rifiutato",
-				properties);
+		producer.publishTextMessage(gatTopic, jmsProducer, "Rifiutato", properties);
 		TransportInfo info;
 		try {
 			info = getTransportInfo(trID);
 		} catch (GATException_Exception ex) {
 			logger.error("errore gat", ex);
-			FacesMessage msg = new FacesMessage(SEVERITY_ERROR,
-					"Avvio trasporto: ", ex.getMessage());
+			FacesMessage msg = new FacesMessage(SEVERITY_ERROR, "Avvio trasporto: ", ex.getMessage());
 			return msg;
 		}
 
 		refreshTransports();
 		refreshOrder(info.getOrderID());
 
-		FacesMessage msg = new FacesMessage(SEVERITY_INFO,
-				"Rifiuto trasporto: ", valueOf(trID));
+		FacesMessage msg = new FacesMessage(SEVERITY_INFO, "Rifiuto trasporto: ", valueOf(trID));
 		return msg;
 	}
 
 	private void refreshOrder(String orderID) {
 		for (MyOrder currentOrder : orderList) {
 			if (currentOrder.getId().equals(orderID)) {
-				currentOrder
-						.refreshData(showOrderDetails(currentOrder.getId()));
+				currentOrder.refreshData(showOrderDetails(currentOrder.getId()));
 				break;
 			}
 		}
@@ -464,8 +433,7 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		return port.loadOrderIDS();
 	}
 
-	private TransportInfo getTransportInfo(String trId)
-			throws GATException_Exception {
+	private TransportInfo getTransportInfo(String trId) throws GATException_Exception {
 		SGOTadminService port = adminService.getSGOTadminServicePort();
 		return port.getTransportInfo(trId);
 	}
@@ -480,10 +448,8 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		return port.confirmShipping(shippingOrderID);
 	}
 
-	private RequestShippingResponseData estimateShipping(
-			java.lang.String fromName,
-			it.vige.greenarea.sgapl.sgot.webservice.Address fromAddress,
-			java.lang.String toName,
+	private RequestShippingResponseData estimateShipping(java.lang.String fromName,
+			it.vige.greenarea.sgapl.sgot.webservice.Address fromAddress, java.lang.String toName,
 			it.vige.greenarea.sgapl.sgot.webservice.Address toAddress,
 			it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData shippingOrder) {
 		ShippingOrderManager port = sgotService.getShippingOrderManagerPort();
@@ -494,15 +460,12 @@ public class SGAPLconsoleController implements Serializable, MqConstants,
 		return port.estimateShipping(shippingOrder);
 	}
 
-	private RequestShippingResponseData requestShipping(
-			java.lang.String fromName,
-			it.vige.greenarea.sgapl.sgot.webservice.Address fromAddress,
-			java.lang.String toName,
+	private RequestShippingResponseData requestShipping(java.lang.String fromName,
+			it.vige.greenarea.sgapl.sgot.webservice.Address fromAddress, java.lang.String toName,
 			it.vige.greenarea.sgapl.sgot.webservice.Address toAddress,
 			it.vige.greenarea.sgapl.sgot.webservice.ShippingOrderData shippingOrder) {
 		ShippingOrderManager port = sgotService.getShippingOrderManagerPort();
-		return port.requestShipping(fromName, fromAddress, toName, toAddress,
-				shippingOrder);
+		return port.requestShipping(fromName, fromAddress, toName, toAddress, shippingOrder);
 	}
 
 	private ResultOperationResponse dropShipping(String shippingOrderID) {

@@ -97,6 +97,10 @@ public class TapGroupData implements Serializable {
 		}
 		return this.params;
 	}
+	
+	public void setParams(List<TapParamData> params) {
+		this.params = params;
+	}
 
 	public TapOutData getTapOutData() {
 		return tapOutData;

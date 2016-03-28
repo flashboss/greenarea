@@ -13,9 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.restservices;
 
-import it.vige.greenarea.cl.library.entities.Filter;
-import it.vige.greenarea.sgapl.sgot.facade.FilterFacade;
-
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -27,6 +24,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import it.vige.greenarea.cl.library.entities.Filter;
+import it.vige.greenarea.sgapl.sgot.facade.FilterFacade;
 
 /**
  * <p>
@@ -58,8 +58,7 @@ public class AdministratorRESTService {
 	@GET
 	@Path("/getFiltersForOP/{operatoreLogistico}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Filter> getFilters(
-			@PathParam("operatoreLogistico") String operatoreLogistico) {
+	public List<Filter> getFilters(@PathParam("operatoreLogistico") String operatoreLogistico) {
 		return ff.findAll(operatoreLogistico);
 	}
 

@@ -17,11 +17,11 @@ package it.vige.greenarea.gtg.utilities;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import static it.vige.greenarea.Utilities.yyMMddHHmmss;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -45,8 +45,7 @@ public class Tracer {
 		StringBuilder sb = new StringBuilder(256);
 		if (tracerDir == null) {
 			try {
-				InputStream propsStream = Tracer.class.getClassLoader()
-						.getResourceAsStream(TNTPROPSFILE);
+				InputStream propsStream = Tracer.class.getClassLoader().getResourceAsStream(TNTPROPSFILE);
 				Properties tntProps = new Properties();
 				tntProps.load(propsStream);
 				tracerDir = tntProps.getProperty(TNTDIR);
@@ -113,10 +112,8 @@ public class Tracer {
 		}
 	}
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-
 	private static void timeStamp(StringBuilder sb) {
 		Calendar cal = new GregorianCalendar();
-		sb.append(sdf.format(cal.getTime()));
+		sb.append(yyMMddHHmmss.format(cal.getTime()));
 	}
 }

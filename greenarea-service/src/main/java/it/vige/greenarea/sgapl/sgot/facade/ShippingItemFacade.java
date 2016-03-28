@@ -13,11 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.facade;
 
-import it.vige.greenarea.cl.library.entities.ShippingItem;
-import it.vige.greenarea.cl.library.entities.ShippingItem_;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -25,6 +20,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Root;
+
+import it.vige.greenarea.cl.library.entities.ShippingItem;
+import it.vige.greenarea.cl.library.entities.ShippingItem_;
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 @Stateless
 public class ShippingItemFacade extends AbstractFacade<ShippingItem, String> {
@@ -55,8 +55,7 @@ public class ShippingItemFacade extends AbstractFacade<ShippingItem, String> {
 		javax.persistence.criteria.CriteriaQuery cq = builder.createQuery();
 		Root<ShippingItem> personRoot = cq.from(ShippingItem.class);
 		cq.select(personRoot);
-		cq.where((builder.equal(personRoot.get(ShippingItem_.shippingOrder),
-				shippingOrder)));
+		cq.where((builder.equal(personRoot.get(ShippingItem_.shippingOrder), shippingOrder)));
 		return getEntityManager().createQuery(cq).getResultList();
 	}
 

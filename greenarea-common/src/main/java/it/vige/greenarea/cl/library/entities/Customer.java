@@ -83,14 +83,9 @@ public class Customer implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((notificationCBurl == null) ? 0 : notificationCBurl
-						.hashCode());
-		result = prime * result
-				+ ((password == null) ? 0 : password.hashCode());
-		result = prime * result
-				+ ((userName == null) ? 0 : userName.hashCode());
+		result = prime * result + ((notificationCBurl == null) ? 0 : notificationCBurl.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
 

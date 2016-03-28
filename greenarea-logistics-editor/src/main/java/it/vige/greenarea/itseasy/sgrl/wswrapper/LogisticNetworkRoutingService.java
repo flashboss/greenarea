@@ -13,8 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.sgrl.wswrapper;
 
-import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -25,13 +23,14 @@ import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.WebServiceFeature;
 
+import it.vige.greenarea.sgrl.webservices.LogisticNetworkRouting;
+
 @WebServiceClient(name = "LogisticNetworkRouting", targetNamespace = "http://webservices.sgrl.greenarea.vige.it/", wsdlLocation = "http://NBW72011844431.vige.local:8080/SGRL/LogisticNetworkRouting?wsdl")
 public class LogisticNetworkRoutingService extends Service {
 
 	private static URL LOGISTICNETWORKROUTING_WSDL_LOCATION;
 	private static WebServiceException LOGISTICNETWORKROUTING_EXCEPTION;
-	private final static QName LOGISTICNETWORKROUTING_QNAME = new QName(
-			"http://webservices.sgrl.greenarea.vige.it/",
+	private final static QName LOGISTICNETWORKROUTING_QNAME = new QName("http://webservices.sgrl.greenarea.vige.it/",
 			"LogisticNetworkRouting");
 
 	public static void setRootUrl(String root) {
@@ -58,8 +57,7 @@ public class LogisticNetworkRoutingService extends Service {
 		super(wsdlLocation, LOGISTICNETWORKROUTING_QNAME);
 	}
 
-	public LogisticNetworkRoutingService(URL wsdlLocation,
-			WebServiceFeature... features) {
+	public LogisticNetworkRoutingService(URL wsdlLocation, WebServiceFeature... features) {
 		super(wsdlLocation, LOGISTICNETWORKROUTING_QNAME, features);
 	}
 
@@ -67,8 +65,7 @@ public class LogisticNetworkRoutingService extends Service {
 		super(wsdlLocation, serviceName);
 	}
 
-	public LogisticNetworkRoutingService(URL wsdlLocation, QName serviceName,
-			WebServiceFeature... features) {
+	public LogisticNetworkRoutingService(URL wsdlLocation, QName serviceName, WebServiceFeature... features) {
 		super(wsdlLocation, serviceName, features);
 	}
 
@@ -78,9 +75,8 @@ public class LogisticNetworkRoutingService extends Service {
 	 */
 	@WebEndpoint(name = "LogisticNetworkRoutingPort")
 	public LogisticNetworkRouting getLogisticNetworkRoutingPort() {
-		return super.getPort(new QName(
-				"http://webservices.sgrl.greenarea.vige.it/",
-				"LogisticNetworkRoutingPort"), LogisticNetworkRouting.class);
+		return super.getPort(new QName("http://webservices.sgrl.greenarea.vige.it/", "LogisticNetworkRoutingPort"),
+				LogisticNetworkRouting.class);
 	}
 
 	/**
@@ -93,12 +89,9 @@ public class LogisticNetworkRoutingService extends Service {
 	 * @return returns LogisticNetworkRouting
 	 */
 	@WebEndpoint(name = "LogisticNetworkRoutingPort")
-	public LogisticNetworkRouting getLogisticNetworkRoutingPort(
-			WebServiceFeature... features) {
-		return super.getPort(new QName(
-				"http://webservices.sgrl.greenarea.vige.it/",
-				"LogisticNetworkRoutingPort"), LogisticNetworkRouting.class,
-				features);
+	public LogisticNetworkRouting getLogisticNetworkRoutingPort(WebServiceFeature... features) {
+		return super.getPort(new QName("http://webservices.sgrl.greenarea.vige.it/", "LogisticNetworkRoutingPort"),
+				LogisticNetworkRouting.class, features);
 	}
 
 	private static URL __getWsdlLocation() {

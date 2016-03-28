@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.routing;
 
-import it.vige.greenarea.costmodels.LNCost;
-import it.vige.greenarea.dto.GeoLocationInterface;
-import it.vige.greenarea.ln.model.LNCell;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.mxgraph.model.mxCell;
+
+import it.vige.greenarea.costmodels.LNCost;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.ln.model.LNCell;
 
 public class LNPath implements Comparable<Object> {
 	private GeoLocationInterface geoFrom;
@@ -31,8 +31,7 @@ public class LNPath implements Comparable<Object> {
 	private Date timeStamp;
 	private ArrayList<mxCell> path;
 
-	public LNPath(GeoLocationInterface geoFrom, GeoLocationInterface geoTo,
-			mxCell[] cells) {
+	public LNPath(GeoLocationInterface geoFrom, GeoLocationInterface geoTo, mxCell[] cells) {
 		// fatto come getInstance per consentire la verifica della coerenza dei
 		// parametri
 		ArrayList<mxCell> path = new ArrayList<mxCell>();
@@ -87,8 +86,7 @@ public class LNPath implements Comparable<Object> {
 
 		StringBuilder sb = new StringBuilder();
 		int legCount = (cells.size() - 1) / 2;
-		sb.append(" cost=").append(Double.toString(cost))
-				.append("   leg count=").append(Integer.toString(legCount))
+		sb.append(" cost=").append(Double.toString(cost)).append("   leg count=").append(Integer.toString(legCount))
 				.append("\n  path: ");
 		if (cells.size() > 0) {
 			int i;
@@ -96,15 +94,10 @@ public class LNPath implements Comparable<Object> {
 				mxCell source = cells.get(i++);
 				mxCell carrier = cells.get(i++);
 				cells.get(i);
-				sb.append("[").append(((LNCell) source.getValue()).toString())
-						.append("]");
-				sb.append("--")
-						.append(((LNCell) carrier.getValue()).toString())
-						.append("->");
+				sb.append("[").append(((LNCell) source.getValue()).toString()).append("]");
+				sb.append("--").append(((LNCell) carrier.getValue()).toString()).append("->");
 			}
-			sb.append("[")
-					.append(((LNCell) cells.get(i).getValue()).toString())
-					.append("]");
+			sb.append("[").append(((LNCell) cells.get(i).getValue()).toString()).append("]");
 		}
 		return sb.toString();
 	}

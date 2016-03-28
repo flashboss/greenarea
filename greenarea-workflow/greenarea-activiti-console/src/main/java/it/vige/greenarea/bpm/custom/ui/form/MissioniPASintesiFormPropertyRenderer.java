@@ -14,6 +14,7 @@
 package it.vige.greenarea.bpm.custom.ui.form;
 
 import static com.vaadin.terminal.Sizeable.UNITS_PIXELS;
+import static it.vige.greenarea.Utilities.giornata;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.MISSIONI_PA_SINTESI_TABLE_FIELDS;
 import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout.STYLE_COLLECTION;
 import static it.vige.greenarea.dto.Operazione.CANCELLAZIONE;
@@ -22,14 +23,9 @@ import static it.vige.greenarea.dto.Operazione.MODIFICA;
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_DETAIL_BLOCK;
-import it.vige.greenarea.bpm.custom.ui.GreenareaMissioniTableCellStyleGenerator;
-import it.vige.greenarea.bpm.form.MissioniPASintesiFormType;
-import it.vige.greenarea.dto.DettaglioMissione;
 
 import java.lang.reflect.Method;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +38,11 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-public class MissioniPASintesiFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<DettaglioMissione> {
+import it.vige.greenarea.bpm.custom.ui.GreenareaMissioniTableCellStyleGenerator;
+import it.vige.greenarea.bpm.form.MissioniPASintesiFormType;
+import it.vige.greenarea.dto.DettaglioMissione;
+
+public class MissioniPASintesiFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<DettaglioMissione> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private GreenareaPagedTable<DettaglioMissione> table;
@@ -59,14 +58,11 @@ public class MissioniPASintesiFormPropertyRenderer extends
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
 		totaleCrediti = 0.0;
-		values = (Map<String, DettaglioMissione>) formProperty.getType()
-				.getInformation("values");
-		table = new GreenareaPagedTable<DettaglioMissione>(values.values(),
-				getGreenareaFormPropertiesForm(), 10);
+		values = (Map<String, DettaglioMissione>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<DettaglioMissione>(values.values(), getGreenareaFormPropertiesForm(), 10);
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(false);
 		table.setStyleName(STYLE_COLLECTION);
@@ -74,45 +70,33 @@ public class MissioniPASintesiFormPropertyRenderer extends
 
 		if (values != null && values.size() > 0) {
 			I18nManager i18nManager = get().getI18nManager();
-			String id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "operatorelogistico");
+			String id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "operatorelogistico");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "missioni");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "missioni");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "accessiingatotale");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "accessiingatotale");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "accessiingamedia");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "accessiingamedia");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "kmpercorsiinga");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "kmpercorsiinga");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "tempotrascorsoinga");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "tempotrascorsoinga");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "numerostop");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "numerostop");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "numeroconsegneperstop");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "numeroconsegneperstop");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "emissionitotali");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "emissionitotali");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "creditidimobilita");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "creditidimobilita");
 			table.addContainerProperty(id, String.class, null);
-			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS
-					+ "bonus");
+			id = i18nManager.getMessage(MISSIONI_PA_SINTESI_TABLE_FIELDS + "bonus");
 			table.addContainerProperty(id, String.class, null);
 			if (formProperty.isWritable())
 				table.addContainerProperty("", HorizontalLayout.class, null);
 
 			boolean captionOK = false;
-			for (Map.Entry<String, DettaglioMissione> enumEntry : values
-					.entrySet()) {
+			for (Map.Entry<String, DettaglioMissione> enumEntry : values.entrySet()) {
 
 				id = enumEntry.getKey();
 				DettaglioMissione value = enumEntry.getValue();
@@ -174,16 +158,14 @@ public class MissioniPASintesiFormPropertyRenderer extends
 	protected HorizontalLayout getButtons(final String item, final Table table) {
 		FormProperty operations = getOperations();
 		@SuppressWarnings("unchecked")
-		Map<String, String> mapOperations = (Map<String, String>) operations
-				.getType().getInformation("values");
+		Map<String, String> mapOperations = (Map<String, String>) operations.getType().getInformation("values");
 
 		HorizontalLayout buttons = new HorizontalLayout();
 		buttons.setSpacing(true);
 		buttons.setWidth(20, UNITS_PIXELS);
 		buttons.addStyleName(STYLE_DETAIL_BLOCK);
 		for (String operation : mapOperations.keySet()) {
-			if (operation.equals(MODIFICA.name())
-					|| operation.equals(CANCELLAZIONE.name())
+			if (operation.equals(MODIFICA.name()) || operation.equals(CANCELLAZIONE.name())
 					|| operation.equals(DETTAGLIO.name())) {
 				addButton(operation, buttons, item, table);
 			}
@@ -195,14 +177,11 @@ public class MissioniPASintesiFormPropertyRenderer extends
 		return buttons;
 	}
 
-	public String getPropertyLabel(FormProperty formProperty,
-			DettaglioMissione type) {
-		DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+	public String getPropertyLabel(FormProperty formProperty, DettaglioMissione type) {
 		String message = null;
 		try {
-			message = getMessage(formProperty.getId(),
-					dateFormat.format(type.getDal()),
-					dateFormat.format(type.getAl()));
+			message = getMessage(formProperty.getId(), giornata.format(type.getDal()),
+					giornata.format(type.getAl()));
 		} catch (Exception ex) {
 			if (formProperty.getName() != null) {
 				return formProperty.getName();

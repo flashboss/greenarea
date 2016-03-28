@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.entity;
 
+import java.io.Serializable;
+
 import it.vige.greenarea.cl.library.entities.ParameterGen;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.dto.Peso;
 import it.vige.greenarea.dto.TipoParametro;
-
-import java.io.Serializable;
 
 public class ParameterTSView implements Serializable {
 

@@ -73,9 +73,9 @@ public interface GreenareaMessages extends Messages {
 	String LOGIN = "login.add";
 	String USER_NAME_TITLE = "username.title";
 	String PASSWORD_TITLE = "password.title";
-	String TORINO_TITLE = "torino.title";
-	String GENOVA_TITLE = "genova.title";
-	String MILANO_TITLE = "milano.title";
+	String GUIDONIA_TITLE = "guidonia.title";
+	String POMEZIA_TITLE = "pomezia.title";
+	String LIVORNO_TITLE = "livorno.title";
 
 	String MAIN_MENU_HOME_INTRO_TITLE = "main.menu.home.intro.title";
 	String MAIN_MENU_HOME_INTRO_TEXT1 = "main.menu.home.intro.text1";

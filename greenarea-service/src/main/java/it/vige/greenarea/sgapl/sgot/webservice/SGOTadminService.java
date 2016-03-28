@@ -15,6 +15,15 @@ package it.vige.greenarea.sgapl.sgot.webservice;
 
 import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertShippingOrderToShippingOrderDetails;
 import static it.vige.greenarea.gtg.constants.ConversioniGTG.convertTransportToTransportInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import it.vige.greenarea.cl.library.entities.ShippingItem;
 import it.vige.greenarea.cl.library.entities.ShippingOrder;
 import it.vige.greenarea.cl.library.entities.Transport;
@@ -24,14 +33,6 @@ import it.vige.greenarea.sgapl.sgot.facade.ShippingItemFacade;
 import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.ShippingOrderDetails;
 import it.vige.greenarea.sgapl.sgot.webservice.wsdata.TransportInfo;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebService;
 
 @WebService(serviceName = "SGOTadminService")
 public class SGOTadminService {
@@ -43,8 +44,7 @@ public class SGOTadminService {
 	private ShippingItemFacade shippingItemFacade;
 
 	@WebMethod(operationName = "showOrderDetails")
-	public ShippingOrderDetails showOrderDetails(
-			@WebParam(name = "id") String id) {
+	public ShippingOrderDetails showOrderDetails(@WebParam(name = "id") String id) {
 
 		return getShippingOrderDetails(id);
 	}
@@ -61,12 +61,9 @@ public class SGOTadminService {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "getTransportInfo")
-	public TransportInfo getTransportInfo(@WebParam(name = "trId") String trId)
-			throws GATException {
+	public TransportInfo getTransportInfo(@WebParam(name = "trId") String trId) throws GATException {
 		if (trId == null) {
-			throw new GATException(
-					GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID,
-					new ArrayList<String>());
+			throw new GATException(GATException.GATerrorCodes.UNKNOWN_TRANSPORT_ID, new ArrayList<String>());
 		}
 		Transport t = transportFacade.find(trId);
 		TransportInfo ti = convertTransportToTransportInfo(t);
@@ -78,8 +75,7 @@ public class SGOTadminService {
 			return null;
 		}
 		ShippingOrder shippingOrder = shippingOrderFacade.find(shID);
-		shippingOrder.setShippingItems(shippingItemFacade
-				.findAll(shippingOrder));
+		shippingOrder.setShippingItems(shippingItemFacade.findAll(shippingOrder));
 		return convertShippingOrderToShippingOrderDetails(shippingOrder);
 	}
 

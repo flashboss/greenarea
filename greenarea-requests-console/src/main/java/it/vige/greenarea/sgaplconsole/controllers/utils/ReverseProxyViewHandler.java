@@ -53,9 +53,8 @@ public class ReverseProxyViewHandler extends ViewHandler {
 	/*
 	 * @Override public String getActionURL(FacesContext context, String viewId)
 	 * { String actionURL = defaultHandler.getActionURL(context, viewId); String
-	 * prefijoProxy =
-	 * context.getExternalContext().getInitParameter("es.acme.faces.PROXY_PREFIX"
-	 * );
+	 * prefijoProxy = context.getExternalContext().getInitParameter(
+	 * "es.acme.faces.PROXY_PREFIX" );
 	 * 
 	 * if (prefijoProxy == null) { return actionURL; } else { return
 	 * prefijoProxy + actionURL; } }
@@ -96,12 +95,10 @@ public class ReverseProxyViewHandler extends ViewHandler {
 	 */
 	private String getProxyiedURL(FacesContext context, String path) {
 
-		String contextPath = context.getExternalContext()
-				.getRequestContextPath();
-		String proxyPath = context.getExternalContext().getInitParameter(
-				"it.vige.greenarea.sgaplconsole.PROXY_CONTEXT_PATH");
-		logger.debug("contextPath = " + contextPath + " proxyPath = "
-				+ proxyPath);
+		String contextPath = context.getExternalContext().getRequestContextPath();
+		String proxyPath = context.getExternalContext()
+				.getInitParameter("it.vige.greenarea.sgaplconsole.PROXY_CONTEXT_PATH");
+		logger.debug("contextPath = " + contextPath + " proxyPath = " + proxyPath);
 
 		// For root proxy context, simply remove context path
 		if ("/".equals(proxyPath)) {
@@ -112,8 +109,7 @@ public class ReverseProxyViewHandler extends ViewHandler {
 	}
 
 	@Override
-	public void renderView(FacesContext context, UIViewRoot viewToRender)
-			throws IOException, FacesException {
+	public void renderView(FacesContext context, UIViewRoot viewToRender) throws IOException, FacesException {
 		defaultHandler.renderView(context, viewToRender);
 	}
 

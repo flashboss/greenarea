@@ -113,8 +113,7 @@ public class MqUtility {
 		}
 	}
 
-	public static Map<String, String> getMessageProperties(Message m)
-			throws JMSException {
+	public static Map<String, String> getMessageProperties(Message m) throws JMSException {
 		Enumeration<String> propNames = m.getPropertyNames();
 
 		Map<String, String> result = new HashMap<String, String>();
@@ -122,8 +121,7 @@ public class MqUtility {
 			String name = propNames.nextElement();
 			result.put(name, m.getStringProperty(name));
 		}
-		logger.debug("per il messaggio: " + m.toString()
-				+ " ho trovato questa lista: " + result.toString());
+		logger.debug("per il messaggio: " + m.toString() + " ho trovato questa lista: " + result.toString());
 
 		return result;
 	}
@@ -266,8 +264,7 @@ public class MqUtility {
 	/**
 	 * Takes the JMS header fields of a JMS message and puts them in a HashMap
 	 */
-	public static HashMap<String, String> jmsHeadersToHashMap(Message m)
-			throws JMSException {
+	public static HashMap<String, String> jmsHeadersToHashMap(Message m) throws JMSException {
 		HashMap<String, String> hdrs = new HashMap<String, String>();
 		String s = null;
 

@@ -13,27 +13,27 @@
  ******************************************************************************/
 package it.vige.greenarea.file;
 
+import static it.vige.greenarea.Utilities.yyyyMMdd;
 import static java.lang.System.getenv;
 import static org.apache.commons.csv.CSVFormat.newFormat;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.dto.Filtro;
-import it.vige.greenarea.dto.OperatoreLogistico;
-import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.vo.RichiestaXML;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.dto.Filtro;
+import it.vige.greenarea.dto.OperatoreLogistico;
+import it.vige.greenarea.dto.Richiesta;
+import it.vige.greenarea.vo.RichiestaXML;
 
 public class ImportaCSVFile implements ImportaFile {
 
@@ -42,8 +42,6 @@ public class ImportaCSVFile implements ImportaFile {
 	private List<Filtro> acceptedRoundCodes = new ArrayList<Filtro>();
 
 	private Logger logger = getLogger(getClass());
-
-	private DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
 	private OperatoreLogistico operatoreLogistico;
 
@@ -62,9 +60,9 @@ public class ImportaCSVFile implements ImportaFile {
 			@Override
 			public boolean accept(File pathname) {
 				long today = 0;
-				String todayStr = dateFormat.format(new Date());
+				String todayStr = yyyyMMdd.format(new Date());
 				try {
-					today = dateFormat.parse(todayStr).getTime();
+					today = yyyyMMdd.parse(todayStr).getTime();
 				} catch (ParseException e) {
 					logger.error("greenarea common", e);
 				}
@@ -79,8 +77,7 @@ public class ImportaCSVFile implements ImportaFile {
 	}
 
 	@Override
-	public List<Richiesta> convertiARichieste(List<RichiestaXML> richiesteXML,
-			OperatoreLogistico operatoreLogistico) {
+	public List<Richiesta> convertiARichieste(List<RichiestaXML> richiesteXML, OperatoreLogistico operatoreLogistico) {
 		List<Richiesta> richieste = new ArrayList<Richiesta>();
 		for (RichiestaXML richiestaXML : richiesteXML) {
 			Richiesta richiesta = new Richiesta(richiestaXML);
@@ -91,12 +88,10 @@ public class ImportaCSVFile implements ImportaFile {
 	}
 
 	@Override
-	public List<RichiestaXML> prelevaDati(InputStream inputStream,
-			List<Filtro> filtri) throws Exception {
+	public List<RichiestaXML> prelevaDati(InputStream inputStream, List<Filtro> filtri) throws Exception {
 		if (filtri != null)
 			acceptedRoundCodes.addAll(filtri);
-		Iterable<CSVRecord> records = newFormat(';').withNullString("")
-				.withIgnoreSurroundingSpaces(true)
+		Iterable<CSVRecord> records = newFormat(';').withNullString("").withIgnoreSurroundingSpaces(true)
 				.parse(new InputStreamReader(inputStream));
 		List<RichiestaXML> richiesteXML = new ArrayList<RichiestaXML>();
 		int i = 0;
@@ -122,8 +117,7 @@ public class ImportaCSVFile implements ImportaFile {
 				if (roundCodeByFilter.equals(roundCode))
 					result = true;
 				else if (roundCodeByFilter.startsWith("0")
-						&& roundCodeByFilter.substring(1,
-								roundCodeByFilter.length()).equals(roundCode))
+						&& roundCodeByFilter.substring(1, roundCodeByFilter.length()).equals(roundCode))
 					result = true;
 			}
 		return result;
@@ -141,54 +135,47 @@ public class ImportaCSVFile implements ImportaFile {
 
 	@Override
 	public File getDirectory() {
-		File importDirectory = new File(IMPORT_FOLDER + "/"
-				+ operatoreLogistico.getId());
+		File importDirectory = new File(IMPORT_FOLDER + "/" + operatoreLogistico.getId());
 		if (!importDirectory.exists())
 			importDirectory.mkdir();
 		return importDirectory;
 	}
 
-	private void aggiungiCampiARichiestaXML(RichiestaXML richiestaXML,
-			CSVRecord cell) throws Exception {
+	private void aggiungiCampiARichiestaXML(RichiestaXML richiestaXML, CSVRecord cell) throws Exception {
 		richiestaXML.setShipmentId(cell.get(0));
 		richiestaXML.setIdStop(cell.get(1));
 		richiestaXML.setDepot(cell.get(2));
 		richiestaXML.setPieces(new Integer(cell.get(3)));
-		richiestaXML.setWeight(new Double(splitPoint(cell.get(4).replace(",",
-				"."))));
-		richiestaXML.setVolume(new Double(splitPoint(cell.get(5).replace(",",
-				"."))));
+		richiestaXML.setWeight(new Double(splitPoint(cell.get(4).replace(",", "."))));
+		richiestaXML.setVolume(new Double(splitPoint(cell.get(5).replace(",", "."))));
 		long data = new Long(cell.get(6));
 		if (date != null)
-			data = new Long(dateFormat.format(date.getTime()));
-		Date dataFormattata = dateFormat.parse(data + "");
+			data = new Long(yyyyMMdd.format(date.getTime()));
+		Date dataFormattata = yyyyMMdd.parse(data + "");
 		richiestaXML.setDataEarlestPu(dataFormattata);
 		data = new Integer(cell.get(7));
 		if (date != null)
-			data = new Long(dateFormat.format(date.getTime()));
-		dataFormattata = dateFormat.parse(data + "");
+			data = new Long(yyyyMMdd.format(date.getTime()));
+		dataFormattata = yyyyMMdd.parse(data + "");
 		richiestaXML.setDataLatestPu(dataFormattata);
 		data = new Integer(cell.get(8));
 		if (date != null)
-			data = new Long(dateFormat.format(date.getTime()));
-		dataFormattata = dateFormat.parse(data + "");
+			data = new Long(yyyyMMdd.format(date.getTime()));
+		dataFormattata = yyyyMMdd.parse(data + "");
 		richiestaXML.setDataEarlestDelivery(dataFormattata);
 		data = new Integer(cell.get(9));
 		if (date != null)
-			data = new Long(dateFormat.format(date.getTime()));
-		dataFormattata = dateFormat.parse(data + "");
+			data = new Long(yyyyMMdd.format(date.getTime()));
+		dataFormattata = yyyyMMdd.parse(data + "");
 		richiestaXML.setDataLatestDelivery(dataFormattata);
 		richiestaXML.setTimeFromPu(new Double(cell.get(10).substring(0, 5)));
 		richiestaXML.setTimeToPu(new Double(cell.get(11).substring(0, 5)));
-		richiestaXML.setTimeFromDelivery(new Double(cell.get(12)
-				.substring(0, 5)));
-		richiestaXML
-				.setTimeToDelivery(new Double(cell.get(13).substring(0, 5)));
+		richiestaXML.setTimeFromDelivery(new Double(cell.get(12).substring(0, 5)));
+		richiestaXML.setTimeToDelivery(new Double(cell.get(13).substring(0, 5)));
 		richiestaXML.setHandlingType(cell.get(14));
 		String packageType = cell.get(15);
 		if (packageType != null)
-			richiestaXML.setPackageType(packageType != null ? packageType
-					.charAt(0) : null);
+			richiestaXML.setPackageType(packageType != null ? packageType.charAt(0) : null);
 		richiestaXML.setCustomer(cell.get(16));
 		richiestaXML.setAddress(cell.get(17));
 		String zipCode = cell.get(18);

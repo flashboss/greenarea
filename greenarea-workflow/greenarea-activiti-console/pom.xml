@@ -330,6 +330,16 @@
 			<groupId>org.activiti</groupId>
 			<artifactId>activiti-simple-workflow</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-cdi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Running example processes -->
 		<dependency>
@@ -368,14 +378,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>it.vige.greenarea</groupId>
-			<artifactId>greenarea-activiti-cdi</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.10.1</version>
+			<version>3.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vaadin.addons</groupId>

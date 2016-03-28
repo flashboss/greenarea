@@ -24,9 +24,9 @@ public class LNCostModels {
 	private static Logger logger = getLogger(LNCostModels.class);
 
 	private static HashMap<String, Class<?>> costModelsMap = new HashMap<String, Class<?>>();
+
 	static {
-		Class<?>[] classes = new Class<?>[] { ConstantCost.class,
-				DistanceBasedCost.class };
+		Class<?>[] classes = new Class<?>[] { ConstantCost.class, DistanceBasedCost.class };
 		for (int i = 0; i < classes.length; i++) {
 			if (!classes[i].isInterface())
 				costModelsMap.put(classes[i].getSimpleName(), classes[i]);

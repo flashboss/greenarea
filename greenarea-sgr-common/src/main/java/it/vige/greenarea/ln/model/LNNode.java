@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.model;
 
+import org.w3c.dom.Element;
+
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.dto.GeoLocationInterface;
-
-import org.w3c.dom.Element;
 
 public abstract class LNNode extends LNCell {
 

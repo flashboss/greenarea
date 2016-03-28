@@ -14,10 +14,6 @@
 package it.vige.greenarea.gtg.db.demoData.jsf;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil;
-import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
-import it.vige.greenarea.gtg.db.entities.SystemVar;
-import it.vige.greenarea.gtg.db.facades.SystemVarFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -36,6 +32,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil;
+import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
+import it.vige.greenarea.gtg.db.entities.SystemVar;
+import it.vige.greenarea.gtg.db.facades.SystemVarFacade;
 
 @Named("systemVarController")
 @SessionScoped
@@ -74,9 +75,8 @@ public class SystemVarController implements Serializable {
 
 				@Override
 				public DataModel createPageDataModel() {
-					return new ListDataModel(getFacade().findRange(
-							new int[] { getPageFirstItem(),
-									getPageFirstItem() + getPageSize() }));
+					return new ListDataModel(getFacade()
+							.findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() }));
 				}
 			};
 		}
@@ -90,8 +90,7 @@ public class SystemVarController implements Serializable {
 
 	public String prepareView() {
 		current = (SystemVar) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "View";
 	}
 
@@ -104,40 +103,34 @@ public class SystemVarController implements Serializable {
 	public String create() {
 		try {
 			getFacade().create(current);
-			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle")
-					.getString("SystemVarCreated"));
+			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SystemVarCreated"));
 			return prepareCreate();
 		} catch (Exception e) {
-			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle")
-					.getString("PersistenceErrorOccured"));
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String prepareEdit() {
 		current = (SystemVar) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "Edit";
 	}
 
 	public String update() {
 		try {
 			getFacade().edit(current);
-			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle")
-					.getString("SystemVarUpdated"));
+			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SystemVarUpdated"));
 			return "View";
 		} catch (Exception e) {
-			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle")
-					.getString("PersistenceErrorOccured"));
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String destroy() {
 		current = (SystemVar) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		performDestroy();
 		recreatePagination();
 		recreateModel();
@@ -160,11 +153,9 @@ public class SystemVarController implements Serializable {
 	private void performDestroy() {
 		try {
 			getFacade().remove(current);
-			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle")
-					.getString("SystemVarDeleted"));
+			JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("SystemVarDeleted"));
 		} catch (Exception e) {
-			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle")
-					.getString("PersistenceErrorOccured"));
+			JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 		}
 	}
 
@@ -179,9 +170,7 @@ public class SystemVarController implements Serializable {
 			}
 		}
 		if (selectedItemIndex >= 0) {
-			current = getFacade().findRange(
-					new int[] { selectedItemIndex, selectedItemIndex + 1 })
-					.get(0);
+			current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
 		}
 	}
 
@@ -224,8 +213,7 @@ public class SystemVarController implements Serializable {
 
 		private static Logger logger = getLogger(SystemVarControllerConverter.class);
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
@@ -251,8 +239,7 @@ public class SystemVarController implements Serializable {
 			return sb.toString();
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -260,8 +247,7 @@ public class SystemVarController implements Serializable {
 				SystemVar o = (SystemVar) object;
 				return getStringKey(o.getVarName());
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
 						+ "; expected type: " + SystemVar.class.getName());
 			}
 		}

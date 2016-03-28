@@ -16,7 +16,7 @@ package it.vige.greenarea.dto;
 import java.io.Serializable;
 
 public class Leg implements Serializable {
-	
+
 	private static final long serialVersionUID = -4869422424441467989L;
 	private ExchangeSite source;
 	private ExchangeSite destination;
@@ -30,7 +30,7 @@ public class Leg implements Serializable {
 		this.vector = vector;
 		this.destination = destination;
 	}
-	
+
 	public ExchangeSite getDestination() {
 		return destination;
 	}
@@ -57,8 +57,7 @@ public class Leg implements Serializable {
 
 	@Override
 	public String toString() {
-		return /* id + " - "+ */vector + ": " + source.getName() + " --> "
-				+ destination.getName();
+		return /* id + " - "+ */vector + ": " + source.getName() + " --> " + destination.getName();
 	}
 
 }

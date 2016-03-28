@@ -88,114 +88,114 @@
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-topic=GatTopic</address>
+									<address>subsystem=messaging-activemq,server=default,jms-topic=GatTopic</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/topic/GatTopic",
+										<entries>!!["GatTopic",
 											"java:/jms/topic/GatTopic"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-topic=VectorTopic</address>
+									<address>subsystem=messaging-activemq,server=default,jms-topic=VectorTopic</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/topic/VectorTopic",
+										<entries>!!["VectorTopic",
 											"java:/jms/topic/VectorTopic"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyLogger</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=ItseasyLogger</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/ItseasyLogger",
+										<entries>!!["ItseasyLogger",
 											"java:/jms/queue/ItseasyLogger"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=ItseasyDest</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=ItseasyDest</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/ItseasyDest",
+										<entries>!!["ItseasyDest",
 											"java:/jms/queue/ItseasyDest"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesTimeSlot</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesTimeSlot</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesTimeSlot",
+										<entries>!!["mesTimeSlot",
 											"java:/jms/queue/mesTimeSlot"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesParameterGen</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesParameterGen</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesParameterGen",
+										<entries>!!["mesParameterGen",
 											"java:/jms/queue/mesParameterGen"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messParameterTS</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messParameterTS</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messParameterTS",
+										<entries>!!["messParameterTS",
 											"java:/jms/queue/messParameterTS"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesMission</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesMission</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesMission",
+										<entries>!!["mesMission",
 											"java:/jms/queue/mesMission"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesPrice</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesPrice</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesPrice",
+										<entries>!!["mesPrice",
 											"java:/jms/queue/mesPrice"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messValueMessage</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messValueMessage</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messValueMessage",
+										<entries>!!["messValueMessage",
 											"java:/jms/queue/messValueMessage"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messSchedule</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messSchedule</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messSchedule",
+										<entries>!!["messSchedule",
 											"java:/jms/queue/messSchedule"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVehicle</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesVehicle</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesVehicle",
+										<entries>!!["mesVehicle",
 											"java:/jms/queue/mesVehicle"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=messTsStat</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=messTsStat</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/messTsStat",
+										<entries>!!["messTsStat",
 											"java:/jms/queue/messTsStat"]</entries>
 									</properties>
 								</resource>
 								<resource>
-									<address>subsystem=messaging,hornetq-server=default,jms-queue=mesVikorResult</address>
+									<address>subsystem=messaging-activemq,server=default,jms-queue=mesVikorResult</address>
 									<properties>
 										<durable>true</durable>
-										<entries>!!["java:/jms/queue/mesVikorResult",
+										<entries>!!["mesVikorResult",
 											"java:/jms/queue/mesVikorResult"]</entries>
 									</properties>
 								</resource>
@@ -225,33 +225,33 @@
 										handler failed: null", "rolled-back"
 										=> true }
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-topic=GatTopic:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-topic=GatTopic:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-topic=VectorTopic:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-topic=VectorTopic:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=ItseasyLogger:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=ItseasyLogger:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=ItseasyDest:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=ItseasyDest:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesTimeSlot:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesTimeSlot:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesParameterGen:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesParameterGen:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messParameterTS:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messParameterTS:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesMission:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesMission:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesPrice:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesPrice:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messValueMessage:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messValueMessage:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messSchedule:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messSchedule:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesVehicle:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesVehicle:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=mesVikorResult:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=mesVikorResult:remove
 									</command>
-									<command>/subsystem=messaging/hornetq-server=default/jms-queue=messTsStat:remove
+									<command>/subsystem=messaging-activemq/server=default/jms-queue=messTsStat:remove
 									</command>
 								</commands>
 							</afterDeployment>
@@ -293,13 +293,13 @@
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>jaxrs-api</artifactId>
-			<version>3.0.8.Final</version>
+			<version>3.0.11.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.8.Final</version>
+			<version>3.0.11.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -316,24 +316,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>3.0.8.Final</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jackson-provider</artifactId>
-			<version>3.0.8.Final</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

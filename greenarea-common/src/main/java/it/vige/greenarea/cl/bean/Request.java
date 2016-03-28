@@ -13,18 +13,17 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.bean;
 
-import it.vige.greenarea.dto.Color;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 //import javax.ejb.Stateless;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import it.vige.greenarea.dto.Color;
 
 /**
  *

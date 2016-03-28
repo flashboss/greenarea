@@ -45,9 +45,9 @@ public class SollecitoPolicyMancanti extends EmptyRecuperoDellePolicy {
 			IdentityService identityService = execution.getEngineServices()
 					.getIdentityService();
 			pubblicheamministrazioni.add(identityService.createUserQuery()
-					.userId("patorino").singleResult());
+					.userId("paguidonia").singleResult());
 			pubblicheamministrazioni.add(identityService.createUserQuery()
-					.userId("pamilano").singleResult());
+					.userId("palivorno").singleResult());
 			Messaggio messaggio = (Messaggio) execution
 					.getVariable("messaggio");
 			messaggio.setCategoria(ERRORELIEVE);

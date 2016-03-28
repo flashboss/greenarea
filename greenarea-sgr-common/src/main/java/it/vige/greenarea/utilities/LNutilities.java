@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.utilities;
 
+import java.util.HashMap;
+
+import com.mxgraph.model.mxCell;
+
 import it.vige.greenarea.ln.model.LNNode;
 import it.vige.greenarea.ln.model.LNSite;
 import it.vige.greenarea.ln.model.LNSitesSet;
 import it.vige.greenarea.ln.model.LogisticNetwork;
-
-import java.util.HashMap;
-
-import com.mxgraph.model.mxCell;
 
 public class LNutilities {
 	private static LogisticNetwork logisticNetwork;
@@ -44,9 +44,7 @@ public class LNutilities {
 			if (o instanceof mxCell) {
 				mxCell cell = (mxCell) o;
 				if ((cell.getValue() instanceof LNNode)) {
-					nodesMap.put(getLogisticNetwork()
-							.convertValueToString(cell), (LNNode) cell
-							.getValue());
+					nodesMap.put(getLogisticNetwork().convertValueToString(cell), (LNNode) cell.getValue());
 				}
 			}
 		}
@@ -64,9 +62,7 @@ public class LNutilities {
 					for (LNSite lns : ((LNSitesSet) cell.getValue()).getSites())
 						nodesMap.put(lns.getName(), lns);
 				if (cell.getValue() instanceof LNSite) {
-					nodesMap.put(getLogisticNetwork()
-							.convertValueToString(cell), (LNSite) cell
-							.getValue());
+					nodesMap.put(getLogisticNetwork().convertValueToString(cell), (LNSite) cell.getValue());
 				}
 			}
 		}

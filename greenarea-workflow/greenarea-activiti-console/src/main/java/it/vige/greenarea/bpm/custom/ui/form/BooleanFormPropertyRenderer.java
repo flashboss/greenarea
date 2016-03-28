@@ -21,8 +21,7 @@ import org.activiti.engine.impl.form.BooleanFormType;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 
-public class BooleanFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+public class BooleanFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = -2109989129047969389L;
 
@@ -38,8 +37,7 @@ public class BooleanFormPropertyRenderer<T> extends
 		checkBox.setEnabled(formProperty.isWritable());
 
 		if (formProperty.getValue() != null) {
-			Boolean value = new Boolean(Boolean.parseBoolean(formProperty
-					.getValue()));
+			Boolean value = new Boolean(Boolean.parseBoolean(formProperty.getValue()));
 			checkBox.setValue(value);
 		}
 

@@ -21,12 +21,6 @@ import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.navigation.TaskNavigator.CATEGORY_TASKS;
 import static org.activiti.explorer.navigation.TaskNavigator.PARAMETER_CATEGORY;
 import static org.activiti.explorer.navigation.TaskNavigator.TASK_URI_PART;
-import it.vige.greenarea.bpm.UserConverter;
-import it.vige.greenarea.bpm.custom.ui.admin.data.AdminHomeListQuery;
-import it.vige.greenarea.bpm.custom.ui.operatorelogistico.data.OperatoreLogisticoHomeListQuery;
-import it.vige.greenarea.bpm.custom.ui.pa.data.PAHomeListQuery;
-import it.vige.greenarea.bpm.custom.ui.societaditrasporto.data.SocietaDiTrasportoHomeListQuery;
-import it.vige.greenarea.bpm.custom.ui.trasportatoreautonomo.data.TrasportatoreAutonomoHomeListQuery;
 
 import java.util.List;
 
@@ -35,6 +29,13 @@ import org.activiti.explorer.data.LazyLoadingQuery;
 import org.activiti.explorer.navigation.UriFragment;
 
 import com.vaadin.ui.AbstractSelect;
+
+import it.vige.greenarea.bpm.UserConverter;
+import it.vige.greenarea.bpm.custom.ui.admin.data.AdminHomeListQuery;
+import it.vige.greenarea.bpm.custom.ui.operatorelogistico.data.OperatoreLogisticoHomeListQuery;
+import it.vige.greenarea.bpm.custom.ui.pa.data.PAHomeListQuery;
+import it.vige.greenarea.bpm.custom.ui.societaditrasporto.data.SocietaDiTrasportoHomeListQuery;
+import it.vige.greenarea.bpm.custom.ui.trasportatoreautonomo.data.TrasportatoreAutonomoHomeListQuery;
 
 /**
  * The page displaying all cases for the logged in user. A case == task where

@@ -14,9 +14,6 @@
 package it.vige.greenarea.cl.smart.action;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.TimeSlot;
-import it.vige.greenarea.cl.smart.restclient.RestClient;
-import it.vige.greenarea.dto.Sched;
 
 import java.util.List;
 
@@ -27,6 +24,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.TimeSlot;
+import it.vige.greenarea.cl.smart.restclient.RestClient;
+import it.vige.greenarea.dto.Sched;
 
 /**
  *
@@ -51,9 +52,8 @@ public class FindTimeSlotAction extends org.apache.struts.action.Action {
 	 * @return
 	 */
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 
 		RestClient rc = new RestClient();
 		List<TimeSlot> liTiSlo = rc.findAllTimeSlots();

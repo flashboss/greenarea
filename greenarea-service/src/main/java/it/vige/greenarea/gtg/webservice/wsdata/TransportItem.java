@@ -13,9 +13,6 @@
  ******************************************************************************/
 package it.vige.greenarea.gtg.webservice.wsdata;
 
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-import it.vige.greenarea.cl.library.entities.Transport;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,10 +20,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
+import it.vige.greenarea.cl.library.entities.Transport;
+
 @XmlType(name = "Transport")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TransportItem implements Serializable {
-	
+
 	private static final long serialVersionUID = -6057730583040319612L;
 	@XmlElement(required = true)
 	private String code;

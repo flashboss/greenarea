@@ -41,14 +41,12 @@ public class RelativeViewHandler extends ViewHandler {
 
 	@Override
 	public String getActionURL(final FacesContext context, final String viewId) {
-		return getRelativeURL(context,
-				this.defaultHandler.getActionURL(context, viewId));
+		return getRelativeURL(context, this.defaultHandler.getActionURL(context, viewId));
 	}
 
 	@Override
 	public String getResourceURL(final FacesContext context, final String path) {
-		return getRelativeURL(context,
-				this.defaultHandler.getResourceURL(context, path));
+		return getRelativeURL(context, this.defaultHandler.getResourceURL(context, path));
 	}
 
 	/**
@@ -63,12 +61,9 @@ public class RelativeViewHandler extends ViewHandler {
 	 * @param theURL
 	 * @return
 	 */
-	private String getRelativeURL(final FacesContext context,
-			final String theURL) {
-		final HttpServletRequest request = ((HttpServletRequest) context
-				.getExternalContext().getRequest());
-		logger.debug("Context Path <" + getPath(request)
-				+ "> e url originale <" + theURL + ">");
+	private String getRelativeURL(final FacesContext context, final String theURL) {
+		final HttpServletRequest request = ((HttpServletRequest) context.getExternalContext().getRequest());
+		logger.debug("Context Path <" + getPath(request) + "> e url originale <" + theURL + ">");
 		String result = theURL;
 		if (theURL.startsWith("/")) {
 			int subpath = StringUtils.countMatches(getPath(request), "/") - 1;
@@ -96,8 +91,7 @@ public class RelativeViewHandler extends ViewHandler {
 	private String getPath(final HttpServletRequest request) {
 		try {
 			// TODO handle more than two '/'
-			return StringUtils.replace(
-					new URI(request.getRequestURI()).getPath(), "//", "/");
+			return StringUtils.replace(new URI(request.getRequestURI()).getPath(), "//", "/");
 		} catch (final URISyntaxException e) {
 			// XXX URISyntaxException ignored
 			return StringUtils.EMPTY;
@@ -120,8 +114,7 @@ public class RelativeViewHandler extends ViewHandler {
 	}
 
 	@Override
-	public void renderView(FacesContext context, UIViewRoot viewToRender)
-			throws IOException, FacesException {
+	public void renderView(FacesContext context, UIViewRoot viewToRender) throws IOException, FacesException {
 		defaultHandler.renderView(context, viewToRender);
 	}
 

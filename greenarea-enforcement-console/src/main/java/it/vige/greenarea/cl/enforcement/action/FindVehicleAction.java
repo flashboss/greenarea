@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.enforcement.action;
 
-import it.vige.greenarea.cl.bean.Request;
-import it.vige.greenarea.cl.enforcement.actionform.FindVehicleForm;
-import it.vige.greenarea.cl.enforcement.rest.RestClient;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import it.vige.greenarea.cl.bean.Request;
+import it.vige.greenarea.cl.enforcement.actionform.FindVehicleForm;
+import it.vige.greenarea.cl.enforcement.rest.RestClient;
 
 /**
  *
@@ -45,9 +45,8 @@ public class FindVehicleAction extends org.apache.struts.action.Action {
 	 * @return
 	 */
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		FindVehicleForm fvf = (FindVehicleForm) form;
 		RestClient rc = new RestClient();
 		String idTs = "1";

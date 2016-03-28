@@ -39,7 +39,7 @@ import org.subethamail.smtp.server.SMTPServer;
 
 public class VisualizzaMissioniAutorizzatePATest extends ResourceActivitiTestCase {
 
-	private final static String USER_NAME = "patorino";
+	private final static String USER_NAME = "paguidonia";
 
 	private GreenareaDemoData greenareaDemoData = new GreenareaDemoData();
 

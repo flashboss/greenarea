@@ -15,28 +15,12 @@ package it.vige.greenarea.cl.control;
 
 import static it.vige.greenarea.Conversioni.addDays;
 import static it.vige.greenarea.Utilities.getPoligonoPerGA;
+import static it.vige.greenarea.Utilities.yyyyMMddDash;
 import static it.vige.greenarea.dto.Selezione.TUTTI;
 import static it.vige.greenarea.geofencing.Distance.calcolateDistance;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.library.entities.TapGroupData;
-import it.vige.greenarea.cl.library.entities.TapOutData;
-import it.vige.greenarea.cl.library.entities.TapParamData;
-import it.vige.greenarea.cl.library.entities.Vehicle;
-import it.vige.greenarea.dto.AccessiInGA;
-import it.vige.greenarea.dto.RichiestaAccesso;
-import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
-import it.vige.greenarea.geofencing.GeoFencingAlgorithm;
-import it.vige.greenarea.geofencing.Poligono;
-import it.vige.greenarea.gtg.db.facades.MissionFacade;
-import it.vige.greenarea.gtg.db.facades.TruckFacade;
-import it.vige.greenarea.tap.facades.TapGroupDataFacade;
-import it.vige.greenarea.tap.facades.TapOutDataFacade;
-import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -54,6 +38,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.library.entities.TapGroupData;
+import it.vige.greenarea.cl.library.entities.TapOutData;
+import it.vige.greenarea.cl.library.entities.TapParamData;
+import it.vige.greenarea.cl.library.entities.Vehicle;
+import it.vige.greenarea.dto.AccessiInGA;
+import it.vige.greenarea.dto.RichiestaAccesso;
+import it.vige.greenarea.dto.RichiestaPosizioneVeicolo;
+import it.vige.greenarea.geofencing.GeoFencingAlgorithm;
+import it.vige.greenarea.geofencing.Poligono;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
+import it.vige.greenarea.gtg.db.facades.TruckFacade;
+import it.vige.greenarea.tap.facades.TapGroupDataFacade;
+import it.vige.greenarea.tap.facades.TapOutDataFacade;
+import it.vige.greenarea.tap.facades.TapParamDataFacade;
 
 /**
  * <p>
@@ -87,8 +87,6 @@ public class TAPControl {
 
 	private Poligono poligono = getPoligonoPerGA();
 
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 	/**
 	 * <p>
 	 * Method: getVeicoliInGA
@@ -104,10 +102,8 @@ public class TAPControl {
 	 */
 	public int getVeicoliInGA() {
 		List<TapOutData> tapOutDatas = tapOutDataFacade.findAllAccess();
-		Map<TapOutData, List<TapGroupData>> mapOutGroup = tapGroupDataFacade
-				.findByOutData(tapOutDatas);
-		Map<TapGroupData, List<TapParamData>> mapGroupParam = tapParamDataFacade
-				.findAll(tapOutDatas);
+		Map<TapOutData, List<TapGroupData>> mapOutGroup = tapGroupDataFacade.findByOutData(tapOutDatas);
+		Map<TapGroupData, List<TapParamData>> mapGroupParam = tapParamDataFacade.findAll(tapOutDatas);
 		Map<String, List<TapOutData>> mappaDettaglio = new HashMap<String, List<TapOutData>>();
 		for (TapOutData tapOutData : tapOutDatas) {
 			String vin = tapOutData.getVin();
@@ -118,15 +114,13 @@ public class TAPControl {
 			}
 			mappaDettaglio.get(vin).add(tapOutData);
 			logger.debug("vin prelevato: " + vin);
-			logger.debug("id data prelevata: " + tapOutData.getId() + " - "
-					+ tapOutData.getDate().getTime());
+			logger.debug("id data prelevata: " + tapOutData.getId() + " - " + tapOutData.getDate().getTime());
 		}
 		int veicoliInGA = 0;
 		for (String vin : mappaDettaglio.keySet()) {
 			List<TapOutData> tapOutDatass = mappaDettaglio.get(vin);
 			if (tapOutDatass != null && tapOutDatass.size() > 0) {
-				TapGroupData gpsData = findLastTapGroupData(tapOutDatass,
-						mapOutGroup, mapGroupParam);
+				TapGroupData gpsData = findLastTapGroupData(tapOutDatass, mapOutGroup, mapGroupParam);
 				if (isInGA(gpsData, mapGroupParam)) {
 					veicoliInGA++;
 					logger.debug("incremento il contatore: ");
@@ -136,37 +130,32 @@ public class TAPControl {
 		return veicoliInGA;
 	}
 
-	private boolean isInGA(TapGroupData tapGroupData,
-			Map<TapGroupData, List<TapParamData>> mapGroupParam) {
-		String[] coordinate = prelevaCoordinate(tapGroupData, mapGroupParam)
-				.split(",");
-		GeoFencingAlgorithm geoFencingAlgorithm = new GeoFencingAlgorithm(
-				new Double(coordinate[0]), new Double(coordinate[1]), poligono);
+	private boolean isInGA(TapGroupData tapGroupData, Map<TapGroupData, List<TapParamData>> mapGroupParam) {
+		String[] coordinate = prelevaCoordinate(tapGroupData, mapGroupParam).split(",");
+		GeoFencingAlgorithm geoFencingAlgorithm = new GeoFencingAlgorithm(new Double(coordinate[0]),
+				new Double(coordinate[1]), poligono);
 		return geoFencingAlgorithm.isInGA();
 	}
 
-	private Map<String, Map<Date, Set<TapGroupData>>> getAccessiPerVin(
-			RichiestaAccesso richiestaAccesso,
+	private Map<String, Map<Date, Set<TapGroupData>>> getAccessiPerVin(RichiestaAccesso richiestaAccesso,
 			Map<TapGroupData, List<TapParamData>> mapGroupParam) {
 		Date dataInizio = richiestaAccesso.getDataInizio();
 		Date dataFine = null;
 		if (richiestaAccesso.getDataFine() != null)
 			dataFine = addDays(richiestaAccesso.getDataFine(), 1);
-		String operatoreLogistico = richiestaAccesso.getOperatoriLogistici()
-				.get(0);
+		String operatoreLogistico = richiestaAccesso.getOperatoriLogistici().get(0);
 		final Map<TapGroupData, List<TapParamData>> finalMapGroupParam = mapGroupParam;
-		Set<TapGroupData> tapGroupDatas = new TreeSet<TapGroupData>(
-				new Comparator<TapGroupData>() {
+		Set<TapGroupData> tapGroupDatas = new TreeSet<TapGroupData>(new Comparator<TapGroupData>() {
 
-					@Override
-					public int compare(TapGroupData o1, TapGroupData o2) {
-						Date d1 = getDate(o1, finalMapGroupParam);
-						Date d2 = getDate(o2, finalMapGroupParam);
-						if (d1 == null || d2 == null)
-							return 0;
-						return d1.compareTo(d2);
-					}
-				});
+			@Override
+			public int compare(TapGroupData o1, TapGroupData o2) {
+				Date d1 = getDate(o1, finalMapGroupParam);
+				Date d2 = getDate(o2, finalMapGroupParam);
+				if (d1 == null || d2 == null)
+					return 0;
+				return d1.compareTo(d2);
+			}
+		});
 		tapGroupDatas.addAll(mapGroupParam.keySet());
 		Map<String, Vehicle> veicoli = new HashMap<String, Vehicle>();
 		for (TapGroupData tapGroupData : tapGroupDatas) {
@@ -182,27 +171,21 @@ public class TAPControl {
 		for (TapGroupData tapGroupData : tapGroupDatas) {
 			String vin = tapGroupData.getTapOutData().getVin();
 			if (mappaPerVin.get(vin) == null)
-				mappaPerVin.put(vin,
-						new LinkedHashMap<Date, Set<TapGroupData>>());
+				mappaPerVin.put(vin, new LinkedHashMap<Date, Set<TapGroupData>>());
 			for (TapGroupData tapGroupDataDate : tapGroupDatas) {
 				String vinDate = tapGroupDataDate.getTapOutData().getVin();
 				Date data = getDate(tapGroupDataDate, mapGroupParam);
 				Vehicle vehicle = veicoli.get(vinDate);
-				if (vehicle == null
-						|| vehicle.getOperatoreLogistico() != null
-						&& vehicle.getOperatoreLogistico().equals(
-								operatoreLogistico)) {
-					if (data != null
-							&& (dataInizio == null || data.after(dataInizio))
+				if (vehicle == null || vehicle.getOperatoreLogistico() != null
+						&& vehicle.getOperatoreLogistico().equals(operatoreLogistico)) {
+					if (data != null && (dataInizio == null || data.after(dataInizio))
 							&& (dataFine == null || data.before(dataFine))) {
-						Set<TapGroupData> dettaglioTap = mappaPerVin.get(
-								vinDate).get(data);
+						Set<TapGroupData> dettaglioTap = mappaPerVin.get(vinDate).get(data);
 						if (dettaglioTap == null) {
 							dettaglioTap = new LinkedHashSet<TapGroupData>();
 							mappaPerVin.get(vinDate).put(data, dettaglioTap);
 						}
-						mappaPerVin.get(vinDate).get(data)
-								.add(tapGroupDataDate);
+						mappaPerVin.get(vinDate).get(data).add(tapGroupDataDate);
 					}
 				}
 			}
@@ -223,10 +206,8 @@ public class TAPControl {
 	 *            richiestaAccesso
 	 * @return Map<Date, Integer>
 	 */
-	public Map<String, Map<Date, AccessiInGA>> getStoricoAccessiInGAPerVeicolo(
-			RichiestaAccesso richiestaAccesso) {
-		List<TapParamData> allGpsDataTapParams = tapParamDataFacade
-				.findAll("GPS_DATA");
+	public Map<String, Map<Date, AccessiInGA>> getStoricoAccessiInGAPerVeicolo(RichiestaAccesso richiestaAccesso) {
+		List<TapParamData> allGpsDataTapParams = tapParamDataFacade.findAll("GPS_DATA");
 		Map<TapGroupData, List<TapParamData>> mapGroupParam = new HashMap<TapGroupData, List<TapParamData>>();
 		for (TapParamData tapParamData : allGpsDataTapParams) {
 			TapGroupData tapGroupData = tapParamData.getTapGroupData();
@@ -234,14 +215,12 @@ public class TAPControl {
 				mapGroupParam.put(tapGroupData, new ArrayList<TapParamData>());
 			mapGroupParam.get(tapGroupData).add(tapParamData);
 		}
-		Map<String, Map<Date, Set<TapGroupData>>> mappaPerVin = getAccessiPerVin(
-				richiestaAccesso, mapGroupParam);
+		Map<String, Map<Date, Set<TapGroupData>>> mappaPerVin = getAccessiPerVin(richiestaAccesso, mapGroupParam);
 		Map<String, Map<Date, AccessiInGA>> accessiInGAPerVin = new LinkedHashMap<String, Map<Date, AccessiInGA>>();
 
 		for (String vinPerData : mappaPerVin.keySet()) {
 			Map<Date, AccessiInGA> accessiInGA = new LinkedHashMap<Date, AccessiInGA>();
-			Map<Date, Set<TapGroupData>> mappaPerDate = mappaPerVin
-					.get(vinPerData);
+			Map<Date, Set<TapGroupData>> mappaPerDate = mappaPerVin.get(vinPerData);
 			boolean accessoEseguito = false;
 			Date tempo = null;
 			String coordinate = null;
@@ -262,17 +241,12 @@ public class TAPControl {
 								int accessoInGA = object.getAccessi();
 								object.setAccessi(accessoInGA + 1);
 							}
-							object.setKm(calcolateDistance(
-									coordinate,
-									prelevaCoordinate(tapGroupData,
-											mapGroupParam)));
+							object.setKm(calcolateDistance(coordinate, prelevaCoordinate(tapGroupData, mapGroupParam)));
 							if (tempo != null)
-								object.setTempoTrascorso(data.getTime()
-										- tempo.getTime());
+								object.setTempoTrascorso(data.getTime() - tempo.getTime());
 							accessiInGA.put(data, object);
 						}
-						coordinate = prelevaCoordinate(tapGroupData,
-								mapGroupParam);
+						coordinate = prelevaCoordinate(tapGroupData, mapGroupParam);
 						tempo = data;
 					}
 				}
@@ -295,10 +269,8 @@ public class TAPControl {
 	 *            richiestaAccesso
 	 * @return Map<Date, Integer>
 	 */
-	public Map<Date, AccessiInGA> getStoricoAccessiInGA(
-			RichiestaAccesso richiestaAccesso) {
-		List<TapParamData> allGpsDataTapParams = tapParamDataFacade
-				.findAll("GPS_DATA");
+	public Map<Date, AccessiInGA> getStoricoAccessiInGA(RichiestaAccesso richiestaAccesso) {
+		List<TapParamData> allGpsDataTapParams = tapParamDataFacade.findAll("GPS_DATA");
 		Map<TapGroupData, List<TapParamData>> mapGroupParam = new HashMap<TapGroupData, List<TapParamData>>();
 		for (TapParamData tapParamData : allGpsDataTapParams) {
 			TapGroupData tapGroupData = tapParamData.getTapGroupData();
@@ -306,13 +278,11 @@ public class TAPControl {
 				mapGroupParam.put(tapGroupData, new ArrayList<TapParamData>());
 			mapGroupParam.get(tapGroupData).add(tapParamData);
 		}
-		Map<String, Map<Date, Set<TapGroupData>>> mappaPerVin = getAccessiPerVin(
-				richiestaAccesso, mapGroupParam);
+		Map<String, Map<Date, Set<TapGroupData>>> mappaPerVin = getAccessiPerVin(richiestaAccesso, mapGroupParam);
 
 		Map<Date, AccessiInGA> accessiInGA = new LinkedHashMap<Date, AccessiInGA>();
 		for (String vinPerData : mappaPerVin.keySet()) {
-			Map<Date, Set<TapGroupData>> mappaPerDate = mappaPerVin
-					.get(vinPerData);
+			Map<Date, Set<TapGroupData>> mappaPerDate = mappaPerVin.get(vinPerData);
 			boolean accessoEseguito = false;
 			Date tempo = null;
 			String coordinate = null;
@@ -341,17 +311,12 @@ public class TAPControl {
 								int accessoInGA = object.getAccessi();
 								object.setAccessi(accessoInGA + 1);
 							}
-							object.setKm(calcolateDistance(
-									coordinate,
-									prelevaCoordinate(tapGroupData,
-											mapGroupParam)));
+							object.setKm(calcolateDistance(coordinate, prelevaCoordinate(tapGroupData, mapGroupParam)));
 							if (tempo != null)
-								object.setTempoTrascorso(data.getTime()
-										- tempo.getTime());
+								object.setTempoTrascorso(data.getTime() - tempo.getTime());
 							accessiInGA.put(data, object);
 						}
-						coordinate = prelevaCoordinate(tapGroupData,
-								mapGroupParam);
+						coordinate = prelevaCoordinate(tapGroupData, mapGroupParam);
 						tempo = data;
 					}
 				}
@@ -360,8 +325,7 @@ public class TAPControl {
 		return accessiInGA;
 	}
 
-	private String prelevaCoordinate(TapGroupData tapGroupData,
-			Map<TapGroupData, List<TapParamData>> mapGroupParam) {
+	private String prelevaCoordinate(TapGroupData tapGroupData, Map<TapGroupData, List<TapParamData>> mapGroupParam) {
 		String latitude = null;
 		String longitude = null;
 		List<TapParamData> tapParamDatas = mapGroupParam.get(tapGroupData);
@@ -378,13 +342,12 @@ public class TAPControl {
 		return latitude + "," + longitude;
 	}
 
-	private Date getDate(TapGroupData tapGroupData,
-			Map<TapGroupData, List<TapParamData>> paramGroup) {
+	private Date getDate(TapGroupData tapGroupData, Map<TapGroupData, List<TapParamData>> paramGroup) {
 		Date data = null;
 		for (TapParamData tapParamData : paramGroup.get(tapGroupData)) {
 			if (tapParamData.getName().equals("TIMESTAMP"))
 				try {
-					data = dateFormat.parse(tapParamData.getValue());
+					data = yyyyMMddDash.parse(tapParamData.getValue());
 				} catch (ParseException e) {
 					logger.error("errore sul parsing", e);
 				}
@@ -392,8 +355,7 @@ public class TAPControl {
 		return data;
 	}
 
-	public String richiediPosizioneVeicolo(
-			RichiestaPosizioneVeicolo richiestaPosizioneVeicolo) {
+	public String richiediPosizioneVeicolo(RichiestaPosizioneVeicolo richiestaPosizioneVeicolo) {
 		String latitude = "0";
 		String longitude = "0";
 		String targa = richiestaPosizioneVeicolo.getTarga();
@@ -411,15 +373,11 @@ public class TAPControl {
 			String vin = vehicle.getVin();
 			List<TapOutData> tapOutDatass = tapOutDataFacade.findAll(vin);
 
-			Map<TapOutData, List<TapGroupData>> mapOutGroup = tapGroupDataFacade
-					.findByOutData(tapOutDatass);
-			Map<TapGroupData, List<TapParamData>> mapGroupParam = tapParamDataFacade
-					.findAll(tapOutDatass);
+			Map<TapOutData, List<TapGroupData>> mapOutGroup = tapGroupDataFacade.findByOutData(tapOutDatass);
+			Map<TapGroupData, List<TapParamData>> mapGroupParam = tapParamDataFacade.findAll(tapOutDatass);
 			if (tapOutDatass != null && tapOutDatass.size() > 0) {
-				TapGroupData last = findLastTapGroupData(tapOutDatass,
-						mapOutGroup, mapGroupParam);
-				List<TapParamData> tapParamDatas = tapParamDataFacade
-						.findAll(last);
+				TapGroupData last = findLastTapGroupData(tapOutDatass, mapOutGroup, mapGroupParam);
+				List<TapParamData> tapParamDatas = tapParamDataFacade.findAll(last);
 				logger.debug("ultimo id gruppo trovato: " + last.getId());
 				for (TapParamData tapParamData : tapParamDatas) {
 					if (tapParamData.getName().equals("LATITUDE")) {
@@ -438,27 +396,21 @@ public class TAPControl {
 	}
 
 	private TapGroupData findLastTapGroupData(List<TapOutData> tapOutDatass,
-			Map<TapOutData, List<TapGroupData>> mapOutGroup,
-			Map<TapGroupData, List<TapParamData>> mapGroupParam) {
+			Map<TapOutData, List<TapGroupData>> mapOutGroup, Map<TapGroupData, List<TapParamData>> mapGroupParam) {
 		TapGroupData lastGpsData = null;
 		TapGroupData currentGpsData = null;
 		for (TapOutData tapOutData : tapOutDatass) {
 			List<TapGroupData> tapGroupDatass = mapOutGroup.get(tapOutData);
 			for (TapGroupData tapGroupData : tapGroupDatass) {
 				if (tapGroupData.getName().equals("GPS_DATA")) {
-					List<TapParamData> tapParamDatass = mapGroupParam
-							.get(tapGroupData);
+					List<TapParamData> tapParamDatass = mapGroupParam.get(tapGroupData);
 					for (TapParamData tapParamData : tapParamDatass) {
 						if (tapParamData.getName().equals("TIMESTAMP"))
 							for (TapParamData tapParamData2 : tapParamDatass) {
 								if (tapParamData2.getName().equals("TIMESTAMP"))
 									try {
-										if (dateFormat
-												.parse(tapParamData2.getValue())
-												.compareTo(
-														dateFormat
-																.parse(tapParamData
-																		.getValue())) > 0)
+										if (yyyyMMddDash.parse(tapParamData2.getValue())
+												.compareTo(yyyyMMddDash.parse(tapParamData.getValue())) > 0)
 											lastGpsData = tapGroupData;
 										currentGpsData = tapGroupData;
 									} catch (ParseException e) {

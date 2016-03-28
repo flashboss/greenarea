@@ -33,9 +33,6 @@ import static org.activiti.explorer.ViewManager.MAIN_NAVIGATION_PROCESS;
 import static org.activiti.explorer.ViewManager.MAIN_NAVIGATION_REPORT;
 import static org.activiti.explorer.ViewManager.MAIN_NAVIGATION_TASK;
 import static org.activiti.explorer.ui.mainlayout.ExplorerLayout.STYLE_HEADER_PROFILE_MENU;
-import it.vige.greenarea.bpm.UserConverter;
-import it.vige.greenarea.bpm.custom.GreenareaMessages;
-import it.vige.greenarea.bpm.custom.GreenareaViewManager;
 
 import java.util.List;
 
@@ -51,6 +48,10 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 
+import it.vige.greenarea.bpm.UserConverter;
+import it.vige.greenarea.bpm.custom.GreenareaMessages;
+import it.vige.greenarea.bpm.custom.GreenareaViewManager;
+
 public class GreenareaMainMenuBar extends MainMenuBar {
 
 	private static final long serialVersionUID = -952431384449544684L;
@@ -65,36 +66,30 @@ public class GreenareaMainMenuBar extends MainMenuBar {
 	@Override
 	protected void initButtons() {
 		// TODO: fixed widths based on i18n strings?
-		Button homeButton = addMenuButton(MAIN_NAVIGATION_HOME,
-				i18nManager.getMessage(MAIN_MENU_HOME), null, false, 80);
+		Button homeButton = addMenuButton(MAIN_NAVIGATION_HOME, i18nManager.getMessage(MAIN_MENU_HOME), null, false,
+				80);
 		homeButton.addListener(new ShowHomeClickListener());
 		menuItemButtons.put(MAIN_NAVIGATION_HOME, homeButton);
 
 		if (get().getLoggedInUser().isAdmin()) {
 
 			Button taskButton = addMenuButton(MAIN_NAVIGATION_TASK,
-					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_TASKS),
-					null, false, 80);
+					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_TASKS), null, false, 80);
 			taskButton.addListener(new ShowTasksClickListener());
 			menuItemButtons.put(MAIN_NAVIGATION_TASK, taskButton);
 
 			Button processButton = addMenuButton(MAIN_NAVIGATION_PROCESS,
-					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_PROCESS),
-					null, false, 80);
-			processButton
-					.addListener(new ShowProcessDefinitionsClickListener());
+					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_PROCESS), null, false, 80);
+			processButton.addListener(new ShowProcessDefinitionsClickListener());
 			menuItemButtons.put(MAIN_NAVIGATION_PROCESS, processButton);
 
 			Button reportingButton = addMenuButton(MAIN_NAVIGATION_REPORT,
-					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_REPORTS),
-					null, false, 80);
+					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_REPORTS), null, false, 80);
 			reportingButton.addListener(new ShowReportsClickListener());
 			menuItemButtons.put(MAIN_NAVIGATION_REPORT, reportingButton);
 
 			Button manageButton = addMenuButton(MAIN_NAVIGATION_MANAGE,
-					i18nManager
-							.getMessage(GreenareaMessages.MAIN_MENU_MANAGEMENT),
-					null, false, 90);
+					i18nManager.getMessage(GreenareaMessages.MAIN_MENU_MANAGEMENT), null, false, 90);
 			manageButton.addListener(new ShowManagementClickListener());
 			menuItemButtons.put(MAIN_NAVIGATION_MANAGE, manageButton);
 		}
@@ -151,67 +146,55 @@ public class GreenareaMainMenuBar extends MainMenuBar {
 			UserConverter userConverter = new UserConverter();
 			List<Group> groups = get().getLoggedInUser().getGroups();
 			if (userConverter.isUserInGroup(groups, OPERATORE_LOGISTICO))
-				profileMenu
-						.addStyleName(STYLE_OPERATORE_LOGISTICO_HEADER_PROFILE_BOX);
+				profileMenu.addStyleName(STYLE_OPERATORE_LOGISTICO_HEADER_PROFILE_BOX);
 			else if (userConverter.isUserInGroup(groups, SOCIETA_DI_TRASPORTO))
-				profileMenu
-						.addStyleName(STYLE_SOCIETA_DI_TRASPORTO_HEADER_PROFILE_BOX);
-			else if (userConverter
-					.isUserInGroup(groups, TRASPORTATORE_AUTONOMO))
-				profileMenu
-						.addStyleName(STYLE_SOCIETA_DI_TRASPORTO_HEADER_PROFILE_BOX);
+				profileMenu.addStyleName(STYLE_SOCIETA_DI_TRASPORTO_HEADER_PROFILE_BOX);
+			else if (userConverter.isUserInGroup(groups, TRASPORTATORE_AUTONOMO))
+				profileMenu.addStyleName(STYLE_SOCIETA_DI_TRASPORTO_HEADER_PROFILE_BOX);
 			else
 				profileMenu.addStyleName(STYLE_PA_HEADER_PROFILE_BOX);
 			profileMenu.setHeight(14, UNITS_PIXELS);
-			MenuItem rootItem = profileMenu.addItem(user.getFirstName() + " "
-					+ user.getLastName(), null);
+			MenuItem rootItem = profileMenu.addItem(user.getFirstName() + " " + user.getLastName(), null);
 			rootItem.setStyleName(STYLE_HEADER_PROFILE_MENU);
 
 			// Show profile
-			rootItem.addItem(i18nManager.getMessage(PROFILE_SHOW),
-					new Command() {
-						private static final long serialVersionUID = 8748698561304992624L;
+			rootItem.addItem(i18nManager.getMessage(PROFILE_SHOW), new Command() {
+				private static final long serialVersionUID = 8748698561304992624L;
 
-						public void menuSelected(MenuItem selectedItem) {
-							get().getViewManager().showProfilePopup(
-									user.getId());
-						}
-					});
+				public void menuSelected(MenuItem selectedItem) {
+					get().getViewManager().showProfilePopup(user.getId());
+				}
+			});
 
 			// Edit profile
-			rootItem.addItem(i18nManager.getMessage(PROFILE_EDIT),
-					new Command() {
-						private static final long serialVersionUID = -5815196339877745007L;
+			rootItem.addItem(i18nManager.getMessage(PROFILE_EDIT), new Command() {
+				private static final long serialVersionUID = -5815196339877745007L;
 
-						public void menuSelected(MenuItem selectedItem) {
-							// TODO: Show in edit-mode
-							get().getViewManager().showProfilePopup(
-									user.getId());
-						}
-					});
+				public void menuSelected(MenuItem selectedItem) {
+					// TODO: Show in edit-mode
+					get().getViewManager().showProfilePopup(user.getId());
+				}
+			});
 
 			// Change password
-			rootItem.addItem(i18nManager.getMessage(PASSWORD_CHANGE),
-					new Command() {
-						private static final long serialVersionUID = -1060329084309607294L;
+			rootItem.addItem(i18nManager.getMessage(PASSWORD_CHANGE), new Command() {
+				private static final long serialVersionUID = -1060329084309607294L;
 
-						public void menuSelected(MenuItem selectedItem) {
-							get().getViewManager().showPopupWindow(
-									new ChangePasswordPopupWindow());
-						}
-					});
+				public void menuSelected(MenuItem selectedItem) {
+					get().getViewManager().showPopupWindow(new ChangePasswordPopupWindow());
+				}
+			});
 
 			rootItem.addSeparator();
 
 			// Logout
-			rootItem.addItem(i18nManager.getMessage(HEADER_LOGOUT),
-					new Command() {
-						private static final long serialVersionUID = 1221427524106192724L;
+			rootItem.addItem(i18nManager.getMessage(HEADER_LOGOUT), new Command() {
+				private static final long serialVersionUID = 1221427524106192724L;
 
-						public void menuSelected(MenuItem selectedItem) {
-							get().close();
-						}
-					});
+				public void menuSelected(MenuItem selectedItem) {
+					get().close();
+				}
+			});
 
 			addComponent(profileMenu);
 			// header.setComponentAlignment(profileMenu, TOP_RIGHT);

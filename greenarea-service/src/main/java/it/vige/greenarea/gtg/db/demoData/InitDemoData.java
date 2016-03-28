@@ -20,6 +20,8 @@ import static it.vige.greenarea.Conversioni.convertiFiltersToFiltri;
 import static it.vige.greenarea.Conversioni.convertiFreightToShippingItem;
 import static it.vige.greenarea.Conversioni.convertiRichiesteToShippingOrders;
 import static it.vige.greenarea.Utilities.createMockShippingId;
+import static it.vige.greenarea.Utilities.giornata;
+import static it.vige.greenarea.Utilities.yyyyMMddNoH;
 import static it.vige.greenarea.cl.library.entities.FreightType.ALTRO_TIPO;
 import static it.vige.greenarea.cl.library.entities.FreightType.DOCUMENTI;
 import static it.vige.greenarea.cl.library.entities.Transport.TransportState.waiting;
@@ -32,14 +34,21 @@ import static it.vige.greenarea.dto.ChiusuraRichieste._4_ORE_PRIMA;
 import static it.vige.greenarea.dto.Color.GIALLO;
 import static it.vige.greenarea.dto.Color.ROSSO;
 import static it.vige.greenarea.dto.Color.VERDE;
+import static it.vige.greenarea.dto.Fuel.BENZINA;
+import static it.vige.greenarea.dto.Fuel.DIESEL;
 import static it.vige.greenarea.dto.Peso.CRITICO;
 import static it.vige.greenarea.dto.Peso.MEDIO;
 import static it.vige.greenarea.dto.Ripetizione.FESTIVI;
 import static it.vige.greenarea.dto.Ripetizione.MAI;
+import static it.vige.greenarea.dto.StatoVeicolo.IDLE;
 import static it.vige.greenarea.dto.TipoParametro.DA_DECIDERE;
 import static it.vige.greenarea.dto.TipoRichiesta.CONSEGNA;
 import static it.vige.greenarea.dto.TipoRichiesta.RITIRO;
 import static it.vige.greenarea.dto.TipologiaClassifica.CLASSIFICA_STANDARD;
+import static it.vige.greenarea.dto.TipologiaParametro.BENEFICIO;
+import static it.vige.greenarea.dto.TipologiaParametro.BOOLEANO;
+import static it.vige.greenarea.dto.TipologiaParametro.CONTATORE;
+import static it.vige.greenarea.dto.TipologiaParametro.COSTO;
 import static it.vige.greenarea.dto.Tolleranza._10_PER_CENTO;
 import static it.vige.greenarea.dto.Tolleranza._20_PER_CENTO;
 import static it.vige.greenarea.dto.Tolleranza._40_PER_CENTO;
@@ -48,6 +57,28 @@ import static java.util.Arrays.asList;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
+import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.core.GenericType;
+
+import org.slf4j.Logger;
+
 import it.vige.greenarea.GTGsystem;
 import it.vige.greenarea.NoDuplicatesList;
 import it.vige.greenarea.cl.control.TimeSlotControl;
@@ -65,8 +96,11 @@ import it.vige.greenarea.cl.library.entities.TapOutData;
 import it.vige.greenarea.cl.library.entities.TapParamData;
 import it.vige.greenarea.cl.library.entities.TimeSlot;
 import it.vige.greenarea.cl.library.entities.Transport;
+import it.vige.greenarea.cl.library.entities.TransportServiceClass;
+import it.vige.greenarea.cl.library.entities.TruckServiceClass;
 import it.vige.greenarea.cl.library.entities.TsStat;
 import it.vige.greenarea.cl.library.entities.ValueMission;
+import it.vige.greenarea.cl.library.entities.Vehicle;
 import it.vige.greenarea.cl.library.entities.VikorResult;
 import it.vige.greenarea.cl.scheduling.Scheduler;
 import it.vige.greenarea.cl.sessions.ParameterGenFacade;
@@ -74,9 +108,9 @@ import it.vige.greenarea.cl.sessions.TsStatFacade;
 import it.vige.greenarea.cl.sessions.ValueMissionFacade;
 import it.vige.greenarea.cl.sessions.VikorResultFacade;
 import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.dto.OperatoreLogistico;
 import it.vige.greenarea.dto.Richiesta;
-import it.vige.greenarea.dto.GreenareaUser;
 import it.vige.greenarea.file.ImportaCSVFile;
 import it.vige.greenarea.file.ImportaFile;
 import it.vige.greenarea.gtg.db.facades.ExchangeStopFacade;
@@ -94,36 +128,17 @@ import it.vige.greenarea.gtg.webservice.wsdata.MissionItem;
 import it.vige.greenarea.gtg.webservice.wsdata.TransportItem;
 import it.vige.greenarea.sgapl.sgot.business.SGOTbean;
 import it.vige.greenarea.sgapl.sgot.facade.CustomerFacade;
+import it.vige.greenarea.sgapl.sgot.facade.FilterFacade;
 import it.vige.greenarea.tap.facades.TapGroupDataFacade;
 import it.vige.greenarea.tap.facades.TapOutDataFacade;
 import it.vige.greenarea.tap.facades.TapParamDataFacade;
 import it.vige.greenarea.vo.RichiestaXML;
 
-import java.io.InputStream;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
-
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.inject.Inject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.core.GenericType;
-
-import org.slf4j.Logger;
-
 /**
  * 
  * @author 00917tapGroupData18
  */
+@Startup
 @Singleton
 public class InitDemoData extends GTGsystem {
 
@@ -165,37 +180,267 @@ public class InitDemoData extends GTGsystem {
 	private TruckServiceClassFacade truckServiceClassFacade;
 	@EJB
 	private SGOTbean sgotBean;
+	@EJB
+	private FilterFacade filterFacade;
 	@Inject
 	private GTGmanagerBean gTGmanagerBean;
 
 	private List<MissionItem> ml;
 
-	private DateFormat dateFormat = new SimpleDateFormat("d-MM-yyyy");
+	@PostConstruct
+	private void startup() {
+		logger.info("Initializing Data");
+		if (filterFacade.findAll().size() == 0 && tsc.findAllParameterGen().size() == 0
+				&& truckServiceClassFacade.findAll().size() == 0 && truckFacade.findAll().size() == 0
+				&& transportServiceClassFacade.findAll().size() == 0) {
+			Filter filter1 = new Filter("01", "tnt");
+			filterFacade.create(filter1);
+			Filter filter2 = new Filter("02", "tnt");
+			filterFacade.create(filter2);
+			Filter filter3 = new Filter("06", "tnt");
+			filterFacade.create(filter3);
+
+			tsc.addParameterGen("carico", BENEFICIO, "Numero", false, "Rapporto da bolla di accompagnamento");
+			tsc.addParameterGen("tappe", BENEFICIO, "Numero", false, "Tappe nel ciclo di consegna");
+			tsc.addParameterGen("peso", BENEFICIO, "kg", false, "Peso del veicolo da libretto");
+			tsc.addParameterGen("euro", COSTO, "Numero", false, "Categoria Euro da libretto");
+			tsc.addParameterGen("rapporto", BENEFICIO, "Numero", false, "Rapporti per accompagnamento");
+			tsc.addParameterGen("tappe esterne", BENEFICIO, "Numero", false, "Tappe esterne al ciclo di consegna");
+			tsc.addParameterGen("peso veicolo", COSTO, "kg", false, "Peso del veicolo da libretto");
+			tsc.addParameterGen("euro categoria", COSTO, "Numero", false, "Categoria Euro non da libretto");
+			tsc.addParameterGen("mio p g", CONTATORE, "euro", false, "mia descrizione");
+			tsc.addParameterGen("mio pg prova", CONTATORE, "euro", false, "mia nuova descrizione");
+			tsc.addParameterGen("lunghezza", COSTO, "m", true, "Lunghezza veicolo da libretto");
+			tsc.addParameterGen("mio parametro", BOOLEANO, "chilometri", false, "il mio parametro in chilometri");
+			tsc.addParameterGen("mio nuovo parametro", BOOLEANO, "metri", false, "il mio parametro in metri");
+			tsc.addParameterGen("libretto", COSTO, "m", true, "Lunghezza veicolo non da libretto");
+
+			TruckServiceClass truckServiceClass1 = new TruckServiceClass();
+			truckServiceClass1.setDescription("FURGONATO");
+			truckServiceClass1.setEURO("4");
+			truckServiceClass1.setEmissionV(214);
+			truckServiceClass1.setFuelV(DIESEL);
+			truckServiceClass1.setLenghtV(6);
+			truckServiceClass1.setMakeV("IVECO");
+			truckServiceClass1.setModelV("DAILY");
+			truckServiceClass1.setWeightV(1300);
+			truckServiceClass1.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass1);
+			TruckServiceClass truckServiceClass2 = new TruckServiceClass();
+			truckServiceClass2.setDescription("FURGONATO");
+			truckServiceClass2.setEURO("5");
+			truckServiceClass2.setEmissionV(255);
+			truckServiceClass2.setFuelV(DIESEL);
+			truckServiceClass2.setLenghtV(6);
+			truckServiceClass2.setMakeV("VOLKSWAGEN");
+			truckServiceClass2.setModelV("CRAFTER");
+			truckServiceClass2.setWeightV(1300);
+			truckServiceClass2.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass2);
+			TruckServiceClass truckServiceClass3 = new TruckServiceClass();
+			truckServiceClass3.setDescription("FURGONATO");
+			truckServiceClass3.setEURO("5");
+			truckServiceClass3.setEmissionV(200);
+			truckServiceClass3.setFuelV(DIESEL);
+			truckServiceClass3.setLenghtV(6);
+			truckServiceClass3.setMakeV("FIAT");
+			truckServiceClass3.setModelV("DUCATO");
+			truckServiceClass3.setWeightV(1300);
+			truckServiceClass3.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass3);
+			TruckServiceClass truckServiceClass4 = new TruckServiceClass();
+			truckServiceClass4.setDescription("3Assi");
+			truckServiceClass4.setEURO("9");
+			truckServiceClass4.setEmissionV(3.8);
+			truckServiceClass4.setFuelV(BENZINA);
+			truckServiceClass4.setLenghtV(111.1);
+			truckServiceClass4.setMakeV("NISSAN");
+			truckServiceClass4.setModelV("MERIVA");
+			truckServiceClass4.setWeightV(2122.0);
+			truckServiceClass4.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass4);
+			TruckServiceClass truckServiceClass5 = new TruckServiceClass();
+			truckServiceClass5.setDescription("4Assi");
+			truckServiceClass5.setEURO("10");
+			truckServiceClass5.setEmissionV(3.8);
+			truckServiceClass5.setFuelV(BENZINA);
+			truckServiceClass5.setLenghtV(234.1);
+			truckServiceClass5.setMakeV("OPEL");
+			truckServiceClass5.setModelV("345");
+			truckServiceClass5.setWeightV(2122.0);
+			truckServiceClass5.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass5);
+			TruckServiceClass truckServiceClass6 = new TruckServiceClass();
+			truckServiceClass6.setDescription("5Assi");
+			truckServiceClass6.setEURO("11");
+			truckServiceClass6.setEmissionV(3.8);
+			truckServiceClass6.setFuelV(DIESEL);
+			truckServiceClass6.setLenghtV(541.1);
+			truckServiceClass6.setMakeV("OPEL");
+			truckServiceClass6.setModelV("MERIVA");
+			truckServiceClass6.setWeightV(2122.0);
+			truckServiceClass6.setConsumption(84.238);
+			truckServiceClassFacade.create(truckServiceClass6);
+
+			Vehicle vehicle1 = new Vehicle("44GU4");
+			vehicle1.setState(IDLE);
+			vehicle1.setServiceClass(truckServiceClass3);
+			vehicle1.setAutista("trasportatoreautonomo3");
+			vehicle1.setOperatoreLogistico("dhl");
+			vehicle1.setRoundCode("01");
+			vehicle1.setCodiceFiliale("T01");
+			vehicle1.setVin("VESA_ULOGOBU_0004");
+			truckFacade.create(vehicle1);
+			Vehicle vehicle2 = new Vehicle("555MK");
+			vehicle2.setState(IDLE);
+			vehicle2.setServiceClass(truckServiceClass5);
+			vehicle2.setAutista("trasportatoreautonomo1");
+			vehicle2.setOperatoreLogistico("dhl");
+			vehicle2.setRoundCode("02");
+			vehicle2.setCodiceFiliale("T01");
+			vehicle2.setVin("VESA_ULOGOBU_0005");
+			truckFacade.create(vehicle2);
+			Vehicle vehicle3 = new Vehicle("OP666");
+			vehicle3.setState(IDLE);
+			vehicle3.setServiceClass(truckServiceClass6);
+			vehicle3.setAutista("trasportatoreautonomo2");
+			vehicle3.setOperatoreLogistico("dhl");
+			vehicle3.setRoundCode("06");
+			vehicle3.setCodiceFiliale("T01");
+			vehicle3.setVin("VESA_ULOGOBU_0006");
+			truckFacade.create(vehicle3);
+			Vehicle vehicle4 = new Vehicle("91GTK");
+			vehicle4.setState(IDLE);
+			vehicle4.setServiceClass(truckServiceClass2);
+			vehicle4.setAutista("autista3");
+			vehicle4.setSocietaDiTrasporto("trambus");
+			vehicle4.setOperatoreLogistico("dhl");
+			vehicle4.setRoundCode("01");
+			vehicle4.setCodiceFiliale("T01");
+			vehicle4.setVin("VESA_ULOGOBU_0007");
+			truckFacade.create(vehicle4);
+			Vehicle vehicle5 = new Vehicle("556MK");
+			vehicle5.setState(IDLE);
+			vehicle5.setServiceClass(truckServiceClass2);
+			vehicle5.setAutista("autista4");
+			vehicle5.setSocietaDiTrasporto("trambus");
+			vehicle5.setOperatoreLogistico("dhl");
+			vehicle5.setRoundCode("02");
+			vehicle5.setCodiceFiliale("T01");
+			vehicle5.setVin("VESA_ULOGOBU_0008");
+			truckFacade.create(vehicle5);
+			Vehicle vehicle6 = new Vehicle("557MK");
+			vehicle6.setState(IDLE);
+			vehicle6.setServiceClass(truckServiceClass2);
+			vehicle6.setAutista("autista5");
+			vehicle6.setSocietaDiTrasporto("trambus");
+			vehicle6.setOperatoreLogistico("dhl");
+			vehicle6.setRoundCode("06");
+			vehicle6.setCodiceFiliale("T01");
+			vehicle6.setVin("VESA_ULOGOBU_0009");
+			truckFacade.create(vehicle6);
+			Vehicle vehicle7 = new Vehicle("558MK");
+			vehicle7.setState(IDLE);
+			vehicle7.setServiceClass(truckServiceClass1);
+			vehicle7.setAutista("autista6");
+			vehicle7.setSocietaDiTrasporto("trambus");
+			vehicle7.setOperatoreLogistico("dhl");
+			vehicle7.setRoundCode("01");
+			vehicle7.setCodiceFiliale("T01");
+			vehicle7.setVin("VESA_ULOGOBU_0010");
+			truckFacade.create(vehicle7);
+			Vehicle vehicle8 = new Vehicle("559MK");
+			vehicle8.setState(IDLE);
+			vehicle8.setServiceClass(truckServiceClass3);
+			vehicle8.setAutista("autista7");
+			vehicle8.setSocietaDiTrasporto("buscar");
+			vehicle8.setOperatoreLogistico("dhl");
+			vehicle8.setRoundCode("02");
+			vehicle8.setCodiceFiliale("T01");
+			vehicle8.setVin("VESA_ULOGOBU_0011");
+			truckFacade.create(vehicle8);
+			Vehicle vehicle9 = new Vehicle("560MK");
+			vehicle9.setState(IDLE);
+			vehicle9.setServiceClass(truckServiceClass3);
+			vehicle9.setAutista("autista8");
+			vehicle9.setSocietaDiTrasporto("buscar");
+			vehicle9.setOperatoreLogistico("dhl");
+			vehicle9.setRoundCode("06");
+			vehicle9.setCodiceFiliale("T01");
+			vehicle9.setVin("VESA_ULOGOBU_0012");
+			truckFacade.create(vehicle9);
+			Vehicle vehicle10 = new Vehicle("561MK");
+			vehicle10.setState(IDLE);
+			vehicle10.setServiceClass(truckServiceClass6);
+			vehicle10.setAutista("enzo1");
+			vehicle10.setSocietaDiTrasporto("buscar");
+			vehicle10.setOperatoreLogistico("dhl");
+			vehicle10.setRoundCode("01");
+			vehicle10.setCodiceFiliale("T01");
+			vehicle10.setVin("VESA_ULOGOBU_0013");
+			truckFacade.create(vehicle10);
+			Vehicle vehicle11 = new Vehicle("LO158ZK");
+			vehicle11.setState(IDLE);
+			vehicle11.setServiceClass(truckServiceClass1);
+			vehicle11.setAutista("autista1");
+			vehicle11.setSocietaDiTrasporto("4006944");
+			vehicle11.setOperatoreLogistico("tnt");
+			vehicle11.setRoundCode("01");
+			vehicle11.setCodiceFiliale("T01");
+			vehicle11.setVin("VESA_ULOGOBU_0001");
+			truckFacade.create(vehicle11);
+			Vehicle vehicle12 = new Vehicle("EL818YP");
+			vehicle12.setState(IDLE);
+			vehicle12.setServiceClass(truckServiceClass2);
+			vehicle12.setAutista("trasportatoreautonomo1");
+			vehicle12.setSocietaDiTrasporto("4006944");
+			vehicle12.setOperatoreLogistico("tnt");
+			vehicle12.setRoundCode("02");
+			vehicle12.setCodiceFiliale("T01");
+			vehicle12.setVin("VESA_ULOGOBU_0002");
+			truckFacade.create(vehicle12);
+			Vehicle vehicle13 = new Vehicle("BV925IT");
+			vehicle13.setState(IDLE);
+			vehicle13.setServiceClass(truckServiceClass3);
+			vehicle13.setAutista("trasportatoreautonomo2");
+			vehicle13.setSocietaDiTrasporto("4006944");
+			vehicle13.setOperatoreLogistico("tnt");
+			vehicle13.setRoundCode("06");
+			vehicle13.setCodiceFiliale("T01");
+			vehicle13.setVin("VESA_ULOGOBU_0003");
+			truckFacade.create(vehicle13);
+
+			TransportServiceClass transportServiceClass1 = new TransportServiceClass();
+			transportServiceClass1.setDescription("FURGONATO");
+			transportServiceClassFacade.create(transportServiceClass1);
+			TransportServiceClass transportServiceClass2 = new TransportServiceClass();
+			transportServiceClass2.setDescription("Frigo");
+			transportServiceClassFacade.create(transportServiceClass2);
+			TransportServiceClass transportServiceClass3 = new TransportServiceClass();
+			transportServiceClass3.setDescription("Pesante");
+			transportServiceClassFacade.create(transportServiceClass3);
+		}
+		logger.info("End initialization");
+	}
 
 	public void caricaPolicy() {
 
 		List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
 		List<TimeSlot> allTimeSlots = tsc.findAllTimeSlots();
 		Date d1 = new Date();
-		String dataInizio = dateFormat.format(addDays(d1, -6));
+		String dataInizio = giornata.format(addDays(d1, -6));
 
 		Calendar c = Calendar.getInstance();
 		c.setTime(d1); // Now use today date.
 		c.add(Calendar.DATE, 4); // Adding 5 days
-		String dataFine = dateFormat.format(c.getTime());
+		String dataFine = giornata.format(c.getTime());
 		for (TimeSlot timeSlot : allTimeSlots)
-			if (timeSlot.getDayFinish().equals("12-12-2014")
-					&& timeSlot.getDayStart().equals("11-12-2014")
-					|| timeSlot.getDayFinish().equals("13-12-2014")
-					&& timeSlot.getDayStart().equals("12-12-2014")
-					|| timeSlot.getDayFinish().equals("14-12-2014")
-					&& timeSlot.getDayStart().equals("13-12-2014")
-					|| timeSlot.getDayFinish().equals("15-12-2014")
-					&& timeSlot.getDayStart().equals("14-12-2014")
-					|| timeSlot.getDayFinish().equals("16-12-2014")
-					&& timeSlot.getDayStart().equals("15-12-2014")
-					|| timeSlot.getDayFinish().equals(dataFine)
-					&& timeSlot.getDayStart().equals(dataInizio))
+			if (timeSlot.getDayFinish().equals("12-12-2014") && timeSlot.getDayStart().equals("11-12-2014")
+					|| timeSlot.getDayFinish().equals("13-12-2014") && timeSlot.getDayStart().equals("12-12-2014")
+					|| timeSlot.getDayFinish().equals("14-12-2014") && timeSlot.getDayStart().equals("13-12-2014")
+					|| timeSlot.getDayFinish().equals("15-12-2014") && timeSlot.getDayStart().equals("14-12-2014")
+					|| timeSlot.getDayFinish().equals("16-12-2014") && timeSlot.getDayStart().equals("15-12-2014")
+					|| timeSlot.getDayFinish().equals(dataFine) && timeSlot.getDayStart().equals(dataInizio))
 				timeSlots.add(timeSlot);
 
 		if (timeSlots.isEmpty()) {
@@ -203,7 +448,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish("12-12-2014");
 			timeSlot.setDayStart("11-12-2014");
 			timeSlot.setFinishTS("08:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("08:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_4_ORE_PRIMA);
@@ -264,7 +509,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish("13-12-2014");
 			timeSlot.setDayStart("12-12-2014");
 			timeSlot.setFinishTS("09:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("11:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_4_ORE_PRIMA);
@@ -325,7 +570,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish("14-12-2014");
 			timeSlot.setDayStart("13-12-2014");
 			timeSlot.setFinishTS("10:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("13:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_4_ORE_PRIMA);
@@ -386,7 +631,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish("15-12-2014");
 			timeSlot.setDayStart("14-12-2014");
 			timeSlot.setFinishTS("07:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("02:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_2_GIORNI_PRIMA);
@@ -438,7 +683,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish("16-12-2014");
 			timeSlot.setDayStart("15-12-2014");
 			timeSlot.setFinishTS("09:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("04:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_4_ORE_PRIMA);
@@ -499,7 +744,7 @@ public class InitDemoData extends GTGsystem {
 			timeSlot.setDayFinish(dataFine);
 			timeSlot.setDayStart(dataInizio);
 			timeSlot.setFinishTS("09:26");
-			timeSlot.setPa("patorino");
+			timeSlot.setPa("paguidonia");
 			timeSlot.setStartTS("04:26");
 			timeSlot.setTimeToAcceptRequest(_12_GIORNI_PRIMA);
 			timeSlot.setTimeToRun(_4_ORE_PRIMA);
@@ -1385,8 +1630,7 @@ public class InitDemoData extends GTGsystem {
 		List<Mission> allMissions = missionFacade.findAll();
 		if (!allMissions.isEmpty())
 			for (Mission mission : allMissions)
-				tsc.getRank(mission.getStartTime(), mission.getTimeSlot()
-						.getIdTS());
+				tsc.getRank(mission.getStartTime(), mission.getTimeSlot().getIdTS());
 	}
 
 	public void caricaTrasporti() {
@@ -1402,9 +1646,8 @@ public class InitDemoData extends GTGsystem {
 		Date oldDayFourth = addDays(dayFirst, -4);
 		Date oldDayFive = addDays(dayFirst, -5);
 
-		List<Date> datePerTrasporti = asList(new Date[] { oldDayFive,
-				oldDayFourth, oldDayThird, oldDaySecond, oldDayFirst, dayFirst,
-				daySecond, dayThird, dayFourth });
+		List<Date> datePerTrasporti = asList(new Date[] { oldDayFive, oldDayFourth, oldDayThird, oldDaySecond,
+				oldDayFirst, dayFirst, daySecond, dayThird, dayFourth });
 
 		List<Transport> allTransports = sc.getAllSchedule();
 		String[] roundCodes = new String[] { "01", "02", "03", "01", "02" };
@@ -1426,8 +1669,7 @@ public class InitDemoData extends GTGsystem {
 				tr1.setPickup(lella);
 				tr1.setDestination(new GeoLocation(enzo));
 				tr1.setDropdown(enzo);
-				tr1.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr1.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr1.setTransportState(waiting);
 				tr1.setTipo(CONSEGNA);
 				tr1.setOperatoreLogistico("tnt");
@@ -1489,8 +1731,7 @@ public class InitDemoData extends GTGsystem {
 				tr2.setPickup(vige);
 				tr2.setDestination(new GeoLocation(enzo));
 				tr2.setDropdown(enzo);
-				tr2.setServiceClass(transportServiceClassFacade
-						.findBySelection("Frigo").get(0));
+				tr2.setServiceClass(transportServiceClassFacade.findBySelection("Frigo").get(0));
 				tr2.setTransportState(waiting);
 				tr2.setTipo(CONSEGNA);
 				tr2.setOperatoreLogistico("tnt");
@@ -1540,8 +1781,7 @@ public class InitDemoData extends GTGsystem {
 				tr3.setPickup(luigi);
 				tr3.setDestination(new GeoLocation(enzo));
 				tr3.setDropdown(enzo);
-				tr3.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr3.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr3.setTransportState(waiting);
 				tr3.setTipo(CONSEGNA);
 				tr3.setOperatoreLogistico("tnt");
@@ -1591,8 +1831,7 @@ public class InitDemoData extends GTGsystem {
 				tr4.setPickup(marco);
 				tr4.setDestination(new GeoLocation(lella));
 				tr4.setDropdown(lella);
-				tr4.setServiceClass(transportServiceClassFacade
-						.findBySelection("Frigo").get(0));
+				tr4.setServiceClass(transportServiceClassFacade.findBySelection("Frigo").get(0));
 				tr4.setTransportState(waiting);
 				tr4.setTipo(CONSEGNA);
 				tr4.setOperatoreLogistico("tnt");
@@ -1654,8 +1893,7 @@ public class InitDemoData extends GTGsystem {
 				tr5.setPickup(vige);
 				tr5.setDestination(new GeoLocation(luigi));
 				tr5.setDropdown(luigi);
-				tr5.setServiceClass(transportServiceClassFacade
-						.findBySelection("FURGONATO").get(0));
+				tr5.setServiceClass(transportServiceClassFacade.findBySelection("FURGONATO").get(0));
 				tr5.setTransportState(waiting);
 				tr5.setTipo(RITIRO);
 				tr5.setOperatoreLogistico("tnt");
@@ -1721,119 +1959,86 @@ public class InitDemoData extends GTGsystem {
 		if (allTransports.isEmpty()) {
 			try {
 				Client client = newClient();
-				Builder bldr = client.target(
-						BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt")
-						.request(APPLICATION_JSON);
-				List<Filter> filters = bldr
-						.get(new GenericType<List<Filter>>() {
-						});
-				InputStream inputStream = currentThread()
-						.getContextClassLoader().getResourceAsStream(
-								"demofile/TO1_ORD_141211_0900.csv");
-				ImportaFile importaFile = new ImportaCSVFile(
-						getOperatoreLogistico(), oldDayFourth);
-				List<RichiestaXML> richiesteXML = importaFile.prelevaDati(
-						inputStream, convertiFiltersToFiltri(filters));
-				List<Richiesta> richieste = importaFile.convertiARichieste(
-						richiesteXML, new OperatoreLogistico(new GreenareaUser(
-								"tnt")));
+				Builder bldr = client.target(BASE_URI_ADMINISTRATOR + "/getFiltersForOP/tnt").request(APPLICATION_JSON);
+				List<Filter> filters = bldr.get(new GenericType<List<Filter>>() {
+				});
+				InputStream inputStream = currentThread().getContextClassLoader()
+						.getResourceAsStream("demofile/TO1_ORD_141211_0900.csv");
+				ImportaFile importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayFourth);
+				List<RichiestaXML> richiesteXML = importaFile.prelevaDati(inputStream,
+						convertiFiltersToFiltri(filters));
+				List<Richiesta> richieste = importaFile.convertiARichieste(richiesteXML,
+						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141211_0903.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayFourth);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayFourth);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141212_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141212_0904Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						oldDayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141212_0904Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), oldDayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141215_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayFirst);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayFirst);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141215_0903.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayFirst);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayFirst);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141216_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						daySecond);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), daySecond);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141216_0903Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						daySecond);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141216_0903Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), daySecond);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
-				inputStream = currentThread()
-						.getContextClassLoader()
+				inputStream = currentThread().getContextClassLoader()
 						.getResourceAsStream("demofile/TO1_ORD_141217_0900.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
 
 				inputStream = currentThread().getContextClassLoader()
-						.getResourceAsStream(
-								"demofile/TO1_ORD_141217_0903Elab.csv");
-				importaFile = new ImportaCSVFile(getOperatoreLogistico(),
-						dayThird);
-				richiesteXML = importaFile.prelevaDati(inputStream,
-						convertiFiltersToFiltri(filters));
+						.getResourceAsStream("demofile/TO1_ORD_141217_0903Elab.csv");
+				importaFile = new ImportaCSVFile(getOperatoreLogistico(), dayThird);
+				richiesteXML = importaFile.prelevaDati(inputStream, convertiFiltersToFiltri(filters));
 				richieste = importaFile.convertiARichieste(richiesteXML,
 						new OperatoreLogistico(new GreenareaUser("tnt")));
 				sgotBean.requestShippings(convertiRichiesteToShippingOrders(richieste));
@@ -1847,8 +2052,7 @@ public class InitDemoData extends GTGsystem {
 	private OperatoreLogistico getOperatoreLogistico() {
 		GreenareaUser greenareaUser = new GreenareaUser();
 		greenareaUser.setId("tnt");
-		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(
-				greenareaUser);
+		OperatoreLogistico operatoreLogistico = new OperatoreLogistico(greenareaUser);
 		return operatoreLogistico;
 	}
 
@@ -1858,13 +2062,12 @@ public class InitDemoData extends GTGsystem {
 		if (!transports.isEmpty()) {
 			for (Transport transport : transports) {
 				Date date = transport.getDateMiss();
-				String dateStr = dateFormat.format(date);
+				String dateStr = giornata.format(date);
 				String roundCode = transport.getRoundCode();
 				String codice = roundCode + dateStr;
 				if (!codiciPerTrasporti.contains(codice)) {
 					try {
-						gTGmanagerBean.buildMission(dateFormat.parse(dateStr),
-								roundCode);
+						gTGmanagerBean.buildMission(giornata.parse(dateStr), roundCode);
 						codiciPerTrasporti.add(codice);
 					} catch (ParseException e) {
 						logger.error("formattazione della data", e);
@@ -1994,8 +2197,7 @@ public class InitDemoData extends GTGsystem {
 		// scarico tr2 in via olivetti
 		mi1276.getDeliveryItems().add(fi1tr2.getCode());
 
-		Timestamp start = new Timestamp(
-				new GregorianCalendar(Locale.ITALIAN).getTimeInMillis());
+		Timestamp start = new Timestamp(new GregorianCalendar(Locale.ITALIAN).getTimeInMillis());
 		Timestamp end = new Timestamp(start.getTime() + 14400000);// (4 * 60 *
 																	// 60 *
 																	// 1000));
@@ -2063,8 +2265,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento1() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd")
-				.format(addDays(new Date(), -5));
+		String dataSpostamento = yyyyMMddNoH.format(addDays(new Date(), -5));
 		TapParamData tapParamData1 = new TapParamData();
 		tapParamData1.setName("TOTAL_ODOMETER");
 		tapParamData1.setValue("0");
@@ -3626,8 +3827,7 @@ public class InitDemoData extends GTGsystem {
 	}
 
 	public void spostamento2() {
-		String dataSpostamento = new SimpleDateFormat("yyyy-MM-dd")
-				.format(addDays(new Date(), -4));
+		String dataSpostamento = yyyyMMddNoH.format(addDays(new Date(), -4));
 		TapParamData tapParamData278 = new TapParamData();
 		tapParamData278.setName("TOTAL_ODOMETER");
 		tapParamData278.setValue("0");

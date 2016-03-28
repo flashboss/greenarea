@@ -15,9 +15,9 @@ package it.vige.greenarea.bpm.tempo.autorizzamissioni;
 
 import static it.vige.greenarea.Constants.BASE_URI_TS;
 import static javax.ws.rs.client.ClientBuilder.newClient;
+import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.bean.Request;
 
 import java.util.List;
 
@@ -27,6 +27,8 @@ import javax.ws.rs.core.GenericType;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.bean.Request;
 
 public class AggiornamentoRanking extends EmptyAggiornamentoRanking {
 
@@ -38,16 +40,10 @@ public class AggiornamentoRanking extends EmptyAggiornamentoRanking {
 		logger.info("CDI Aggiornamento Ranking");
 		Client client = newClient();
 		@SuppressWarnings("unchecked")
-		List<Request> allRequests = (List<Request>) execution
-				.getVariable("richieste");
-		for (Request request : allRequests) {
-			Builder bldr = client.target(
-					BASE_URI_TS + "/updateVikor/" + request.getDateMiss() + "/"
-							+ request.getIdTimeSlot())
-					.request(APPLICATION_JSON);
-			bldr.get(new GenericType<List<Request>>() {
-			});
-		}
+		List<Request> allRequests = (List<Request>) execution.getVariable("richieste");
+		Builder bldr = client.target(BASE_URI_TS + "/updateVikor").request(APPLICATION_JSON);
+		bldr.post(entity(allRequests, APPLICATION_JSON), new GenericType<List<Request>>() {
+		});
 	}
 
 }

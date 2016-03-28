@@ -19,8 +19,6 @@ import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_POLICY_FA
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_POLICY_PERIODO_VALIDITA;
 import static it.vige.greenarea.bpm.custom.GreenareaMessages.DETTAGLIO_POLICY_TITLE;
 import static org.activiti.explorer.ExplorerApp.get;
-import it.vige.greenarea.bpm.custom.ui.form.GreenareaAbstractFormPropertyRenderer;
-import it.vige.greenarea.dto.FasciaOraria;
 
 import java.util.Collection;
 
@@ -43,6 +41,9 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+import it.vige.greenarea.bpm.custom.ui.form.GreenareaAbstractFormPropertyRenderer;
+import it.vige.greenarea.dto.FasciaOraria;
+
 public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 	/**
 	 * 
@@ -53,24 +54,18 @@ public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 	protected Label fasciaOrariaLabel;
 	protected Button policyDetailsButton;
 
-	public DettaglioPolicyField(
-			FormProperty formProperty,
-			GreenareaAbstractFormPropertyRenderer<T> greenareaAbstractFormPropertyRenderer,
-			FasciaOraria fasciaOraria) {
+	public DettaglioPolicyField(FormProperty formProperty,
+			GreenareaAbstractFormPropertyRenderer<T> greenareaAbstractFormPropertyRenderer, FasciaOraria fasciaOraria) {
 		I18nManager i18nManager = get().getI18nManager();
 		String caption = i18nManager.getMessage(DETTAGLIO_POLICY_TITLE);
 		setSpacing(true);
 		setCaption(caption);
 		setHeight(Sizeable.SIZE_UNDEFINED, 0);
 		validityLabel = new Label();
-		validityLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_POLICY_PERIODO_VALIDITA)
-				+ " "
+		validityLabel.setValue(i18nManager.getMessage(DETTAGLIO_POLICY_PERIODO_VALIDITA) + " "
 				+ (fasciaOraria != null ? fasciaOraria.getValidita() : ""));
 		fasciaOrariaLabel = new Label();
-		fasciaOrariaLabel.setValue(i18nManager
-				.getMessage(DETTAGLIO_POLICY_FASCIA_ORARIA)
-				+ " "
+		fasciaOrariaLabel.setValue(i18nManager.getMessage(DETTAGLIO_POLICY_FASCIA_ORARIA) + " "
 				+ (fasciaOraria != null ? fasciaOraria.getNome() : ""));
 		VerticalLayout vLayout = new VerticalLayout();
 		vLayout.addComponent(validityLabel);
@@ -78,16 +73,12 @@ public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 		vLayout.setStyleName("dettaglio-policy-label");
 
 		policyDetailsButton = new Button();
-		final String dettaglioPolicy = i18nManager
-				.getMessage(DETTAGLIO_POLICY_DETTAGLIO_POLICY);
-		policyDetailsButton.setCaption(i18nManager
-				.getMessage(DETTAGLIO_POLICY_BUTTON));
+		final String dettaglioPolicy = i18nManager.getMessage(DETTAGLIO_POLICY_DETTAGLIO_POLICY);
+		policyDetailsButton.setCaption(i18nManager.getMessage(DETTAGLIO_POLICY_BUTTON));
 		final ParametriTable parametriTable = new ParametriTable(formProperty,
-				greenareaAbstractFormPropertyRenderer
-						.getGreenareaFormPropertiesForm());
+				greenareaAbstractFormPropertyRenderer.getGreenareaFormPropertiesForm());
 		final PrezziTable prezziTable = new PrezziTable(formProperty,
-				greenareaAbstractFormPropertyRenderer
-						.getGreenareaFormPropertiesForm());
+				greenareaAbstractFormPropertyRenderer.getGreenareaFormPropertiesForm());
 		policyDetailsButton.addListener(new ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -150,8 +141,7 @@ public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 		return wrappedField.isWriteThrough();
 	}
 
-	public void setWriteThrough(boolean writeThrough) throws SourceException,
-			InvalidValueException {
+	public void setWriteThrough(boolean writeThrough) throws SourceException, InvalidValueException {
 		wrappedField.setWriteThrough(true);
 	}
 
@@ -191,8 +181,7 @@ public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 		return wrappedField.isInvalidAllowed();
 	}
 
-	public void setInvalidAllowed(boolean invalidValueAllowed)
-			throws UnsupportedOperationException {
+	public void setInvalidAllowed(boolean invalidValueAllowed) throws UnsupportedOperationException {
 		wrappedField.setInvalidAllowed(invalidValueAllowed);
 	}
 
@@ -200,8 +189,7 @@ public class DettaglioPolicyField<T> extends HorizontalLayout implements Field {
 		return wrappedField.getValue();
 	}
 
-	public void setValue(Object newValue) throws ReadOnlyException,
-			ConversionException {
+	public void setValue(Object newValue) throws ReadOnlyException, ConversionException {
 		wrappedField.setValue(newValue);
 	}
 

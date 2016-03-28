@@ -13,13 +13,13 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.entity;
 
-import it.vige.greenarea.dto.AccessoVeicoli;
-import it.vige.greenarea.dto.Color;
-
 import java.io.Serializable;
 import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
+
+import it.vige.greenarea.dto.AccessoVeicoli;
+import it.vige.greenarea.dto.Color;
 
 public class PriceView implements Serializable {
 
@@ -93,8 +93,7 @@ public class PriceView implements Serializable {
 		String tipologiaAccess = "";
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = facesContext.getApplication()
-				.getResourceBundle(facesContext, "messages");
+		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "messages");
 
 		switch (typeEntry) {
 		case NEGATO:
@@ -104,16 +103,11 @@ public class PriceView implements Serializable {
 			tipologiaAccess = bundle.getString("fasceorarie_accesso_gratuito");
 			break;
 		case PREZZO_FISSO:
-			tipologiaAccess = bundle
-					.getString("fasceorarie_accesso_a_prezzo_fisso")
-					+ " "
-					+ fixPrice + " ???";
+			tipologiaAccess = bundle.getString("fasceorarie_accesso_a_prezzo_fisso") + " " + fixPrice + " ???";
 			break;
 		case PREZZO_VARIABILE:
-			tipologiaAccess = bundle
-					.getString("fasceorarie_accesso_a_prezzo_variabile")
-					+ " ["
-					+ minPrice + " ??? - " + maxPrice + " ???]";
+			tipologiaAccess = bundle.getString("fasceorarie_accesso_a_prezzo_variabile") + " [" + minPrice + " ??? - "
+					+ maxPrice + " ???]";
 			break;
 		default:
 			tipologiaAccess = "";

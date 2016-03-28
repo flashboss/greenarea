@@ -13,16 +13,16 @@
  ******************************************************************************/
 package it.vige.greenarea.cl.admin.bean;
 
-import it.vige.greenarea.cl.library.entities.ParameterGen;
-import it.vige.greenarea.dto.TipologiaParametro;
-import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.Dependent;
+
+import it.vige.greenarea.cl.admin.rest.TimeSlotRestClient;
+import it.vige.greenarea.cl.library.entities.ParameterGen;
+import it.vige.greenarea.dto.TipologiaParametro;
 
 @ManagedBean
 @Dependent

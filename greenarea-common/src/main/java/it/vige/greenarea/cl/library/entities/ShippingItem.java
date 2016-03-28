@@ -43,8 +43,7 @@ public class ShippingItem implements Serializable {
 		this.id = id;
 	}
 
-	public ShippingItem(String id, String descrizione,
-			HashMap<String, String> attributi) {
+	public ShippingItem(String id, String descrizione, HashMap<String, String> attributi) {
 		this(id);
 		this.description = descrizione;
 		this.attributes = attributi;
@@ -97,8 +96,7 @@ public class ShippingItem implements Serializable {
 			return false;
 		}
 		ShippingItem other = (ShippingItem) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
@@ -106,7 +104,6 @@ public class ShippingItem implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ShippingItem[ id=" + id + " ]: " + id + " - " + description
-				+ "( " + getAttributes().toString() + ")";
+		return "ShippingItem[ id=" + id + " ]: " + id + " - " + description + "( " + getAttributes().toString() + ")";
 	}
 }

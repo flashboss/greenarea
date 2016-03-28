@@ -26,8 +26,7 @@ import org.activiti.engine.impl.form.EnumFormType;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 
-public class EnumFormPropertyRenderer<T> extends
-		GreenareaAbstractFormPropertyRenderer<T> {
+public class EnumFormPropertyRenderer<T> extends GreenareaAbstractFormPropertyRenderer<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,29 +39,25 @@ public class EnumFormPropertyRenderer<T> extends
 	public Field getPropertyField(FormProperty formProperty) {
 		ComboBox comboBox = new ComboBox(getPropertyLabel(formProperty));
 		comboBox.setRequired(formProperty.isRequired());
-		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		comboBox.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		comboBox.setEnabled(formProperty.isWritable());
 		comboBox.setNullSelectionAllowed(false);
 
 		Object itemToSelect = null;
-		Map<String, String> values = (Map<String, String>) formProperty
-				.getType().getInformation("values");
+		Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
 		if (values != null) {
 			for (Entry<String, String> enumEntry : values.entrySet()) {
 				// Add value and label (if any)
 				comboBox.addItem(enumEntry.getKey());
 
 				String selectedValue = formProperty.getValue();
-				if ((selectedValue != null && selectedValue.equals(enumEntry
-						.getKey())) || itemToSelect == null) {
+				if ((selectedValue != null && selectedValue.equals(enumEntry.getKey())) || itemToSelect == null) {
 					itemToSelect = enumEntry.getKey(); // select first
 														// element
 				}
 
 				if (enumEntry.getValue() != null) {
-					comboBox.setItemCaption(enumEntry.getKey(),
-							enumEntry.getValue());
+					comboBox.setItemCaption(enumEntry.getKey(), enumEntry.getValue());
 				}
 			}
 		}

@@ -15,8 +15,6 @@ package it.vige.greenarea.gtg.db.demoData.jsf;
 
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.getSelectItems;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.ShippingOrder;
-import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 import java.io.Serializable;
 
@@ -32,6 +30,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.ShippingOrder;
+import it.vige.greenarea.sgapl.sgot.facade.ShippingOrderFacade;
 
 @Named("shippingOrderController")
 @SessionScoped
@@ -65,8 +66,7 @@ public class ShippingOrderController implements Serializable {
 
 		private static Logger logger = getLogger(ShippingOrderControllerConverter.class);
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
@@ -80,8 +80,7 @@ public class ShippingOrderController implements Serializable {
 			return ejbFacade.find(value);
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -89,8 +88,7 @@ public class ShippingOrderController implements Serializable {
 				ShippingOrder o = (ShippingOrder) object;
 				return o.getId();
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
 						+ "; expected type: " + ShippingOrder.class.getName());
 			}
 		}

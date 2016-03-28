@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm.pa.gestiscifasceorarie;
 
-import it.vige.greenarea.dto.Parametro;
-
 import java.util.Collection;
 
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
+
+import it.vige.greenarea.dto.Parametro;
 
 public class RecuperaParametriSelezionatiEAggiunti implements TaskListener {
 
@@ -27,13 +27,10 @@ public class RecuperaParametriSelezionatiEAggiunti implements TaskListener {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void notify(DelegateTask delegateTask) {
-		Collection<Parametro> parametri = (Collection<Parametro>) delegateTask
-				.getVariable("parametrits");
-		Collection<Parametro> parametriAggiunti = (Collection<Parametro>) delegateTask
-				.getVariable("parametriaggiunti");
+		Collection<Parametro> parametri = (Collection<Parametro>) delegateTask.getVariable("parametrits");
+		Collection<Parametro> parametriAggiunti = (Collection<Parametro>) delegateTask.getVariable("parametriaggiunti");
 		delegateTask.setVariable("parametritsselezionati", parametri);
-		delegateTask.setVariable("parametriaggiuntiselezionati",
-				parametriAggiunti);
+		delegateTask.setVariable("parametriaggiuntiselezionati", parametriAggiunti);
 	}
 
 }

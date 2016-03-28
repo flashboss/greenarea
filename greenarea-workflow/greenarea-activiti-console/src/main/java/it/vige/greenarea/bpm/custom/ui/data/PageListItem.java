@@ -21,18 +21,15 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.data.util.PropertysetItem;
 
-public class PageListItem extends PropertysetItem implements
-		Comparable<PageListItem> {
+public class PageListItem extends PropertysetItem implements Comparable<PageListItem> {
 
 	private static final long serialVersionUID = 1L;
 	private Page page;
 
 	public PageListItem(Page page) {
 		this.page = page;
-		addItemProperty("id", new ObjectProperty<String>(page.getId(),
-				String.class));
-		addItemProperty("name", new ObjectProperty<String>(page.getName(),
-				String.class));
+		addItemProperty("id", new ObjectProperty<String>(page.getId(), String.class));
+		addItemProperty("name", new ObjectProperty<String>(page.getName(), String.class));
 	}
 
 	public int compareTo(PageListItem other) {
@@ -78,8 +75,7 @@ public class PageListItem extends PropertysetItem implements
 			}
 	}
 
-	private PageListItem findFather(PageListItem child, List<Item> items,
-			int level) {
+	private PageListItem findFather(PageListItem child, List<Item> items, int level) {
 		for (Item item : items) {
 			PageListItem pli = (PageListItem) item;
 			List<Page> children = pli.getPage().getChildren();

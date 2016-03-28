@@ -14,8 +14,5 @@
 package it.vige.greenarea.itseasy.lib.configurationData;
 
 public enum FreightAttribs {
-    Volume, Height, Length, Width,
-    Weight, Stackable, KeepUpStanding
+	Volume, Height, Length, Width, Weight, Stackable, KeepUpStanding
 }
-    
-

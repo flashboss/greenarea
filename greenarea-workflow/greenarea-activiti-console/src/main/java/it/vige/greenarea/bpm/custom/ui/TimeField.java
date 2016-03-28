@@ -191,8 +191,7 @@ public class TimeField extends CustomField {
 
 			private static final long serialVersionUID = 3383351188340627219L;
 
-			public void valueChange(
-					com.vaadin.data.Property.ValueChangeEvent event) {
+			public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
 				if (maskInternalValueChange) {
 					return;
 				}
@@ -320,12 +319,10 @@ public class TimeField extends CustomField {
 	public void setLocale(Locale l) {
 		givenLocale = l;
 
-		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT,
-				givenLocale);
+		DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, givenLocale);
 		String time = df.format(new Date());
 
-		if (time.contains("am") || time.contains("AM") || time.contains("pm")
-				|| time.contains("PM")) {
+		if (time.contains("am") || time.contains("AM") || time.contains("pm") || time.contains("PM")) {
 			use24HourClock = false;
 		} else {
 			use24HourClock = true;
@@ -374,8 +371,7 @@ public class TimeField extends CustomField {
 		// browser
 		if (givenLocale == null) {
 			// we have access to application after attachment
-			Locale locale = ((WebApplicationContext) getApplication()
-					.getContext()).getBrowser().getLocale();
+			Locale locale = ((WebApplicationContext) getApplication().getContext()).getBrowser().getLocale();
 			setLocale(locale);
 		}
 	}

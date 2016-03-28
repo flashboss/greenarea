@@ -13,18 +13,18 @@
  ******************************************************************************/
 package it.vige.greenarea.bpm;
 
-import it.vige.greenarea.dto.GreenareaUser;
-
 import java.util.List;
 
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 
+import it.vige.greenarea.dto.GreenareaUser;
+
 public class UserConverter {
 
 	public static GreenareaUser convertToGreenareaUser(User user) {
-		return new GreenareaUser(user.getId(), user.getFirstName(),
-				user.getLastName(), user.getEmail(), user.getPassword());
+		return new GreenareaUser(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(),
+				user.getPassword());
 	}
 
 	public boolean isUserInGroup(List<Group> groups, String groupToFind) {

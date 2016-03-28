@@ -14,18 +14,15 @@
 package it.vige.greenarea.bpm.operatorelogistico.richiediperformancemissioni;
 
 import static it.vige.greenarea.Constants.BASE_URI_RICHIESTE;
+import static it.vige.greenarea.Utilities.ddMyyyy;
+import static it.vige.greenarea.Utilities.yyyyMMddNH;
 import static it.vige.greenarea.bpm.risultato.Categoria.ERROREGRAVE;
 import static it.vige.greenarea.bpm.risultato.Tipo.ERRORESISTEMA;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.risultato.Messaggio;
-import it.vige.greenarea.dto.Missione;
-import it.vige.greenarea.dto.RichiestaMissioni;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,11 +39,12 @@ import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 
-public class RichiediPerformanceMissioni extends
-		EmptyRichiediPerformanceMissioni {
-	private Logger logger = getLogger(getClass());
+import it.vige.greenarea.bpm.risultato.Messaggio;
+import it.vige.greenarea.dto.Missione;
+import it.vige.greenarea.dto.RichiestaMissioni;
 
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-d");
+public class RichiediPerformanceMissioni extends EmptyRichiediPerformanceMissioni {
+	private Logger logger = getLogger(getClass());
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -57,23 +55,17 @@ public class RichiediPerformanceMissioni extends
 			Date al = (Date) execution.getVariable("al");
 
 			Client client = newClient();
-			Builder bldr = client.target(
-					BASE_URI_RICHIESTE + "/getSintesiMissioni").request(
-					APPLICATION_JSON);
+			Builder bldr = client.target(BASE_URI_RICHIESTE + "/getSintesiMissioni").request(APPLICATION_JSON);
 			RichiestaMissioni richiesta = new RichiestaMissioni();
 			richiesta.setDataFine(al);
-			List<Missione> missioni = bldr.post(
-					entity(richiesta, APPLICATION_JSON),
-					new GenericType<List<Missione>>() {
-					});
+			List<Missione> missioni = bldr.post(entity(richiesta, APPLICATION_JSON), new GenericType<List<Missione>>() {
+			});
 			Map<String, List<Missione>> elencoMissioni = new HashMap<String, List<Missione>>();
 			Map<String, Double> mappaCrediti = new HashMap<String, Double>();
-			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			if (missioni != null)
 				for (Missione missione : missioni) {
-					String dataInizio = dateFormat.format(missione
-							.getDataInizio());
-					String di = df.format(missione.getDataInizio());
+					String dataInizio = yyyyMMddNH.format(missione.getDataInizio());
+					String di = ddMyyyy.format(missione.getDataInizio());
 					if (elencoMissioni.get(di) == null)
 						elencoMissioni.put(di, new ArrayList<Missione>());
 					elencoMissioni.get(di).add(missione);
@@ -84,8 +76,8 @@ public class RichiediPerformanceMissioni extends
 						mappaCrediti.put(dataInizio, creditoIniziale + credito);
 					}
 				}
-			execution.setVariable("dal", df.format(dal));
-			execution.setVariable("al", df.format(al));
+			execution.setVariable("dal", ddMyyyy.format(dal));
+			execution.setVariable("al", ddMyyyy.format(al));
 
 			// TODO Mock data da sostituire con i valori della TAP
 			Map<String, Number> reportData = new LinkedHashMap<String, Number>();
@@ -100,8 +92,8 @@ public class RichiediPerformanceMissioni extends
 			String day = "";
 
 			while (!ss.equals(ee)) {
-				day = df.format(ss.getTime());
-				String data = dateFormat.format(ss.getTime());
+				day = ddMyyyy.format(ss.getTime());
+				String data = yyyyMMddNH.format(ss.getTime());
 				Double value = mappaCrediti.get(data);
 				if (value != null)
 					reportData.put(day, value);
@@ -112,8 +104,7 @@ public class RichiediPerformanceMissioni extends
 			execution.setVariable("elencoMissioni", elencoMissioni);
 
 		} catch (Exception ex) {
-			Messaggio messaggio = (Messaggio) execution
-					.getVariable("messaggio");
+			Messaggio messaggio = (Messaggio) execution.getVariable("messaggio");
 			messaggio.setCategoria(ERROREGRAVE);
 			messaggio.setTipo(ERRORESISTEMA);
 			throw new BpmnError("errorerichiestaperformancemissioni");

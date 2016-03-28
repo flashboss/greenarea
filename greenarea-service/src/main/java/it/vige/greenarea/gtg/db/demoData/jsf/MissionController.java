@@ -17,10 +17,6 @@ import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addErrorMessage
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.addSuccessMessage;
 import static it.vige.greenarea.gtg.db.demoData.jsf.util.JsfUtil.getSelectItems;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.cl.library.entities.Mission;
-import it.vige.greenarea.cl.sessions.ValueMissionFacade;
-import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
-import it.vige.greenarea.gtg.db.facades.MissionFacade;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,6 +36,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.slf4j.Logger;
+
+import it.vige.greenarea.cl.library.entities.Mission;
+import it.vige.greenarea.cl.sessions.ValueMissionFacade;
+import it.vige.greenarea.gtg.db.demoData.jsf.util.PaginationHelper;
+import it.vige.greenarea.gtg.db.facades.MissionFacade;
 
 @Named("missionController")
 @SessionScoped
@@ -83,13 +84,11 @@ public class MissionController implements Serializable {
 
 				@Override
 				public DataModel createPageDataModel() {
-					List<Mission> missions = getFacade().findRange(
-							new int[] { getPageFirstItem(),
-									getPageFirstItem() + getPageSize() });
+					List<Mission> missions = getFacade()
+							.findRange(new int[] { getPageFirstItem(), getPageFirstItem() + getPageSize() });
 					if (missions != null)
 						for (Mission mission : missions) {
-							mission.setValuesMission(ejbVFacade
-									.findAByMission(mission));
+							mission.setValuesMission(ejbVFacade.findAByMission(mission));
 						}
 					return new ListDataModel(missions);
 				}
@@ -105,8 +104,7 @@ public class MissionController implements Serializable {
 
 	public String prepareView() {
 		current = (Mission) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "View";
 	}
 
@@ -119,44 +117,34 @@ public class MissionController implements Serializable {
 	public String create() {
 		try {
 			getFacade().create(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"MissionCreated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MissionCreated"));
 			return prepareCreate();
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String prepareEdit() {
 		current = (Mission) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		return "Edit";
 	}
 
 	public String update() {
 		try {
 			getFacade().edit(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"MissionUpdated"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MissionUpdated"));
 			return "View";
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 			return null;
 		}
 	}
 
 	public String destroy() {
 		current = (Mission) getItems().getRowData();
-		selectedItemIndex = pagination.getPageFirstItem()
-				+ getItems().getRowIndex();
+		selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
 		performDestroy();
 		recreatePagination();
 		recreateModel();
@@ -179,13 +167,9 @@ public class MissionController implements Serializable {
 	private void performDestroy() {
 		try {
 			getFacade().remove(current);
-			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(
-					"MissionDeleted"));
+			addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MissionDeleted"));
 		} catch (Exception e) {
-			addErrorMessage(
-					e,
-					ResourceBundle.getBundle("/Bundle").getString(
-							"PersistenceErrorOccured"));
+			addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
 		}
 	}
 
@@ -200,9 +184,7 @@ public class MissionController implements Serializable {
 			}
 		}
 		if (selectedItemIndex >= 0) {
-			current = getFacade().findRange(
-					new int[] { selectedItemIndex, selectedItemIndex + 1 })
-					.get(0);
+			current = getFacade().findRange(new int[] { selectedItemIndex, selectedItemIndex + 1 }).get(0);
 		}
 	}
 
@@ -255,16 +237,14 @@ public class MissionController implements Serializable {
 
 		private static Logger logger = getLogger(MissionControllerConverter.class);
 
-		public Object getAsObject(FacesContext facesContext,
-				UIComponent component, String value) {
+		public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
 			if (value == null || value.length() == 0) {
 				return null;
 			}
 			MissionFacade ejbFacade = null;
 			ValueMissionFacade ejbVFacade = null;
 			try {
-				ejbFacade = (MissionFacade) new InitialContext()
-						.lookup("java:global/greenarea-service/MissionFacade");
+				ejbFacade = (MissionFacade) new InitialContext().lookup("java:global/greenarea-service/MissionFacade");
 				ejbVFacade = (ValueMissionFacade) new InitialContext()
 						.lookup("java:global/greenarea-service/ValueMissionFacade");
 			} catch (NamingException e) {
@@ -287,8 +267,7 @@ public class MissionController implements Serializable {
 			return sb.toString();
 		}
 
-		public String getAsString(FacesContext facesContext,
-				UIComponent component, Object object) {
+		public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
 			if (object == null) {
 				return null;
 			}
@@ -296,8 +275,7 @@ public class MissionController implements Serializable {
 				Mission o = (Mission) object;
 				return getStringKey(o.getId());
 			} else {
-				throw new IllegalArgumentException("object " + object
-						+ " is of type " + object.getClass().getName()
+				throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName()
 						+ "; expected type: " + Mission.class.getName());
 			}
 		}

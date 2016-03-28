@@ -17,8 +17,6 @@ import static it.vige.greenarea.Constants.BASE_URI_USER;
 import static javax.ws.rs.client.ClientBuilder.newClient;
 import static javax.ws.rs.client.Entity.entity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import it.vige.greenarea.dto.RichiestaVeicolo;
-import it.vige.greenarea.dto.Veicolo;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -30,6 +28,9 @@ import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.core.GenericType;
 
 import org.activiti.engine.form.AbstractFormType;
+
+import it.vige.greenarea.dto.RichiestaVeicolo;
+import it.vige.greenarea.dto.Veicolo;
 
 public class TargaTrFormType extends AbstractFormType implements Serializable {
 
@@ -65,13 +66,10 @@ public class TargaTrFormType extends AbstractFormType implements Serializable {
 
 	private void getTarghe() {
 		Client client = newClient();
-		Builder bldr = client.target(BASE_URI_USER + "/findVinVehicles")
-				.request(APPLICATION_JSON);
+		Builder bldr = client.target(BASE_URI_USER + "/findVinVehicles").request(APPLICATION_JSON);
 		RichiestaVeicolo richiestaVeicolo = new RichiestaVeicolo();
-		List<Veicolo> veicoli = bldr.post(
-				entity(richiestaVeicolo, APPLICATION_JSON),
-				new GenericType<List<Veicolo>>() {
-				});
+		List<Veicolo> veicoli = bldr.post(entity(richiestaVeicolo, APPLICATION_JSON), new GenericType<List<Veicolo>>() {
+		});
 		values.clear();
 		if (veicoli != null)
 			for (Veicolo veicolo : veicoli) {

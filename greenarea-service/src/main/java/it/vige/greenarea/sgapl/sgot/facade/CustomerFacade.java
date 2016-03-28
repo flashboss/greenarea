@@ -13,12 +13,12 @@
  ******************************************************************************/
 package it.vige.greenarea.sgapl.sgot.facade;
 
-import it.vige.greenarea.cl.library.entities.Customer;
-import it.vige.greenarea.gtg.db.facades.AbstractFacade;
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import it.vige.greenarea.cl.library.entities.Customer;
+import it.vige.greenarea.gtg.db.facades.AbstractFacade;
 
 @Stateless
 public class CustomerFacade extends AbstractFacade<Customer, Long> {

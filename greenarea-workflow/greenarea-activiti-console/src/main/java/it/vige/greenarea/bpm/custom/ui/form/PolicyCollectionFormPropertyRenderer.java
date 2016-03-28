@@ -19,8 +19,6 @@ import static it.vige.greenarea.bpm.custom.ui.mainlayout.GreenareaExplorerLayout
 import static org.activiti.explorer.ExplorerApp.get;
 import static org.activiti.explorer.Messages.FORM_FIELD_REQUIRED;
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.bpm.form.PolicyCollectionFormType;
-import it.vige.greenarea.dto.Parametro;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,8 +33,10 @@ import org.slf4j.Logger;
 
 import com.vaadin.ui.Field;
 
-public class PolicyCollectionFormPropertyRenderer extends
-		GreenareaAbstractFormPropertyRenderer<Parametro> {
+import it.vige.greenarea.bpm.form.PolicyCollectionFormType;
+import it.vige.greenarea.dto.Parametro;
+
+public class PolicyCollectionFormPropertyRenderer extends GreenareaAbstractFormPropertyRenderer<Parametro> {
 
 	private static final long serialVersionUID = -5680213877307810907L;
 	private Logger logger = getLogger(getClass());
@@ -50,29 +50,24 @@ public class PolicyCollectionFormPropertyRenderer extends
 	@Override
 	@SuppressWarnings("unchecked")
 	public Field getPropertyField(FormProperty formProperty) {
-		values = (Map<String, Parametro>) formProperty.getType()
-				.getInformation("values");
-		table = new GreenareaPagedTable<Parametro>(values.values(),
-				getGreenareaFormPropertiesForm());
+		values = (Map<String, Parametro>) formProperty.getType().getInformation("values");
+		table = new GreenareaPagedTable<Parametro>(values.values(), getGreenareaFormPropertiesForm());
 		table.setCaption(getPropertyLabel(formProperty));
 		table.setRequired(formProperty.isRequired());
-		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED,
-				getPropertyLabel(formProperty)));
+		table.setRequiredError(getMessage(FORM_FIELD_REQUIRED, getPropertyLabel(formProperty)));
 		table.setEnabled(formProperty.isReadable());
 		table.setSelectable(formProperty.isWritable());
 		table.setMultiSelect(false);
 		table.setStyleName(STYLE_COLLECTION);
 		if (values != null && values.size() > 0) {
-			Class<Parametro> genericClass = (Class<Parametro>) values.values()
-					.iterator().next().getClass();
+			Class<Parametro> genericClass = (Class<Parametro>) values.values().iterator().next().getClass();
 			Method[] methods = genericClass.getMethods();
 			java.lang.reflect.Field[] fields = genericClass.getDeclaredFields();
 			I18nManager i18nManager = get().getI18nManager();
 			for (java.lang.reflect.Field field : fields)
 				if (visible(methods, field))
-					table.addContainerProperty(
-							i18nManager.getMessage(POLICY_TABLE_FIELDS
-									+ field.getName()), String.class, null);
+					table.addContainerProperty(i18nManager.getMessage(POLICY_TABLE_FIELDS + field.getName()),
+							String.class, null);
 			for (Map.Entry<String, Parametro> enumEntry : values.entrySet()) {
 
 				String id = enumEntry.getKey();
@@ -98,24 +93,17 @@ public class PolicyCollectionFormPropertyRenderer extends
 	@Override
 	protected boolean visible(Method method, java.lang.reflect.Field field) {
 		String methodName = method.getName();
-		if (methodName.startsWith("get")
-				&& methodName.substring(3).equalsIgnoreCase(field.getName())
-				&& field.getType() != List.class
-				&& field.getType() != Collection.class
-				&& field.getType() != Map.class
-				&& !field.getName().equalsIgnoreCase("id")
-				&& !field.getName().equalsIgnoreCase("ga")
-				&& !field.getName().equalsIgnoreCase("dataInizio")
-				&& !field.getName().equalsIgnoreCase("dataFine")
-				&& !field.getName().equalsIgnoreCase("orarioInizio")
-				&& !field.getName().equalsIgnoreCase("orarioFine")
+		if (methodName.startsWith("get") && methodName.substring(3).equalsIgnoreCase(field.getName())
+				&& field.getType() != List.class && field.getType() != Collection.class && field.getType() != Map.class
+				&& !field.getName().equalsIgnoreCase("id") && !field.getName().equalsIgnoreCase("ga")
+				&& !field.getName().equalsIgnoreCase("dataInizio") && !field.getName().equalsIgnoreCase("dataFine")
+				&& !field.getName().equalsIgnoreCase("orarioInizio") && !field.getName().equalsIgnoreCase("orarioFine")
 				&& !field.getName().equalsIgnoreCase("tipologiaClassifica"))
 			return true;
 		return false;
 	}
 
-	private Object[] getValues(java.lang.reflect.Field[] fields,
-			Method[] methods, Parametro type) {
+	private Object[] getValues(java.lang.reflect.Field[] fields, Method[] methods, Parametro type) {
 		List<Object> result = new ArrayList<Object>();
 		try {
 			for (java.lang.reflect.Field field : fields)
@@ -123,15 +111,14 @@ public class PolicyCollectionFormPropertyRenderer extends
 					if (visible(method, field)) {
 						Object value = method.invoke(type);
 						if (value instanceof String && value != null)
-							result.add(uppercaseFirstLetters(((String) value)
-									.replaceAll("_", " ").replaceAll(
-											" PER CENTO", "%")));
+							result.add(uppercaseFirstLetters(
+									((String) value).replaceAll("_", " ").replaceAll(" PER CENTO", "%")));
 						else
 							result.add(value);
 					}
 				}
-		} catch (UnsupportedOperationException | IllegalArgumentException
-				| IllegalAccessException | InvocationTargetException e) {
+		} catch (UnsupportedOperationException | IllegalArgumentException | IllegalAccessException
+				| InvocationTargetException e) {
 			logger.error("formattazione della collection", e.getMessage());
 		}
 		return result.toArray();

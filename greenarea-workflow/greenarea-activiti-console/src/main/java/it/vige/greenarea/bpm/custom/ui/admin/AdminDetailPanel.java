@@ -32,8 +32,7 @@ public class AdminDetailPanel extends DetailPanel {
 
 	private I18nManager i18nManager = get().getI18nManager();
 
-	private transient RepositoryService repositoryService = getDefaultProcessEngine()
-			.getRepositoryService();
+	private transient RepositoryService repositoryService = getDefaultProcessEngine().getRepositoryService();
 
 	private AbstractTablePage parentPage;
 
@@ -71,18 +70,13 @@ public class AdminDetailPanel extends DetailPanel {
 			String id = (String) item.getItemProperty("id").getValue();
 			switch (id) {
 			case "0-0":
-				String processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("impostazioneFiltri")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new DefinizioneFiltri(processDefinitionId,
-						this));
+				String processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("impostazioneFiltri").latestVersion().singleResult().getId();
+				addDetailComponent(new DefinizioneFiltri(processDefinitionId, this));
 				break;
 			case "0-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("variazioneFiltri")
-						.latestVersion().singleResult().getId();
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("variazioneFiltri").latestVersion().singleResult().getId();
 				addDetailComponent(new LetturaFiltri(processDefinitionId, this));
 				break;
 			}

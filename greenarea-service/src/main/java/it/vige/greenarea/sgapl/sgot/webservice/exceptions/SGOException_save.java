@@ -32,116 +32,65 @@ public class SGOException_save extends Exception {
 			SGOerrorCodes.class);
 
 	static {
-		SGOerrorDesc.put(SGOerrorCodes.UNSOPPORTED_OPERATION,
-				new SGOerrorMessage("Not supported yet.", 0));
+		SGOerrorDesc.put(SGOerrorCodes.UNSOPPORTED_OPERATION, new SGOerrorMessage("Not supported yet.", 0));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_DATA,
-				new SGOerrorMessage(
-						"Request Shipping with null ShippingOrderData", 0));
-		SGOerrorDesc.put(SGOerrorCodes.NULL_REF_CONTRACT, new SGOerrorMessage(
-				"Client Account is null", 0));
-		SGOerrorDesc.put(SGOerrorCodes.UNKNOWN_REF_CONTRACT,
-				new SGOerrorMessage("Client Account {0} is unknown", 1));
-		SGOerrorDesc.put(SGOerrorCodes.UNKNOWN_SHIPPING_ID,
-				new SGOerrorMessage("ShippingOrderID {0} is unknown", 1));
+				new SGOerrorMessage("Request Shipping with null ShippingOrderData", 0));
+		SGOerrorDesc.put(SGOerrorCodes.NULL_REF_CONTRACT, new SGOerrorMessage("Client Account is null", 0));
+		SGOerrorDesc.put(SGOerrorCodes.UNKNOWN_REF_CONTRACT, new SGOerrorMessage("Client Account {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.UNKNOWN_SHIPPING_ID, new SGOerrorMessage("ShippingOrderID {0} is unknown", 1));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_DEST,
-				new SGOerrorMessage(
-						"Request Shipping with null Destination Address", 0));
+				new SGOerrorMessage("Request Shipping with null Destination Address", 0));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_SOURCE,
-				new SGOerrorMessage(
-						"Request Shipping with null Source Address", 0));
+				new SGOerrorMessage("Request Shipping with null Source Address", 0));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_ITEMS,
-				new SGOerrorMessage(
-						"Request Shipping with no ShippingItemList", 0));
+				new SGOerrorMessage("Request Shipping with no ShippingItemList", 0));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_DATA,
-				new SGOerrorMessage(
-						"Request Shipping with no ShippingOrder data", 0));
+				new SGOerrorMessage("Request Shipping with no ShippingOrder data", 0));
 		SGOerrorDesc.put(SGOerrorCodes.REQUEST_SHIPPING_NO_TRANSPORT,
-				new SGOerrorMessage("Request Shipping: no transport available",
-						0));
+				new SGOerrorMessage("Request Shipping: no transport available", 0));
 		SGOerrorDesc.put(SGOerrorCodes.ESTIMATE_SHIPPING_NO_DEST,
-				new SGOerrorMessage(
-						"Estimate Shipping with null Destination Address", 0));
+				new SGOerrorMessage("Estimate Shipping with null Destination Address", 0));
 		SGOerrorDesc.put(SGOerrorCodes.ESTIMATE_SHIPPING_NO_SOURCE,
-				new SGOerrorMessage(
-						"Estimate Shipping with null Source Address", 0));
+				new SGOerrorMessage("Estimate Shipping with null Source Address", 0));
 		SGOerrorDesc.put(SGOerrorCodes.ESTIMATE_SHIPPING_NO_ITEMS,
-				new SGOerrorMessage(
-						"Estimate Shipping with no ShippingItemList", 0));
+				new SGOerrorMessage("Estimate Shipping with no ShippingItemList", 0));
 		SGOerrorDesc.put(SGOerrorCodes.ESTIMATE_SHIPPING_NO_DATA,
-				new SGOerrorMessage(
-						"Estimate Shipping with no ShippingOrder data", 0));
+				new SGOerrorMessage("Estimate Shipping with no ShippingOrder data", 0));
 		SGOerrorDesc.put(SGOerrorCodes.ESTIMATE_SHIPPING_NO_TRANSPORT,
-				new SGOerrorMessage(
-						"Estimate Shipping: no transport available", 0));
-		SGOerrorDesc.put(SGOerrorCodes.CANNOT_LOCATE, new SGOerrorMessage(
-				"Cannot Locate shippingID {0}", 1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.LOCATE_NULL_SHIPPING_ID,
-						new SGOerrorMessage(
-								"Locate Shipping Request with null ShippingOrderID",
-								0));
-		SGOerrorDesc
-				.put(SGOerrorCodes.LOCATE_UNKNOWN_SHIPPING_ID,
-						new SGOerrorMessage(
-								"locate Shipping Request: shippingID {0} is unknown",
-								1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.LOCATE_NOT_ALLOWED,
-						new SGOerrorMessage(
-								"locate Shipping Request not allowed: shippingID {0} status is {1}",
-								2));
-		SGOerrorDesc
-				.put(SGOerrorCodes.CONFIRM_NULL_SHIPPING_ID,
-						new SGOerrorMessage(
-								"Confirm Shipping Request with null ShippingOrderID",
-								0));
+				new SGOerrorMessage("Estimate Shipping: no transport available", 0));
+		SGOerrorDesc.put(SGOerrorCodes.CANNOT_LOCATE, new SGOerrorMessage("Cannot Locate shippingID {0}", 1));
+		SGOerrorDesc.put(SGOerrorCodes.LOCATE_NULL_SHIPPING_ID,
+				new SGOerrorMessage("Locate Shipping Request with null ShippingOrderID", 0));
+		SGOerrorDesc.put(SGOerrorCodes.LOCATE_UNKNOWN_SHIPPING_ID,
+				new SGOerrorMessage("locate Shipping Request: shippingID {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.LOCATE_NOT_ALLOWED,
+				new SGOerrorMessage("locate Shipping Request not allowed: shippingID {0} status is {1}", 2));
+		SGOerrorDesc.put(SGOerrorCodes.CONFIRM_NULL_SHIPPING_ID,
+				new SGOerrorMessage("Confirm Shipping Request with null ShippingOrderID", 0));
 		SGOerrorDesc.put(SGOerrorCodes.CONFIRM_UNKNOWN_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Confirm Shipping Request: shippingID {0} is unknown",
-						1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.CONFIRM_NOT_ALLOWED,
-						new SGOerrorMessage(
-								"Confirm Shipping Request not allowed: shippingID {0} status is {1}",
-								2));
+				new SGOerrorMessage("Confirm Shipping Request: shippingID {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.CONFIRM_NOT_ALLOWED,
+				new SGOerrorMessage("Confirm Shipping Request not allowed: shippingID {0} status is {1}", 2));
 		SGOerrorDesc.put(SGOerrorCodes.DROP_NULL_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Drop Shipping Request with null ShippingOrderID", 0));
+				new SGOerrorMessage("Drop Shipping Request with null ShippingOrderID", 0));
 		SGOerrorDesc.put(SGOerrorCodes.DROP_UNKNOWN_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Drop Shipping Request: shippingID {0} is unknown", 1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.DROP_NOT_ALLOWED,
-						new SGOerrorMessage(
-								"Drop Shipping Request not allowed: shippingID {0} status is {1}",
-								2));
-		SGOerrorDesc
-				.put(SGOerrorCodes.DROP_TRANSPORT_ERROR,
-						new SGOerrorMessage(
-								"Drop Shipping Request not allowed for shippingID {0}: Gat error for transport {1}  is {3}",
-								2));
+				new SGOerrorMessage("Drop Shipping Request: shippingID {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.DROP_NOT_ALLOWED,
+				new SGOerrorMessage("Drop Shipping Request not allowed: shippingID {0} status is {1}", 2));
+		SGOerrorDesc.put(SGOerrorCodes.DROP_TRANSPORT_ERROR, new SGOerrorMessage(
+				"Drop Shipping Request not allowed for shippingID {0}: Gat error for transport {1}  is {3}", 2));
 		SGOerrorDesc.put(SGOerrorCodes.GET_TRACKING_NULL_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Get Tracking Request with null ShippingOrderID", 0));
+				new SGOerrorMessage("Get Tracking Request with null ShippingOrderID", 0));
 		SGOerrorDesc.put(SGOerrorCodes.GET_TRACKING_UNKNOWN_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Get Tracking Request: shippingID {0} is unknown", 1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.GET_TRACKING_NOT_ALLOWED,
-						new SGOerrorMessage(
-								"Get Tracking Request not allowed: shippingID {0} status is {1}",
-								2));
+				new SGOerrorMessage("Get Tracking Request: shippingID {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.GET_TRACKING_NOT_ALLOWED,
+				new SGOerrorMessage("Get Tracking Request not allowed: shippingID {0} status is {1}", 2));
 		SGOerrorDesc.put(SGOerrorCodes.GET_STATUS_NULL_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Get Status Request with null ShippingOrderID", 0));
+				new SGOerrorMessage("Get Status Request with null ShippingOrderID", 0));
 		SGOerrorDesc.put(SGOerrorCodes.GET_STATUS_UNKNOWN_SHIPPING_ID,
-				new SGOerrorMessage(
-						"Get Status Request: shippingID {0} is unknown", 1));
-		SGOerrorDesc
-				.put(SGOerrorCodes.GET_STATUS_NOT_ALLOWED,
-						new SGOerrorMessage(
-								"Get Status Requestnot allowed: shippingID {0} status is {1}",
-								2));
+				new SGOerrorMessage("Get Status Request: shippingID {0} is unknown", 1));
+		SGOerrorDesc.put(SGOerrorCodes.GET_STATUS_NOT_ALLOWED,
+				new SGOerrorMessage("Get Status Requestnot allowed: shippingID {0} status is {1}", 2));
 	};
 
 	private SGOerrorCodes errorCode;

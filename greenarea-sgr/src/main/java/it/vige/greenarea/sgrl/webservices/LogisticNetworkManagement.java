@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.sgrl.webservices;
 
-import it.vige.greenarea.sgrl.LogisticNetworkManager;
-
 import java.io.UnsupportedEncodingException;
 
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+
+import it.vige.greenarea.sgrl.LogisticNetworkManager;
 
 @WebService(serviceName = "LogisticNetworkManagement")
 public class LogisticNetworkManagement {
@@ -32,11 +32,9 @@ public class LogisticNetworkManagement {
 	 * Web service operation
 	 */
 	@WebMethod(operationName = "upload")
-	public String upload(@WebParam(name = "name") String name,
-			@WebParam(name = "xmlGraph") String xmlGraph)
+	public String upload(@WebParam(name = "name") String name, @WebParam(name = "xmlGraph") String xmlGraph)
 			throws UnsupportedEncodingException {
-		logisticNetworkManager.useLN(LogisticNetworkManager.DEFAULT_NETWORK,
-				xmlGraph);
+		logisticNetworkManager.useLN(LogisticNetworkManager.DEFAULT_NETWORK, xmlGraph);
 		return null;
 	}
 
@@ -45,7 +43,6 @@ public class LogisticNetworkManagement {
 	 */
 	@WebMethod(operationName = "download")
 	public String download(@WebParam(name = "name") String name) {
-		return logisticNetworkManager
-				.getLN(LogisticNetworkManager.DEFAULT_NETWORK);
+		return logisticNetworkManager.getLN(LogisticNetworkManager.DEFAULT_NETWORK);
 	}
 }

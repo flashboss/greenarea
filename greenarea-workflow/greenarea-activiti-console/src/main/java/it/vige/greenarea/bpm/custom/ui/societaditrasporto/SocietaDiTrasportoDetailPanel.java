@@ -32,8 +32,7 @@ public class SocietaDiTrasportoDetailPanel extends DetailPanel {
 
 	private I18nManager i18nManager = get().getI18nManager();
 
-	private transient RepositoryService repositoryService = getDefaultProcessEngine()
-			.getRepositoryService();
+	private transient RepositoryService repositoryService = getDefaultProcessEngine().getRepositoryService();
 
 	private AbstractTablePage parentPage;
 
@@ -60,8 +59,7 @@ public class SocietaDiTrasportoDetailPanel extends DetailPanel {
 			title.addStyleName(LABEL_H2);
 			addComponent(title);
 		} else {
-			String name = i18nManager
-					.getMessage(MAIN_MENU_SOCIETA_DI_TRASPORTO_HOME);
+			String name = i18nManager.getMessage(MAIN_MENU_SOCIETA_DI_TRASPORTO_HOME);
 			Label title = new Label(name.toUpperCase());
 			title.addStyleName(LABEL_H2);
 			addComponent(title);
@@ -73,46 +71,30 @@ public class SocietaDiTrasportoDetailPanel extends DetailPanel {
 			String id = (String) item.getItemProperty("id").getValue();
 			switch (id) {
 			case "0-0":
-				String processDefinitionId = repositoryService
-						.createProcessDefinitionQuery()
-						.active()
-						.processDefinitionKey(
-								"aggiornaStatoVeicoliSocietaDiTrasporto")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new AggiornaStatoVeicoli(
-						processDefinitionId, this));
+				String processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("aggiornaStatoVeicoliSocietaDiTrasporto").latestVersion().singleResult()
+						.getId();
+				addDetailComponent(new AggiornaStatoVeicoli(processDefinitionId, this));
 				break;
 			case "1-0":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery()
-						.active()
-						.processDefinitionKey("visualizzaMissioniAutorizzateSt")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new VisualizzaMissioniAutorizzate(
-						processDefinitionId, this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("visualizzaMissioniAutorizzateSt").latestVersion().singleResult().getId();
+				addDetailComponent(new VisualizzaMissioniAutorizzate(processDefinitionId, this));
 				break;
 			case "1-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("monitoringMissioniSt")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new MonitoringMissioni(processDefinitionId,
-						this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("monitoringMissioniSt").latestVersion().singleResult().getId();
+				addDetailComponent(new MonitoringMissioni(processDefinitionId, this));
 				break;
 			case "2-0":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("posizioneVeicoloSt")
-						.latestVersion().singleResult().getId();
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("posizioneVeicoloSt").latestVersion().singleResult().getId();
 				addDetailComponent(new PosizioneVeicolo(processDefinitionId, this));
 				break;
 			case "2-1":
-				processDefinitionId = repositoryService
-						.createProcessDefinitionQuery().active()
-						.processDefinitionKey("performanceVeicoliSt")
-						.latestVersion().singleResult().getId();
-				addDetailComponent(new PerformanceVeicoli(processDefinitionId,
-						this));
+				processDefinitionId = repositoryService.createProcessDefinitionQuery().active()
+						.processDefinitionKey("performanceVeicoliSt").latestVersion().singleResult().getId();
+				addDetailComponent(new PerformanceVeicoli(processDefinitionId, this));
 				break;
 			}
 		} else {

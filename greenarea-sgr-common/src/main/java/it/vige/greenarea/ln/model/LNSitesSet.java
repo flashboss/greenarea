@@ -26,15 +26,15 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.model;
 
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
-
 import java.util.HashSet;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
 
 public class LNSitesSet extends LNNode {
 

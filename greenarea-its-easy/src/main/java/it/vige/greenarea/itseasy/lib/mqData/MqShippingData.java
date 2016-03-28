@@ -13,11 +13,11 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.lib.mqData;
 
-import it.vige.greenarea.cl.library.entities.DBGeoLocation;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+
+import it.vige.greenarea.cl.library.entities.DBGeoLocation;
 
 public class MqShippingData implements Serializable {
 
@@ -36,11 +36,9 @@ public class MqShippingData implements Serializable {
 	private Map<String, String> attributes;
 	private List<MY_Attachment> attachments;
 
-	public MqShippingData(String shId, String trId, DBGeoLocation sourceLocation,
-			DBGeoLocation destinationLocation, DBGeoLocation pickup,
-			DBGeoLocation dropdown, String serviceClass,
-			List<MqFreightData> shippingItems, Map<String, String> attributes,
-			List<MY_Attachment> attachments) {
+	public MqShippingData(String shId, String trId, DBGeoLocation sourceLocation, DBGeoLocation destinationLocation,
+			DBGeoLocation pickup, DBGeoLocation dropdown, String serviceClass, List<MqFreightData> shippingItems,
+			Map<String, String> attributes, List<MY_Attachment> attachments) {
 		this.shId = shId;
 		this.trId = trId;
 		this.sourceLocation = sourceLocation;
@@ -147,8 +145,7 @@ public class MqShippingData implements Serializable {
 			sb.append("\n- mittente: ").append(sourceLocation.toString());
 		}
 		if (this.destinationLocation != null) {
-			sb.append("\n- destinatario: ").append(
-					destinationLocation.toString());
+			sb.append("\n- destinatario: ").append(destinationLocation.toString());
 		}
 		if (this.pickup != null) {
 			sb.append("\n- pickUp: ").append(pickup.toString());

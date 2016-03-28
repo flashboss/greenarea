@@ -14,17 +14,6 @@
 package it.vige.greenarea.sgrl;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.db.entities.LNimg;
-import it.vige.greenarea.db.facade.LNimgFacade;
-import it.vige.greenarea.geo.GisService;
-import it.vige.greenarea.geo.GoogleGis;
-import it.vige.greenarea.geo.GisService.GeoCodingException;
-import it.vige.greenarea.ln.model.LNCellCodec;
-import it.vige.greenarea.ln.model.LNSite;
-import it.vige.greenarea.ln.model.LNSitesSet;
-import it.vige.greenarea.ln.model.LogisticNetwork;
-import it.vige.greenarea.utilities.Application;
-import it.vige.greenarea.utilities.LNutilities;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -46,6 +35,18 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxXmlUtils;
 import com.mxgraph.view.mxGraph;
+
+import it.vige.greenarea.db.entities.LNimg;
+import it.vige.greenarea.db.facade.LNimgFacade;
+import it.vige.greenarea.geo.GisService;
+import it.vige.greenarea.geo.GisService.GeoCodingException;
+import it.vige.greenarea.geo.GoogleGis;
+import it.vige.greenarea.ln.model.LNCellCodec;
+import it.vige.greenarea.ln.model.LNSite;
+import it.vige.greenarea.ln.model.LNSitesSet;
+import it.vige.greenarea.ln.model.LogisticNetwork;
+import it.vige.greenarea.utilities.Application;
+import it.vige.greenarea.utilities.LNutilities;
 
 @Singleton
 public class LogisticNetworkManager {
@@ -79,10 +80,8 @@ public class LogisticNetworkManager {
 		}
 		for (LNSite lns : s) {
 			String zip;
-			logger.info(String.format(
-					"Refreshing Address: %s, %s, %s, %s, %s, %s, %s",
-					lns.getNumber(), lns.getStreet(), lns.getCity(),
-					lns.getAdminAreaLevel1(), lns.getAdminAreaLevel2(),
+			logger.info(String.format("Refreshing Address: %s, %s, %s, %s, %s, %s, %s", lns.getNumber(),
+					lns.getStreet(), lns.getCity(), lns.getAdminAreaLevel1(), lns.getAdminAreaLevel2(),
 					lns.getZipCode(), lns.getCountry()));
 			zip = lns.getZipCode();
 			try {
@@ -94,8 +93,7 @@ public class LogisticNetworkManager {
 		}
 	}
 
-	public void saveLogisticNetwork(String name, LogisticNetwork ln)
-			throws UnsupportedEncodingException {
+	public void saveLogisticNetwork(String name, LogisticNetwork ln) throws UnsupportedEncodingException {
 		saveLogisticNetwork(name, _encode(ln));
 	}
 
@@ -104,8 +102,7 @@ public class LogisticNetworkManager {
 		if (lnimg == null) {
 			lnimg = new LNimg();
 			lnimg.setName(name);
-			lnimg.setTimeStamp(GregorianCalendar.getInstance()
-					.getTimeInMillis());
+			lnimg.setTimeStamp(GregorianCalendar.getInstance().getTimeInMillis());
 			lnimg.setO(xml);
 			lNimgFacade.create(lnimg);
 		} else {
@@ -114,21 +111,16 @@ public class LogisticNetworkManager {
 		}
 	}
 
-	private String _encode(LogisticNetwork logisticNetwork)
-			throws UnsupportedEncodingException {
+	private String _encode(LogisticNetwork logisticNetwork) throws UnsupportedEncodingException {
 		mxCodec codec = new mxCodec();
-		return URLEncoder.encode(
-				mxXmlUtils.getXml(codec.encode(logisticNetwork.getModel())),
-				"UTF-8");
+		return URLEncoder.encode(mxXmlUtils.getXml(codec.encode(logisticNetwork.getModel())), "UTF-8");
 	}
 
-	private LogisticNetwork _decode(String xmlGraph)
-			throws UnsupportedEncodingException {
+	private LogisticNetwork _decode(String xmlGraph) throws UnsupportedEncodingException {
 		Document document;
 		document = mxXmlUtils.parseXml(URLDecoder.decode(xmlGraph, "UTF-8"));
 		mxCodec codec = new mxCodec(document);
-		mxIGraphModel m = (mxIGraphModel) codec.decode(document
-				.getDocumentElement());
+		mxIGraphModel m = (mxIGraphModel) codec.decode(document.getDocumentElement());
 		if (m == null)
 			return null;
 		LogisticNetwork ln = new LogisticNetwork();
@@ -136,15 +128,13 @@ public class LogisticNetworkManager {
 		return ln;
 	}
 
-	public void useLN(String name, LogisticNetwork logisticNetwork)
-			throws UnsupportedEncodingException {
+	public void useLN(String name, LogisticNetwork logisticNetwork) throws UnsupportedEncodingException {
 		saveLogisticNetwork(name, logisticNetwork);
 		LNutilities.setLogisticNetwork(logisticNetwork);
 		refreshAllAddresses();
 	}
 
-	public void useLN(String name, String xmlGraph)
-			throws UnsupportedEncodingException {
+	public void useLN(String name, String xmlGraph) throws UnsupportedEncodingException {
 		saveLogisticNetwork(name, xmlGraph);
 		LNutilities.setLogisticNetwork(_decode(xmlGraph));
 		refreshAllAddresses();
@@ -152,9 +142,8 @@ public class LogisticNetworkManager {
 
 	@PostConstruct
 	public void execute() {
-		Locale.setDefault(new Locale(
-				Application.getProperty("Locale.language"), Application
-						.getProperty("Locale.country")));
+		Locale.setDefault(
+				new Locale(Application.getProperty("Locale.language"), Application.getProperty("Locale.country")));
 		mxCodecRegistry.register(new LNCellCodec());
 		try {
 			useLN(DEFAULT_NETWORK);

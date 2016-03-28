@@ -13,14 +13,14 @@
  ******************************************************************************/
 package it.vige.greenarea.itseasy.routing.swing;
 
-import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.dto.GeoLocation;
-import it.vige.greenarea.dto.GeoLocationInterface;
-
 import java.awt.event.ActionEvent;
 
 import com.mxgraph.swing.mxGraphComponent;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.dto.GeoLocation;
+import it.vige.greenarea.dto.GeoLocationInterface;
+import it.vige.greenarea.itseasy.swing.editor.LogisticsNetEditor;
 
 public class RouteFinderDialog extends java.awt.Dialog {
 	/**
@@ -98,8 +98,7 @@ public class RouteFinderDialog extends java.awt.Dialog {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
-				RouteFinderDialog dialog = new RouteFinderDialog(
-						new java.awt.Frame(), true);
+				RouteFinderDialog dialog = new RouteFinderDialog(new java.awt.Frame(), true);
 				dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
 					public void windowClosing(java.awt.event.WindowEvent e) {

@@ -13,10 +13,10 @@
  ******************************************************************************/
 package it.vige.greenarea.ln.model;
 
+import org.w3c.dom.Element;
+
 import it.vige.greenarea.dto.GeoLocation;
 import it.vige.greenarea.dto.GeoLocationInterface;
-
-import org.w3c.dom.Element;
 
 public class LNArea extends LNNode implements GeoLocationInterface {
 	/**
@@ -30,9 +30,7 @@ public class LNArea extends LNNode implements GeoLocationInterface {
 			return false;
 		boolean result = true;
 		for (int i = 0; i < 5; i++) {
-			result = result
-					&& (zipCode.charAt(i) == 'x' || zip.charAt(i) == zipCode
-							.charAt(i));
+			result = result && (zipCode.charAt(i) == 'x' || zip.charAt(i) == zipCode.charAt(i));
 		}
 		return result;
 	}
@@ -230,16 +228,11 @@ public class LNArea extends LNNode implements GeoLocationInterface {
 		case city:
 			result = result && l.getCity().equalsIgnoreCase(location.getCity());
 		case adminAreaLevel2:
-			result = result
-					&& l.getAdminAreaLevel2().equalsIgnoreCase(
-							location.getAdminAreaLevel2());
+			result = result && l.getAdminAreaLevel2().equalsIgnoreCase(location.getAdminAreaLevel2());
 		case adminAreaLevel1:
-			result = result
-					&& l.getAdminAreaLevel1().equalsIgnoreCase(
-							location.getAdminAreaLevel1());
+			result = result && l.getAdminAreaLevel1().equalsIgnoreCase(location.getAdminAreaLevel1());
 		case country:
-			result = result
-					&& l.getCountry().equalsIgnoreCase(location.getCountry());
+			result = result && l.getCountry().equalsIgnoreCase(location.getCountry());
 		}
 		return result;
 	}

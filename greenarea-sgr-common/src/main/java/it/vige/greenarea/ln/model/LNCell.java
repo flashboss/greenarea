@@ -14,10 +14,6 @@
 package it.vige.greenarea.ln.model;
 
 import static org.slf4j.LoggerFactory.getLogger;
-import it.vige.greenarea.I18N.I18N;
-import it.vige.greenarea.costmodels.ConstantCost;
-import it.vige.greenarea.costmodels.LNCostModels;
-import it.vige.greenarea.costmodels.LNICostFunction;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
@@ -28,6 +24,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.mxgraph.util.mxDomUtils;
+
+import it.vige.greenarea.I18N.I18N;
+import it.vige.greenarea.costmodels.ConstantCost;
+import it.vige.greenarea.costmodels.LNCostModels;
+import it.vige.greenarea.costmodels.LNICostFunction;
 
 public abstract class LNCell implements Serializable, Cloneable {
 
@@ -51,15 +52,12 @@ public abstract class LNCell implements Serializable, Cloneable {
 	}
 
 	protected Element toElement() {
-		Element nodeDescriptor = doc
-				.createElement(LNCell.class.getSimpleName());
-		nodeDescriptor.setAttribute(LNCell.LNCELLTYPE, this.getClass()
-				.getSimpleName());
+		Element nodeDescriptor = doc.createElement(LNCell.class.getSimpleName());
+		nodeDescriptor.setAttribute(LNCell.LNCELLTYPE, this.getClass().getSimpleName());
 		nodeDescriptor.setAttribute(LNCell.LNCELLNAME, distinguishedName);
 		if (costFunction == null)
 			costFunction = new ConstantCost();
-		nodeDescriptor.setAttribute(LNCell.LNCOSTFUNCTION, costFunction
-				.getClass().getSimpleName());
+		nodeDescriptor.setAttribute(LNCell.LNCOSTFUNCTION, costFunction.getClass().getSimpleName());
 		costFunction.toElement(nodeDescriptor);
 
 		return nodeDescriptor;
@@ -102,8 +100,7 @@ public abstract class LNCell implements Serializable, Cloneable {
 
 	@Override
 	public String toString() {
-		return this.distinguishedName.concat(isValid() ? "" : I18N
-				.getString("hasErrors"));
+		return this.distinguishedName.concat(isValid() ? "" : I18N.getString("hasErrors"));
 	}
 
 	@Override
