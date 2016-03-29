@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="acquisisciMissioni" name="Acquisisci Missioni" isExecutable="true">
+    <startEvent id="timerAcquisisciMissioni" name="Timer Acquisisci Missioni">
+      <documentation>contiene:
+&lt;UC4_2.6.1.1&gt;: &lt;Acquisisci missioni&gt;
+&lt;UC5_2.6.1.1&gt;: &lt;Recupera acquisizione missioni&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetOperatoriLogistici"></activiti:executionListener>
+      </extensionElements>
+      <timerEventDefinition>
+        <timeDate>T07:15:00</timeDate>
+      </timerEventDefinition>
+    </startEvent>
+    <endEvent id="endAcquisisciMissioni" name="End Acquisisci Missioni"></endEvent>
+    <subProcess id="subprocessAcquisisciMissioni" name="Sub Process Acquisisci Missioni">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico"></multiInstanceLoopCharacteristics>
+      <serviceTask id="verificaDatiMissioni" name="Verifica Dati Missioni" activiti:class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.VerificaDatiMissioni"></serviceTask>
+      <serviceTask id="aggiornamentoDatiMissioni" name="Aggiornamento Dati Missioni" activiti:class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.AggiornamentoDatiMissioni"></serviceTask>
+      <startEvent id="startSubprocessAcquisisciMissioni" name="Start Sub process Acquisisci Missioni">
+        <extensionElements>
+          <activiti:executionListener event="end" class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.SollecitoDatiMancantiNonEseguito"></activiti:executionListener>
+          <activiti:executionListener event="end" class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.SollecitoDatiNonCorrettiNonEseguito"></activiti:executionListener>
+        </extensionElements>
+      </startEvent>
+      <endEvent id="endSubprocessAcquisisciMissioni" name="End Sub process Acquisisci Missioni"></endEvent>
+      <serviceTask id="sollecitoDatiMissioniNonTrovatiAOperatoreLogistico" name="Sollecito Dati Missioni non trovati a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Sollecito Dati Missioni non trovati]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Sollecito Dati Missioni non trovati]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="segnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" name="Segnalazione Dati Missione non corretti a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Dati Missione non corretti]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Dati Missione non corretti]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="segnalazioneErroreAggiornamentoAAmministratore" name="Segnalazione Errore Aggiornamento a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="segnalazioneErroreAggiornamentoAOperatoreLogistico" name="Segnalazione Errore Aggiornamento a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="recuperaDatiMissioni" name="Recupera Dati Missioni" activiti:class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.RecuperaDatiMissioni"></serviceTask>
+      <sequenceFlow id="flowRecuperaDatiMissioni" sourceRef="startSubprocessAcquisisciMissioni" targetRef="recuperaDatiMissioni"></sequenceFlow>
+      <sequenceFlow id="flowExclusivegatewayRecuperaDatiMissioni" sourceRef="recuperaDatiMissioni" targetRef="exclusivegatewayRecuperaDatiMissioni"></sequenceFlow>
+      <exclusiveGateway id="exclusivegatewayVerificaDatiMissioni" name="Exclusive Gateway Verifica Dati Missioni"></exclusiveGateway>
+      <sequenceFlow id="flowExclusivegatewayVerificaDatiMissioni" sourceRef="verificaDatiMissioni" targetRef="exclusivegatewayVerificaDatiMissioni"></sequenceFlow>
+      <exclusiveGateway id="exclusivegatewayRecuperaDatiMissioni" name="Exclusive Gateway Recupera Dati Missioni"></exclusiveGateway>
+      <sequenceFlow id="flowSollecitoDatiMissioniNonTrovatiAOperatoreLogistico" sourceRef="exclusivegatewayRecuperaDatiMissioni" targetRef="sollecitoDatiMissioniNonTrovatiAOperatoreLogistico">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERROREDATIMANCANTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowVerificaDatiMissioni" sourceRef="exclusivegatewayRecuperaDatiMissioni" targetRef="verificaDatiMissioni">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'ERROREDATIMANCANTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowAggiornamentoDatiMissioni" sourceRef="exclusivegatewayVerificaDatiMissioni" targetRef="aggiornamentoDatiMissioni">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'ERROREDATINONCORRETTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowSegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" sourceRef="exclusivegatewayVerificaDatiMissioni" targetRef="segnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'ERROREDATINONCORRETTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <inclusiveGateway id="inclusivegatewayAggiornamentoDatiMissioni" name="Inclusive Gateway Aggiornamento Dati Missioni"></inclusiveGateway>
+      <sequenceFlow id="flowSegnalazioneErroreAggiornamentoAAmministratore" sourceRef="inclusivegatewayAggiornamentoDatiMissioni" targetRef="segnalazioneErroreAggiornamentoAAmministratore">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowSegnalazioneErroreAggiornamentoAOperatoreLogistico" sourceRef="inclusivegatewayAggiornamentoDatiMissioni" targetRef="segnalazioneErroreAggiornamentoAOperatoreLogistico">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo != 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowendInclusivegatewayAggiornamentoDatiMissioni" sourceRef="inclusivegatewayAggiornamentoDatiMissioni" targetRef="endSubprocessAcquisisciMissioni">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowInclusivegatewayAggiornamentoDatiMissioni" sourceRef="aggiornamentoDatiMissioni" targetRef="inclusivegatewayAggiornamentoDatiMissioni"></sequenceFlow>
+      <inclusiveGateway id="inclusivegatewayendAggiornamentoDatiMissioni" name="Inclusive Gateway End Aggiornamento Dati Missioni"></inclusiveGateway>
+      <sequenceFlow id="flowendSegnalazioneErroreAggiornamentoAAmministratore" sourceRef="segnalazioneErroreAggiornamentoAAmministratore" targetRef="inclusivegatewayendAggiornamentoDatiMissioni"></sequenceFlow>
+      <sequenceFlow id="flowendSegnalazioneErroreAggiornamentoAOperatoreLogistico" sourceRef="segnalazioneErroreAggiornamentoAOperatoreLogistico" targetRef="inclusivegatewayendAggiornamentoDatiMissioni"></sequenceFlow>
+      <sequenceFlow id="flowendInclusivegatewayendAggiornamentoDatiMissioni" sourceRef="inclusivegatewayendAggiornamentoDatiMissioni" targetRef="endSubprocessAcquisisciMissioni"></sequenceFlow>
+      <sequenceFlow id="flowExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" sourceRef="segnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" targetRef="exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico"></sequenceFlow>
+      <exclusiveGateway id="exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" name="Exclusive Gateway Segnalazione Dati Missione non corretti a Operatore Logistico"></exclusiveGateway>
+      <sequenceFlow id="flowendExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" sourceRef="exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" targetRef="endSubprocessAcquisisciMissioni">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${sollecitodatinoncorrettieseguito}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flowAttesaNuoviDatiMissioni" sourceRef="exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" targetRef="timerAttesaDatiNonCorretti">
+        <extensionElements>
+          <activiti:executionListener event="take" class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.SollecitoDatiNonCorrettiEseguito"></activiti:executionListener>
+        </extensionElements>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!sollecitodatinoncorrettieseguito}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow1" sourceRef="sollecitoDatiMissioniNonTrovatiAOperatoreLogistico" targetRef="exclusivegateway1"></sequenceFlow>
+      <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow2" sourceRef="exclusivegateway1" targetRef="timerAttesaDatiNonTrovati">
+        <extensionElements>
+          <activiti:executionListener event="take" class="it.vige.greenarea.bpm.tempo.acquisiscimissioni.SollecitoDatiMancantiEseguito"></activiti:executionListener>
+        </extensionElements>
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!sollecitodatimancantieseguito}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="endSubprocessAcquisisciMissioni">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${sollecitodatimancantieseguito}]]></conditionExpression>
+      </sequenceFlow>
+      <intermediateCatchEvent id="timerAttesaDatiNonCorretti" name="Timer Attesa Dati non corretti">
+        <timerEventDefinition>
+          <timeDuration>PT10M</timeDuration>
+        </timerEventDefinition>
+      </intermediateCatchEvent>
+      <intermediateCatchEvent id="timerAttesaDatiNonTrovati" name="Timer Attesa dati non trovati">
+        <timerEventDefinition>
+          <timeDuration>PT10M</timeDuration>
+        </timerEventDefinition>
+      </intermediateCatchEvent>
+      <sequenceFlow id="flowendSollecitoDatiMissioniNonTrovatiAOperatoreLogistico" sourceRef="timerAttesaDatiNonTrovati" targetRef="recuperaDatiMissioni"></sequenceFlow>
+      <sequenceFlow id="flowendAttesaNuoviDatiMissioni" sourceRef="timerAttesaDatiNonCorretti" targetRef="recuperaDatiMissioni"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flowSubprocessAcquisisciMissioni" sourceRef="timerAcquisisciMissioni" targetRef="subprocessAcquisisciMissioni"></sequenceFlow>
+    <sequenceFlow id="flowendSubprocessAcquisisciMissioni" sourceRef="subprocessAcquisisciMissioni" targetRef="endAcquisisciMissioni"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_acquisisciMissioni">
+    <bpmndi:BPMNPlane bpmnElement="acquisisciMissioni" id="BPMNPlane_acquisisciMissioni">
+      <bpmndi:BPMNShape bpmnElement="timerAcquisisciMissioni" id="BPMNShape_timerAcquisisciMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="150.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endAcquisisciMissioni" id="BPMNShape_endAcquisisciMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="160.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocessAcquisisciMissioni" id="BPMNShape_subprocessAcquisisciMissioni">
+        <omgdc:Bounds height="641.0" width="1047.0" x="370.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="verificaDatiMissioni" id="BPMNShape_verificaDatiMissioni">
+        <omgdc:Bounds height="61.0" width="121.0" x="420.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornamentoDatiMissioni" id="BPMNShape_aggiornamentoDatiMissioni">
+        <omgdc:Bounds height="71.0" width="105.0" x="690.0" y="325.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSubprocessAcquisisciMissioni" id="BPMNShape_startSubprocessAcquisisciMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="450.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endSubprocessAcquisisciMissioni" id="BPMNShape_endSubprocessAcquisisciMissioni">
+        <omgdc:Bounds height="35.0" width="35.0" x="980.0" y="450.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoDatiMissioniNonTrovatiAOperatoreLogistico" id="BPMNShape_sollecitoDatiMissioniNonTrovatiAOperatoreLogistico">
+        <omgdc:Bounds height="81.0" width="117.0" x="824.0" y="52.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" id="BPMNShape_segnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <omgdc:Bounds height="71.0" width="121.0" x="570.0" y="470.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoAAmministratore" id="BPMNShape_segnalazioneErroreAggiornamentoAAmministratore">
+        <omgdc:Bounds height="81.0" width="141.0" x="960.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoAOperatoreLogistico" id="BPMNShape_segnalazioneErroreAggiornamentoAOperatoreLogistico">
+        <omgdc:Bounds height="81.0" width="131.0" x="980.0" y="310.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="recuperaDatiMissioni" id="BPMNShape_recuperaDatiMissioni">
+        <omgdc:Bounds height="71.0" width="111.0" x="520.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayVerificaDatiMissioni" id="BPMNShape_exclusivegatewayVerificaDatiMissioni">
+        <omgdc:Bounds height="40.0" width="40.0" x="460.0" y="390.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayRecuperaDatiMissioni" id="BPMNShape_exclusivegatewayRecuperaDatiMissioni">
+        <omgdc:Bounds height="40.0" width="40.0" x="650.0" y="270.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inclusivegatewayAggiornamentoDatiMissioni" id="BPMNShape_inclusivegatewayAggiornamentoDatiMissioni">
+        <omgdc:Bounds height="40.0" width="40.0" x="850.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="inclusivegatewayendAggiornamentoDatiMissioni" id="BPMNShape_inclusivegatewayendAggiornamentoDatiMissioni">
+        <omgdc:Bounds height="40.0" width="40.0" x="1170.0" y="370.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" id="BPMNShape_exclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <omgdc:Bounds height="40.0" width="40.0" x="770.0" y="447.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="1180.0" y="77.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerAttesaDatiNonCorretti" id="BPMNShape_timerAttesaDatiNonCorretti">
+        <omgdc:Bounds height="35.0" width="35.0" x="950.0" y="570.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerAttesaDatiNonTrovati" id="BPMNShape_timerAttesaDatiNonTrovati">
+        <omgdc:Bounds height="35.0" width="35.0" x="1360.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flowRecuperaDatiMissioni" id="BPMNEdge_flowRecuperaDatiMissioni">
+        <omgdi:waypoint x="467.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="575.0" y="170.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewayRecuperaDatiMissioni" id="BPMNEdge_flowExclusivegatewayRecuperaDatiMissioni">
+        <omgdi:waypoint x="575.0" y="241.0"></omgdi:waypoint>
+        <omgdi:waypoint x="670.0" y="270.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewayVerificaDatiMissioni" id="BPMNEdge_flowExclusivegatewayVerificaDatiMissioni">
+        <omgdi:waypoint x="480.0" y="351.0"></omgdi:waypoint>
+        <omgdi:waypoint x="480.0" y="390.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSollecitoDatiMissioniNonTrovatiAOperatoreLogistico" id="BPMNEdge_flowSollecitoDatiMissioniNonTrovatiAOperatoreLogistico">
+        <omgdi:waypoint x="670.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="882.0" y="133.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowVerificaDatiMissioni" id="BPMNEdge_flowVerificaDatiMissioni">
+        <omgdi:waypoint x="650.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="541.0" y="320.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowAggiornamentoDatiMissioni" id="BPMNEdge_flowAggiornamentoDatiMissioni">
+        <omgdi:waypoint x="500.0" y="410.0"></omgdi:waypoint>
+        <omgdi:waypoint x="742.0" y="396.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" id="BPMNEdge_flowSegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <omgdi:waypoint x="480.0" y="430.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="470.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSegnalazioneErroreAggiornamentoAAmministratore" id="BPMNEdge_flowSegnalazioneErroreAggiornamentoAAmministratore">
+        <omgdi:waypoint x="870.0" y="340.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1030.0" y="251.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSegnalazioneErroreAggiornamentoAOperatoreLogistico" id="BPMNEdge_flowSegnalazioneErroreAggiornamentoAOperatoreLogistico">
+        <omgdi:waypoint x="890.0" y="360.0"></omgdi:waypoint>
+        <omgdi:waypoint x="980.0" y="350.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendInclusivegatewayAggiornamentoDatiMissioni" id="BPMNEdge_flowendInclusivegatewayAggiornamentoDatiMissioni">
+        <omgdi:waypoint x="870.0" y="380.0"></omgdi:waypoint>
+        <omgdi:waypoint x="997.0" y="450.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowInclusivegatewayAggiornamentoDatiMissioni" id="BPMNEdge_flowInclusivegatewayAggiornamentoDatiMissioni">
+        <omgdi:waypoint x="795.0" y="360.0"></omgdi:waypoint>
+        <omgdi:waypoint x="850.0" y="360.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendSegnalazioneErroreAggiornamentoAAmministratore" id="BPMNEdge_flowendSegnalazioneErroreAggiornamentoAAmministratore">
+        <omgdi:waypoint x="1030.0" y="251.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1190.0" y="370.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendSegnalazioneErroreAggiornamentoAOperatoreLogistico" id="BPMNEdge_flowendSegnalazioneErroreAggiornamentoAOperatoreLogistico">
+        <omgdi:waypoint x="1111.0" y="350.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1190.0" y="370.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendInclusivegatewayendAggiornamentoDatiMissioni" id="BPMNEdge_flowendInclusivegatewayendAggiornamentoDatiMissioni">
+        <omgdi:waypoint x="1190.0" y="410.0"></omgdi:waypoint>
+        <omgdi:waypoint x="997.0" y="450.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" id="BPMNEdge_flowExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <omgdi:waypoint x="691.0" y="505.0"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0" y="487.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico" id="BPMNEdge_flowendExclusivegatewaySegnalazioneDatiMissioneNonCorrettiAOperatoreLogistico">
+        <omgdi:waypoint x="810.0" y="467.0"></omgdi:waypoint>
+        <omgdi:waypoint x="980.0" y="467.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowAttesaNuoviDatiMissioni" id="BPMNEdge_flowAttesaNuoviDatiMissioni">
+        <omgdi:waypoint x="790.0" y="487.0"></omgdi:waypoint>
+        <omgdi:waypoint x="967.0" y="570.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="941.0" y="92.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1180.0" y="97.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="1220.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1314.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1377.0" y="260.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="1200.0" y="117.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1279.0" y="425.0"></omgdi:waypoint>
+        <omgdi:waypoint x="997.0" y="450.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendSollecitoDatiMissioniNonTrovatiAOperatoreLogistico" id="BPMNEdge_flowendSollecitoDatiMissioniNonTrovatiAOperatoreLogistico">
+        <omgdi:waypoint x="1377.0" y="295.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1341.0" y="467.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1123.0" y="612.0"></omgdi:waypoint>
+        <omgdi:waypoint x="653.0" y="627.0"></omgdi:waypoint>
+        <omgdi:waypoint x="386.0" y="627.0"></omgdi:waypoint>
+        <omgdi:waypoint x="386.0" y="356.0"></omgdi:waypoint>
+        <omgdi:waypoint x="386.0" y="128.0"></omgdi:waypoint>
+        <omgdi:waypoint x="575.0" y="170.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendAttesaNuoviDatiMissioni" id="BPMNEdge_flowendAttesaNuoviDatiMissioni">
+        <omgdi:waypoint x="950.0" y="587.0"></omgdi:waypoint>
+        <omgdi:waypoint x="400.0" y="574.0"></omgdi:waypoint>
+        <omgdi:waypoint x="400.0" y="205.0"></omgdi:waypoint>
+        <omgdi:waypoint x="520.0" y="205.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSubprocessAcquisisciMissioni" id="BPMNEdge_flowSubprocessAcquisisciMissioni">
+        <omgdi:waypoint x="185.0" y="307.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="350.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowendSubprocessAcquisisciMissioni" id="BPMNEdge_flowendSubprocessAcquisisciMissioni">
+        <omgdi:waypoint x="370.0" y="350.0"></omgdi:waypoint>
+        <omgdi:waypoint x="177.0" y="125.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <signal id="importaconsegneeritiriok" name="importaconsegneeritiriok"></signal>
+  <signal id="importaconsegneerititirieseguito" name="importaconsegneerititirieseguito"></signal>
+  <process id="importaConsegneERitiri" name="Importa Consegne e Ritiri" isExecutable="true">
+    <startEvent id="timerImportaConsegneERitiri" name="Timer Importa Consegne e Ritiri">
+      <documentation>contiene:
+&lt;UC1_2.6.1.1&gt;: &lt;Importa consegne/ritiri&gt;
+&lt;UC2_2.6.1.1&gt;: &lt;Recupera import consegne/ritiri&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.GetOperatoriLogistici"></activiti:executionListener>
+      </extensionElements>
+      <timerEventDefinition>
+        <timeDate>T07:15:00</timeDate>
+      </timerEventDefinition>
+    </startEvent>
+    <sequenceFlow id="flowVerificaDatiConsegneERitiri" sourceRef="timerImportaConsegneERitiri" targetRef="subprocessImportaConsegneERitiri"></sequenceFlow>
+    <subProcess id="subprocessImportaConsegneERitiri" name="Sub Process Importa Consegne e Ritiri">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="operatorilogistici" activiti:elementVariable="operatorelogistico">
+        <completionCondition>${messaggio.categoria == 'ERROREGRAVE'}</completionCondition>
+      </multiInstanceLoopCharacteristics>
+      <endEvent id="endSubprocessImportaConsegneERitiri" name="End Subprocess Importa Consegne e Ritiri"></endEvent>
+      <serviceTask id="verificaDatiConsegneERitiri" name="Verifica Dati Consegne e Ritiri" activiti:class="it.vige.greenarea.bpm.tempo.importaconsegneeritiri.VerificaDatiConsegneERitiri"></serviceTask>
+      <exclusiveGateway id="exclusivegatewayLetturaDatiConsegneERitiri" name="Exclusive Gateway Lettura Dati Consegne e Ritiri"></exclusiveGateway>
+      <serviceTask id="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriMancanti" name="Sollecito a Operatore Logistico per Dati Consegne e Ritiri mancanti" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Sollecito per Dati Consegne e Ritiri mancanti]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Sollecito per Dati Consegne e Ritiri mancanti]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <serviceTask id="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriNonCorretti" name="Sollecito a Operatore Logistico per Dati Consegne e Ritiri non corretti" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Sollecito per Dati Consegne e Ritiri non corretto]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Sollecito per Dati Consegne e Ritiri non corretto]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow4" sourceRef="exclusivegatewayLetturaDatiConsegneERitiri" targetRef="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriMancanti">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!sollecitoeseguito && messaggio.tipo == 'ERROREDATIMANCANTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow5" sourceRef="exclusivegatewayLetturaDatiConsegneERitiri" targetRef="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriNonCorretti">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${!sollecitoeseguito && messaggio.tipo == 'ERROREDATINONCORRETTI'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow6" sourceRef="verificaDatiConsegneERitiri" targetRef="exclusivegatewayLetturaDatiConsegneERitiri"></sequenceFlow>
+      <serviceTask id="aggiornamentoConsegneERitiri" name="Aggiornamento Consegne e Ritiri" activiti:delegateExpression="${aggiornamentoConsegneERitiri}"></serviceTask>
+      <sequenceFlow id="flow7" sourceRef="exclusivegatewayLetturaDatiConsegneERitiri" targetRef="aggiornamentoConsegneERitiri">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.tipo == 'NESSUNERRORE'}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegatewayAggiornamentoConsegneERitiri" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow8" sourceRef="aggiornamentoConsegneERitiri" targetRef="exclusivegatewayAggiornamentoConsegneERitiri"></sequenceFlow>
+      <sequenceFlow id="flow9" sourceRef="exclusivegatewayAggiornamentoConsegneERitiri" targetRef="exclusivegateway2">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria == 'OK'}]]></conditionExpression>
+      </sequenceFlow>
+      <startEvent id="startSubprocessImportaConsegneERitiri" name="Start Subprocess Importa Consegne e Ritiri">
+        <extensionElements>
+          <activiti:executionListener event="end" class="it.vige.greenarea.bpm.tempo.importaconsegneeritiri.SollecitoNonEseguito"></activiti:executionListener>
+        </extensionElements>
+      </startEvent>
+      <intermediateCatchEvent id="timerAttesaDatiConsegneERitiri" name="Timer Attesa Dati Consegne e Ritiri">
+        <timerEventDefinition>
+          <timeDuration>PT10M</timeDuration>
+        </timerEventDefinition>
+      </intermediateCatchEvent>
+      <sequenceFlow id="flow15" sourceRef="timerAttesaDatiConsegneERitiri" targetRef="exclusivegateway3"></sequenceFlow>
+      <sequenceFlow id="flow21" sourceRef="startSubprocessImportaConsegneERitiri" targetRef="exclusivegateway3"></sequenceFlow>
+      <serviceTask id="segnalazioneErroreAggiornamentoConsegneERitiriAAmministratore" name="Segnalazione Errore Aggiornamento Consegne e Ritiri a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Consegne e Ritiri]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Consegne e Ritiri]]></activiti:string>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow11" sourceRef="segnalazioneErroreAggiornamentoConsegneERitiriAAmministratore" targetRef="segnalazioneErroreAggiornamentoConsegneERitiriAOperatoreLogistico"></sequenceFlow>
+      <serviceTask id="segnalazioneErroreAggiornamentoConsegneERitiriAOperatoreLogistico" name="Segnalazione Errore Aggiornamento Consegne e Ritiri a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Consegne e Ritiri]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Segnalazione Errore Aggiornamento Consegne e Ritiri]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${operatorelogistico.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow24" sourceRef="exclusivegatewayAggiornamentoConsegneERitiri" targetRef="segnalazioneErroreAggiornamentoConsegneERitiriAAmministratore">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria != 'OK'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow25" sourceRef="segnalazioneErroreAggiornamentoConsegneERitiriAOperatoreLogistico" targetRef="exclusivegateway2"></sequenceFlow>
+      <sequenceFlow id="flow29" sourceRef="exclusivegatewayLetturaDatiConsegneERitiri" targetRef="exclusivegateway2">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${sollecitoeseguito && messaggio.categoria != 'OK' || messaggio.categoria == 'ERROREGRAVE'}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow30" sourceRef="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriNonCorretti" targetRef="exclusivegateway1"></sequenceFlow>
+      <sequenceFlow id="flow31" sourceRef="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriMancanti" targetRef="exclusivegateway1"></sequenceFlow>
+      <sequenceFlow id="flow32" sourceRef="exclusivegateway1" targetRef="timerAttesaDatiConsegneERitiri">
+        <extensionElements>
+          <activiti:executionListener event="take" class="it.vige.greenarea.bpm.tempo.importaconsegneeritiri.SollecitoEseguito"></activiti:executionListener>
+        </extensionElements>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow33" sourceRef="exclusivegateway2" targetRef="endSubprocessImportaConsegneERitiri"></sequenceFlow>
+      <exclusiveGateway id="exclusivegateway3" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow34" sourceRef="exclusivegateway3" targetRef="verificaDatiConsegneERitiri"></sequenceFlow>
+    </subProcess>
+    <endEvent id="endImportaConsegneERitiri" name="End Importa Consegne e Ritiri"></endEvent>
+    <sequenceFlow id="flow13" sourceRef="subprocessImportaConsegneERitiri" targetRef="signalintermediatethrowevent1"></sequenceFlow>
+    <intermediateThrowEvent id="signalintermediatethrowevent1" name="SignalThrowEvent">
+      <signalEventDefinition signalRef="importaconsegneerititirieseguito"></signalEventDefinition>
+    </intermediateThrowEvent>
+    <sequenceFlow id="flow22" sourceRef="signalintermediatethrowevent1" targetRef="endImportaConsegneERitiri"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_importaConsegneERitiri">
+    <bpmndi:BPMNPlane bpmnElement="importaConsegneERitiri" id="BPMNPlane_importaConsegneERitiri">
+      <bpmndi:BPMNShape bpmnElement="timerImportaConsegneERitiri" id="BPMNShape_timerImportaConsegneERitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocessImportaConsegneERitiri" id="BPMNShape_subprocessImportaConsegneERitiri">
+        <omgdc:Bounds height="576.0" width="877.0" x="140.0" y="155.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endSubprocessImportaConsegneERitiri" id="BPMNShape_endSubprocessImportaConsegneERitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="751.0" y="577.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="verificaDatiConsegneERitiri" id="BPMNShape_verificaDatiConsegneERitiri">
+        <omgdc:Bounds height="69.0" width="105.0" x="640.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayLetturaDatiConsegneERitiri" id="BPMNShape_exclusivegatewayLetturaDatiConsegneERitiri">
+        <omgdc:Bounds height="40.0" width="40.0" x="900.0" y="468.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriMancanti" id="BPMNShape_sollecitoAOperatoreLogisticoPerDatiConsegneERitiriMancanti">
+        <omgdc:Bounds height="91.0" width="105.0" x="626.0" y="287.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sollecitoAOperatoreLogisticoPerDatiConsegneERitiriNonCorretti" id="BPMNShape_sollecitoAOperatoreLogisticoPerDatiConsegneERitiriNonCorretti">
+        <omgdc:Bounds height="87.0" width="118.0" x="710.0" y="390.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornamentoConsegneERitiri" id="BPMNShape_aggiornamentoConsegneERitiri">
+        <omgdc:Bounds height="71.0" width="134.0" x="820.0" y="630.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegatewayAggiornamentoConsegneERitiri" id="BPMNShape_exclusivegatewayAggiornamentoConsegneERitiri">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="600.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startSubprocessImportaConsegneERitiri" id="BPMNShape_startSubprocessImportaConsegneERitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="270.0" y="252.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerAttesaDatiConsegneERitiri" id="BPMNShape_timerAttesaDatiConsegneERitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="490.0" y="315.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoConsegneERitiriAAmministratore" id="BPMNShape_segnalazioneErroreAggiornamentoConsegneERitiriAAmministratore">
+        <omgdc:Bounds height="88.0" width="131.0" x="360.0" y="577.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="segnalazioneErroreAggiornamentoConsegneERitiriAOperatoreLogistico" id="BPMNShape_segnalazioneErroreAggiornamentoConsegneERitiriAOperatoreLogistico">
+        <omgdc:Bounds height="84.0" width="141.0" x="304.0" y="420.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="580.0" y="435.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="690.0" y="515.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway3" id="BPMNShape_exclusivegateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="540.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endImportaConsegneERitiri" id="BPMNShape_endImportaConsegneERitiri">
+        <omgdc:Bounds height="35.0" width="35.0" x="660.0" y="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="signalintermediatethrowevent1" id="BPMNShape_signalintermediatethrowevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="750.0" y="100.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flowVerificaDatiConsegneERitiri" id="BPMNEdge_flowVerificaDatiConsegneERitiri">
+        <omgdi:waypoint x="77.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="578.0" y="155.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="920.0" y="468.0"></omgdi:waypoint>
+        <omgdi:waypoint x="836.0" y="333.0"></omgdi:waypoint>
+        <omgdi:waypoint x="731.0" y="332.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="900.0" y="488.0"></omgdi:waypoint>
+        <omgdi:waypoint x="828.0" y="433.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="745.0" y="204.0"></omgdi:waypoint>
+        <omgdi:waypoint x="919.0" y="223.0"></omgdi:waypoint>
+        <omgdi:waypoint x="920.0" y="468.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="920.0" y="508.0"></omgdi:waypoint>
+        <omgdi:waypoint x="887.0" y="630.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="820.0" y="665.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="640.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="570.0" y="600.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="555.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="507.0" y="315.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="260.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="305.0" y="269.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="240.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="425.0" y="577.0"></omgdi:waypoint>
+        <omgdi:waypoint x="374.0" y="504.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="550.0" y="620.0"></omgdi:waypoint>
+        <omgdi:waypoint x="491.0" y="621.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="445.0" y="462.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="515.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+        <omgdi:waypoint x="900.0" y="488.0"></omgdi:waypoint>
+        <omgdi:waypoint x="710.0" y="515.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
+        <omgdi:waypoint x="710.0" y="433.0"></omgdi:waypoint>
+        <omgdi:waypoint x="620.0" y="455.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
+        <omgdi:waypoint x="678.0" y="378.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0" y="435.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+        <omgdi:waypoint x="600.0" y="435.0"></omgdi:waypoint>
+        <omgdi:waypoint x="507.0" y="350.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow33" id="BPMNEdge_flow33">
+        <omgdi:waypoint x="710.0" y="555.0"></omgdi:waypoint>
+        <omgdi:waypoint x="768.0" y="577.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
+        <omgdi:waypoint x="580.0" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="640.0" y="204.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="578.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="767.0" y="135.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
+        <omgdi:waypoint x="767.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="677.0" y="75.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

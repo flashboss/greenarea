@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <message id="missionepresaincarico" name="missionepresaincarico"></message>
+  <process id="gestioneConsegne" name="Gestione Consegne" isExecutable="true">
+    <endEvent id="endGestioneConsegne" name="End Gestione Consegne"></endEvent>
+    <subProcess id="subprocessAggiornaConsegna" name="Sub Process Aggiorna Consegna">
+      <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="${missione.richieste}" activiti:elementVariable="richiesta"></multiInstanceLoopCharacteristics>
+      <userTask id="aggiornaConsegna" name="Aggiorna Consegna" activiti:candidateUsers="${missione.veicolo.autista.id}" activiti:candidateGroups="autista,trasportatoreautonomo">
+        <extensionElements>
+          <activiti:formProperty id="motivazione" name="motivazione" type="string"></activiti:formProperty>
+          <activiti:formProperty id="stato" name="stato" type="string"></activiti:formProperty>
+          <activiti:taskListener event="assignment" class="it.vige.greenarea.bpm.autista.gestioneconsegne.AggiornaStatoInCarico"></activiti:taskListener>
+          <activiti:taskListener event="complete" class="it.vige.greenarea.bpm.autista.gestioneconsegne.AggiornaConsegna"></activiti:taskListener>
+          <activiti:taskListener event="complete" class="it.vige.greenarea.bpm.autista.gestioneconsegne.NotificaAggiornamentoConsegnaAOperatoreLogistico"></activiti:taskListener>
+        </extensionElements>
+      </userTask>
+      <startEvent id="starteventSubprocessAggiornaConsegna" name="Start Subprocess Aggiorna Consegna"></startEvent>
+      <endEvent id="endeventSubprocessAggiornaConsegna" name="End Subprocess Aggiorna Consegna"></endEvent>
+      <sequenceFlow id="flow13" sourceRef="starteventSubprocessAggiornaConsegna" targetRef="aggiornaConsegna"></sequenceFlow>
+      <sequenceFlow id="flow18" sourceRef="aggiornaConsegna" targetRef="exclusivegateway1"></sequenceFlow>
+      <serviceTask id="notificaErroreAAutista" name="Notifica Errore a Autista" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${missione.veicolo.autista.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow10" sourceRef="notificaErroreAAutista" targetRef="notificaErroreAOperatoreLogistico"></sequenceFlow>
+      <serviceTask id="notificaErroreAOperatoreLogistico" name="Notifica Errore a Operatore Logistico" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${missione.veicolo.operatoreLogistico.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="flow11" sourceRef="notificaErroreAOperatoreLogistico" targetRef="notificaErroreAAmministratore"></sequenceFlow>
+      <serviceTask id="notificaErroreAAmministratore" name="Notifica Errore a Amministratore" activiti:type="mail">
+        <extensionElements>
+          <activiti:field name="subject">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="html">
+            <activiti:string><![CDATA[Notifica Errore]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="to">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+          <activiti:field name="from">
+            <activiti:expression>${amministratore.email}</activiti:expression>
+          </activiti:field>
+        </extensionElements>
+      </serviceTask>
+      <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow19" sourceRef="exclusivegateway1" targetRef="notificaErroreAAutista">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria != 'OK'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow20" sourceRef="notificaErroreAAmministratore" targetRef="endeventSubprocessAggiornaConsegna"></sequenceFlow>
+      <sequenceFlow id="flow21" sourceRef="exclusivegateway1" targetRef="endeventSubprocessAggiornaConsegna">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${messaggio.categoria == 'OK'}]]></conditionExpression>
+      </sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow14" sourceRef="subprocessAggiornaConsegna" targetRef="endGestioneConsegne"></sequenceFlow>
+    <startEvent id="messagestarteventGestioneConsegne" name="Message start Gestione Consegne">
+      <documentation>contiene:
+&lt;UC3_2.6.1.5&gt;: &lt;Gestisci stato consegna&gt;
+&lt;UC4_2.6.1.5&gt;: &lt;Gestisci presa in carico consegne&gt;
+&lt;UC5_2.6.1.5&gt;: &lt;Gestisci altri stati consegne&gt;
+&lt;UC6_2.6.1.5&gt;: &lt;Gestisci stato ritiro&gt;</documentation>
+      <extensionElements>
+        <activiti:executionListener event="end" class="it.vige.greenarea.bpm.InitLocalEnvironment"></activiti:executionListener>
+      </extensionElements>
+      <messageEventDefinition messageRef="missionepresaincarico"></messageEventDefinition>
+    </startEvent>
+    <sequenceFlow id="flow15" sourceRef="messagestarteventGestioneConsegne" targetRef="subprocessAggiornaConsegna"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_gestioneConsegne">
+    <bpmndi:BPMNPlane bpmnElement="gestioneConsegne" id="BPMNPlane_gestioneConsegne">
+      <bpmndi:BPMNShape bpmnElement="endGestioneConsegne" id="BPMNShape_endGestioneConsegne">
+        <omgdc:Bounds height="35.0" width="35.0" x="150.0" y="380.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocessAggiornaConsegna" id="BPMNShape_subprocessAggiornaConsegna">
+        <omgdc:Bounds height="381.0" width="581.0" x="270.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="aggiornaConsegna" id="BPMNShape_aggiornaConsegna">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="starteventSubprocessAggiornaConsegna" id="BPMNShape_starteventSubprocessAggiornaConsegna">
+        <omgdc:Bounds height="35.0" width="35.0" x="320.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endeventSubprocessAggiornaConsegna" id="BPMNShape_endeventSubprocessAggiornaConsegna">
+        <omgdc:Bounds height="35.0" width="35.0" x="790.0" y="184.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreAAutista" id="BPMNShape_notificaErroreAAutista">
+        <omgdc:Bounds height="71.0" width="128.0" x="409.0" y="230.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreAOperatoreLogistico" id="BPMNShape_notificaErroreAOperatoreLogistico">
+        <omgdc:Bounds height="71.0" width="133.0" x="510.0" y="340.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="notificaErroreAAmministratore" id="BPMNShape_notificaErroreAAmministratore">
+        <omgdc:Bounds height="69.0" width="105.0" x="730.0" y="380.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="messagestarteventGestioneConsegne" id="BPMNShape_messagestarteventGestioneConsegne">
+        <omgdc:Bounds height="35.0" width="35.0" x="170.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="355.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="525.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="180.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="473.0" y="301.0"></omgdi:waypoint>
+        <omgdi:waypoint x="576.0" y="340.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="643.0" y="375.0"></omgdi:waypoint>
+        <omgdi:waypoint x="730.0" y="414.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="700.0" y="200.0"></omgdi:waypoint>
+        <omgdi:waypoint x="473.0" y="230.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="782.0" y="380.0"></omgdi:waypoint>
+        <omgdi:waypoint x="807.0" y="219.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="720.0" y="180.0"></omgdi:waypoint>
+        <omgdi:waypoint x="790.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="270.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="167.0" y="380.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="187.0" y="65.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="90.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
