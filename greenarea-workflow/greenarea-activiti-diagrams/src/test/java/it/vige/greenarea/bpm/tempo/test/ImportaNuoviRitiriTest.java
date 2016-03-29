@@ -42,7 +42,7 @@ public class ImportaNuoviRitiriTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -151,7 +151,7 @@ public class ImportaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiNuoviRitiriNonCorretti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -261,7 +261,7 @@ public class ImportaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_nuovi_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornamentoNuoviRitiri() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

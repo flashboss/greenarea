@@ -51,7 +51,7 @@ public class VisualizzaMissioniAutorizzateTrasportatoreAutonomoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -219,7 +219,7 @@ public class VisualizzaMissioniAutorizzateTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNoDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -362,7 +362,7 @@ public class VisualizzaMissioniAutorizzateTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -485,7 +485,7 @@ public class VisualizzaMissioniAutorizzateTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -611,7 +611,7 @@ public class VisualizzaMissioniAutorizzateTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErrorePolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

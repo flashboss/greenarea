@@ -54,7 +54,7 @@ public class SimulazioneMissioniTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/simulazione_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/simulazione_missioni.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -225,7 +225,7 @@ public class SimulazioneMissioniTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/simulazione_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/simulazione_missioni.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -339,7 +339,7 @@ public class SimulazioneMissioniTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/simulazione_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/simulazione_missioni.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -456,7 +456,7 @@ public class SimulazioneMissioniTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/simulazione_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/simulazione_missioni.bpmn20.xml" })
 	public void testNotificaErrorePolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

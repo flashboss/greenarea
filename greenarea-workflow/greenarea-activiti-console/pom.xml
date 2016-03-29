@@ -26,13 +26,36 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
-
 	<build>
 		<finalName>greenarea-activiti-console</finalName>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-activiti-diagrams</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>it.vige.greenarea</groupId>
+									<artifactId>greenarea-activiti-diagrams</artifactId>
+								</artifactItem>
+							</artifactItems>
+							<stripVersion>true</stripVersion>
+							<outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<excludeTransitive>true</excludeTransitive>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.zeroturnaround</groupId>
 				<artifactId>jrebel-maven-plugin</artifactId>
@@ -109,6 +132,16 @@
 									</command>
 								</commands>
 							</afterDeployment>
+						</configuration>
+					</execution>
+					<execution>
+						<id>shutdown</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>shutdown</goal>
+						</goals>
+						<configuration>
+							<reload>true</reload>
 						</configuration>
 					</execution>
 				</executions>
@@ -375,6 +408,12 @@
 		<dependency>
 			<groupId>it.vige.greenarea</groupId>
 			<artifactId>greenarea-activiti-diagrams</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>it.vige.greenarea</groupId>
+			<artifactId>greenarea-ws-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

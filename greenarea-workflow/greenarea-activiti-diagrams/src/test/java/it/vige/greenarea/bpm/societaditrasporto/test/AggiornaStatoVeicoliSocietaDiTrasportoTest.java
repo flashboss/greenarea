@@ -36,8 +36,7 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
 import org.subethamail.smtp.server.SMTPServer;
 
-public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
-		ResourceActivitiTestCase {
+public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends ResourceActivitiTestCase {
 
 	private final static String USER_NAME = "buscar";
 
@@ -47,7 +46,7 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/societaditrasporto/aggiorna_stato_veicoli_societa_di_trasporto.bpmn20.xml" })
+	@Deployment(resources = { "bpm/sdt/aggiorna_stato_veicoli_sdt.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -69,40 +68,29 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		variables.put("targa", targa);
 
 		// POPOLO I VEICOLI
-		ProcessDefinition aggiornaStatoVeicoli = repositoryService
-				.createProcessDefinitionQuery().singleResult();
-		BpmnModel aggiornaStatoVeicoliModel = repositoryService
-				.getBpmnModel(aggiornaStatoVeicoli.getId());
-		org.activiti.engine.repository.Deployment deployment = repositoryService
-				.createDeploymentQuery().singleResult();
-		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel
-				.getFlowElement("richiediIVeicoli");
-		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class
-				.getName());
-		ServiceTask aggiornaStato = (ServiceTask) aggiornaStatoVeicoliModel
-				.getFlowElement("aggiornaStato");
+		ProcessDefinition aggiornaStatoVeicoli = repositoryService.createProcessDefinitionQuery().singleResult();
+		BpmnModel aggiornaStatoVeicoliModel = repositoryService.getBpmnModel(aggiornaStatoVeicoli.getId());
+		org.activiti.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
+		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel.getFlowElement("richiediIVeicoli");
+		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class.getName());
+		ServiceTask aggiornaStato = (ServiceTask) aggiornaStatoVeicoliModel.getFlowElement("aggiornaStato");
 		aggiornaStato.setImplementation(EmptyAggiornaStato.class.getName());
 		repositoryService.deleteDeployment(deployment.getId());
-		deployment = repositoryService.createDeployment()
-				.addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
+		deployment = repositoryService.createDeployment().addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
 				.deploy();
 
 		// INIZIO PROCESSO
-		runtimeService.startProcessInstanceByKey(
-				"aggiornaStatoVeicoliSocietaDiTrasporto", variables);
+		runtimeService.startProcessInstanceByKey("aggiornaStatoVeicoliSocietaDiTrasporto", variables);
 
 		// VERIFICO LA CREAZIONE DEL TASK DI ELENCO VEICOLI
-		List<Task> elencoVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("elencoVeicoli").includeProcessVariables()
-				.list();
+		List<Task> elencoVeicoli = taskService.createTaskQuery().taskDefinitionKey("elencoVeicoli")
+				.includeProcessVariables().list();
 		assertEquals(elencoVeicoli.size(), 1);
 
 		// SELEZIONO 1 FILTRO
 		@SuppressWarnings("unchecked")
-		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(
-				elencoVeicoli.get(0).getId(), "veicoli");
-		List<Veicolo> veicoliDaSelezionare = new ArrayList<Veicolo>(
-				asList(new Veicolo[] { veicoli.get(0) }));
+		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(elencoVeicoli.get(0).getId(), "veicoli");
+		List<Veicolo> veicoliDaSelezionare = new ArrayList<Veicolo>(asList(new Veicolo[] { veicoli.get(0) }));
 		assertEquals(veicoli.size(), 2);
 		Map<String, Object> selezioneVeicoli = new HashMap<String, Object>();
 		selezioneVeicoli.put("veicoliselezionati", veicoliDaSelezionare);
@@ -111,14 +99,12 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		// VERIFICO CHE SIANO RIEMPITE LE VARIABILI DEL TASK DI VISUALIZZAZIONE
 		// PARAMETRI DEL VEICOLO
 		List<Task> visualizzaParametriVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("visualizzaParametriVeicolo")
-				.includeProcessVariables().list();
+				.taskDefinitionKey("visualizzaParametriVeicolo").includeProcessVariables().list();
 		assertEquals(visualizzaParametriVeicoli.size(), 1);
 		Task visualizzaParametriVeicolo = visualizzaParametriVeicoli.get(0);
 		variables = visualizzaParametriVeicolo.getProcessVariables();
 		@SuppressWarnings("unchecked")
-		Veicolo veicoloModel = ((List<Veicolo>) variables.get("veicoli"))
-				.get(0);
+		Veicolo veicoloModel = ((List<Veicolo>) variables.get("veicoli")).get(0);
 		assertEquals(veicoloModel.getStato(), DELIVERING.name());
 		assertEquals(veicoloModel.getTarga(), "targa1");
 		assertEquals(visualizzaParametriVeicolo.getAssignee(), USER_NAME);
@@ -127,8 +113,8 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		veicoloModel.setStato(DELIVERING.name());
 		veicoloModel.setTarga("targa_modificata_1");
 		taskService.complete(visualizzaParametriVeicolo.getId(), variables);
-		visualizzaParametriVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("visualizzaParametriVeicolo").list();
+		visualizzaParametriVeicoli = taskService.createTaskQuery().taskDefinitionKey("visualizzaParametriVeicolo")
+				.list();
 		assertEquals(visualizzaParametriVeicoli.size(), 0);
 
 		// RIPULISCO IL DB
@@ -140,7 +126,7 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/societaditrasporto/aggiorna_stato_veicoli_societa_di_trasporto.bpmn20.xml" })
+	@Deployment(resources = { "bpm/sdt/aggiorna_stato_veicoli_sdt.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornaStato() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -162,42 +148,29 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		variables.put("targa", targa);
 
 		// POPOLO I VEICOLI E AGGIUNGO UN ERRORE DI AGGIORNAMENTO DEL VEICOLO
-		ProcessDefinition aggiornaStatoVeicoli = repositoryService
-				.createProcessDefinitionQuery().singleResult();
-		BpmnModel aggiornaStatoVeicoliModel = repositoryService
-				.getBpmnModel(aggiornaStatoVeicoli.getId());
-		org.activiti.engine.repository.Deployment deployment = repositoryService
-				.createDeploymentQuery().singleResult();
-		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel
-				.getFlowElement("richiediIVeicoli");
-		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class
-				.getName());
-		ServiceTask aggiornaStato = (ServiceTask) aggiornaStatoVeicoliModel
-				.getFlowElement("aggiornaStato");
-		aggiornaStato
-				.setImplementation(AggiornaStatoConSegnalazioneErroreAggiornaStato.class
-						.getName());
+		ProcessDefinition aggiornaStatoVeicoli = repositoryService.createProcessDefinitionQuery().singleResult();
+		BpmnModel aggiornaStatoVeicoliModel = repositoryService.getBpmnModel(aggiornaStatoVeicoli.getId());
+		org.activiti.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
+		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel.getFlowElement("richiediIVeicoli");
+		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class.getName());
+		ServiceTask aggiornaStato = (ServiceTask) aggiornaStatoVeicoliModel.getFlowElement("aggiornaStato");
+		aggiornaStato.setImplementation(AggiornaStatoConSegnalazioneErroreAggiornaStato.class.getName());
 		repositoryService.deleteDeployment(deployment.getId());
-		deployment = repositoryService.createDeployment()
-				.addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
+		deployment = repositoryService.createDeployment().addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
 				.deploy();
 
 		// INIZIO PROCESSO
-		runtimeService.startProcessInstanceByKey(
-				"aggiornaStatoVeicoliSocietaDiTrasporto", variables);
+		runtimeService.startProcessInstanceByKey("aggiornaStatoVeicoliSocietaDiTrasporto", variables);
 
 		// VERIFICO LA CREAZIONE DEL TASK DI ELENCO VEICOLI
-		List<Task> elencoVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("elencoVeicoli").includeProcessVariables()
-				.list();
+		List<Task> elencoVeicoli = taskService.createTaskQuery().taskDefinitionKey("elencoVeicoli")
+				.includeProcessVariables().list();
 		assertEquals(elencoVeicoli.size(), 1);
 
 		// SELEZIONO 1 FILTRO
 		@SuppressWarnings("unchecked")
-		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(
-				elencoVeicoli.get(0).getId(), "veicoli");
-		List<Veicolo> veicoliDaSelezionare = new ArrayList<Veicolo>(
-				asList(new Veicolo[] { veicoli.get(0) }));
+		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(elencoVeicoli.get(0).getId(), "veicoli");
+		List<Veicolo> veicoliDaSelezionare = new ArrayList<Veicolo>(asList(new Veicolo[] { veicoli.get(0) }));
 		assertEquals(veicoli.size(), 2);
 		Map<String, Object> selezioneVeicoli = new HashMap<String, Object>();
 		selezioneVeicoli.put("veicoliselezionati", veicoliDaSelezionare);
@@ -206,14 +179,12 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		// VERIFICO CHE SIANO RIEMPITE LE VARIABILI DEL TASK DI VISUALIZZAZIONE
 		// PARAMETRI DEL VEICOLO
 		List<Task> visualizzaParametriVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("visualizzaParametriVeicolo")
-				.includeProcessVariables().list();
+				.taskDefinitionKey("visualizzaParametriVeicolo").includeProcessVariables().list();
 		assertEquals(visualizzaParametriVeicoli.size(), 1);
 		Task visualizzaParametriVeicolo = visualizzaParametriVeicoli.get(0);
 		variables = visualizzaParametriVeicolo.getProcessVariables();
 		@SuppressWarnings("unchecked")
-		Veicolo veicoloModel = ((List<Veicolo>) variables.get("veicoli"))
-				.get(0);
+		Veicolo veicoloModel = ((List<Veicolo>) variables.get("veicoli")).get(0);
 		assertEquals(veicoloModel.getStato(), DELIVERING.name());
 		assertEquals(veicoloModel.getTarga(), "targa1");
 		assertEquals(visualizzaParametriVeicolo.getAssignee(), USER_NAME);
@@ -222,31 +193,26 @@ public class AggiornaStatoVeicoliSocietaDiTrasportoTest extends
 		veicoloModel.setStato(DELIVERING.name());
 		veicoloModel.setTarga("targa_modificata_1");
 		taskService.complete(visualizzaParametriVeicolo.getId(), variables);
-		visualizzaParametriVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("visualizzaParametriVeicolo").list();
+		visualizzaParametriVeicoli = taskService.createTaskQuery().taskDefinitionKey("visualizzaParametriVeicolo")
+				.list();
 		assertEquals(visualizzaParametriVeicoli.size(), 1);
 
 		// VERIFICO CHE LE EMAIL PER IL VEICOLO 1 SONO STATE MANDATE
 		List<HistoricActivityInstance> segnalazioneErroreaggiornaStatoAAmministratore = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("segnalazioneErroreaggiornaStatoAAmministratore")
+				.createHistoricActivityInstanceQuery().activityId("segnalazioneErroreaggiornaStatoAAmministratore")
 				.list();
 		assertEquals(segnalazioneErroreaggiornaStatoAAmministratore.size(), 1);
 		List<HistoricActivityInstance> segnalazioneErroreaggiornaStatoASocietaDiTrasporto = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId(
-						"segnalazioneErroreaggiornaStatoASocietaDiTrasporto")
+				.createHistoricActivityInstanceQuery().activityId("segnalazioneErroreaggiornaStatoASocietaDiTrasporto")
 				.list();
-		assertEquals(segnalazioneErroreaggiornaStatoASocietaDiTrasporto.size(),
-				1);
+		assertEquals(segnalazioneErroreaggiornaStatoASocietaDiTrasporto.size(), 1);
 
 		// MODIFICO DI NUOVO I PARAMETRI DEL VEICOLO 1
 		veicoloModel.setStato(DELIVERING.name());
 		veicoloModel.setTarga("targa_modificata_2");
-		taskService.complete(visualizzaParametriVeicoli.get(0).getId(),
-				variables);
-		visualizzaParametriVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("visualizzaParametriVeicolo").list();
+		taskService.complete(visualizzaParametriVeicoli.get(0).getId(), variables);
+		visualizzaParametriVeicoli = taskService.createTaskQuery().taskDefinitionKey("visualizzaParametriVeicolo")
+				.list();
 		assertEquals(visualizzaParametriVeicoli.size(), 0);
 
 		// RIPULISCO IL DB

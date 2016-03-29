@@ -43,7 +43,7 @@ public class PerformanceVeicoliTrasportatoreAutonomoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/performance_veicoli.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/performance_veicoli.bpmn20.xml" })
 	public void testPerformanceMissioniOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -124,7 +124,7 @@ public class PerformanceVeicoliTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/performance_veicoli.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/performance_veicoli.bpmn20.xml" })
 	public void testSegnalazioneErroreRichiediVeicoli() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

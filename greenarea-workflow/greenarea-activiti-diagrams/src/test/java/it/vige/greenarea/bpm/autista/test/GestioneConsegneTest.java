@@ -50,7 +50,7 @@ public class GestioneConsegneTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+	@Deployment(resources = { "bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -165,7 +165,7 @@ public class GestioneConsegneTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+	@Deployment(resources = { "bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testNotificaErrore() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

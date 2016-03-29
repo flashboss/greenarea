@@ -53,7 +53,7 @@ public class VerificaStatoConsegneERitiriTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
 	public void testDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -192,7 +192,7 @@ public class VerificaStatoConsegneERitiriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
 	public void testNoDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -286,7 +286,7 @@ public class VerificaStatoConsegneERitiriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
 	public void testSegnalazioneRichiestaStati() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -369,7 +369,7 @@ public class VerificaStatoConsegneERitiriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/verifica_stato_consegne_e_ritiri.bpmn20.xml" })
 	public void testErroreSimulazione() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

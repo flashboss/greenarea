@@ -23,6 +23,10 @@
 		</license>
 	</licenses>
 
+	<build>
+		<finalName>greenarea-activiti-diagrams</finalName>
+	</build>
+
 	<dependencies>
 		<!-- BPMN model conversion -->
 		<dependency>

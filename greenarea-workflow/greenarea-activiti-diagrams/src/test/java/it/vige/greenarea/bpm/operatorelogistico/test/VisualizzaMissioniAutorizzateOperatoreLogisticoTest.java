@@ -51,7 +51,7 @@ public class VisualizzaMissioniAutorizzateOperatoreLogisticoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -216,7 +216,7 @@ public class VisualizzaMissioniAutorizzateOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNoDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -357,7 +357,7 @@ public class VisualizzaMissioniAutorizzateOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -478,7 +478,7 @@ public class VisualizzaMissioniAutorizzateOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -602,7 +602,7 @@ public class VisualizzaMissioniAutorizzateOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErrorePolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

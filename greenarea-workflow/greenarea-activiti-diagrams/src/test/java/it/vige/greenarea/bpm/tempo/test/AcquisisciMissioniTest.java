@@ -45,7 +45,7 @@ public class AcquisisciMissioniTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/acquisisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/acquisisci_missioni.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -156,7 +156,7 @@ public class AcquisisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/acquisisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/acquisisci_missioni.bpmn20.xml" })
 	public void testSollecitoDatiMissioneNonTrovati() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -277,7 +277,7 @@ public class AcquisisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/acquisisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/acquisisci_missioni.bpmn20.xml" })
 	public void testSegnalazioneDatiMissioneNonCorretti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -398,7 +398,7 @@ public class AcquisisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/acquisisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/acquisisci_missioni.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornamento() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

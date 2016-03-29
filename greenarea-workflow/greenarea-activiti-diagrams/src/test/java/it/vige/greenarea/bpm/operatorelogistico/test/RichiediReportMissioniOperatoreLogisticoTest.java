@@ -33,8 +33,7 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
 import org.subethamail.smtp.server.SMTPServer;
 
-public class RichiediReportMissioniOperatoreLogisticoTest extends
-		ResourceActivitiTestCase {
+public class RichiediReportMissioniOperatoreLogisticoTest extends ResourceActivitiTestCase {
 
 	private final static String USER_NAME = "tnt";
 
@@ -44,7 +43,7 @@ public class RichiediReportMissioniOperatoreLogisticoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/richiedi_report_missioni_operatore_logistico.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/richiedi_report_missioni_op.bpmn20.xml" })
 	public void testReportDettaglioOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -70,34 +69,25 @@ public class RichiediReportMissioniOperatoreLogisticoTest extends
 		variables.put("ga", ga);
 
 		// POPOLO LE MISSIONI
-		ProcessDefinition reportMissioni = repositoryService
-				.createProcessDefinitionQuery().singleResult();
-		BpmnModel reportMissioniModel = repositoryService
-				.getBpmnModel(reportMissioni.getId());
-		org.activiti.engine.repository.Deployment deployment = repositoryService
-				.createDeploymentQuery().singleResult();
-		ServiceTask reportMissioniService = (ServiceTask) reportMissioniModel
-				.getFlowElement("recuperaMissioni");
-		reportMissioniService.setImplementation(RecuperaMissioniPopolate.class
-				.getName());
+		ProcessDefinition reportMissioni = repositoryService.createProcessDefinitionQuery().singleResult();
+		BpmnModel reportMissioniModel = repositoryService.getBpmnModel(reportMissioni.getId());
+		org.activiti.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
+		ServiceTask reportMissioniService = (ServiceTask) reportMissioniModel.getFlowElement("recuperaMissioni");
+		reportMissioniService.setImplementation(RecuperaMissioniPopolate.class.getName());
 		repositoryService.deleteDeployment(deployment.getId());
-		deployment = repositoryService.createDeployment()
-				.addBpmnModel("dynamic-model.bpmn", reportMissioniModel)
+		deployment = repositoryService.createDeployment().addBpmnModel("dynamic-model.bpmn", reportMissioniModel)
 				.deploy();
 
 		// INIZIO PROCESSO
-		runtimeService.startProcessInstanceByKey(
-				"richiediReportMissioniOperatoreLogistico", variables);
+		runtimeService.startProcessInstanceByKey("richiediReportMissioniOperatoreLogistico", variables);
 
 		// VERIFICO CHE CI SIA SEMPRE UN UNICO PROCESSO DI REPORT ATTIVO
-		List<ProcessInstance> reportProcessInstances = runtimeService
-				.createProcessInstanceQuery().variableValueEquals("report")
-				.list();
+		List<ProcessInstance> reportProcessInstances = runtimeService.createProcessInstanceQuery()
+				.variableValueEquals("report").list();
 		assertEquals(reportProcessInstances.size(), 1);
 
 		// VERIFICO CHE SIANO RIEMPITE LE VARIABILI DEL TASK DI REPORT
-		List<Task> visualizzaReports = taskService.createTaskQuery()
-				.taskName("Visualizza Report Dettaglio Missioni")
+		List<Task> visualizzaReports = taskService.createTaskQuery().taskName("Visualizza Report Dettaglio Missioni")
 				.includeProcessVariables().list();
 		assertEquals(visualizzaReports.size(), 1);
 		Task visualizzaReport = visualizzaReports.get(0);
@@ -108,41 +98,32 @@ public class RichiediReportMissioniOperatoreLogisticoTest extends
 		taskService.complete(visualizzaReport.getId());
 
 		// VERIFICO CHE IL RECUPERO DELLE MISSIONI E' STATO ESEGUITO
-		List<HistoricActivityInstance> recuperaMissioni = historyService
-				.createHistoricActivityInstanceQuery()
+		List<HistoricActivityInstance> recuperaMissioni = historyService.createHistoricActivityInstanceQuery()
 				.activityId("recuperaMissioni").list();
 		assertEquals(recuperaMissioni.size(), 1);
 
 		// VERIFICO CHE IL RECUPERO DELLE CONSEGNE NON E' STATO ESEGUITO
-		List<HistoricActivityInstance> recuperaConsegneHistory = historyService
-				.createHistoricActivityInstanceQuery()
+		List<HistoricActivityInstance> recuperaConsegneHistory = historyService.createHistoricActivityInstanceQuery()
 				.activityId("recuperaConsegne").list();
 		assertEquals(recuperaConsegneHistory.size(), 0);
 
 		// VERIFICO CHE LE EMAIL NON SONO STATE MANDATE
 		List<HistoricActivityInstance> notificaErroreReperimentoMissioniAAmministratore = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreReperimentoMissioniAAmministratore")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreReperimentoMissioniAAmministratore")
 				.list();
 		assertEquals(notificaErroreReperimentoMissioniAAmministratore.size(), 0);
 		List<HistoricActivityInstance> notificaErroreReperimentoMissioniAOperatoreLogistico = historyService
 				.createHistoricActivityInstanceQuery()
-				.activityId(
-						"notificaErroreReperimentoMissioniAOperatoreLogistico")
-				.list();
-		assertEquals(
-				notificaErroreReperimentoMissioniAOperatoreLogistico.size(), 0);
+				.activityId("notificaErroreReperimentoMissioniAOperatoreLogistico").list();
+		assertEquals(notificaErroreReperimentoMissioniAOperatoreLogistico.size(), 0);
 		List<HistoricActivityInstance> notificaErroreRecuperoConsegneAAmministratore = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreRecuperoConsegneAAmministratore")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreRecuperoConsegneAAmministratore")
 				.list();
 		assertEquals(notificaErroreRecuperoConsegneAAmministratore.size(), 0);
 		List<HistoricActivityInstance> notificaErroreRecuperoConsegneAOperatoreLogistico = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreRecuperoConsegneAOperatoreLogistico")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreRecuperoConsegneAOperatoreLogistico")
 				.list();
-		assertEquals(notificaErroreRecuperoConsegneAOperatoreLogistico.size(),
-				0);
+		assertEquals(notificaErroreRecuperoConsegneAOperatoreLogistico.size(), 0);
 
 		// RIPULISCO IL DB
 		greenareaDemoData.deleteAllIdentities(identityService);
@@ -153,7 +134,7 @@ public class RichiediReportMissioniOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/richiedi_report_missioni_operatore_logistico.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/richiedi_report_missioni_op.bpmn20.xml" })
 	public void testNotificaErroreRecuperoMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -178,67 +159,50 @@ public class RichiediReportMissioniOperatoreLogisticoTest extends
 		variables.put("ga", ga);
 
 		// AGGIUNGO UN ERRORE AL RECUPERO MISSIONI
-		ProcessDefinition richiediReportMissioni = repositoryService
-				.createProcessDefinitionQuery().singleResult();
-		BpmnModel richiediReportMissioniModel = repositoryService
-				.getBpmnModel(richiediReportMissioni.getId());
-		org.activiti.engine.repository.Deployment deployment = repositoryService
-				.createDeploymentQuery().singleResult();
+		ProcessDefinition richiediReportMissioni = repositoryService.createProcessDefinitionQuery().singleResult();
+		BpmnModel richiediReportMissioniModel = repositoryService.getBpmnModel(richiediReportMissioni.getId());
+		org.activiti.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
 		ServiceTask recuperaMissioniService = (ServiceTask) richiediReportMissioniModel
 				.getFlowElement("recuperaMissioni");
-		recuperaMissioniService
-				.setImplementation(RecuperaMissioniConNotificaErroreReperimentoMissioni.class
-						.getName());
+		recuperaMissioniService.setImplementation(RecuperaMissioniConNotificaErroreReperimentoMissioni.class.getName());
 		repositoryService.deleteDeployment(deployment.getId());
-		deployment = repositoryService
-				.createDeployment()
-				.addBpmnModel("dynamic-model.bpmn", richiediReportMissioniModel)
-				.deploy();
+		deployment = repositoryService.createDeployment()
+				.addBpmnModel("dynamic-model.bpmn", richiediReportMissioniModel).deploy();
 
 		// INIZIO PROCESSO
-		runtimeService.startProcessInstanceByKey(
-				"richiediReportMissioniOperatoreLogistico", variables);
+		runtimeService.startProcessInstanceByKey("richiediReportMissioniOperatoreLogistico", variables);
 
 		// VERIFICO CHE LE EMAIL DI RECUPERO MISSIONI SONO STATE MANDATE
 		List<HistoricActivityInstance> notificaErroreReperimentoMissioniAAmministratore = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreReperimentoMissioniAAmministratore")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreReperimentoMissioniAAmministratore")
 				.list();
 		assertEquals(notificaErroreReperimentoMissioniAAmministratore.size(), 1);
 		List<HistoricActivityInstance> notificaErroreReperimentoMissioniAOperatoreLogistico = historyService
 				.createHistoricActivityInstanceQuery()
-				.activityId(
-						"notificaErroreReperimentoMissioniAOperatoreLogistico")
-				.list();
-		assertEquals(
-				notificaErroreReperimentoMissioniAOperatoreLogistico.size(), 1);
+				.activityId("notificaErroreReperimentoMissioniAOperatoreLogistico").list();
+		assertEquals(notificaErroreReperimentoMissioniAOperatoreLogistico.size(), 1);
 
 		// VERIFICO CHE LE EMAIL DI RECUPERO CONSEGNE NON SONO STATE MANDATE
 		List<HistoricActivityInstance> notificaErroreRecuperoConsegneAAmministratore = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreRecuperoConsegneAAmministratore")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreRecuperoConsegneAAmministratore")
 				.list();
 		assertEquals(notificaErroreRecuperoConsegneAAmministratore.size(), 0);
 		List<HistoricActivityInstance> notificaErroreRecuperoConsegneAOperatoreLogistico = historyService
-				.createHistoricActivityInstanceQuery()
-				.activityId("notificaErroreRecuperoConsegneAOperatoreLogistico")
+				.createHistoricActivityInstanceQuery().activityId("notificaErroreRecuperoConsegneAOperatoreLogistico")
 				.list();
-		assertEquals(notificaErroreRecuperoConsegneAOperatoreLogistico.size(),
-				0);
+		assertEquals(notificaErroreRecuperoConsegneAOperatoreLogistico.size(), 0);
 
 		// VERIFICO CHE NON CI SIA NESSUN TASK PRESENTE
 		List<Task> taskCorrenti = taskService.createTaskQuery().list();
 		assertEquals(taskCorrenti.size(), 0);
 
 		// VERIFICO CHE IL RECUPERO DELLE MISSIONI E' STATO ESEGUITO
-		List<HistoricActivityInstance> recuperaMissioni = historyService
-				.createHistoricActivityInstanceQuery()
+		List<HistoricActivityInstance> recuperaMissioni = historyService.createHistoricActivityInstanceQuery()
 				.activityId("recuperaMissioni").list();
 		assertEquals(recuperaMissioni.size(), 1);
 
 		// VERIFICO CHE IL RECUPERO DELLE CONSEGNE NON E' STATO ESEGUITO
-		List<HistoricActivityInstance> recuperaConsegne = historyService
-				.createHistoricActivityInstanceQuery()
+		List<HistoricActivityInstance> recuperaConsegne = historyService.createHistoricActivityInstanceQuery()
 				.activityId("recuperaConsegne").list();
 		assertEquals(recuperaConsegne.size(), 0);
 

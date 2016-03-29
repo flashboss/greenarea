@@ -41,11 +41,11 @@ public class PerformanceMissioniTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/performance_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/performance_missioni.bpmn20.xml" })
 	public void testPerformanceMissioniOK() {
 	}
 	
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/performance_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/performance_missioni.bpmn20.xml" })
 	public void testMonitoringPerformanceMissioniOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -121,7 +121,7 @@ public class PerformanceMissioniTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/performance_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/performance_missioni.bpmn20.xml" })
 	public void testNotificaErroreRecuperoAccessiGa() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

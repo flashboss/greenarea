@@ -84,6 +84,16 @@
 							</afterDeployment>
 						</configuration>
 					</execution>
+					<execution>
+						<id>shutdown</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>shutdown</goal>
+						</goals>
+						<configuration>
+							<reload>true</reload>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>

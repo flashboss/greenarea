@@ -43,7 +43,7 @@ public class RichiediReportMissioniPATest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/richiedi_report_missioni_pa.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/richiedi_report_missioni_pa.bpmn20.xml" })
 	public void testReportSintesiOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -135,7 +135,7 @@ public class RichiediReportMissioniPATest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/richiedi_report_missioni_pa.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/richiedi_report_missioni_pa.bpmn20.xml" })
 	public void testNotificaErroreRecuperoMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
