@@ -31,8 +31,7 @@ import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
 import org.subethamail.smtp.server.SMTPServer;
 
-public class AnagrafeVeicoliOperatoreLogisticoTest extends
-		ResourceActivitiTestCase {
+public class AnagrafeVeicoliOperatoreLogisticoTest extends ResourceActivitiTestCase {
 
 	private final static String USER_NAME = "tnt";
 
@@ -42,7 +41,7 @@ public class AnagrafeVeicoliOperatoreLogisticoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/anagrafe_veicoli_operatore_logistico.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/anagrafe_veicoli_op.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -64,35 +63,26 @@ public class AnagrafeVeicoliOperatoreLogisticoTest extends
 		variables.put("targa", targa);
 
 		// POPOLO I VEICOLI
-		ProcessDefinition aggiornaStatoVeicoli = repositoryService
-				.createProcessDefinitionQuery().singleResult();
-		BpmnModel aggiornaStatoVeicoliModel = repositoryService
-				.getBpmnModel(aggiornaStatoVeicoli.getId());
-		org.activiti.engine.repository.Deployment deployment = repositoryService
-				.createDeploymentQuery().singleResult();
-		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel
-				.getFlowElement("richiediIVeicoli");
-		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class
-				.getName());
+		ProcessDefinition aggiornaStatoVeicoli = repositoryService.createProcessDefinitionQuery().singleResult();
+		BpmnModel aggiornaStatoVeicoliModel = repositoryService.getBpmnModel(aggiornaStatoVeicoli.getId());
+		org.activiti.engine.repository.Deployment deployment = repositoryService.createDeploymentQuery().singleResult();
+		ServiceTask richiediVeicoli = (ServiceTask) aggiornaStatoVeicoliModel.getFlowElement("richiediIVeicoli");
+		richiediVeicoli.setImplementation(RichiediVeicoliPopolati.class.getName());
 		repositoryService.deleteDeployment(deployment.getId());
-		deployment = repositoryService.createDeployment()
-				.addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
+		deployment = repositoryService.createDeployment().addBpmnModel("dynamic-model.bpmn", aggiornaStatoVeicoliModel)
 				.deploy();
 
 		// INIZIO PROCESSO
-		runtimeService.startProcessInstanceByKey(
-				"anagrafeVeicoliOperatoreLogistico", variables);
+		runtimeService.startProcessInstanceByKey("anagrafeVeicoliOperatoreLogistico", variables);
 
 		// VERIFICO LA CREAZIONE DEL TASK DI ELENCO VEICOLI
-		List<Task> elencoVeicoli = taskService.createTaskQuery()
-				.taskDefinitionKey("elencoVeicoli").includeProcessVariables()
-				.list();
+		List<Task> elencoVeicoli = taskService.createTaskQuery().taskDefinitionKey("elencoVeicoli")
+				.includeProcessVariables().list();
 		assertEquals(elencoVeicoli.size(), 1);
 
 		// CHIUDO
 		@SuppressWarnings("unchecked")
-		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(
-				elencoVeicoli.get(0).getId(), "veicoli");
+		List<Veicolo> veicoli = (List<Veicolo>) taskService.getVariable(elencoVeicoli.get(0).getId(), "veicoli");
 		assertEquals(veicoli.size(), 2);
 		Map<String, Object> operazione = new HashMap<String, Object>();
 		operazione.put("operazione", CHIUDI);

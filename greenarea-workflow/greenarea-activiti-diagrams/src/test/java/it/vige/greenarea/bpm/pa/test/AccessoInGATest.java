@@ -41,11 +41,11 @@ public class AccessoInGATest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/accesso_in_ga.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/accesso_in_ga.bpmn20.xml" })
 	public void testReportDettaglioOK() {
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/accesso_in_ga.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/accesso_in_ga.bpmn20.xml" })
 	public void testMonitoringAccessiGaOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -123,7 +123,7 @@ public class AccessoInGATest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/accesso_in_ga.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/accesso_in_ga.bpmn20.xml" })
 	public void testNotificaErroreRecuperoAccessiGa() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

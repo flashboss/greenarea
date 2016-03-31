@@ -56,8 +56,8 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml",
-			"it/vige/greenarea/bpm/pa/inserisci_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml",
+			"bpm/pa/inserisci_parametri.bpmn20.xml" })
 	public void testInserimentoOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -165,7 +165,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testLetturaEModificaOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -318,7 +318,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testLetturaECancellazioneOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -430,7 +430,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testNotificaErroreLetturaGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -498,7 +498,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testNotificaErroreLetturaLieve() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -566,8 +566,8 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml",
-			"it/vige/greenarea/bpm/pa/inserisci_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml",
+			"bpm/pa/inserisci_parametri.bpmn20.xml" })
 	public void testNotificaErroreInserimentoLieve() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -675,8 +675,8 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml",
-			"it/vige/greenarea/bpm/pa/inserisci_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml",
+			"bpm/pa/inserisci_parametri.bpmn20.xml" })
 	public void testNotificaErroreInserimentoGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -784,7 +784,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testNotificaErroreCancellazione() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -869,7 +869,7 @@ public class GestisciParametriTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/lettura_parametri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/lettura_parametri.bpmn20.xml" })
 	public void testNotificaErroreModifica() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

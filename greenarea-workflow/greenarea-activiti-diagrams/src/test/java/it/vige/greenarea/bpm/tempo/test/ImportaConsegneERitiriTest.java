@@ -53,7 +53,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -167,7 +167,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testVerificaDatiConsegneERitiriConErroreGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -291,7 +291,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornamentoConsegneERitiriConErroreGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -405,7 +405,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriNonCorrettiConReinoltro() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -529,7 +529,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriNonCorrettiSenzaReinoltro() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -653,7 +653,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriNonCorrettiSenzaReinoltroSuPrimoOP() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -777,7 +777,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriNonCorrettiSenzaReinoltroSuSecondoOP() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -901,7 +901,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriMancantiConReinoltro() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1025,7 +1025,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriMancantiSenzaReinoltro() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1149,7 +1149,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriMancantiSenzaReinoltroSuPrimoOP() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1273,7 +1273,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSollecitoPerDatiConsegneERitiriMancantiSenzaReinoltroSuSecondoOP() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1397,7 +1397,7 @@ public class ImportaConsegneERitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/importa_consegne_e_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornamentoConsegneERitiriConErroreLieve() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

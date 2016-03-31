@@ -95,7 +95,7 @@
 		</property>
 
 		<property name="deploymentResources"
-			value="classpath*:/it/vige/greenarea/bpm/*/*.bpmn20.xml" />
+			value="classpath*:/bpm/*/*.bpmn20.xml" />
 
 		<!-- notifiche via mail -->
 		<property name="mailServerDefaultFrom" value="${mailServerDefaultFrom}" />

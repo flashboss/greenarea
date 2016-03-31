@@ -47,7 +47,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -192,7 +192,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testNotificaErroreLieveRecuperoNuoviRitiri() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -337,7 +337,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testNotificaErroreGraveRecuperoNuoviRitiri() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -484,7 +484,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreLieveMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -634,7 +634,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreGraveMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -780,7 +780,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreLieveAggiornamentoCorrente() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -926,7 +926,7 @@ public class AssegnaNuoviRitiriTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/assegna_nuovi_ritiri.bpmn20.xml" })
 	public void testSegnalazioneErroreGraveAggiornamentoCorrente() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

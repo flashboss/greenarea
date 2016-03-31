@@ -25,7 +25,9 @@ PRE INSTALLATION:
   
 - create a directory 'greenarea' in the home folder whom starts wildfly
 
-- start wildfly with command: ./standalone.sh -c standalone-full.xml
+- start wildfly with command: ./standalone.sh -c standalone-full.xml  
+
+For a correct installation of the workflow, wildfly cannot be installed in a folder over the 60 characters. Its a limitation of activiti inside wildfly
 
 
 INSTALLATION:

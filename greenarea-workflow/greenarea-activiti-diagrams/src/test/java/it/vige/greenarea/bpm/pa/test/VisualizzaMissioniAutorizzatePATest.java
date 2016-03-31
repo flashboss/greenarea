@@ -47,7 +47,7 @@ public class VisualizzaMissioniAutorizzatePATest extends ResourceActivitiTestCas
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -171,7 +171,7 @@ public class VisualizzaMissioniAutorizzatePATest extends ResourceActivitiTestCas
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -283,7 +283,7 @@ public class VisualizzaMissioniAutorizzatePATest extends ResourceActivitiTestCas
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDatiPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -396,7 +396,7 @@ public class VisualizzaMissioniAutorizzatePATest extends ResourceActivitiTestCas
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/visualizza_missioni_autorizzate.bpmn20.xml" })
 	public void testNotificaErrorePolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

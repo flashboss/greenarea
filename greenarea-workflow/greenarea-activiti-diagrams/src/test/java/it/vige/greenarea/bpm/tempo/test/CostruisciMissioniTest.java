@@ -59,7 +59,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -302,7 +302,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testErroreReperimentoPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -547,7 +547,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testSollecitoPolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -790,7 +790,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDatiVeicoliAutistiMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1033,7 +1033,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDatiVeicoliAutistiErroreSistema() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1276,7 +1276,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDatiVeicoliAutistiErroreGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1519,7 +1519,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testNotificaErroreInserimentoConsegnaPerLaMissione() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -1762,7 +1762,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testNotificaErroreAggiornamentoMissione() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -2005,7 +2005,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDelleConsegneEDeiRitiriErroreSistema() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -2248,7 +2248,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDelleConsegneEDeiRitiriErroreGrave() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -2491,7 +2491,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testRecuperoDelleConsegneEDeiRitiriErroreDatiMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -2734,7 +2734,7 @@ public class CostruisciMissioniTest extends ResourceActivitiTestCase {
 
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/tempo/costruisci_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/tempo/costruisci_missioni.bpmn20.xml" })
 	public void testNotificaVeicoliInsufficientiPerTutteLeConsegne() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

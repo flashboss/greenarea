@@ -43,7 +43,7 @@ public class ImpattoAmbientaleTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/impatto_ambientale.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/impatto_ambientale.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -131,7 +131,7 @@ public class ImpattoAmbientaleTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/pa/impatto_ambientale.bpmn20.xml" })
+	@Deployment(resources = { "bpm/pa/impatto_ambientale.bpmn20.xml" })
 	public void testNotificaErroreReperimentoDati() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

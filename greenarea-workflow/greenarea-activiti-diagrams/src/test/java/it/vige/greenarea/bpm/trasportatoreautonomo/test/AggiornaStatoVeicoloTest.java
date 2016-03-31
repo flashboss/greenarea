@@ -44,7 +44,7 @@ public class AggiornaStatoVeicoloTest extends ResourceActivitiTestCase {
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/aggiorna_stato_veicolo.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/aggiorna_stato_veicolo.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -118,7 +118,7 @@ public class AggiornaStatoVeicoloTest extends ResourceActivitiTestCase {
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/aggiorna_stato_veicolo.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/aggiorna_stato_veicolo.bpmn20.xml" })
 	public void testSegnalazioneErroreAggiornaStato() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

@@ -42,7 +42,7 @@ public class PosizioneVeicoloTrasportatoreAutonomoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/posizione_veicolo.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/posizione_veicolo.bpmn20.xml" })
 	public void testPosizioneVeicoloOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -122,7 +122,7 @@ public class PosizioneVeicoloTrasportatoreAutonomoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/trasportatoreautonomo/posizione_veicolo.bpmn20.xml" })
+	@Deployment(resources = { "bpm/ta/posizione_veicolo.bpmn20.xml" })
 	public void testNotificaErroreRecuperoPosizione() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

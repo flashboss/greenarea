@@ -69,10 +69,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -274,10 +274,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testNotificaErroreReperimentoPolicy() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -440,10 +440,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testSollecitoPolicyMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -604,10 +604,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testErroreMissioniMancanti() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -768,10 +768,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testNotificaErroreReperimentoMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -932,10 +932,10 @@ public class AutorizzaMissioniTest extends ResourceActivitiTestCase {
 	}
 
 	@Deployment(resources = {
-			"it/vige/greenarea/bpm/tempo/autorizza_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/operatorelogistico/segnala_nuovi_ritiri.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_missioni.bpmn20.xml",
-			"it/vige/greenarea/bpm/autista/gestione_consegne.bpmn20.xml" })
+			"bpm/tempo/autorizza_missioni.bpmn20.xml",
+			"bpm/op/segnala_nuovi_ritiri.bpmn20.xml",
+			"bpm/autista/gestione_missioni.bpmn20.xml",
+			"bpm/autista/gestione_consegne.bpmn20.xml" })
 	public void testNotificaErroreAggiornamentoRanking() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();

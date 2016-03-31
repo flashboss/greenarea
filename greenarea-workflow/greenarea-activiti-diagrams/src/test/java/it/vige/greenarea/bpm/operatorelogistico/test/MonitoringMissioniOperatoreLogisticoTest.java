@@ -42,7 +42,7 @@ public class MonitoringMissioniOperatoreLogisticoTest extends
 		super("activiti.cfg-mem.xml");
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/monitoring_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/monitoring_missioni.bpmn20.xml" })
 	public void testMonitoringMissioniOK() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
@@ -117,7 +117,7 @@ public class MonitoringMissioniOperatoreLogisticoTest extends
 		smtpServer.stop();
 	}
 
-	@Deployment(resources = { "it/vige/greenarea/bpm/operatorelogistico/monitoring_missioni.bpmn20.xml" })
+	@Deployment(resources = { "bpm/op/monitoring_missioni.bpmn20.xml" })
 	public void testNotificaErroreRecuperoMissioni() {
 		// PARTE IL SERVER DI POSTA
 		MyMessageHandlerFactory myFactory = new MyMessageHandlerFactory();
